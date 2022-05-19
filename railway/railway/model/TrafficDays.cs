@@ -6,23 +6,17 @@ using System.Text;
 
 namespace railway.model
 {
-    public enum Days { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday}
-    public class Schedule
+    public class TrafficDays
     {
         [Key]
         public int Id { get; set; }
-
 
         [ForeignKey("DrivingLine")]
         public int DrivingLineId { get; set; }
         public virtual DrivingLine DrivingLine { get; set; }
 
-
-        public DateTime DepatureDate { get; set; }    // samo date je bitno
-
-
-        public virtual List<Ticket> Tickets { get; set; }
-
-        //public virtual List<ScheduleStationFreePlace> ScheduleStationFreePlaces { get; set; }
+        //[ForeignKey("Day")]
+        //public int DayId { get; set; }
+        public Days Day { get; set; }
     }
 }

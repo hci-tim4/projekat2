@@ -6,20 +6,20 @@ using System.Text;
 
 namespace railway.model
 {
-    public enum TicketType {Reserved, Bought }
-    public class Ticket
+    public class ScheduleStationFreePlace
     {
         [Key]
         public int Id { get; set; }
 
+        [ForeignKey("StationSchedule")]
+        public int StationScheduleId { get; set; }
+        public virtual StationSchedule StationSchedule { get; set; }
+
         [ForeignKey("Schedule")]
         public int ScheduleId { get; set; }
         public virtual Schedule Schedule { get; set; }
-        public TicketType TicketType { get; set; }
 
+        public int FreePlace { get; set; }
 
-        [ForeignKey("User")]
-        public int UserId { get; set; }
-        public virtual User User { get; set; }
     }
 }
