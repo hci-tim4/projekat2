@@ -24,12 +24,12 @@ namespace railway
         public MainWindow()
         {
             InitializeComponent();
-            //FillDatabase fd = new FillDatabase();
-            //fd.fill();
-            page.Content = new map.Map();
+            FillDatabase fd = new FillDatabase();
+            fd.fill();
+            page.Content = new Login();
 
         }
 
-
+       
     }
 }
