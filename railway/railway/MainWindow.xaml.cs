@@ -25,11 +25,11 @@ namespace railway
         {
             InitializeComponent();
             FillDatabase fd = new FillDatabase();
-            fd.fill();
+           // fd.fill();
+
             page.Content = new Login();
 
         }
 
-       
     }
 }

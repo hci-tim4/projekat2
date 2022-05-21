@@ -26,7 +26,7 @@ namespace railway.database
 
         public DbSet<User> users { get; set; }
 
-        public DbSet<ScheduleStationFreePlace> scheduleStationFreePlaces { get; set; }
+        public DbSet<TicketSeats> ticketSeats { get; set; }
 
         public DbSet<TrafficDays> TrafficDays { get; set; }
     }

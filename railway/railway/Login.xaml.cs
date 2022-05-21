@@ -12,6 +12,8 @@ using System.Windows.Shapes;
 using railway.dto.login_dto;
 using railway.services;
 
+
+
 namespace railway
 {
     /// <summary>
@@ -47,7 +49,9 @@ namespace railway
                 }
                 else
                 {
-                    MessageBox.Show("Ulogovan klijent!");
+                    Window clienthp = new ClientHomePage();
+                    App.Current.MainWindow.Close();
+                    clienthp.Show();
                 }
             }
         }
