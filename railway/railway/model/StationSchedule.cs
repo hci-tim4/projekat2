@@ -20,11 +20,11 @@ namespace railway.model
         public TimeSpan DepartureTime { get; set; }
 
         
-        //[ForeignKey("DrivingLine")]
+        [ForeignKey("DrivingLine")]
         public int DrivingLineId { get; set; }
-        /*
+        
         public virtual DrivingLine DrivingLine { get; set; }
-        */
+        
 
     }
 }

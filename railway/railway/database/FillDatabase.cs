@@ -187,23 +187,7 @@ namespace railway.database
                 db.Database.ExecuteSqlCommand("Insert into Schedules Values(4, '05/23/2022')");
                 db.Database.ExecuteSqlCommand("Insert into Schedules Values(4, '05/24/2022')");
 
-                db.Database.ExecuteSqlCommand("Insert into ScheduleStationFreePlaces Values(1, 1, 20)");
-                db.Database.ExecuteSqlCommand("Insert into ScheduleStationFreePlaces Values(2, 1, 20)");
-                db.Database.ExecuteSqlCommand("Insert into ScheduleStationFreePlaces Values(3, 1, 20)");
-                db.Database.ExecuteSqlCommand("Insert into ScheduleStationFreePlaces Values(4, 1, 20)");
-                db.Database.ExecuteSqlCommand("Insert into ScheduleStationFreePlaces Values(5, 2, 20)");
-                db.Database.ExecuteSqlCommand("Insert into ScheduleStationFreePlaces Values(6, 2, 20)");
-                db.Database.ExecuteSqlCommand("Insert into ScheduleStationFreePlaces Values(7, 2, 20)");
-                db.Database.ExecuteSqlCommand("Insert into ScheduleStationFreePlaces Values(8, 3, 20)");
-                db.Database.ExecuteSqlCommand("Insert into ScheduleStationFreePlaces Values(9, 3, 20)");
-                db.Database.ExecuteSqlCommand("Insert into ScheduleStationFreePlaces Values(10, 3, 20)");
-                db.Database.ExecuteSqlCommand("Insert into ScheduleStationFreePlaces Values(11, 4, 20)");
-                db.Database.ExecuteSqlCommand("Insert into ScheduleStationFreePlaces Values(12, 4, 20)");
-                db.Database.ExecuteSqlCommand("Insert into ScheduleStationFreePlaces Values(13, 4, 20)");
-                db.Database.ExecuteSqlCommand("Insert into ScheduleStationFreePlaces Values(14, 5, 20)");
-                db.Database.ExecuteSqlCommand("Insert into ScheduleStationFreePlaces Values(15, 5, 20)");
-                db.Database.ExecuteSqlCommand("Insert into ScheduleStationFreePlaces Values(1, 5, 20)");
-
+                
 
                 db.SaveChanges();
             }
