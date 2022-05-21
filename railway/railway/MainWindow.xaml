@@ -9,7 +9,7 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <!--<local:MapControl x:Name="map" />-->
-        <Frame x:Name="page" NavigationUIVisibility="Hidden" Margin="2,2,2,2"  Grid.Row="2" Grid.ColumnSpan="2"/>
+        <Frame x:Name="page" NavigationUIVisibility="Hidden" Margin="2,2,2,2"  Grid.Row="2" Grid.ColumnSpan="2"/> 
 
     </Grid>
 </Window>

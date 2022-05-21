@@ -88,15 +88,15 @@ namespace railway.database
                     "(2, 4, '11:50:00.00', '11:55:00.00', 3)"); 
 
                 db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId) Values" +
-                    "(5, 1, '11:00:00.00', '11:10:00.00', 3)");
+                    "(5, 1, '11:00:00.00', '11:10:00.00', 4)");
                 db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId) Values" +
-                    "(1, 2, '11:20:00.00', '11:25:00.00', 3)");
+                    "(1, 2, '11:20:00.00', '11:25:00.00', 4)");
                 db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId) Values" +
-                    "(4, 3, '11:30:00.00', '11:35:00.00', 3)"); 
+                    "(4, 3, '11:30:00.00', '11:35:00.00', 4)"); 
                 db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId) Values" +
-                    "(8, 4, '11:50:00.00', '11:55:00.00', 3)");
+                    "(8, 4, '11:50:00.00', '11:55:00.00', 4)");
                 db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId) Values" +
-                    "(19, 5, '12:00:00.00', '12:55:00.00', 3)"); 
+                    "(19, 5, '12:00:00.00', '12:55:00.00', 4)"); 
                 //*/
                 /*
                 db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime) Values" +
