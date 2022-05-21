@@ -63,7 +63,7 @@ namespace railway.database
                 db.Database.ExecuteSqlCommand("Insert into DrivingLines (Name, TrainId) Values('d4', 1)");
                 //
                 //With driving line
-                /*
+                ///*
                 db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId) Values" +
                     "(1, 1, '17:00:00.00', '17:10:00.00', 1)");
                 db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId) Values" +
@@ -98,7 +98,7 @@ namespace railway.database
                 db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId) Values" +
                     "(19, 5, '12:00:00.00', '12:55:00.00', 3)"); 
                 //*/
-
+                /*
                 db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime) Values" +
                     "(1, 1, '17:00:00.00', '17:10:00.00')");
                 db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime) Values" +
@@ -132,6 +132,8 @@ namespace railway.database
                     "(8, 4, '11:50:00.00', '11:55:00.00')");
                 db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime) Values" +
                     "(19, 5, '12:00:00.00', '12:55:00.00')");
+
+                */
                 db.Database.ExecuteSqlCommand("Insert into TrafficDays Values(1, 1)");
                 db.Database.ExecuteSqlCommand("Insert into TrafficDays Values(1, 2)");
                 db.Database.ExecuteSqlCommand("Insert into TrafficDays Values(1, 3)");
