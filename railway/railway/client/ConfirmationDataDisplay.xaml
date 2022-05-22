@@ -1,0 +1,59 @@
+﻿<Page x:Class="railway.client.ConfirmationDataDisplay"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:railway.client"
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="800"
+      xmlns:rg="clr-namespace:SourceChord.ResponsiveGrid;assembly=ResponsiveGrid.Wpf"
+      Title="ConfirmationDataDisplay">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <rg:ResponsiveGrid Grid.Row="0">
+            <Label rg:ResponsiveGrid.XS="5" rg:ResponsiveGrid.SM="2">Datum polaska:</Label>
+            <Label rg:ResponsiveGrid.XS="5" rg:ResponsiveGrid.SM="2" Content="{Binding Path=Date}"></Label>
+        </rg:ResponsiveGrid>
+        <rg:ResponsiveGrid Grid.Row="1">
+            <Label rg:ResponsiveGrid.XS="5" rg:ResponsiveGrid.SM="2">Od stanice:</Label>
+            <Label x:Name="fromStation" rg:ResponsiveGrid.XS="5" rg:ResponsiveGrid.SM="2"  Content="{Binding Path=fromStation, Mode=TwoWay}"></Label>
+        </rg:ResponsiveGrid>
+        <rg:ResponsiveGrid Grid.Row="2">
+            <Label rg:ResponsiveGrid.XS="5" rg:ResponsiveGrid.SM="2">Vreme polaska:</Label>
+            <Label x:Name="depatureTime" rg:ResponsiveGrid.XS="5" rg:ResponsiveGrid.SM="2"  Content="{Binding Path=depatureTime, Mode=TwoWay}"></Label>
+        </rg:ResponsiveGrid>
+        <rg:ResponsiveGrid Grid.Row="3">
+            <Label rg:ResponsiveGrid.XS="5" rg:ResponsiveGrid.SM="2">Do stanice:</Label>
+            <Label x:Name="untilStation" rg:ResponsiveGrid.XS="5" rg:ResponsiveGrid.SM="2" Content="{Binding Path=untilStation, Mode=TwoWay}"></Label>
+        </rg:ResponsiveGrid>
+        <rg:ResponsiveGrid Grid.Row="4">
+            <Label rg:ResponsiveGrid.XS="5" rg:ResponsiveGrid.SM="2">Vreme dolaska:</Label>
+            <Label x:Name="arrTime" rg:ResponsiveGrid.XS="5" rg:ResponsiveGrid.SM="2"  Content="{Binding Path=arrivalTime, Mode=TwoWay}"></Label>
+        </rg:ResponsiveGrid>
+        <rg:ResponsiveGrid Grid.Row="5">
+            <Label rg:ResponsiveGrid.XS="5" rg:ResponsiveGrid.SM="2">Broj karata:</Label>
+            <Label x:Name="numberOfTickets" rg:ResponsiveGrid.XS="5" rg:ResponsiveGrid.SM="2" Content="{Binding Path=ticketCount, Mode=TwoWay}"></Label>
+        </rg:ResponsiveGrid>
+        <rg:ResponsiveGrid Grid.Row="6">
+            <Label rg:ResponsiveGrid.XS="5" rg:ResponsiveGrid.SM="2">Cena:</Label>
+            <Label x:Name="price" rg:ResponsiveGrid.XS="5" rg:ResponsiveGrid.SM="2" Content="{Binding Path=price, Mode=TwoWay}"></Label>
+        </rg:ResponsiveGrid>
+
+        <Grid.ContextMenu>
+            <ContextMenu>
+            </ContextMenu>
+        </Grid.ContextMenu>
+    </Grid>
+</Page>

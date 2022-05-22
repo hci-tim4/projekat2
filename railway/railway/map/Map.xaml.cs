@@ -39,5 +39,6 @@ namespace railway.map
             // lets the user drag the map with the left mouse button
             mapView.DragButton = MouseButton.Left;
         }
+
     }
 }

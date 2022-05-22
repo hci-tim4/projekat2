@@ -17,7 +17,7 @@ namespace railway.database
                 db.Database.ExecuteSqlCommand("Insert into Users Values('Đorđe', 'Simić', 1, 'đole', '123')");
 
                 db.Database.ExecuteSqlCommand("Insert into SeatTypes Values('VIP', 200)");
-                db.Database.ExecuteSqlCommand("Insert into SeatTypes Values('LoveBox', 120)");
+                db.Database.ExecuteSqlCommand("Insert into SeatTypes Values('Biznis klasa', 120)");
                 db.Database.ExecuteSqlCommand("Insert into SeatTypes Values('Regularan', 80)");
 
                 db.Database.ExecuteSqlCommand("Insert into Trains Values('Sova', 'bela')");
@@ -45,7 +45,7 @@ namespace railway.database
                 db.Database.ExecuteSqlCommand("Insert into Stations Values('Kruševac')");
                 db.Database.ExecuteSqlCommand("Insert into Stations Values('Kragujevac')");
                 db.Database.ExecuteSqlCommand("Insert into Stations Values('Valjevo')");
-                db.Database.ExecuteSqlCommand("Insert into Stations Values('Srpska Mitrovica')");
+                db.Database.ExecuteSqlCommand("Insert into Stations Values('Sremska Mitrovica')");
                 db.Database.ExecuteSqlCommand("Insert into Stations Values('Sombor')");
                 db.Database.ExecuteSqlCommand("Insert into Stations Values('Kikinda')");
                 db.Database.ExecuteSqlCommand("Insert into Stations Values('Bor')");
@@ -187,8 +187,13 @@ namespace railway.database
                 db.Database.ExecuteSqlCommand("Insert into Schedules Values(4, '05/23/2022')");
                 db.Database.ExecuteSqlCommand("Insert into Schedules Values(4, '05/24/2022')");
 
-                
 
+                db.Database.ExecuteSqlCommand("Insert into Tickets Values(1,1,1,4,1,400)");
+                db.Database.ExecuteSqlCommand("Insert into TicketSeats Values(1,1)");
+                db.Database.ExecuteSqlCommand("Insert into Tickets Values(0,1,10,4,21,500)");
+                db.Database.ExecuteSqlCommand("Insert into TicketSeats Values(1,2)");
+                db.Database.ExecuteSqlCommand("Insert into Tickets Values(0,1,8,1,20,800)");
+                db.Database.ExecuteSqlCommand("Insert into TicketSeats Values(1,3)");
                 db.SaveChanges();
             }
         }

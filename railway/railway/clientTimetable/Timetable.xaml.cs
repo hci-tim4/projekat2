@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using railway.client;
 using railway.database;
 using railway.model;
 
@@ -27,12 +28,16 @@ namespace railway.clientTimetable
         Station arrival;
         List<DrivingLineDTO> lines = new List<DrivingLineDTO>();
         List<Station> stations = GetAllStations();
+        User loggedUser;
+        private Frame parentFrame;
 
-        public Timetable()
+        public Timetable(User user, Frame page1)
         {
             InitializeComponent();
+            parentFrame = page1;
             cmbDeparture.ItemsSource = GetAllStations();
             cmbArrival.ItemsSource = GetAllStations();
+            this.loggedUser = user;
         }
 
         private static List<Station> GetAllStations()
@@ -110,7 +115,7 @@ namespace railway.clientTimetable
             List<DrivingLineDTO> DTOs = new List<DrivingLineDTO>();
 
             bool correct = false;
-
+            int dtoId = 0;
             using (var db = new RailwayContext())
             {
                 var stations =
@@ -125,7 +130,7 @@ namespace railway.clientTimetable
                          departureTime = stationSchedule.DepartureTime,
                          serialNumber = stationSchedule.SerialNumber,
                          DrivinglineId = stationSchedule.DrivingLineId,
-                         ScheduleStationId = stationSchedule.Id
+                         FromScheduleStationId = stationSchedule.Id
 
                      }).ToList();
 
@@ -142,6 +147,7 @@ namespace railway.clientTimetable
                          select new
                          {
                              EndStationId = stat.StationId,
+                             UntilStationSchedule = stat.Id,
                              TrainName = train.Name
                          }).ToList();
 
@@ -151,21 +157,27 @@ namespace railway.clientTimetable
                             correct=true;
                         }
                         if ((arrival.Id == until.EndStationId) && (correct==true)) {
-                            List<DateTime> datesTravell =
+                            var datesTravell =
                                 (from schedule in db.schedules
                                 where schedule.DrivingLineId == s.DrivinglineId
-                                select schedule.DepatureDate).ToList();
+                                select new { 
+                                    scheduleId = schedule.Id,
+                                    departureDate= schedule.DepatureDate }).ToList();
 
-                            foreach(DateTime dateTravell in datesTravell) {
-                                if (dateTravell.Equals(date))
+                            foreach(var dateTravell in datesTravell) {
+                                if (dateTravell.departureDate.Equals(date))
                                 {
                                     DrivingLineDTO dto = new DrivingLineDTO
                                     {
+                                        Id = dtoId++,
                                         Departure = s.departureName,
                                         Date = date,
                                         Time = s.departureTime,
                                         Train = until.TrainName,
                                         Arrival = arrival.Name,
+                                        FromStationScheduleId = s.FromScheduleStationId,
+                                        UntilStationScheduleId = until.UntilStationSchedule,
+                                        ScheduleId = dateTravell.scheduleId,
                                         drivingLine = s.DrivinglineId
                                     };
                                     DTOs.Add(dto);
@@ -182,21 +194,36 @@ namespace railway.clientTimetable
         private void StartDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             var picker = sender as DatePicker;
-        //    picker.DisplayDateEnd = picker.SelectedDate;
             this.date = picker.SelectedDate;
         }
 
 
         private void btnUzmi_Click(object sender, RoutedEventArgs e)
         {
-            
-
+            var dtoId = ((Button)sender).Tag;
+            DrivingLineDTO dto = findDTOById((int)dtoId);
+            GetTicketDTO getTicketDTO = new GetTicketDTO {
+                DrivingLineId = dto.drivingLine, 
+                FromStationScheduleId = dto.FromStationScheduleId,
+                UntilStationScheduleId = dto.UntilStationScheduleId,
+                ScheduleId = dto.ScheduleId
+            };
+            this.parentFrame.Content = new GetTicketPage(getTicketDTO, this.loggedUser);
         }
 
         private void btnDetalji_Click(object sender, RoutedEventArgs e)
         {
             var drivinLineId = ((Button)sender).Tag;
-            this.page.Content = new DetailsTimetable((int)drivinLineId);
+            this.parentFrame.Content = new DetailsTimetable((int)drivinLineId);
+        }
+
+        private DrivingLineDTO findDTOById(int dtoId) {
+            foreach (DrivingLineDTO dto in this.lines) {
+                if (dto.Id == dtoId) {
+                    return dto;
+                }
+            }
+            return null;
         }
     }
 }

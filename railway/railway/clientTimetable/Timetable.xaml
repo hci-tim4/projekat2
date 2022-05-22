@@ -11,38 +11,40 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="7*"></RowDefinition>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="4*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <StackPanel  Grid.Row="0" Grid.Column="0" Orientation="Horizontal"  Background="#be4249">
-            <Label FontSize="20"  Content="Polazište: " VerticalAlignment="Center" HorizontalAlignment="Center" ></Label>
-            <ComboBox x:Name="cmbDeparture" ItemsSource="{Binding Stations}" DisplayMemberPath="Name" IsEditable="True"  Width="120"  FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" >
-                <ComboBox.Style>
-                    <Style>
-                        <EventSetter Event="TextBox.TextChanged" Handler="TextBox_TextChanged1" />
-                    </Style>
-                </ComboBox.Style>
-            </ComboBox>
+            <StackPanel  Grid.Row="0" Grid.Column="0"  Orientation="Vertical"  Background="#be4249">
+                <Label FontSize="20"  Content="Polazište: " VerticalAlignment="Center" HorizontalAlignment="Center" Width="100" ></Label>
+                <ComboBox x:Name="cmbDeparture" ItemsSource="{Binding Stations}" DisplayMemberPath="Name" IsEditable="True"  Width="120"  FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" >
+                    <ComboBox.Style>
+                        <Style>
+                            <EventSetter Event="TextBox.TextChanged" Handler="TextBox_TextChanged1" />
+                        </Style>
+                    </ComboBox.Style>
+                </ComboBox>
 
-            <Label Margin="2,2,2,2" Padding="2" FontSize="20" Content="Odredište: " VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
+                <Label Margin="2,2,2,2" Padding="2" FontSize="20" Content="Odredište: " VerticalAlignment="Center" HorizontalAlignment="Center" Width="100"></Label>
 
-            <ComboBox x:Name="cmbArrival" ItemsSource="{Binding Stations}" DisplayMemberPath="Name" IsEditable="True" Width="120" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <ComboBox.Style>
-                    <Style>
-                        <EventSetter Event="TextBox.TextChanged" Handler="TextBox_TextChanged2" />
-                    </Style>
-                </ComboBox.Style>
-            </ComboBox> 
+                <ComboBox x:Name="cmbArrival" ItemsSource="{Binding Stations}" DisplayMemberPath="Name" IsEditable="True" Width="120" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <ComboBox.Style>
+                        <Style>
+                            <EventSetter Event="TextBox.TextChanged" Handler="TextBox_TextChanged2" />
+                        </Style>
+                    </ComboBox.Style>
+                </ComboBox>
 
-            <Label Margin="2,2,2,2" Padding="2" FontSize="20" Content="Datum: " VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
-            <DatePicker SelectedDate="{Binding Path=date, Mode=TwoWay}"  x:Name="startDate" FirstDayOfWeek="Monday" SelectedDateChanged="StartDate_SelectedDateChanged" Text="SEEEEELEEECT" VerticalAlignment="Center" HorizontalAlignment="Center" />
-            <Button Margin="2,2,2,2" Padding="2" FontSize="30" Content="Pretraži" Click="btn_search" HorizontalAlignment="Center" VerticalAlignment="Center"></Button>
+                <Label Margin="2,2,2,2" Padding="2" FontSize="20" Content="Datum: " VerticalAlignment="Center" HorizontalAlignment="Center" Width="100"></Label>
+                <Viewbox HorizontalAlignment="Center" Width="150">
+                    <DatePicker SelectedDate="{Binding Path=date, Mode=TwoWay}"  x:Name="startDate" FirstDayOfWeek="Monday" SelectedDateChanged="StartDate_SelectedDateChanged" Text="SEEEEELEEECT" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                </Viewbox>
+                <Button Margin="2,2,2,2" Padding="2" FontSize="20" Content="Pretraži" Click="btn_search" HorizontalAlignment="Center" VerticalAlignment="Center"></Button>
 
-        </StackPanel>
+            </StackPanel>
 
 
         <!-- tabela -->
@@ -55,7 +57,7 @@
                    IsReadOnly="True" Name="dataGrid" ScrollViewer.CanContentScroll="True"
                     ScrollViewer.HorizontalScrollBarVisibility="Auto"
                     ScrollViewer.VerticalScrollBarVisibility="Auto"
-                   Grid.Row="1"  Background="#EEE2DC" CanUserSortColumns="False" RenderTransformOrigin="0.997,0.431">
+                   Grid.Row="0" Grid.Column="1"  Background="#EEE2DC" CanUserSortColumns="False" RenderTransformOrigin="0.997,0.431">
 
             <DataGrid.Columns>
                 <DataGridTextColumn  MinWidth="60" Header="Polazište" Binding="{Binding Path=Departure}"/>
@@ -67,7 +69,7 @@
                 <DataGridTemplateColumn Header="Uzmi">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button x:Name="btnUzmi" Click="btnUzmi_Click" Content="Uzmi"/>
+                            <Button x:Name="btnUzmi" Click="btnUzmi_Click" Content="Uzmi" Tag="{Binding Path=Id}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

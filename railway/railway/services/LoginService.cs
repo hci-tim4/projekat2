@@ -28,23 +28,17 @@ namespace railway.services
             }
         }
 
-        public static int logIn(LoginDTO dto)
+        public static User logIn(LoginDTO dto)
         {
             using (var db = new RailwayContext())
             {
-               var userType = (from u in db.users
+               var user = (from u in db.users
                            where u.Username == dto.username & u.Password == dto.password
-                           select u.UserType).FirstOrDefault();
-                
-                if ((int)userType == 0)
-                {
-                    return 2;
-                }
-                else
-                {
-                    return ((int)userType);
-                }
+                           select u).FirstOrDefault();
+
+                return (User)user;
             }
+            
         }
     }
 }

@@ -15,9 +15,6 @@ namespace railway.model
         public int SeatId { get; set; }
         public virtual Seat Seat { get; set; }
 
-
-        //[ForeignKey("Ticket")]
         public int TicketId { get; set; }
-        //public virtual Ticket Ticket { get; set; }
     }
 }
