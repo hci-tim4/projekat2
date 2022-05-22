@@ -19,7 +19,7 @@ namespace railway.model
         public string Password { get; set; }
 
 
-        public virtual List<Ticket>? Tickets { get; set; }
+        public virtual List<Ticket> Tickets { get; set; }
         
     }
 }

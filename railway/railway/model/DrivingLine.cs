@@ -12,13 +12,9 @@ namespace railway.model
         public int Id { get; set; }
         public string Name { get; set; }
 
-        //public virtual List<StationSchedule> StationSchedule { get; set; }
-
         [ForeignKey("Train")]
         public int TrainId { get; set; }
         public virtual Train Train { get; set; }
-
-        //public virtual List<Schedule> Schedules { get; set; }
 
     }
 }

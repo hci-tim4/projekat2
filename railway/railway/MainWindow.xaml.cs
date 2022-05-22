@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using railway.database;
+using railway.client;
 
 namespace railway
 {
@@ -26,9 +27,18 @@ namespace railway
             InitializeComponent();
             //FillDatabase fd = new FillDatabase();
             //fd.fill();
-            page.Content = new map.Map();
+            page.Content = new GetTicketPage(new GetTicketDTO()
+            {
+                FromStationScheduleId = 1,
+                UntilStationScheduleId = 2,
+                ScheduleId = 1,
+                DrivingLineId = 1
+            }, new model.User());
 
         }
+
+
+
 
 
     }
