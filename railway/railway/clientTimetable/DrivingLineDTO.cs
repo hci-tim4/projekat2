@@ -11,5 +11,8 @@ namespace railway.clientTimetable
         public DateTime Date { get; set; }
         public TimeSpan Time { get; set; }
         public string Train { get; set; }
+        public int drivingLine { get; set; }
+
+
     }
 }

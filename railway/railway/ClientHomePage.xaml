@@ -33,11 +33,14 @@
                     <Setter Property="Padding" Value="3" />
                 </Style>
             </TabControl.Resources>
-            <TabItem Header="Red vožnje" Height="50"  Width="150"   >
+            
+            <TabItem Header="Red vožnje" Height="50"  Width="150" >
                 <!--  <Label Content="Content goes here..." />   -->
                 <Frame x:Name="page" NavigationUIVisibility="Hidden" Margin="2,2,2,2"  Grid.Row="0" Grid.ColumnSpan="2"/>
             </TabItem>
+
             <TabItem Header="Pregled karata" Height="50" Width="150" />
+
         </TabControl>
 
     </Grid>

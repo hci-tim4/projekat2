@@ -17,28 +17,36 @@ namespace railway
     /// </summary>
     public partial class ClientHomePage : Window
     {
+        string last = "";
+        Page clientTimetable = new clientTimetable.Timetable();
         public ClientHomePage()
         {
             InitializeComponent();
         }
-        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+       private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string tabItem = ((sender as TabControl).SelectedItem as TabItem).Header as string;
 
-            switch (tabItem)
-            {
-                case "Red vožnje":
-                    page.Content = new clientTimetable.Timetable();
-                    break;
+            if (!tabItem.Equals(last))
+                {
+                switch (tabItem)
+                {
+                    case "Red vožnje":
+                        last = "Red vožnje";
+                        page.Content = this.clientTimetable;
+                        break;
 
-                case "Pregled karata":
+                    case "Pregled karata":
+                        last = "Pregled karata";
+                        break;
 
-                    break;
-
-                default:
-                    return;
+                    default:
+                        return;
+                }
             }
         }
+
+ 
 
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,9 +22,12 @@ namespace railway.clientTimetable
     /// </summary>
     public partial class Timetable : Page
     {
-        DateTime date;
+        DateTime? date = null;
         Station departure;
         Station arrival;
+        List<DrivingLineDTO> lines = new List<DrivingLineDTO>();
+        List<Station> stations = GetAllStations();
+
         public Timetable()
         {
             InitializeComponent();
@@ -31,83 +35,168 @@ namespace railway.clientTimetable
             cmbArrival.ItemsSource = GetAllStations();
         }
 
-        private List<Station> GetAllStations() {
-            using (var db = new RailwayContext()) {
-                var stations = db.stations.Select(s=>s).ToList();
+        private static List<Station> GetAllStations()
+        {
+            using (var db = new RailwayContext())
+            {
+                var stations = db.stations.Select(s => s).ToList();
                 return stations;
-            }   
+            }
+        }
+        private void TextBox_TextChanged1(object sender, TextChangedEventArgs e)
+        {
+            var cmbx = sender as ComboBox;
+            cmbx.ItemsSource = from item in stations
+                               where item.Name.ToLower().Contains(cmbx.Text.ToLower())
+                               select item;
+            this.departure = (from item in stations
+                            where item.Name.ToLower().Equals(cmbx.Text.ToLower())
+                            select item).FirstOrDefault();
+
+            cmbx.IsDropDownOpen = true;
+        }
+
+        private void TextBox_TextChanged2(object sender, TextChangedEventArgs e)
+        {
+            var cmbx = sender as ComboBox;
+            cmbx.ItemsSource = from item in stations
+                               where item.Name.ToLower().Contains(cmbx.Text.ToLower())
+                               select item;
+
+            this.arrival = (from item in stations
+                           where item.Name.ToLower().Equals(cmbx.Text.ToLower())
+                           select item).FirstOrDefault();
+
+            cmbx.IsDropDownOpen = true;
         }
 
         private void cmbDeparture_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            this.departure = (Station) (cmbDeparture.SelectedItem as Station);
-          //  cmbDeparture.= selectedStation.Name;
+            this.departure = (Station)(cmbDeparture.SelectedItem as Station);
         }
 
-        private void cmbArrival_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e) 
+        private void cmbArrival_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            this.arrival = (Station) (cmbArrival.SelectedItem as Station);
-         // cmbArrival.DataContext = arrivalStation.Name;
-
+            this.arrival = (Station)(cmbArrival.SelectedItem as Station);
         }
-
-        private void getInput() {
-            Station departureStation = (Station)cmbDeparture.SelectedItem;
-            Station arrivalStation = (Station)cmbArrival.SelectedItem;
-        }
-
-        private void btn_search(object sender, RoutedEventArgs e) 
+     
+        private void btn_search(object sender, RoutedEventArgs e)
         {
-            Find(this.departure, this.arrival, this.date);
-  
+
+            if ((this.departure == null) || (this.arrival == null) || (this.date == null))
+            {
+                MessageBox.Show("Unesite sve podatke za pretragu");
+            }
+            else
+            {
+                this.lines = Find(this.departure, this.arrival, (DateTime)this.date);
+                dataGrid.ItemsSource = this.lines;
+            }
 
         }
 
-        private List<DrivingLineDTO> Find(Station departure, Station arrival, DateTime date) 
+        private List<DrivingLineDTO> Find(Station departure, Station arrival, DateTime date)
         {
-            departure = new Station()
+          /*  departure = new Station()
             {
                 Id = 1
             };
             //arrival.Id = 4;
+            arrival = new Station() { Id = 11 };
 
+            date = DateTime.ParseExact("05/29/2022", "MM/dd/yyyy", null);
+          */
 
             List<DrivingLineDTO> DTOs = new List<DrivingLineDTO>();
+
+            bool correct = false;
+
             using (var db = new RailwayContext())
             {
-                var stations = 
+                var stations =
                     (from station in db.stations
-                    join stationSchedule in db.stationsSchedules
-                    on station.Id equals stationSchedule.Station.Id
-                    where station.Id==departure.Id
-                select new
-                { 
-                    departureName = station.Name,
-                    departureId = station.Id,
-                    departureTime = stationSchedule.DepartureTime,
-                    serialNumber = stationSchedule.SerialNumber,
-                    DrivinglineId = stationSchedule.DrivingLineId
+                     join stationSchedule in db.stationsSchedules
+                     on station.Id equals stationSchedule.Station.Id
+                     where station.Id == departure.Id
+                     select new
+                     {
+                         departureName = station.Name,
+                         departureId = station.Id,
+                         departureTime = stationSchedule.DepartureTime,
+                         serialNumber = stationSchedule.SerialNumber,
+                         DrivinglineId = stationSchedule.DrivingLineId,
+                         ScheduleStationId = stationSchedule.Id
 
-                }).ToList();
-
-
-
+                     }).ToList();
 
 
-                /*join  DrivingLine in db.drivingLines
-                on stationSchedule.DrivingLineId equals DrivingLine.Id
-                join Train in db.trains
-                on DrivingLine.TrainId equals Train.Id
-                join schedule in db.schedules
-                on DrivingLine.Id equals schedule.DrivingLineId  */
-                return null;
+                foreach (var s in stations) {
+
+                    var drivingLineStations =
+                        (from DrivingLine in db.drivingLines
+                         join stat in db.stationsSchedules
+                         on DrivingLine.Id equals stat.DrivingLineId
+                         join train in db.trains
+                         on DrivingLine.TrainId equals train.Id
+                         where DrivingLine.Id == s.DrivinglineId
+                         select new
+                         {
+                             EndStationId = stat.StationId,
+                             TrainName = train.Name
+                         }).ToList();
+
+
+                    foreach (var until in drivingLineStations) {
+                        if (departure.Id == until.EndStationId) {
+                            correct=true;
+                        }
+                        if ((arrival.Id == until.EndStationId) && (correct==true)) {
+                            List<DateTime> datesTravell =
+                                (from schedule in db.schedules
+                                where schedule.DrivingLineId == s.DrivinglineId
+                                select schedule.DepatureDate).ToList();
+
+                            foreach(DateTime dateTravell in datesTravell) {
+                                if (dateTravell.Equals(date))
+                                {
+                                    DrivingLineDTO dto = new DrivingLineDTO
+                                    {
+                                        Departure = s.departureName,
+                                        Date = date,
+                                        Time = s.departureTime,
+                                        Train = until.TrainName,
+                                        Arrival = arrival.Name,
+                                        drivingLine = s.DrivinglineId
+                                    };
+                                    DTOs.Add(dto);
+                                    correct = false;
+                                }
+                            }
+                        }
+                    }
+                }
             }
+            return DTOs;
         }
 
-        private void selectedDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        private void StartDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var picker = sender as DatePicker;
+        //    picker.DisplayDateEnd = picker.SelectedDate;
+            this.date = picker.SelectedDate;
+        }
+
+
+        private void btnUzmi_Click(object sender, RoutedEventArgs e)
         {
             
+
         }
 
+        private void btnDetalji_Click(object sender, RoutedEventArgs e)
+        {
+            var drivinLineId = ((Button)sender).Tag;
+            this.page.Content = new DetailsTimetable((int)drivinLineId);
+        }
     }
 }

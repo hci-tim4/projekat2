@@ -14,6 +14,7 @@ namespace railway.model
         public virtual List<StationSchedule> StationSchedules { get; set; }
 
 
+
         //podaci za mapu
         // longitude, latitude
     }

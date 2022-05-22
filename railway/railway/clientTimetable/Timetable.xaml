@@ -18,35 +18,29 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <StackPanel  Grid.Row="0" Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Background="#be4249">
-            <Label FontSize="30"  Content="Polazište: "></Label>
-            <!-- <TextBox Margin="2,2,2,2" Width="100" FontSize="30"  Padding="2"></TextBox>  -->
-            <ComboBox Name="cmbDeparture" IsEditable="True"  Width="120"  FontSize="20" SelectionChanged="cmbDeparture_SelectionChanged">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Name}"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
+        <StackPanel  Grid.Row="0" Grid.Column="0" Orientation="Horizontal"  Background="#be4249">
+            <Label FontSize="20"  Content="Polazište: " VerticalAlignment="Center" HorizontalAlignment="Center" ></Label>
+            <ComboBox x:Name="cmbDeparture" ItemsSource="{Binding Stations}" DisplayMemberPath="Name" IsEditable="True"  Width="120"  FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" >
+                <ComboBox.Style>
+                    <Style>
+                        <EventSetter Event="TextBox.TextChanged" Handler="TextBox_TextChanged1" />
+                    </Style>
+                </ComboBox.Style>
             </ComboBox>
 
-            <Label Margin="2,2,2,2" Padding="2" FontSize="30" Content="Odredište"></Label>
-            <!-- <TextBox Margin="2,2,2,2" Width="100" FontSize="30" Padding="2"></TextBox>   -->
+            <Label Margin="2,2,2,2" Padding="2" FontSize="20" Content="Odredište: " VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
 
-            <ComboBox Name="cmbArrival" IsEditable="True" Width="120" FontSize="20" SelectionChanged="cmbArrival_SelectionChanged">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="{Binding Name}"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
+            <ComboBox x:Name="cmbArrival" ItemsSource="{Binding Stations}" DisplayMemberPath="Name" IsEditable="True" Width="120" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <ComboBox.Style>
+                    <Style>
+                        <EventSetter Event="TextBox.TextChanged" Handler="TextBox_TextChanged2" />
+                    </Style>
+                </ComboBox.Style>
+            </ComboBox> 
 
-            <Label Margin="2,2,2,2" Padding="2" FontSize="30" Content="Datum"></Label>
-            <DatePicker SelectedDate="{Binding Path=date, Mode=TwoWay}"  x:Name="inputDate" FirstDayOfWeek="Monday" SelectedDateChanged="selectedDate_SelectedDateChanged" Text="SEEEEELEEECT"/>
-            <Button Margin="2,2,2,2" Padding="2" FontSize="30" Content="Pretraži" Click="btn_search"></Button>
+            <Label Margin="2,2,2,2" Padding="2" FontSize="20" Content="Datum: " VerticalAlignment="Center" HorizontalAlignment="Center"></Label>
+            <DatePicker SelectedDate="{Binding Path=date, Mode=TwoWay}"  x:Name="startDate" FirstDayOfWeek="Monday" SelectedDateChanged="StartDate_SelectedDateChanged" Text="SEEEEELEEECT" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            <Button Margin="2,2,2,2" Padding="2" FontSize="30" Content="Pretraži" Click="btn_search" HorizontalAlignment="Center" VerticalAlignment="Center"></Button>
 
         </StackPanel>
 
@@ -56,7 +50,7 @@
 
 
         <DataGrid  AlternatingRowBackground="Gainsboro" AlternationCount="1"
-                   ItemsSource="{Binding Path=Values }" Width="360" ColumnWidth="180"
+                   ItemsSource="{Binding Path=lines}" 
                   SelectionUnit="FullRow" SelectionMode="Single" AutoGenerateColumns="False"
                    IsReadOnly="True" Name="dataGrid" ScrollViewer.CanContentScroll="True"
                     ScrollViewer.HorizontalScrollBarVisibility="Auto"
@@ -64,12 +58,28 @@
                    Grid.Row="1"  Background="#EEE2DC" CanUserSortColumns="False" RenderTransformOrigin="0.997,0.431">
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Polazište"/>
-                <DataGridTextColumn Header="Odredište"/>
-                <DataGridTextColumn  Header="Date (dd.MM.yyyy. HH:mm)"/>
+                <DataGridTextColumn  MinWidth="60" Header="Polazište" Binding="{Binding Path=Departure}"/>
+                <DataGridTextColumn MinWidth="60" Header="Odredište" Binding="{Binding Path=Arrival}"/>
+                <DataGridTextColumn MinWidth="60" Header="Date (dd.MM.yyyy. HH:mm)" Binding="{Binding Path=Date}"/>
                 <!-- Binding="{Binding Path=Date, Converter={local:DateTimeToStringConverter}}"  -->
-                <DataGridTextColumn Header="Vreme"/>
-                <DataGridTextColumn Header="Voz"/>
+                <DataGridTextColumn MinWidth="60" Header="Vreme" Binding="{Binding Path=Time}" />
+                <DataGridTextColumn MinWidth="60" Header="Voz" Binding="{Binding Path=Train}" />
+                <DataGridTemplateColumn Header="Uzmi">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="btnUzmi" Click="btnUzmi_Click" Content="Uzmi"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Detalji">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="btnDetalji"  Tag="{Binding Path=drivingLine}" Click="btnDetalji_Click" Content="Detalji"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
             </DataGrid.Columns>
 
         </DataGrid>
