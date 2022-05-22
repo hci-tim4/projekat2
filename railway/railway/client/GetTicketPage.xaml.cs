@@ -19,20 +19,33 @@ namespace railway.client
     /// <summary>
     /// Interaction logic for GetTicketPage.xaml
     /// </summary>
+    public delegate void TicketGotSavedHandler();
     public partial class GetTicketPage : Page
     {
+        public event TicketGotSavedHandler ticketGotSaved;
+
         private SeatDisplay seatsPage;
         private List<TicketSeats> ticketSeats;//SACUVAAAAAAAAAAAAAAJ
         private GetTicketDTO getTicketDTO;
         private User user;
+        public List<Window> openedWindows;
         public GetTicketPage(GetTicketDTO dto, User u)
         {
             InitializeComponent();
+            this.ticketGotSaved += new TicketGotSavedHandler(rerenderSeatDisplay);
+            openedWindows = new List<Window>();
             getTicketDTO = dto;
             user = u;
             seatsPage = new SeatDisplay(dto.DrivingLineId, dto.ScheduleId);;
             seatDisplay.Content = seatsPage;
             displayInfo.Content = new ChosenSchedulePage(dto.FromStationScheduleId, dto.UntilStationScheduleId, dto.ScheduleId);
+        }
+
+        private void rerenderSeatDisplay()
+        {
+            seatsPage = new SeatDisplay(getTicketDTO.DrivingLineId, getTicketDTO.ScheduleId);
+            seatDisplay.Content = seatsPage;
+
         }
 
         private void reserveBtn_Click(object sender, RoutedEventArgs e)
@@ -41,8 +54,10 @@ namespace railway.client
             if (t == null)
                 return;
             t.TicketType = TicketType.Reserved;
-            Window confirmation = new TicketConfirmationWindow(t, "rezervišete", seatsPage.checkedSeatIds);
+            TicketConfirmationWindow confirmation = new TicketConfirmationWindow(t, "rezervišete", seatsPage.checkedSeatIds, ticketGotSaved);
+            openedWindows.Add(confirmation);
             confirmation.Show();
+
         }
 
         private void buyBtn_Click(object sender, RoutedEventArgs e)
@@ -51,7 +66,8 @@ namespace railway.client
             if (t == null)
                 return;
             t.TicketType = TicketType.Bought;
-            Window confirmation = new TicketConfirmationWindow(t, "kupite", seatsPage.checkedSeatIds);
+            TicketConfirmationWindow confirmation = new TicketConfirmationWindow(t, "kupite", seatsPage.checkedSeatIds, ticketGotSaved);
+            openedWindows.Add(confirmation);
             confirmation.Show();
         }
 
@@ -107,6 +123,22 @@ namespace railway.client
 
             }
             return price;
+        }
+
+        private void buyTicket_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            List<int> chosenSeatsId = seatsPage.checkedSeatIds;
+            if (chosenSeatsId.Count == 0)
+            {
+                MessageBox.Show("Niste izabrali sedište! Pre nastavka morate da izaberete sedište");
+                e.CanExecute = false;
+            }
+            e.CanExecute = true;
+        }
+
+        private void buyTicket_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            buyBtn_Click(sender, e);
         }
     }
 }

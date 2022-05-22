@@ -51,12 +51,15 @@ namespace railway.client
                                         select schedules.Tickets).Single().ToList();
                 List<int> seatIds = new List<int>();
                 foreach (Ticket t in tickets) {
-                    Seat s = (from ticketSeats in db.ticketSeats
+                    List<Seat> seats = (from ticketSeats in db.ticketSeats
                               where ticketSeats.TicketId == t.Id
-                              select ticketSeats.Seat).SingleOrDefault();
-                    if (s == null)
-                        continue;
-                    seatIds.Add(s.Id);
+                              select ticketSeats.Seat).ToList();
+                    foreach (Seat s in seats)
+                    {
+                        if (s == null)
+                            continue;
+                        seatIds.Add(s.Id);
+                    }
                 }
                 this.occupiedSeats = seatIds;
             }

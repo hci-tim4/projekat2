@@ -22,24 +22,40 @@ namespace railway
     /// </summary>
     public partial class MainWindow : Window
     {
+        private List<Window> openedWindows = new List<Window>();
+        private GetTicketPage getTicketPage;
         public MainWindow()
         {
             InitializeComponent();
             //FillDatabase fd = new FillDatabase();
             //fd.fill();
-            page.Content = new GetTicketPage(new GetTicketDTO()
+            getTicketPage = new GetTicketPage(new GetTicketDTO()
             {
                 FromStationScheduleId = 1,
                 UntilStationScheduleId = 2,
                 ScheduleId = 1,
                 DrivingLineId = 1
             }, new model.User());
-
+            page.Content = getTicketPage;
         }
 
+        private void CloseWindow_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
 
+        private void CloseWindow_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            this.Close();
+        }
 
-
-
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            List<Window> openWindows = getTicketPage.openedWindows;
+            foreach (Window w in openWindows)
+            {
+                w.Close();
+            }
+        }
     }
 }

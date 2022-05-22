@@ -45,7 +45,7 @@ namespace railway.database
                 db.Database.ExecuteSqlCommand("Insert into Stations Values('Kruševac')");
                 db.Database.ExecuteSqlCommand("Insert into Stations Values('Kragujevac')");
                 db.Database.ExecuteSqlCommand("Insert into Stations Values('Valjevo')");
-                db.Database.ExecuteSqlCommand("Insert into Stations Values('Srpska Mitrovica')");
+                db.Database.ExecuteSqlCommand("Insert into Stations Values('Sremska Mitrovica')");
                 db.Database.ExecuteSqlCommand("Insert into Stations Values('Sombor')");
                 db.Database.ExecuteSqlCommand("Insert into Stations Values('Kikinda')");
                 db.Database.ExecuteSqlCommand("Insert into Stations Values('Bor')");

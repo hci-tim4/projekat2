@@ -50,5 +50,10 @@
             <Label rg:ResponsiveGrid.XS="5" rg:ResponsiveGrid.SM="2">Cena:</Label>
             <Label x:Name="price" rg:ResponsiveGrid.XS="5" rg:ResponsiveGrid.SM="2" Content="{Binding Path=price, Mode=TwoWay}"></Label>
         </rg:ResponsiveGrid>
+
+        <Grid.ContextMenu>
+            <ContextMenu>
+            </ContextMenu>
+        </Grid.ContextMenu>
     </Grid>
 </Page>

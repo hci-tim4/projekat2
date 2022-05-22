@@ -22,39 +22,18 @@ namespace railway.client
     {
         private Ticket ticket;
         private List<int> checkedSeatIds;
-        public TicketConfirmationWindow(Ticket t, string action, List<int> checkedSeatIds)
+        public Boolean ticketsGotSaved { get; set; }
+        private TicketGotSavedHandler ticketGotSavedHandler;
+
+        public TicketConfirmationWindow(Ticket t, string action, List<int> checkedSeatIds, TicketGotSavedHandler ticketGotSaved)
         {
             InitializeComponent();
+            this.ticketGotSavedHandler = ticketGotSaved;
+            ticketsGotSaved = false;
             this.checkedSeatIds = checkedSeatIds;
             ticket = t;
             askingForConfirmLabel.Content = "Potvrdite da hoćete da " + action + "izabranu kartu/izabrane karte.";
             confirmationDataFrame.Content = new ConfirmationDataDisplay(t, checkedSeatIds.Count);
-        }
-
-        private void confirmBtn_Click(object sender, RoutedEventArgs e)
-        {
-            
-            using (var db = new RailwayContext())
-            {
-                //save ticket
-                //save ticketseats
-                db.tickets.Add(ticket);
-                db.SaveChanges();
-                foreach (int seatId in checkedSeatIds)
-                {
-                    Seat seat = (from seats in db.seats
-                                 where seats.Id == seatId
-                                 select seats).Single();
-                    TicketSeats ts = new TicketSeats()
-                    {
-                        SeatId = seatId,
-                        TicketId = ticket.Id
-                    };
-                    db.ticketSeats.Add(ts);
-                }
-                db.SaveChanges();
-            }
-            MessageBox.Show("Uspešno su sačuvani podaci.", "Uspeh");
         }
 
         private void confirmBtn_Click_1(object sender, RoutedEventArgs e)
@@ -80,9 +59,25 @@ namespace railway.client
                 }
                 db.SaveChanges();
             }
+            ticketGotSavedHandler();
             MessageBox.Show("Uspešno su sačuvani podaci.", "Uspeh");
             this.Close();
-
         }
+
+        private void CloseWindow_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void CloseWindow_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void cancelBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
     }
 }

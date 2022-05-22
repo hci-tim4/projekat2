@@ -5,10 +5,14 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:railway.client"
       xmlns:bootstrap="http://github.com/scheshan/bootstrap"
+        xmlns:cmd="clr-namespace:railway.Commands"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="GetTicketPage">
 
+    <Page.CommandBindings>
+        <CommandBinding Command="cmd:RoutedCommands.BuyTicket" CanExecute="buyTicket_CanExecute" Executed="buyTicket_Executed"></CommandBinding>
+    </Page.CommandBindings>
     <Grid>
 
         <Grid.ColumnDefinitions>
