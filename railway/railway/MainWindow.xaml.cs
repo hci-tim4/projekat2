@@ -1,18 +1,10 @@
-﻿using System;
+﻿using railway.database;
+using railway.dto.tickets_view;
+using railway.model;
+using railway.services;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using railway.database;
+using System.Linq;
 
 namespace railway
 {
@@ -21,15 +13,14 @@ namespace railway
     /// </summary>
     public partial class MainWindow : Window
     {
+        
         public MainWindow()
         {
             InitializeComponent();
             FillDatabase fd = new FillDatabase();
-           // fd.fill();
+            fd.fill();
 
             page.Content = new Login();
-
         }
-
     }
 }

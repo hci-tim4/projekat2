@@ -187,8 +187,13 @@ namespace railway.database
                 db.Database.ExecuteSqlCommand("Insert into Schedules Values(4, '05/23/2022')");
                 db.Database.ExecuteSqlCommand("Insert into Schedules Values(4, '05/24/2022')");
 
-                
 
+                db.Database.ExecuteSqlCommand("Insert into Tickets Values(1,1,1,4,1,400)");
+                db.Database.ExecuteSqlCommand("Insert into TicketSeats Values(1,1)");
+                db.Database.ExecuteSqlCommand("Insert into Tickets Values(0,1,10,4,21,500)");
+                db.Database.ExecuteSqlCommand("Insert into TicketSeats Values(1,2)");
+                db.Database.ExecuteSqlCommand("Insert into Tickets Values(0,1,8,1,20,800)");
+                db.Database.ExecuteSqlCommand("Insert into TicketSeats Values(1,3)");
                 db.SaveChanges();
             }
         }

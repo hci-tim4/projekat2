@@ -1,4 +1,5 @@
-﻿using System;
+﻿using railway.model;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -17,9 +18,11 @@ namespace railway
     /// </summary>
     public partial class ClientHomePage : Window
     {
-        public ClientHomePage()
+        User loggedUser;
+        public ClientHomePage(User user)
         {
             InitializeComponent();
+            loggedUser = user;
         }
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -28,11 +31,12 @@ namespace railway
             switch (tabItem)
             {
                 case "Red vožnje":
-                    page.Content = new clientTimetable.Timetable();
+                    page1.Content = new clientTimetable.Timetable();
                     break;
 
                 case "Pregled karata":
-
+                    
+                    page2.Content = new TicketsView(loggedUser);
                     break;
 
                 default:

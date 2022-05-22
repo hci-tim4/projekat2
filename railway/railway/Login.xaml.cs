@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using railway.dto.login_dto;
+using railway.model;
 using railway.services;
 
 
@@ -38,21 +39,26 @@ namespace railway
             {
                 string password = passwordBox1.Password;
                 LoginDTO dto = new LoginDTO { username = username, password = password };
-                int u = LoginService.logIn(dto);
-                if (u == 2)
+                User u = LoginService.logIn(dto);
+                if (u == null)
                 {
                     MessageBox.Show("Neispravna lozinka!");
                 }
-                else if(u==0)
-                {
-                    MessageBox.Show("Ulogovan menadzer!");
-                }
                 else
                 {
-                    Window clienthp = new ClientHomePage();
-                    App.Current.MainWindow.Close();
-                    clienthp.Show();
+                    if ((int)u.UserType == 0)
+                    {
+                        MessageBox.Show("Ulogovan menadzer!");
+
+                    }
+                    else if ((int)u.UserType == 1)
+                    {
+                        Window clienthp = new ClientHomePage(u);
+                        App.Current.MainWindow.Close();
+                        clienthp.Show();
+                    }
                 }
+               
             }
         }
     }

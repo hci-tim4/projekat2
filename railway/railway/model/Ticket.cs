@@ -34,5 +34,7 @@ namespace railway.model
 
         public int ScheduleId { get; set; }
 
+        public double Price { get; set; }
+
     }
 }

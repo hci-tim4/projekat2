@@ -18,7 +18,10 @@
         </Grid.RowDefinitions>
 
         <Frame x:Name="page" NavigationUIVisibility="Hidden" Margin="2,2,2,2" Grid.ColumnSpan="2" />
-      
+
+
+
+
     </Grid>
  
 </Window>
