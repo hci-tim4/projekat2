@@ -1,8 +1,8 @@
-﻿using System;
+﻿using railway.database;
+using railway.dto.tickets_view;
+using railway.model;
+using railway.services;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using railway.database;
 using railway.client;
+using System.Linq;
 
 namespace railway
 {
@@ -29,6 +30,8 @@ namespace railway
             InitializeComponent();
             //FillDatabase fd = new FillDatabase();
             //fd.fill();
+            page.Content = new Login();
+            /*
             getTicketPage = new GetTicketPage(new GetTicketDTO()
             {
                 FromStationScheduleId = 1,
@@ -36,7 +39,7 @@ namespace railway
                 ScheduleId = 1,
                 DrivingLineId = 1
             }, new model.User());
-            page.Content = getTicketPage;
+            page.Content = getTicketPage;*/
         }
 
         private void CloseWindow_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -57,5 +60,6 @@ namespace railway
                 w.Close();
             }
         }
+        
     }
 }

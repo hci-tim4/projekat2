@@ -12,9 +12,19 @@
     <Window.CommandBindings>
         <CommandBinding Command="cmd:RoutedCommands.CloseWindow" CanExecute="CloseWindow_CanExecute" Executed="CloseWindow_Executed"></CommandBinding>
     </Window.CommandBindings>
-    <Grid>
         <!--<local:MapControl x:Name="map" />-->
-        <Frame x:Name="page" NavigationUIVisibility="Hidden" Margin="2,2,2,2"  Grid.Row="2" Grid.ColumnSpan="2"/>
+    <Grid Background="Red">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Frame x:Name="page" NavigationUIVisibility="Hidden" Margin="2,2,2,2" Grid.ColumnSpan="2" />
+
 
     </Grid>
+ 
 </Window>

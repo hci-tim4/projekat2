@@ -88,15 +88,15 @@ namespace railway.database
                     "(2, 4, '11:50:00.00', '11:55:00.00', 3)"); 
 
                 db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId) Values" +
-                    "(5, 1, '11:00:00.00', '11:10:00.00', 3)");
+                    "(5, 1, '11:00:00.00', '11:10:00.00', 4)");
                 db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId) Values" +
-                    "(1, 2, '11:20:00.00', '11:25:00.00', 3)");
+                    "(1, 2, '11:20:00.00', '11:25:00.00', 4)");
                 db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId) Values" +
-                    "(4, 3, '11:30:00.00', '11:35:00.00', 3)"); 
+                    "(4, 3, '11:30:00.00', '11:35:00.00', 4)"); 
                 db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId) Values" +
-                    "(8, 4, '11:50:00.00', '11:55:00.00', 3)");
+                    "(8, 4, '11:50:00.00', '11:55:00.00', 4)");
                 db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId) Values" +
-                    "(19, 5, '12:00:00.00', '12:55:00.00', 3)"); 
+                    "(19, 5, '12:00:00.00', '12:55:00.00', 4)"); 
                 //*/
                 /*
                 db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime) Values" +
@@ -187,8 +187,13 @@ namespace railway.database
                 db.Database.ExecuteSqlCommand("Insert into Schedules Values(4, '05/23/2022')");
                 db.Database.ExecuteSqlCommand("Insert into Schedules Values(4, '05/24/2022')");
 
-                
 
+                db.Database.ExecuteSqlCommand("Insert into Tickets Values(1,1,1,4,1,400)");
+                db.Database.ExecuteSqlCommand("Insert into TicketSeats Values(1,1)");
+                db.Database.ExecuteSqlCommand("Insert into Tickets Values(0,1,10,4,21,500)");
+                db.Database.ExecuteSqlCommand("Insert into TicketSeats Values(1,2)");
+                db.Database.ExecuteSqlCommand("Insert into Tickets Values(0,1,8,1,20,800)");
+                db.Database.ExecuteSqlCommand("Insert into TicketSeats Values(1,3)");
                 db.SaveChanges();
             }
         }
