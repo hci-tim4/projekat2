@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using railway.database;
+using railway.model;
 using railway.client;
 using System.Linq;
 
@@ -30,7 +31,20 @@ namespace railway
             InitializeComponent();
             //FillDatabase fd = new FillDatabase();
             //fd.fill();
-            page.Content = new Login();
+            //page.Content = new Login();
+///*
+            using (var db = new RailwayContext())
+            {
+                List<StationSchedule> ss = (from stationSchedules in db.stationsSchedules
+                                            where stationSchedules.DrivingLineId == 1
+                                            orderby stationSchedules.SerialNumber
+                                            select stationSchedules).ToList();
+
+                page.Content = new map.Map(ss);
+            }
+//*/
+
+
             /*
             getTicketPage = new GetTicketPage(new GetTicketDTO()
             {
@@ -54,11 +68,13 @@ namespace railway
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            /*
             List<Window> openWindows = getTicketPage.openedWindows;
             foreach (Window w in openWindows)
             {
                 w.Close();
             }
+            */
         }
         
     }

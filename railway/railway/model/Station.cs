@@ -13,6 +13,10 @@ namespace railway.model
 
         public virtual List<StationSchedule> StationSchedules { get; set; }
 
+        public double Latitude { get; set;}
+        public double Longitude { get; set;}
+
+
 
         //podaci za mapu
         // longitude, latitude

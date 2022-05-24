@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:railway"
+        xmlns:map="clr-namespace:railway.map"
         xmlns:cmd="clr-namespace:railway.Commands"
         mc:Ignorable="d"
         Closing="Window_Closing"
@@ -12,7 +13,6 @@
     <Window.CommandBindings>
         <CommandBinding Command="cmd:RoutedCommands.CloseWindow" CanExecute="CloseWindow_CanExecute" Executed="CloseWindow_Executed"></CommandBinding>
     </Window.CommandBindings>
-        <!--<local:MapControl x:Name="map" />-->
     <Grid Background="Red">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>

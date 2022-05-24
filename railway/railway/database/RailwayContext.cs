@@ -8,6 +8,11 @@ namespace railway.database
 {
     public class RailwayContext : DbContext
     {
+        public RailwayContext()
+        {
+            
+        }
+        
         public DbSet<DrivingLine> drivingLines { get; set; }
 
         public DbSet<Schedule> schedules { get; set; }
