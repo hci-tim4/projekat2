@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Text;
 using railway.model;
 
@@ -11,7 +12,6 @@ namespace railway.database
         {
             using (var db = new RailwayContext())
             {
-                ///*
                 db.Database.ExecuteSqlCommand("Insert into Users Values('Mika', 'Mikic', 1, 'miki', '123')");
                 db.Database.ExecuteSqlCommand("Insert into Users Values('Jovan', 'Jokic', 1, 'joca', '123')");
                 db.Database.ExecuteSqlCommand("Insert into Users Values('Đorđe', 'Simić', 1, 'đole', '123')");

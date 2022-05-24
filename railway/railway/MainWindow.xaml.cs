@@ -32,7 +32,7 @@ namespace railway
             //FillDatabase fd = new FillDatabase();
             //fd.fill();
             //page.Content = new Login();
-///*
+/*
             using (var db = new RailwayContext())
             {
                 List<StationSchedule> ss = (from stationSchedules in db.stationsSchedules
@@ -45,6 +45,9 @@ namespace railway
 //*/
 
 
+            //FillDatabase fd = new FillDatabase();
+            //fd.fill();
+            page.Content = new Login();
             /*
             getTicketPage = new GetTicketPage(new GetTicketDTO()
             {
@@ -68,13 +71,13 @@ namespace railway
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            /*
+          /* 
+>>>>>>> 53b025e3cee3613ea9cb6e9f3c5f7ec3a97d55e1
             List<Window> openWindows = getTicketPage.openedWindows;
             foreach (Window w in openWindows)
             {
                 w.Close();
-            }
-            */
+            }*/
         }
         
     }

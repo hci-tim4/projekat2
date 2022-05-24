@@ -18,31 +18,41 @@ namespace railway
     /// </summary>
     public partial class ClientHomePage : Window
     {
+
+        string last = "";
         User loggedUser;
+        Page clientTimetable;
+
         public ClientHomePage(User user)
         {
             InitializeComponent();
             loggedUser = user;
+            clientTimetable = new clientTimetable.Timetable(loggedUser, page1);
         }
-        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+       private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string tabItem = ((sender as TabControl).SelectedItem as TabItem).Header as string;
 
-            switch (tabItem)
-            {
-                case "Red vožnje":
-                    page1.Content = new clientTimetable.Timetable();
-                    break;
+            if (!tabItem.Equals(last))
+                {
+                switch (tabItem)
+                {
+                    case "Red vožnje":
+                        last = "Red vožnje";
+                        page1.Content = this.clientTimetable;
+                        break;
 
-                case "Pregled karata":
-                    
-                    page2.Content = new TicketsView(loggedUser);
-                    break;
+                    case "Pregled karata":
+                        last = "Pregled karata";
+                        break;
 
-                default:
-                    return;
+                    default:
+                        return;
+                }
             }
         }
+
+ 
 
     }
 }

@@ -27,9 +27,14 @@ namespace railway.map
     {
         private List<StationSchedule> stationSchedules;
         private List<Station> stations;
-        public Map(List<StationSchedule> ss)
+        private int fromStationId;
+        private int untilStationId;
+        private GMap.NET.PointLatLng center = new GMap.NET.PointLatLng(0, 0);
+        public Map(List<StationSchedule> ss, int fromStationId, int arrivalId)
         {
             InitializeComponent();
+            this.fromStationId = fromStationId;
+            this.untilStationId = arrivalId;
             stationSchedules = ss;
             stations = new List<Station>();
         }
@@ -50,18 +55,52 @@ namespace railway.map
                                   select stations).Single();
                     stations.Add(st);
                     current = new GMap.NET.PointLatLng(st.Latitude, st.Longitude);
-                    GMap.NET.WindowsPresentation.GMapMarker marker = new GMap.NET.WindowsPresentation.GMapMarker(current);
-                    marker.Shape = new Ellipse
+                    if (st.Id == this.fromStationId)
                     {
-                        Width = 10,
-                        Height = 10,
-                        Stroke = Brushes.Red,
-                        StrokeThickness = 1.5,
-                        ToolTip = "This is tooltip",
-                        Visibility = Visibility.Visible,
-                        Fill = Brushes.Red,
+                        center = current;
+                    }
+                    GMap.NET.WindowsPresentation.GMapMarker marker = new GMap.NET.WindowsPresentation.GMapMarker(current);
+                    if (st.Id != fromStationId && st.Id != untilStationId){
+                        marker.Shape = new Ellipse
+                        {
+                            Width = 10,
+                            Height = 10,
+                            Stroke = Brushes.Red,
+                            StrokeThickness = 1.5,
+                            ToolTip = "Stanica",
+                            Visibility = Visibility.Visible,
+                            Fill = Brushes.Red,
 
-                    };
+                        };
+                    }
+                    else if (st.Id == fromStationId)
+                    {
+                        marker.Shape = new Ellipse
+                        {
+                            Width = 10,
+                            Height = 10,
+                            Stroke = Brushes.Blue,
+                            StrokeThickness = 1.5,
+                            ToolTip = "Polazište",
+                            Visibility = Visibility.Visible,
+                            Fill = Brushes.Blue,
+
+                        };
+                    }
+                    else if (st.Id == untilStationId)
+                    {
+                        marker.Shape = new Ellipse
+                        {
+                            Width = 10,
+                            Height = 10,
+                            Stroke = Brushes.Blue,
+                            StrokeThickness = 1.5,
+                            ToolTip = "Odredište",
+                            Visibility = Visibility.Visible,
+                            Fill = Brushes.Blue,
+
+                        };
+                    }
                     mapView.Markers.Add(marker);
                     
                     //routesOverlay.Routes.Add(route);
@@ -78,11 +117,11 @@ namespace railway.map
             // don't forget to add the marker to the map
             //mapView.Markers.Add(routeMarker);
 
-            mapView.MinZoom = 6;
+            mapView.MinZoom = 3;
             mapView.MaxZoom = 17;
             // whole world zoom
-            mapView.Zoom = 10;
-            mapView.Position = new GMap.NET.PointLatLng(44.374229f, 19.105961f);
+            mapView.Zoom = 7;
+            mapView.Position = center;//new GMap.NET.PointLatLng(44.374229f, 19.105961f);
             // lets the map use the mousewheel to zoom
             mapView.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
             // lets the user drag the map

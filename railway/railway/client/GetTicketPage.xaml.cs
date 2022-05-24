@@ -20,7 +20,7 @@ namespace railway.client
     /// Interaction logic for GetTicketPage.xaml
     /// </summary>
     public delegate void TicketGotSavedHandler();
-    public partial class GetTicketPage : Page
+    public partial class GetTicketPage : UserControl
     {
         public event TicketGotSavedHandler ticketGotSaved;
 
@@ -132,6 +132,7 @@ namespace railway.client
             {
                 MessageBox.Show("Niste izabrali sedište! Pre nastavka morate da izaberete sedište");
                 e.CanExecute = false;
+                return;
             }
             e.CanExecute = true;
         }

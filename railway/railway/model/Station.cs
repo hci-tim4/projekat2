@@ -18,6 +18,7 @@ namespace railway.model
 
 
 
+
         //podaci za mapu
         // longitude, latitude
     }
