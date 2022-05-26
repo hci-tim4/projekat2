@@ -8,6 +8,7 @@
         xmlns:cmd="clr-namespace:railway.Commands"
         mc:Ignorable="d"
         Closing="Window_Closing"
+        
         Title="MainWindow" Height="450" Width="800">
 
     <Window.CommandBindings>
@@ -22,7 +23,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Frame x:Name="page" NavigationUIVisibility="Hidden" Margin="2,2,2,2" Grid.ColumnSpan="2" />
+        <Frame x:Name="page" NavigationUIVisibility="Hidden" Margin="2,2,2,2" Grid.ColumnSpan="2"/>
 
 
     </Grid>

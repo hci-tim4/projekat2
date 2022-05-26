@@ -13,6 +13,7 @@ using System.Windows.Shapes;
 using railway.model;
 using railway.database;
 using System.Linq;
+using railway.clientTimetable;
 
 namespace railway.client
 {
@@ -23,13 +24,15 @@ namespace railway.client
     public partial class GetTicketPage : UserControl
     {
         public event TicketGotSavedHandler ticketGotSaved;
-
         private SeatDisplay seatsPage;
         private List<TicketSeats> ticketSeats;//SACUVAAAAAAAAAAAAAAJ
         private GetTicketDTO getTicketDTO;
         private User user;
         public List<Window> openedWindows;
-        public GetTicketPage(GetTicketDTO dto, User u)
+        private Frame parentFrame;
+        private Page parentPage;
+        
+        public GetTicketPage(GetTicketDTO dto, User u, Frame parentFrame, Page timetable)
         {
             InitializeComponent();
             this.ticketGotSaved += new TicketGotSavedHandler(rerenderSeatDisplay);
@@ -39,6 +42,8 @@ namespace railway.client
             seatsPage = new SeatDisplay(dto.DrivingLineId, dto.ScheduleId);;
             seatDisplay.Content = seatsPage;
             displayInfo.Content = new ChosenSchedulePage(dto.FromStationScheduleId, dto.UntilStationScheduleId, dto.ScheduleId);
+            this.parentFrame = parentFrame;
+            this.parentPage = timetable;
         }
 
         private void rerenderSeatDisplay()
@@ -140,6 +145,11 @@ namespace railway.client
         private void buyTicket_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             buyBtn_Click(sender, e);
+        }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            this.parentFrame.Content = parentPage;
         }
     }
 }
