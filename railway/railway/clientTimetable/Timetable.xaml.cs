@@ -381,13 +381,13 @@ namespace railway.clientTimetable
                 UntilStationScheduleId = dto.UntilStationScheduleId,
                 ScheduleId = dto.ScheduleId
             };
-            this.parentFrame.Content = new GetTicketPage(getTicketDTO, this.loggedUser);
+            this.parentFrame.Content = new GetTicketPage(getTicketDTO, this.loggedUser, parentFrame, this);
         }
 
         private void btnDetalji_Click(object sender, RoutedEventArgs e)
         {
             var drivinLineId = ((Button)sender).Tag;
-            this.parentFrame.Content = new DetailsTimetable((int)drivinLineId, departure.Id, arrival.Id);
+            this.parentFrame.Content = new DetailsTimetable((int)drivinLineId, departure.Id, arrival.Id, parentFrame, this);
         }
 
         private DrivingLineDTO findDTOById(int dtoId) {

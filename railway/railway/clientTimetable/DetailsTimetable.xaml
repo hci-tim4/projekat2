@@ -10,7 +10,7 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -18,24 +18,28 @@
             <ColumnDefinition Width="2*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
+        
+        <StackPanel Grid.Row="0" Grid.Column="0">
+            <Button ToolTip="Nazad na poslednji prozor" FontSize="20" HorizontalAlignment="Left" Click="ButtonBase_OnClick" MaxHeight="50px" MinHeight="50" MinWidth="50" MaxWidth="50">
+                <Image Source="https://toppng.com/uploads/preview/back-arrow-icon-11550122033egydzyhmwy.png"></Image>
+            </Button>
+            <DataGrid AlternatingRowBackground="Gainsboro" AlternationCount="1" FontSize="20"
+                      ItemsSource="{Binding Path=Values }"
+                      SelectionUnit="FullRow" SelectionMode="Single" AutoGenerateColumns="False"
+                      IsReadOnly="True" Name="detailGrid" ScrollViewer.CanContentScroll="True"
+                      ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                      ScrollViewer.VerticalScrollBarVisibility="Auto"
+                      Grid.RowSpan="2" Background="#EEE2DC" CanUserSortColumns="False" RenderTransformOrigin="0.997,0.431">
 
-        <DataGrid  AlternatingRowBackground="Gainsboro" AlternationCount="1"
-                   ItemsSource="{Binding Path=Values }"
-                  SelectionUnit="FullRow" SelectionMode="Single" AutoGenerateColumns="False"
-                   IsReadOnly="True" Name="detailGrid" ScrollViewer.CanContentScroll="True"
-                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                    ScrollViewer.VerticalScrollBarVisibility="Auto"
-                   Grid.Row="0" Grid.Column="0" Background="#EEE2DC" CanUserSortColumns="False" RenderTransformOrigin="0.997,0.431">
+                <DataGrid.Columns>
+                    <DataGridTextColumn  Header="Stanica"  Binding="{Binding Path=StationName}" />
+                    <DataGridTextColumn Header="Vreme dolaska"  Binding="{Binding Path=ArrivalTime}" />
+                    <DataGridTextColumn Header="Vreme polaska" Binding="{Binding Path=DepartureTime}" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
 
-            <DataGrid.Columns>
-                <DataGridTextColumn  Header="Stanica"  Binding="{Binding Path=StationName}" />
-                <DataGridTextColumn Header="Vreme dolaska"  Binding="{Binding Path=ArrivalTime}" />
-                <DataGridTextColumn Header="Vreme polaska" Binding="{Binding Path=DepartureTime}" />
-            </DataGrid.Columns>
-        </DataGrid>
-
-        <TextBlock Text="Ovde idee mapa" Grid.Column="1" Grid.Row="0"></TextBlock>
-        <Frame x:Name="page" Grid.Column="1" Grid.Row="0" NavigationUIVisibility="Hidden" Margin="2,2,2,2" Grid.ColumnSpan="2" />
+        <Frame x:Name="page" Grid.Column="1" Grid.Row="1" NavigationUIVisibility="Hidden" Margin="2,2,2,2" Grid.ColumnSpan="2" />
 
     </Grid>
 </Page>
