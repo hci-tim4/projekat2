@@ -24,8 +24,10 @@ namespace railway.clientTimetable
         List<DetailDrivinglineDTO> detailLine = new List<DetailDrivinglineDTO>();
         //private List<StationSchedule> stationSchedules;
         int drivingLineId;
+        private Frame parentFrame;
+        private Page parentPage;
 
-        public DetailsTimetable(int drivingLineId, int fromStationId, int arrivalId)
+        public DetailsTimetable(int drivingLineId, int fromStationId, int arrivalId, Frame parentFrame, Page timetable)
         {
             InitializeComponent();
             showDrivingLineDetails(drivingLineId);
@@ -40,7 +42,8 @@ namespace railway.clientTimetable
 
                 page.Content = new map.Map(ss, fromStationId, arrivalId);
             }
-
+            this.parentFrame = parentFrame;
+            this.parentPage = timetable;
         }
 
         private void showDrivingLineDetails(int drivingLineId) {
@@ -82,5 +85,11 @@ namespace railway.clientTimetable
                 return detailDrivinglineDTOs;
             }
         }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            this.parentFrame.Content = parentPage;
+        }
+    
     }
 }

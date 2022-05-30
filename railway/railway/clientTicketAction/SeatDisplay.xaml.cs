@@ -211,6 +211,7 @@ namespace railway.client
             dp.Children.Add(i);
             Label l = new Label
             {
+                FontSize= 20,
                 Content = "Zauzet"
             };
             dp.Children.Add(l);
@@ -225,6 +226,7 @@ namespace railway.client
             dp.Children.Add(i);
             Label l = new Label
             {
+                FontSize= 20,
                 Content = st.Name
             };
             dp.Children.Add(l);
