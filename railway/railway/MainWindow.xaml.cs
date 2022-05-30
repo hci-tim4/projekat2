@@ -16,6 +16,7 @@ using railway.database;
 using railway.model;
 using railway.client;
 using System.Linq;
+using railway.defineDrivingLine;
 
 namespace railway
 {
@@ -45,9 +46,14 @@ namespace railway
 //*/
 
 
-            //FillDatabase fd = new FillDatabase();
+            FillDatabase fd = new FillDatabase();
             //fd.fill();
-            page.Content = new Login();
+
+            ViewDrivingLines v = new ViewDrivingLines(page);//new Login();
+            
+            
+            
+            //page.Content = new Login();
             /*
             getTicketPage = new GetTicketPage(new GetTicketDTO()
             {

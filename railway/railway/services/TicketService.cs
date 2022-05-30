@@ -81,13 +81,13 @@ namespace railway.services
                 StationSchedule ssDeparture = (StationSchedule)(from s in db.stationsSchedules
                                    where s.StationId == ticket.FromStationScheduleId
                                    select s).FirstOrDefault();
-                dto.DepartureTime = ssDeparture.DepartureTime;
+                dto.DepartureTime = (TimeSpan)ssDeparture.DepartureTime;
                 dto.DepartureStationName = getStationName(ssDeparture.StationId);
 
                 StationSchedule ssArrival = (StationSchedule)(from s in db.stationsSchedules
                                                                 where s.StationId == ticket.UntilStationScheduleId
                                                                 select s).FirstOrDefault();
-                dto.ArrivalTime= ssDeparture.ArrivalTime;
+                dto.ArrivalTime= (TimeSpan)ssDeparture.ArrivalTime;
                 dto.ArrivalStationName = getStationName(ssArrival.StationId);
 
             }

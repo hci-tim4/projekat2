@@ -10,7 +10,7 @@ namespace railway.clientTimetable
         public string Departure { get; set; }
         public string Arrival { get; set; }
         public DateTime Date { get; set; }
-        public TimeSpan Time { get; set; }
+        public TimeSpan? Time { get; set; }
         public string Train { get; set; }
 
         public int FromStationScheduleId { get; set; }
