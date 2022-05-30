@@ -14,7 +14,7 @@ namespace railway.database
             {
                 db.Database.ExecuteSqlCommand("Insert into Users Values('Mika', 'Mikic', 1, 'miki', '123')");
                 db.Database.ExecuteSqlCommand("Insert into Users Values('Jovan', 'Jokic', 1, 'joca', '123')");
-                db.Database.ExecuteSqlCommand("Insert into Users Values('Đorđe', 'Simić', 1, 'đole', '123')");
+                db.Database.ExecuteSqlCommand("Insert into Users Values('Đorđe', 'Simić', 0, 'đole', '123')");
 
                 db.Database.ExecuteSqlCommand("Insert into SeatTypes Values('VIP', 200)");
                 db.Database.ExecuteSqlCommand("Insert into SeatTypes Values('Biznis klasa', 120)");

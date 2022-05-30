@@ -36,6 +36,10 @@ namespace railway
             dataGrid.ItemsSource = dto;
         }
 
+        public TicketsView()
+        {
+        }
+
         private void buy_checked(object sender, RoutedEventArgs e)
         {
             ttype = TicketType.Bought;
