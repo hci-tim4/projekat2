@@ -9,42 +9,44 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace railway
 {
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    /// Interaction logic for ManagerHomePage.xaml
     /// </summary>
-    public partial class ClientHomePage : Window
+    public partial class ManagerHomePage : Window
     {
-
-        string last = "";
         User loggedUser;
-        Page clientTimetable;
-
-        public ClientHomePage(User user)
+        string last = "";
+        public ManagerHomePage(User user)
         {
             InitializeComponent();
             loggedUser = user;
-            clientTimetable = new clientTimetable.Timetable(loggedUser, page1);
         }
-       private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string tabItem = ((sender as TabControl).SelectedItem as TabItem).Header as string;
 
             if (!tabItem.Equals(last))
-                {
+            {
                 switch (tabItem)
                 {
                     case "Red vožnje":
                         last = "Red vožnje";
-                        page1.Content = this.clientTimetable;
                         break;
-
-                    case "Pregled karata":
+                    case "Vozne linije":
+                        last = "Vozne linije";
+                        break;
+                    case "Vozovi":
+                        last = "Vozovi";
+                        page3.Content = new CRUDTrains();
+                        break;
+                    case "Pregled prodatih karata":
                         last = "Pregled karata";
-                        page2.Content = new TicketsView();
                         break;
 
                     default:
@@ -52,8 +54,6 @@ namespace railway
                 }
             }
         }
-
- 
-
+        
     }
 }
