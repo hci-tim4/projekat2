@@ -1,0 +1,88 @@
+﻿<UserControl x:Class="railway.monthlyReport.ViewMonthlyTicketView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:local="clr-namespace:railway.monthlyReport"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type Control}" x:Key="baseStyle">
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="Margin" Value="2,3,2,3"></Setter>
+        </Style>
+        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource baseStyle}"></Style>
+        <Style TargetType="{x:Type Label}" BasedOn="{StaticResource baseStyle}"></Style>
+        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource baseStyle}"></Style>
+        <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource baseStyle}"></Style>
+        <Style TargetType="{x:Type DatePicker}" BasedOn="{StaticResource baseStyle}"></Style>
+        <Style TargetType="RadioButton">
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!-- ComboBox, RadioButton, CheckBox, etc... -->
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <StackPanel  Grid.Column="0" Grid.Row="0"  MinWidth="100">
+            <StackPanel Margin="3">
+                <DatePicker x:Name="fromDateDatePicker"></DatePicker>
+                <DatePicker x:Name="untilDateDatePicker"></DatePicker>
+                <Button x:Name="showReport" Click="ShowReport_OnClick" Content="Prikaži" Width="60" HorizontalAlignment="Right"></Button>
+            </StackPanel>
+            
+            <StackPanel>
+                <Label>Tip podela</Label>
+                <RadioButton x:Name="seatTypeRadioButton" Margin="3" Content="Tip sedišta" Checked="showBySeatTypes"></RadioButton>
+                <RadioButton x:Name="drivingLineRadioButton" Margin="3" Checked="showByDrivingLines">Mrežna linija</RadioButton>
+            </StackPanel>
+        </StackPanel>
+        
+        
+        <StackPanel Grid.Column="1" Grid.Row="0">
+            
+            <StackPanel x:Name="chartStackPanel">
+                <lvc:CartesianChart x:Name="barChart" Series="{Binding Path=barChartData.BarLineSeriesCollection}" Width="1100" Height="500">
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis x:Name="barChartX" Title="Tip" Labels="{Binding Path=barChartData.xAxisLabels}"></lvc:Axis>
+                    </lvc:CartesianChart.AxisX>
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis Title="Broj prodatih karata" LabelFormatter="{Binding Formatter}"></lvc:Axis>
+                    </lvc:CartesianChart.AxisY>
+                </lvc:CartesianChart>
+                
+            </StackPanel>
+            
+            <ScrollViewer>
+            <DataGrid  AlternatingRowBackground="Gainsboro" AlternationCount="1"
+                       ItemsSource="{Binding Path=currentData }"
+                       SelectionUnit="FullRow" SelectionMode="Single" AutoGenerateColumns="False"
+                       IsReadOnly="True" Name="dataGrid" ScrollViewer.CanContentScroll="True"
+                       ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                       ScrollViewer.VerticalScrollBarVisibility="Auto"
+                       Background="#EEE2DC" CanUserSortColumns="True">
+                    
+                
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="*" MinWidth="100" Header="Tip" Binding="{Binding Path=Type}"/>
+                    <DataGridTextColumn Width="*" MinWidth="100" Header="Broj karata" Binding="{Binding Path=NumberOfSelledTickets}"/>
+                    <DataGridTextColumn Width="*" MinWidth="100" Header="Iznos" Binding="{Binding Path=Price}"/>
+                </DataGrid.Columns>
+
+            </DataGrid>
+                </ScrollViewer>
+            
+            <!-- GRAFIKON & tabel -->
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.Windows;
+using railway.monthlyReport;
 
 namespace railway.services
 {
@@ -133,6 +135,46 @@ namespace railway.services
                     seatsForTicket.Add(s);
                 }
                 return seatsForTicket;
+            }
+        }
+
+        public List<TicketForReportDTO> getTicketsInPeriod(DateTime? fromDate, DateTime? untilDate)
+        {
+            using (var db = new RailwayContext())
+            {
+                List<TicketForReportDTO> res = (from tick in db.tickets
+                    join sched in db.schedules
+                        on tick.ScheduleId equals sched.Id
+                        where sched.DepatureDate > fromDate && sched.DepatureDate < untilDate
+                    select new TicketForReportDTO()
+                    {
+                        TicketId = tick.Id,
+                        DrivingLineId = sched.DrivingLineId,
+                        Price = tick.Price,
+                        //ticketSeats = tick.ticketSeats
+                    }).ToList();
+                foreach (TicketForReportDTO ticketForReport in res)
+                {
+                    ticketForReport.ticketSeats = new List<TicketSeats>();
+                    foreach (TicketSeats t in db.ticketSeats)
+                    {
+                        if (ticketForReport.TicketId == t.TicketId)
+                        {
+                            ticketForReport.ticketSeats.Add(t);
+                            
+                        }
+                    }
+                }
+                foreach (TicketForReportDTO t in res)
+                {
+                    t.NumberOfVIPSeats = t.GetNumberOfSeatType("VIP");
+                    t.NumberOfBiznisSeats = t.GetNumberOfSeatType("Biznis klasa");
+                    t.NumberOfRegularSeats = t.GetNumberOfSeatType("Regularan");
+                    t.PriceOfVIPSeats = t.CountPriceForSeatType("VIP");
+                    t.PriceOfBiznisSeats = t.CountPriceForSeatType("Biznis klasa");
+                    t.PriceOfRegularSeats = t.CountPriceForSeatType("Regularan");
+                }
+                return res;
             }
         }
     }
