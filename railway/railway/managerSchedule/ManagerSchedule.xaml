@@ -1,0 +1,108 @@
+﻿<Page x:Class="railway.managerSchedule.ManagerSchedule"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:railway.managerSchedule"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800" Name="winTable"
+      Title="ManagerSchedule">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+
+
+            <DataGrid  AlternatingRowBackground="Gainsboro" AlternationCount="1"
+                  Grid.Row="0" Grid.Column="0" ItemsSource="{Binding Path=lines}" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True"
+                  SelectionUnit="FullRow" SelectionMode="Single"
+                   IsReadOnly="True" Name="drivingLineDataGrid" ScrollViewer.CanContentScroll="True"
+                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto" FontSize="20"
+                    Background="#EEE2DC" CanUserSortColumns="False" RenderTransformOrigin="0.997,0.431">
+                <DataGrid.ItemContainerStyle>
+                    <Style TargetType="DataGridRow">
+                        <EventSetter Event="MouseUp" Handler="DrivingLineDataGrid_OnSelected"/>
+                    </Style>
+                </DataGrid.ItemContainerStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn  MinWidth="60" Header="Naziv" Binding="{Binding Path=Name}"/>
+                <!--    <DataGridTextColumn MinWidth="60" Header="Dani" Binding="{Binding Path=trafficDays}"/>   -->
+                <DataGridCheckBoxColumn  x:Name="ponSelectedServer" Binding="{Binding Monday}"  Header="Ponedeljak"/>
+                <DataGridCheckBoxColumn  x:Name="utoSelectedServer" Binding="{Binding Tuesday}"  Header="Utorak"/>
+                <DataGridCheckBoxColumn  x:Name="sreSelectedServer" Binding="{Binding Wednesday}"  Header="Sreda"/>
+                <DataGridCheckBoxColumn  x:Name="cetSelectedServer" Binding="{Binding Thursday}"  Header="Četvrtak"/>
+                <DataGridCheckBoxColumn  x:Name="petSelectedServer" Binding="{Binding Friday}"  Header="Petak"/>
+                <DataGridCheckBoxColumn  x:Name="subSelectedServer" Binding="{Binding Saturday}"  Header="Subota"/>
+                <DataGridCheckBoxColumn  x:Name="nedSelectedServer" Binding="{Binding Sunday}"  Header="Nedelja"/>
+
+                <DataGridTemplateColumn Header="Izmeni">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button ToolTip="Izmenite dane kojima saobraća linija" x:Name="btnChangeDays" Click="btnChangeDays_Click" Content="Izmeni dane" Tag="{Binding Path=drivingLineId}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+
+                <DataGridTemplateColumn Header="Dodaj">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button ToolTip="Dodajte novi raspored vožnje" x:Name="btnAdd" Click="btnAdd_Click" Content="Dodaj" Tag="{Binding Path=drivingLineId}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+           
+        </DataGrid>
+
+
+        <DataGrid  AlternatingRowBackground="Gainsboro" AlternationCount="1"
+                       ItemsSource="{Binding Path=Studenti}"
+                  SelectionUnit="FullRow" SelectionMode="Single" AutoGenerateColumns="False"
+                  Name="dataGridStationSchedule" ScrollViewer.CanContentScroll="True"
+                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                   Grid.Row="0" Grid.Column="1" ScrollViewer.VerticalScrollBarVisibility="Auto" FontSize="20"
+                   CanUserAddRows="False"
+                     Background="#EEE2DC" CanUserSortColumns="False" RenderTransformOrigin="0.997,0.431">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn  MinWidth="60" Header="Stanica" Binding="{Binding Path=StationName}" IsReadOnly="True"/>
+                <DataGridTextColumn MinWidth="60" Header="Dolazak" Binding="{Binding Path=ArrivalTime, Mode=TwoWay}" IsReadOnly="false"/>
+                <DataGridTextColumn MinWidth="60" Header="Polazak" Binding="{Binding Path=DepartureTime, Mode=TwoWay}" IsReadOnly="false"/>
+
+                <DataGridTemplateColumn Header="Izmeni">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button ToolTip="Izmenite vreme polaska i dolaska" x:Name="btnUpdate" Click="btnUpdate_Click" Content="Izmeni" Tag="{Binding Path=StationScheduleId}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+            </DataGrid.Columns>
+
+            <DataGrid.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Tura: "></TextBlock>
+                                <TextBlock Text="{Binding Path=Name}"/>
+                                <Button ToolTip="Obriši ovu turu" Content="Obriši" x:Name="btnDelete" Click="btnDelete_Click" Tag="{Binding Path=Name}"></Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                </GroupStyle>
+            </DataGrid.GroupStyle>
+
+        </DataGrid>
+    </Grid>
+</Page>

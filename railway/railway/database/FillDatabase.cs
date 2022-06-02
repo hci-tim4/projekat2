@@ -14,7 +14,7 @@ namespace railway.database
             {
                 db.Database.ExecuteSqlCommand("Insert into Users Values('Mika', 'Mikic', 1, 'miki', '123')");
                 db.Database.ExecuteSqlCommand("Insert into Users Values('Jovan', 'Jokic', 1, 'joca', '123')");
-                db.Database.ExecuteSqlCommand("Insert into Users Values('Đorđe', 'Simić', 1, 'đole', '123')");
+                db.Database.ExecuteSqlCommand("Insert into Users Values('Đorđe', 'Simić', 0, 'djole', '123')");
 
                 db.Database.ExecuteSqlCommand("Insert into SeatTypes Values('VIP', 200)");
                 db.Database.ExecuteSqlCommand("Insert into SeatTypes Values('Biznis klasa', 120)");
@@ -64,39 +64,49 @@ namespace railway.database
                 //
                 //With driving line
                 ///*
-                db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId) Values" +
-                    "(1, 1, '09:00:00.00', '09:10:00.00', 1)");
-                db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId) Values" +
-                    "(11, 2, '09:20:00.00', '09:25:00.00', 1)");
-                db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId) Values" +
-                    "(4, 3, '09:30:00.00', '09:35:00.00', 1)"); 
+                db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId, Tour, StartDate, Deleted) Values" +
+                    "(1, 1, '09:00:00.00', '09:10:00.00', 1, 1, '01/01/2022', 'false')");
+                db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId, Tour, StartDate, Deleted) Values" +
+                    "(11, 2, '09:20:00.00', '09:25:00.00', 1, 1, '01/01/2022', 'false')");
+                db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId, Tour, StartDate, Deleted) Values" +
+                    "(4, 3, '09:30:00.00', '09:35:00.00', 1, 1, '01/01/2022', 'false')");
 
-                db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId) Values" +
-                    "(20, 1, '16:00:00.00', '16:10:00.00', 2)");
-                db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId) Values" +
-                    "(10, 2, '16:20:00.00', '16:25:00.00', 2)");
-                db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId) Values" +
-                    "(4, 3, '16:30:00.00', '16:35:00.00', 2)"); 
 
-                db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId) Values" +
-                    "(4, 1, '17:00:00.00', '17:10:00.00', 3)");
-                db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId) Values" +
-                    "(1, 2, '17:20:00.00', '17:25:00.00', 3)");
-                db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId) Values" +
-                    "(12, 3, '17:30:00.00', '17:35:00.00', 3)"); 
-                db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId) Values" +
-                    "(2, 4, '17:50:00.00', '17:55:00.00', 3)"); 
+                db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId, Tour, StartDate, Deleted) Values" +
+              "(1, 1, '17:00:00.00', '17:10:00.00', 1, 2, '01/01/2022', 'false')");
+                db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId, Tour, StartDate, Deleted) Values" +
+                    "(11, 2, '17:20:00.00', '17:25:00.00', 1, 2, '01/01/2022', 'false')");
+                db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId, Tour, StartDate, Deleted) Values" +
+                    "(4, 3, '17:30:00.00', '17:35:00.00', 1, 2, '01/01/2022', 'false')");
 
-                db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId) Values" +
-                    "(5, 1, '11:00:00.00', '11:10:00.00', 4)");
-                db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId) Values" +
-                    "(1, 2, '11:20:00.00', '11:25:00.00', 4)");
-                db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId) Values" +
-                    "(4, 3, '11:30:00.00', '11:35:00.00', 4)"); 
-                db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId) Values" +
-                    "(8, 4, '11:50:00.00', '11:55:00.00', 4)");
-                db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId) Values" +
-                    "(19, 5, '12:00:00.00', '12:55:00.00', 4)"); 
+
+
+                db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId, Tour, StartDate, Deleted) Values" +
+                    "(20, 1, '16:00:00.00', '16:10:00.00', 2, 1, '01/01/2022', 'false')");
+                db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId, Tour, StartDate, Deleted) Values" +
+                    "(10, 2, '16:20:00.00', '16:25:00.00', 2, 1, '01/01/2022', 'false')");
+                db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId, Tour, StartDate, Deleted) Values" +
+                    "(4, 3, '16:30:00.00', '16:35:00.00', 2, 1, '01/01/2022', 'false')"); 
+
+                db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId, Tour, StartDate, Deleted) Values" +
+                    "(4, 1, '17:00:00.00', '17:10:00.00', 3, 1, '01/01/2022', 'false')");
+                db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId, Tour, StartDate, Deleted) Values" +
+                    "(1, 2, '17:20:00.00', '17:25:00.00', 3, 1, '01/01/2022', 'false')");
+                db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId, Tour, StartDate, Deleted) Values" +
+                    "(12, 3, '17:30:00.00', '17:35:00.00', 3, 1, '01/01/2022', 'false')"); 
+                db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId, Tour, StartDate, Deleted) Values" +
+                    "(2, 4, '17:50:00.00', '17:55:00.00', 3, 1, '01/01/2022', 'false')"); 
+
+                db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId, Tour, StartDate, Deleted) Values" +
+                    "(5, 1, '11:00:00.00', '11:10:00.00', 4, 1, '01/01/2022', 'false')");
+                db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId, Tour, StartDate, Deleted) Values" +
+                    "(1, 2, '11:20:00.00', '11:25:00.00', 4, 1, '01/01/2022', 'false')");
+                db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId, Tour, StartDate, Deleted) Values" +
+                    "(4, 3, '11:30:00.00', '11:35:00.00', 4, 1, '01/01/2022', 'false')"); 
+                db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId, Tour, StartDate, Deleted) Values" +
+                    "(8, 4, '11:50:00.00', '11:55:00.00', 4, 1, '01/01/2022', 'false')");
+                db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime, DrivingLineId, Tour, StartDate, Deleted) Values" +
+                    "(19, 5, '12:00:00.00', '12:55:00.00', 4, 1, '01/01/2022', 'false')"); 
                 //*/
                 /*
                 db.Database.ExecuteSqlCommand("Insert into StationSchedules (StationId, SerialNumber, ArrivalTime, DepartureTime) Values" +

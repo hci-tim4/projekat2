@@ -1,0 +1,42 @@
+﻿<Window x:Class="railway.managerSchedule.ChangeTrafficDay"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:railway.managerSchedule" xmlns:clienttimetable="clr-namespace:railway.clientTimetable" d:DataContext="{d:DesignInstance Type=clienttimetable:DetailDrivinglineDTO}"
+        mc:Ignorable="d"
+        Title="ChangeTrafficDay" Height="250" Width="500" MaxHeight="250" MaxWidth="500">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+      
+        </Grid.ColumnDefinitions>
+
+        
+
+        <StackPanel Orientation="Vertical" Grid.Row="1" Grid.ColumnSpan="2">
+            <Label Content="{Binding Path=Name}"></Label>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <CheckBox MaxHeight="200" MaxWidth="100" Content="Ponedeljak" FontSize="20" IsChecked="{Binding Path=Monday}"/>
+                <CheckBox MaxHeight="200" MaxWidth="100" Content="Utorak" FontSize="20" IsChecked="{Binding Path=Tuesday}"/>
+                <CheckBox MaxHeight="200" MaxWidth="100" Content="Sreda" FontSize="20" IsChecked="{Binding Path=Wednesday}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <CheckBox MaxHeight="200" MaxWidth="100" Content="Četvrtak" FontSize="20" IsChecked="{Binding Path=Thursday}"/>
+                <CheckBox MaxHeight="200" MaxWidth="100" Content="Petak" FontSize="20" IsChecked="{Binding Path=Friday}"/>
+                <CheckBox MaxHeight="200" MaxWidth="100" Content="Subota" FontSize="20" IsChecked="{Binding Path=Saturday}"/>
+                <CheckBox MaxHeight="200" MaxWidth="100" Content="Nedelja" FontSize="20" IsChecked="{Binding Path=Sunday}"/>
+        </StackPanel>
+
+        <Button ToolTip="Izmeni dane u kojima saobraća linija" HorizontalAlignment="Right" Name="changeDays" Click="changeDays_Click"  Content="Izmeni" MaxWidth="50"></Button>
+
+        </StackPanel>
+
+
+    </Grid>
+</Window>

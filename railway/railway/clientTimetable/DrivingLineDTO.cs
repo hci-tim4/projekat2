@@ -18,8 +18,7 @@ namespace railway.clientTimetable
         public int ScheduleId { get; set; }
         public int drivingLine { get; set; }
 
-
-
+        public int Tour { get; set; }
 
     }
 }

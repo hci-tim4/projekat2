@@ -15,6 +15,5 @@ namespace railway.model
         [ForeignKey("Train")]
         public int TrainId { get; set; }
         public virtual Train Train { get; set; }
-
     }
 }

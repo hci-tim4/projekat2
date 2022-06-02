@@ -96,7 +96,10 @@ namespace railway.clientTimetable
             else
             {
                 this.lines = Find(this.departure, this.arrival, (DateTime)this.date);
-                this.lines.AddRange(FindWithTransfer(this.departure, this.arrival, (DateTime)this.date));
+                if (this.lines.Count == 0)
+                {
+                    this.lines.AddRange(FindWithTransfer(this.departure, this.arrival, (DateTime)this.date));
+                }
                 dataGrid.ItemsSource = this.lines;
             }
 
@@ -117,7 +120,9 @@ namespace railway.clientTimetable
             List<DrivingLineDTO> DTOs = new List<DrivingLineDTO>();
 
             bool correct = false;
-            int dtoId = 0;
+            List<int> fromStationScheduleIds = new List<int>();
+            List<int> toStationScheduleIds = new List<int>();
+
             using (var db = new RailwayContext())
             {
                 var stations =
@@ -132,7 +137,8 @@ namespace railway.clientTimetable
                          departureTime = stationSchedule.DepartureTime,
                          serialNumber = stationSchedule.SerialNumber,
                          DrivinglineId = stationSchedule.DrivingLineId,
-                         FromScheduleStationId = stationSchedule.Id
+                         FromScheduleStationId = stationSchedule.Id,
+                         Tour = stationSchedule.Tour
                      }).ToList();
 
 
@@ -166,7 +172,8 @@ namespace railway.clientTimetable
                                     departureDate= schedule.DepatureDate }).ToList();
 
                             foreach(var dateTravell in datesTravell) {
-                                if (dateTravell.departureDate.Equals(date))
+                                if (dateTravell.departureDate.Equals(date) && (!fromStationScheduleIds.Contains(s.FromScheduleStationId))
+                                    &&(!toStationScheduleIds.Contains(until.UntilStationSchedule)))
                                 {
                                     DrivingLineDTO dto = new DrivingLineDTO
                                     {
@@ -179,9 +186,12 @@ namespace railway.clientTimetable
                                         FromStationScheduleId = s.FromScheduleStationId,
                                         UntilStationScheduleId = until.UntilStationSchedule,
                                         ScheduleId = dateTravell.scheduleId,
-                                        drivingLine = s.DrivinglineId
+                                        drivingLine = s.DrivinglineId,
+                                        Tour = s.Tour
                                     };
                                     DTOs.Add(dto);
+                                    fromStationScheduleIds.Add(dto.FromStationScheduleId);
+                                    toStationScheduleIds.Add(dto.UntilStationScheduleId);
                                     correct = false;
                                 }
                             }
@@ -291,9 +301,6 @@ namespace railway.clientTimetable
 
                              }).ToList();
 
-                        int queueStart = 0;
-                        int queueEnd = 0;
-
                         foreach (var startMed in stationsForStartDrivinLine) 
                         {
                             foreach (var endMed in stationsForEndDrivingLine)
@@ -355,7 +362,6 @@ namespace railway.clientTimetable
                                     }
                                 
                             }
-                            queueStart++;
                         }
                     }
                 }
@@ -386,8 +392,8 @@ namespace railway.clientTimetable
 
         private void btnDetalji_Click(object sender, RoutedEventArgs e)
         {
-            var drivinLineId = ((Button)sender).Tag;
-            this.parentFrame.Content = new DetailsTimetable((int)drivinLineId, departure.Id, arrival.Id, parentFrame, this);
+            var tour = ((Button)sender).Tag;
+            this.parentFrame.Content = new DetailsTimetable((int)tour, departure.Id, arrival.Id, parentFrame, this);
         }
 
         private DrivingLineDTO findDTOById(int dtoId) {

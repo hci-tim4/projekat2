@@ -29,25 +29,28 @@ namespace railway
         public MainWindow()
         {
             InitializeComponent();
-           // FillDatabase fd = new FillDatabase();
-          //  fd.fill();
+               //   FillDatabase fd = new FillDatabase();
+                //  fd.fill();
             //page.Content = new Login();
-/*
-            using (var db = new RailwayContext())
-            {
-                List<StationSchedule> ss = (from stationSchedules in db.stationsSchedules
-                                            where stationSchedules.DrivingLineId == 1
-                                            orderby stationSchedules.SerialNumber
-                                            select stationSchedules).ToList();
+            /*
+                        using (var db = new RailwayContext())
+                        {
+                            List<StationSchedule> ss = (from stationSchedules in db.stationsSchedules
+                                                        where stationSchedules.DrivingLineId == 1
+                                                        orderby stationSchedules.SerialNumber
+                                                        select stationSchedules).ToList();
 
-                page.Content = new map.Map(ss);
-            }
-//*/
+                            page.Content = new map.Map(ss);
+                        }
+            //*/
 
 
             //FillDatabase fd = new FillDatabase();
             //fd.fill();
-            page.Content = new Login();
+            //page.Content 
+            Window w = new ManagerHomePage(new User());// new Login();
+            w.Show();
+            this.Close();
             /*
             getTicketPage = new GetTicketPage(new GetTicketDTO()
             {
