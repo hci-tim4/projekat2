@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Windows;
 using System.Windows.Documents;
@@ -70,30 +71,38 @@ namespace railway.services
                 {
                     Name = name,
                     TrainId = train.Id,
-                    startDate = startSelectedDate
+                    startDate = startSelectedDate,
+                    endDate = null
                 };
                 db.drivingLines.Add(dl);
 
+                db.SaveChanges();    
+                
                 if (stations != null)
                     saveStations(db, dl, stations);
-
-                db.SaveChanges();            
+        
             }
         }
 
-        private void saveStations(RailwayContext db, DrivingLine drivingLine, ObservableCollection<Station> stations)
+        private void saveStations(RailwayContext db1, DrivingLine drivingLine, ObservableCollection<Station> stations)
         {
             int serialNumber = 1;
-            foreach (Station s in stations)
+            using (var db = new RailwayContext())
             {
-                StationSchedule ss = new StationSchedule()
+                foreach (Station s in stations)
                 {
-                    SerialNumber = serialNumber,
-                    StationId = s.Id,
-                    DrivingLineId = drivingLine.Id,
-                };
-                serialNumber++;
-                db.stationsSchedules.Add(ss);
+                    StationSchedule ss = new StationSchedule()
+                    {
+                        SerialNumber = serialNumber,
+                        StationId = s.Id,
+                        DrivingLineId = drivingLine.Id,
+                        StartDate = null
+                    };
+                    serialNumber++;
+                    db.stationsSchedules.Add(ss);
+                }
+
+                db.SaveChanges();
             }
         }
     }

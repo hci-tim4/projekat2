@@ -14,6 +14,7 @@ using railway.managerSchedule;
 using railway.defineDrivingLine;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using railway.drivingLineReport;
 using railway.monthlyReport;
 
 
@@ -30,6 +31,8 @@ namespace railway
         Page managerSchedule;
         UserControl viewDrivinglines;
         UserControl monthlyReport;
+        private UserControl drivingLineReport;
+        
         public ManagerHomePage(User user)
         {
             InitializeComponent();
@@ -37,6 +40,7 @@ namespace railway
             this.managerSchedule = new ManagerSchedule();
             this.viewDrivinglines = new ViewDrivingLines(page2);
             this.monthlyReport = new ViewMonthlyTicketView();
+            this.drivingLineReport = new ViewDrivingLineTicketReport();
         }
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -66,6 +70,7 @@ namespace railway
                         break;
                     case "Izveštaj za mrežu linija":
                         last = "Izveštaj za mrežu linija";
+                        page5.Content = this.drivingLineReport;
                         break;
 
                     default:
