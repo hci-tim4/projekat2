@@ -11,6 +11,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using railway.managerSchedule;
+using railway.defineDrivingLine;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+using railway.monthlyReport;
 
 
 namespace railway
@@ -20,14 +24,19 @@ namespace railway
     /// </summary>
     public partial class ManagerHomePage : Window
     {
+
         string last = "";
         User loggedUser;
         Page managerSchedule;
+        UserControl viewDrivinglines;
+        UserControl monthlyReport;
         public ManagerHomePage(User user)
         {
             InitializeComponent();
             this.loggedUser = user;
             this.managerSchedule = new ManagerSchedule();
+            this.viewDrivinglines = new ViewDrivingLines(page2);
+            this.monthlyReport = new ViewMonthlyTicketView();
         }
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -38,42 +47,31 @@ namespace railway
             {
                 switch (tabItem)
                 {
-                    case "Mesečni izveštaj":
-                        last = "Mesečni izveštaj";
-                      //  page1.Content = ;
-                        break;
-
-                    case "Linijski izveštaj":
-                        last = "Linijski izveštaj";
-                  //      page2.Content = ;
-                        break;
 
                     case "Red vožnje":
                         last = "Red vožnje";
-                        page3.Content = this.managerSchedule;
+                        page1.Content = this.managerSchedule;
                         break;
-
-                    case "Mrežna linija":
-                        last = "Mrežna linija";
-                  //    page4.Content = ;
+                    case "Vozne linije":
+                        last = "Vozne linije";
+                        page2.Content = this.viewDrivinglines;
                         break;
-
                     case "Vozovi":
                         last = "Vozovi";
-                     //page5.Content = ;
+                        page3.Content = new CRUDTrains();
+                        break;
+                    case "Mesečni izveštaj":
+                        last = "Mesečni izveštaj";
+                        page4.Content = this.monthlyReport;
+                        break;
+                    case "Izveštaj za mrežu linija":
+                        last = "Izveštaj za mrežu linija";
                         break;
 
-                    case "Pomoć":
-                        last = "Pomoć";
-                    //  page6.Content = ;
-                        break;
                     default:
                         return;
                 }
             }
         }
-
-
-
     }
 }

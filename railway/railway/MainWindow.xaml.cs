@@ -16,6 +16,7 @@ using railway.database;
 using railway.model;
 using railway.client;
 using System.Linq;
+using railway.defineDrivingLine;
 
 namespace railway
 {
@@ -29,9 +30,14 @@ namespace railway
         public MainWindow()
         {
             InitializeComponent();
-               //   FillDatabase fd = new FillDatabase();
-                //  fd.fill();
-            //page.Content = new Login();
+
+              //    FillDatabase fd = new FillDatabase();
+              //    fd.fill();
+
+           // FillDatabase fd = new FillDatabase();
+            //fd.fill();
+
+            page.Content = new Login();
             /*
                         using (var db = new RailwayContext())
                         {
@@ -45,12 +51,20 @@ namespace railway
             //*/
 
 
-            //FillDatabase fd = new FillDatabase();
+        //    FillDatabase fd = new FillDatabase();
             //fd.fill();
+
             //page.Content 
-            Window w = new ManagerHomePage(new User());// new Login();
-            w.Show();
-            this.Close();
+       //     Window w = new ManagerHomePage(new User());// new Login();
+        //    w.Show();
+         //   this.Close();
+
+
+      //      ViewDrivingLines v = new ViewDrivingLines(page);//new Login();
+         
+            
+            //page.Content = new Login();
+
             /*
             getTicketPage = new GetTicketPage(new GetTicketDTO()
             {
@@ -74,8 +88,7 @@ namespace railway
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-          /* 
->>>>>>> 53b025e3cee3613ea9cb6e9f3c5f7ec3a97d55e1
+            /*
             List<Window> openWindows = getTicketPage.openedWindows;
             foreach (Window w in openWindows)
             {

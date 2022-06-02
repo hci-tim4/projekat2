@@ -44,6 +44,7 @@ namespace railway
 
                     case "Pregled karata":
                         last = "Pregled karata";
+                        page2.Content = new TicketsView();
                         break;
 
                     default:

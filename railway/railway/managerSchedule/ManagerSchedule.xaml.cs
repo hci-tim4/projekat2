@@ -141,7 +141,7 @@ namespace railway.managerSchedule
                      on drivingLine.Id equals stationSchedule.DrivingLineId
                      join station in db.stations
                      on stationSchedule.StationId equals station.Id
-                     where drivingLine.Id == drivingLineId && stationSchedule.Deleted == false
+                     where drivingLine.Id == drivingLineId && stationSchedule.deleted == false
                      select new
                      {
                          StationName = station.Name,
@@ -235,7 +235,7 @@ namespace railway.managerSchedule
 
                 foreach (var s in stations) 
                 {
-                    s.Deleted = true;
+                    s.deleted = true;
                     s.StartDate = DateTime.Now.AddDays(30);
                 }
                 db.SaveChanges();

@@ -49,6 +49,7 @@ namespace railway
                     if ((int)u.UserType == 0)
                     {
                       //  MessageBox.Show("Ulogovan menadzer!");
+
                         Window managerhp = new ManagerHomePage(u);
                         App.Current.MainWindow.Close();
                         managerhp.Show();

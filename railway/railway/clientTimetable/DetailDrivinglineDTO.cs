@@ -18,8 +18,8 @@ namespace railway.clientTimetable
     
         public int StationScheduleId { get; set; }
         public string StationName { get; set; }
-        public TimeSpan ArrivalTime { get; set; }
-        public TimeSpan DepartureTime { get; set; }
+        public TimeSpan? ArrivalTime { get; set; }
+        public TimeSpan? DepartureTime { get; set; }
         private int _tour;
 
         public int Tour
