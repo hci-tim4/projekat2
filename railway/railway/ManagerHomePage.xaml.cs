@@ -9,8 +9,13 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using railway.managerSchedule;
+using railway.defineDrivingLine;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using railway.monthlyReport;
+
 
 namespace railway
 {
@@ -19,12 +24,19 @@ namespace railway
     /// </summary>
     public partial class ManagerHomePage : Window
     {
-        User loggedUser;
+
         string last = "";
+        User loggedUser;
+        Page managerSchedule;
+        UserControl viewDrivinglines;
+        UserControl monthlyReport;
         public ManagerHomePage(User user)
         {
             InitializeComponent();
-            loggedUser = user;
+            this.loggedUser = user;
+            this.managerSchedule = new ManagerSchedule();
+            this.viewDrivinglines = new ViewDrivingLines(page2);
+            this.monthlyReport = new ViewMonthlyTicketView();
         }
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -35,18 +47,25 @@ namespace railway
             {
                 switch (tabItem)
                 {
+
                     case "Red vožnje":
                         last = "Red vožnje";
+                        page1.Content = this.managerSchedule;
                         break;
                     case "Vozne linije":
                         last = "Vozne linije";
+                        page2.Content = this.viewDrivinglines;
                         break;
                     case "Vozovi":
                         last = "Vozovi";
                         page3.Content = new CRUDTrains();
                         break;
-                    case "Pregled prodatih karata":
-                        last = "Pregled karata";
+                    case "Mesečni izveštaj":
+                        last = "Mesečni izveštaj";
+                        page4.Content = this.monthlyReport;
+                        break;
+                    case "Izveštaj za mrežu linija":
+                        last = "Izveštaj za mrežu linija";
                         break;
 
                     default:
@@ -54,6 +73,5 @@ namespace railway
                 }
             }
         }
-        
     }
 }

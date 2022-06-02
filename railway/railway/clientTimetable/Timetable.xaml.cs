@@ -30,6 +30,7 @@ namespace railway.clientTimetable
         List<Station> stations = GetAllStations();
         User loggedUser;
         private Frame parentFrame;
+        private int id = 0;
 
         public Timetable(User user, Frame page1)
         {
@@ -95,6 +96,10 @@ namespace railway.clientTimetable
             else
             {
                 this.lines = Find(this.departure, this.arrival, (DateTime)this.date);
+                if (this.lines.Count == 0)
+                {
+                    this.lines.AddRange(FindWithTransfer(this.departure, this.arrival, (DateTime)this.date));
+                }
                 dataGrid.ItemsSource = this.lines;
             }
 
@@ -115,7 +120,9 @@ namespace railway.clientTimetable
             List<DrivingLineDTO> DTOs = new List<DrivingLineDTO>();
 
             bool correct = false;
-            int dtoId = 0;
+            List<int> fromStationScheduleIds = new List<int>();
+            List<int> toStationScheduleIds = new List<int>();
+
             using (var db = new RailwayContext())
             {
                 var stations =
@@ -130,8 +137,8 @@ namespace railway.clientTimetable
                          departureTime = stationSchedule.DepartureTime,
                          serialNumber = stationSchedule.SerialNumber,
                          DrivinglineId = stationSchedule.DrivingLineId,
-                         FromScheduleStationId = stationSchedule.Id
-
+                         FromScheduleStationId = stationSchedule.Id,
+                         Tour = stationSchedule.Tour
                      }).ToList();
 
 
@@ -165,11 +172,12 @@ namespace railway.clientTimetable
                                     departureDate= schedule.DepatureDate }).ToList();
 
                             foreach(var dateTravell in datesTravell) {
-                                if (dateTravell.departureDate.Equals(date))
+                                if (dateTravell.departureDate.Equals(date) && (!fromStationScheduleIds.Contains(s.FromScheduleStationId))
+                                    &&(!toStationScheduleIds.Contains(until.UntilStationSchedule)))
                                 {
                                     DrivingLineDTO dto = new DrivingLineDTO
                                     {
-                                        Id = dtoId++,
+                                        Id = ++id,
                                         Departure = s.departureName,
                                         Date = date,
                                         Time = s.departureTime,
@@ -178,9 +186,12 @@ namespace railway.clientTimetable
                                         FromStationScheduleId = s.FromScheduleStationId,
                                         UntilStationScheduleId = until.UntilStationSchedule,
                                         ScheduleId = dateTravell.scheduleId,
-                                        drivingLine = s.DrivinglineId
+                                        drivingLine = s.DrivinglineId,
+                                        Tour = s.Tour
                                     };
                                     DTOs.Add(dto);
+                                    fromStationScheduleIds.Add(dto.FromStationScheduleId);
+                                    toStationScheduleIds.Add(dto.UntilStationScheduleId);
                                     correct = false;
                                 }
                             }
@@ -188,6 +199,174 @@ namespace railway.clientTimetable
                     }
                 }
             }
+            return DTOs;
+        }
+
+        private List<DrivingLineDTO> FindWithTransfer(Station departure, Station arrival, DateTime date) {
+
+            List<DrivingLineDTO> DTOs = new List<DrivingLineDTO>();
+
+            using (var db = new RailwayContext())
+            {
+                var startStations =
+                    (from station in db.stations
+                     join stationSchedule in db.stationsSchedules
+                     on station.Id equals stationSchedule.Station.Id
+                     where station.Id == departure.Id
+                     select new
+                     {
+                         departureName = station.Name,
+                         departureId = station.Id,
+                         departureTime = stationSchedule.DepartureTime,
+                         startArrivalTime = stationSchedule.ArrivalTime,
+                         serialNumber = stationSchedule.SerialNumber,
+                         DrivinglineId = stationSchedule.DrivingLineId,
+                         FromScheduleStationId = stationSchedule.Id
+
+                     }).ToList();
+
+
+                var endStations =
+                    (from station in db.stations
+                     join stationSchedule in db.stationsSchedules
+                     on station.Id equals stationSchedule.Station.Id
+                     where station.Id == arrival.Id
+                     select new
+                     {
+                         departureName = station.Name,
+                         departureId = station.Id,
+                         departureTime = stationSchedule.DepartureTime,
+                         endArrivalTime = stationSchedule.ArrivalTime,
+                         serialNumber = stationSchedule.SerialNumber,
+                         DrivinglineId = stationSchedule.DrivingLineId,
+                         ToScheduleStationId = stationSchedule.Id
+
+                     }).ToList();
+
+
+
+                foreach (var start in startStations) {
+                    var stationsForStartDrivinLine =             // sve stanice driving line-a sa polazistem
+                         (from drivingLine in db.drivingLines
+                          join stationSchedule in db.stationsSchedules
+                          on drivingLine.Id equals stationSchedule.DrivingLineId
+                          join station in db.stations
+                          on stationSchedule.StationId equals station.Id
+                          join schedule in db.schedules
+                          on drivingLine.Id equals schedule.DrivingLineId
+                          join train in db.trains
+                          on drivingLine.TrainId equals train.Id
+                          where drivingLine.Id == start.DrivinglineId
+                          select new
+                          {
+                              stationName = station.Name,
+                              stationId = station.Id,
+                              stationDepartureTime = stationSchedule.DepartureTime,
+                              stationArrivalTime = stationSchedule.ArrivalTime,
+                              date = schedule.DepatureDate,
+                              drivingLineId = drivingLine.Id,
+                              trainName = train.Name,
+                              stationScheduleId = stationSchedule.Id,
+                              scheduleId = schedule.Id
+
+                          }).ToList();
+
+
+                    foreach (var end in endStations) {          // sve stanice driving line-a sa odredistem
+                        var stationsForEndDrivingLine =
+                            (from drivingLine in db.drivingLines
+                             join stationSchedule in db.stationsSchedules
+                             on drivingLine.Id equals stationSchedule.DrivingLineId
+                             join station in db.stations
+                             on stationSchedule.StationId equals station.Id
+                             join schedule in db.schedules
+                             on drivingLine.Id equals schedule.DrivingLineId
+                             join train in db.trains
+                             on drivingLine.TrainId equals train.Id
+                             where drivingLine.Id==end.DrivinglineId
+
+                             select new 
+                             {
+                                 stationName = station.Name,
+                                 stationId = station.Id,
+                                 stationDepartureTime = stationSchedule.DepartureTime,
+                                 stationArrivalTime = stationSchedule.ArrivalTime,
+                                 date = schedule.DepatureDate,
+                                 drivingLineId = drivingLine.Id,
+                                 trainName = train.Name,
+                                 stationScheduleId = stationSchedule.Id,
+                                 scheduleId = schedule.Id,
+                                 DrivingLineId = drivingLine.Id 
+                             
+
+                             }).ToList();
+
+                        foreach (var startMed in stationsForStartDrivinLine) 
+                        {
+                            foreach (var endMed in stationsForEndDrivingLine)
+                            { 
+                                    if (startMed.stationName == departure.Name) {
+                                        continue;
+                                    }
+                            
+                                    if (startMed.stationId == endMed.stationId && startMed.stationArrivalTime < endMed.stationDepartureTime &&
+                                        startMed.date == endMed.date && startMed.date == date && start.DrivinglineId != endMed.DrivingLineId 
+                                       )
+                                    {
+                                        DrivingLineDTO dto1 = new DrivingLineDTO
+                                        {
+                                            Departure = departure.Name,
+                                            Arrival = startMed.stationName,
+                                            Time = start.departureTime,
+                                            Date = startMed.date,
+                                            Train = startMed.trainName,
+
+                                            FromStationScheduleId = start.FromScheduleStationId,
+                                            UntilStationScheduleId = startMed.stationScheduleId,
+                                            ScheduleId = startMed.scheduleId,
+                                            drivingLine = start.DrivinglineId,
+                                            Id = ++id,
+                                        };
+
+
+
+
+                                        DrivingLineDTO dto2 = new DrivingLineDTO
+                                        {
+                                            Id = ++id,
+                                            Departure = startMed.stationName,
+
+                                            Time = endMed.stationDepartureTime,
+                                            Train = endMed.trainName,
+                                            Date = endMed.date,
+
+                                            FromStationScheduleId = endMed.stationScheduleId,
+                                            ScheduleId = endMed.scheduleId,
+                                            drivingLine = endMed.DrivingLineId
+                                        };
+
+                                        DTOs.Add(dto1);
+                                        DTOs.Add(dto2);
+
+                                    }
+                                    if (endMed.stationId == arrival.Id)
+                                    {
+                                        foreach (var dto in DTOs)
+                                        {
+                                            if (dto.Id == id)
+                                            {
+                                                dto.UntilStationScheduleId = endMed.stationScheduleId;
+                                                dto.Arrival = endMed.stationName;
+                                            }
+                                        }
+                                    }
+                                
+                            }
+                        }
+                    }
+                }
+            }
+
             return DTOs;
         }
 
@@ -213,8 +392,8 @@ namespace railway.clientTimetable
 
         private void btnDetalji_Click(object sender, RoutedEventArgs e)
         {
-            var drivinLineId = ((Button)sender).Tag;
-            this.parentFrame.Content = new DetailsTimetable((int)drivinLineId, departure.Id, arrival.Id, parentFrame, this);
+            var tour = ((Button)sender).Tag;
+            this.parentFrame.Content = new DetailsTimetable((int)tour, departure.Id, arrival.Id, parentFrame, this);
         }
 
         private DrivingLineDTO findDTOById(int dtoId) {
