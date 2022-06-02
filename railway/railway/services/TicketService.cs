@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using System.Windows;
+using railway.drivingLineReport;
 using railway.monthlyReport;
 
 namespace railway.services
@@ -177,5 +178,38 @@ namespace railway.services
                 return res;
             }
         }
+        
+        public List<TicketsForDrivingLineReportDTO> GetTicketByDrivingLine(int drivingLineId)
+        {
+            using (var db = new RailwayContext())
+            {
+                List<TicketsForDrivingLineReportDTO> res = (from tick in db.tickets
+                    join sched in db.schedules
+                        on tick.ScheduleId equals sched.Id
+                    where sched.DrivingLineId == drivingLineId
+                    select new TicketsForDrivingLineReportDTO()
+                    {
+                        TicketId = tick.Id,
+                        Price = tick.Price,
+                        DateOfDepature = sched.DepatureDate
+                    }).ToList();
+
+                foreach (TicketsForDrivingLineReportDTO ticketForReport in res)
+                {
+                    ticketForReport.numberOfTickets = 0;
+                    foreach (TicketSeats t in db.ticketSeats)
+                    {
+                        if (ticketForReport.TicketId == t.TicketId)
+                        {
+                            ticketForReport.numberOfTickets++;
+                        }
+                    }
+                
+                }
+
+                return res;
+            }
+        }
+        
     }
 }

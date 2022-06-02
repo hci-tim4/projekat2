@@ -161,6 +161,33 @@ namespace railway.database
                 db.Database.ExecuteSqlCommand("Insert into Schedules Values(1, '05/29/2022')");
                 db.Database.ExecuteSqlCommand("Insert into Schedules Values(1, '05/30/2022')");
 
+                db.Database.ExecuteSqlCommand("Insert into Schedules Values(2, '04/27/2022')");
+                db.Database.ExecuteSqlCommand("Insert into Schedules Values(2, '04/28/2022')");
+
+                db.Database.ExecuteSqlCommand("Insert into Schedules Values(2, '04/20/2022')");
+                db.Database.ExecuteSqlCommand("Insert into Schedules Values(2, '04/21/2022')");
+
+
+                db.Database.ExecuteSqlCommand("Insert into Schedules Values(3, '04/20/2022')");
+                db.Database.ExecuteSqlCommand("Insert into Schedules Values(3, '04/21/2022')");
+                db.Database.ExecuteSqlCommand("Insert into Schedules Values(3, '04/22/2022')");
+                db.Database.ExecuteSqlCommand("Insert into Schedules Values(3, '04/23/2022')");
+
+                db.Database.ExecuteSqlCommand("Insert into Schedules Values(3, '04/27/2022')");
+                db.Database.ExecuteSqlCommand("Insert into Schedules Values(3, '04/28/2022')");
+                db.Database.ExecuteSqlCommand("Insert into Schedules Values(3, '04/29/2022')");
+                db.Database.ExecuteSqlCommand("Insert into Schedules Values(3, '04/30/2022')");
+
+                db.Database.ExecuteSqlCommand("Insert into Schedules Values(4, '04/29/2022')");
+                db.Database.ExecuteSqlCommand("Insert into Schedules Values(4, '04/30/2022')");
+                db.Database.ExecuteSqlCommand("Insert into Schedules Values(4, '04/30/2022')");
+
+                db.Database.ExecuteSqlCommand("Insert into Schedules Values(4, '04/22/2022')");
+                db.Database.ExecuteSqlCommand("Insert into Schedules Values(4, '04/23/2022')");
+                db.Database.ExecuteSqlCommand("Insert into Schedules Values(4, '04/24/2022')");
+                
+                
+                
 
                 db.Database.ExecuteSqlCommand("Insert into Schedules Values(2, '05/27/2022')");
                 db.Database.ExecuteSqlCommand("Insert into Schedules Values(2, '05/28/2022')");
@@ -194,6 +221,14 @@ namespace railway.database
                 db.Database.ExecuteSqlCommand("Insert into TicketSeats Values(1,2)");
                 db.Database.ExecuteSqlCommand("Insert into Tickets Values(0,1,8,1,20,800)");
                 db.Database.ExecuteSqlCommand("Insert into TicketSeats Values(1,3)");
+                
+                
+                db.Database.ExecuteSqlCommand("Insert into Tickets Values(1,1,1,4,27,400)");
+                db.Database.ExecuteSqlCommand("Insert into TicketSeats Values(1,4)");
+                db.Database.ExecuteSqlCommand("Insert into Tickets Values(0,1,10,4,39,500)");
+                db.Database.ExecuteSqlCommand("Insert into TicketSeats Values(1,5)");
+                db.Database.ExecuteSqlCommand("Insert into Tickets Values(0,1,8,1,38,800)");
+                db.Database.ExecuteSqlCommand("Insert into TicketSeats Values(1,6)");
                 db.SaveChanges();
             }
         }
