@@ -31,6 +31,7 @@ namespace railway.clientTimetable
         User loggedUser;
         private Frame parentFrame;
         private int id = 0;
+        DrivingLineDTO currentSelected;
 
         public Timetable(User user, Frame page1)
         {
@@ -122,6 +123,7 @@ namespace railway.clientTimetable
             bool correct = false;
             List<int> fromStationScheduleIds = new List<int>();
             List<int> toStationScheduleIds = new List<int>();
+            int t = -1;
 
             using (var db = new RailwayContext())
             {
@@ -129,7 +131,7 @@ namespace railway.clientTimetable
                     (from station in db.stations
                      join stationSchedule in db.stationsSchedules
                      on station.Id equals stationSchedule.Station.Id
-                     where station.Id == departure.Id
+                     where station.Id == departure.Id && stationSchedule.deleted == false
                      select new
                      {
                          departureName = station.Name,
@@ -150,20 +152,23 @@ namespace railway.clientTimetable
                          on DrivingLine.Id equals stat.DrivingLineId
                          join train in db.trains
                          on DrivingLine.TrainId equals train.Id
-                         where DrivingLine.Id == s.DrivinglineId
+                         where DrivingLine.Id == s.DrivinglineId && stat.Tour ==s.Tour && stat.deleted==false && DrivingLine.deleted == false
                          select new
                          {
                              EndStationId = stat.StationId,
                              UntilStationSchedule = stat.Id,
-                             TrainName = train.Name
+                             TrainName = train.Name,
+                             Tour = s.Tour
                          }).ToList();
 
-
+                  
                     foreach (var until in drivingLineStations) {
+                        
                         if (departure.Id == until.EndStationId) {
                             correct=true;
+                            t = until.Tour;
                         }
-                        if ((arrival.Id == until.EndStationId) && (correct==true)) {
+                        if ((arrival.Id == until.EndStationId) && (correct==true) && (t == until.Tour)) {
                             var datesTravell =
                                 (from schedule in db.schedules
                                 where schedule.DrivingLineId == s.DrivinglineId
@@ -193,6 +198,7 @@ namespace railway.clientTimetable
                                     fromStationScheduleIds.Add(dto.FromStationScheduleId);
                                     toStationScheduleIds.Add(dto.UntilStationScheduleId);
                                     correct = false;
+                                    t = -1;
                                 }
                             }
                         }
@@ -221,7 +227,8 @@ namespace railway.clientTimetable
                          startArrivalTime = stationSchedule.ArrivalTime,
                          serialNumber = stationSchedule.SerialNumber,
                          DrivinglineId = stationSchedule.DrivingLineId,
-                         FromScheduleStationId = stationSchedule.Id
+                         FromScheduleStationId = stationSchedule.Id,
+                         Tour = stationSchedule.Tour
 
                      }).ToList();
 
@@ -239,7 +246,8 @@ namespace railway.clientTimetable
                          endArrivalTime = stationSchedule.ArrivalTime,
                          serialNumber = stationSchedule.SerialNumber,
                          DrivinglineId = stationSchedule.DrivingLineId,
-                         ToScheduleStationId = stationSchedule.Id
+                         ToScheduleStationId = stationSchedule.Id,
+                         Tour = stationSchedule.Tour
 
                      }).ToList();
 
@@ -256,7 +264,7 @@ namespace railway.clientTimetable
                           on drivingLine.Id equals schedule.DrivingLineId
                           join train in db.trains
                           on drivingLine.TrainId equals train.Id
-                          where drivingLine.Id == start.DrivinglineId
+                          where drivingLine.Id == start.DrivinglineId && stationSchedule.Tour == start.Tour
                           select new
                           {
                               stationName = station.Name,
@@ -267,7 +275,8 @@ namespace railway.clientTimetable
                               drivingLineId = drivingLine.Id,
                               trainName = train.Name,
                               stationScheduleId = stationSchedule.Id,
-                              scheduleId = schedule.Id
+                              scheduleId = schedule.Id,
+                              Tour = stationSchedule.Tour
 
                           }).ToList();
 
@@ -283,7 +292,7 @@ namespace railway.clientTimetable
                              on drivingLine.Id equals schedule.DrivingLineId
                              join train in db.trains
                              on drivingLine.TrainId equals train.Id
-                             where drivingLine.Id==end.DrivinglineId
+                             where drivingLine.Id==end.DrivinglineId && stationSchedule.Tour == end.Tour
 
                              select new 
                              {
@@ -296,7 +305,8 @@ namespace railway.clientTimetable
                                  trainName = train.Name,
                                  stationScheduleId = stationSchedule.Id,
                                  scheduleId = schedule.Id,
-                                 DrivingLineId = drivingLine.Id 
+                                 DrivingLineId = drivingLine.Id,
+                                 Tour = stationSchedule.Tour
                              
 
                              }).ToList();
@@ -326,6 +336,7 @@ namespace railway.clientTimetable
                                             ScheduleId = startMed.scheduleId,
                                             drivingLine = start.DrivinglineId,
                                             Id = ++id,
+                                            Tour = start.Tour
                                         };
 
 
@@ -342,7 +353,8 @@ namespace railway.clientTimetable
 
                                             FromStationScheduleId = endMed.stationScheduleId,
                                             ScheduleId = endMed.scheduleId,
-                                            drivingLine = endMed.DrivingLineId
+                                            drivingLine = endMed.DrivingLineId,
+                                            Tour = endMed.Tour
                                         };
 
                                         DTOs.Add(dto1);
@@ -392,8 +404,9 @@ namespace railway.clientTimetable
 
         private void btnDetalji_Click(object sender, RoutedEventArgs e)
         {
-            var tour = ((Button)sender).Tag;
-            this.parentFrame.Content = new DetailsTimetable((int)tour, departure.Id, arrival.Id, parentFrame, this);
+            var dtoId = ((Button)sender).Tag;
+            DrivingLineDTO dto = findDTOById((int)dtoId);
+            this.parentFrame.Content = new DetailsTimetable(dto.Tour, departure.Id, arrival.Id, parentFrame, this, dto.drivingLine);
         }
 
         private DrivingLineDTO findDTOById(int dtoId) {

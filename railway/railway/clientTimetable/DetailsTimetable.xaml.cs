@@ -27,10 +27,10 @@ namespace railway.clientTimetable
         private Frame parentFrame;
         private Page parentPage;
 
-        public DetailsTimetable(int tour, int fromStationId, int arrivalId, Frame parentFrame, Page timetable)
+        public DetailsTimetable(int tour, int fromStationId, int arrivalId, Frame parentFrame, Page timetable, int drivingLineId)
         {
             InitializeComponent();
-            showDrivingLineDetails(tour);
+            showDrivingLineDetails(tour, drivingLineId);
             using (var db = new RailwayContext())
             {
                 List<StationSchedule> ss = (from stationSchedules in db.stationsSchedules
@@ -46,33 +46,31 @@ namespace railway.clientTimetable
             this.parentPage = timetable;
         }
 
-        private void showDrivingLineDetails(int tour) {
-            detailLine = FindDetails(tour);
+        private void showDrivingLineDetails(int tour, int drivingLine) {
+            detailLine = FindDetails(tour, drivingLine);
             detailGrid.ItemsSource = detailLine;
 
         }
-        private List<DetailDrivinglineDTO> FindDetails(int tour)
+        private List<DetailDrivinglineDTO> FindDetails(int tour, int drivingLineId)
         {
 
             List<DetailDrivinglineDTO> detailDrivinglineDTOs = new List<DetailDrivinglineDTO>();
 
             using (var db = new RailwayContext())
             {
-                int drivingLineId =
+            /*    int drivingLineId =
                 (from station in db.stationsSchedules
                 where station.Tour == tour
                 select station.DrivingLineId).FirstOrDefault();
 
-                this.drivingLineId = drivingLineId;
+                this.drivingLineId = drivingLineId;   */
 
                 var stations =
-                    (from drivingLine in db.drivingLines
-                    join stationSchedule in db.stationsSchedules
-                    on drivingLine.Id equals stationSchedule.DrivingLineId
+                    (from stationSchedule in db.stationsSchedules
                     join station in db.stations
                     on stationSchedule.StationId equals station.Id
-                    where drivingLine.Id == drivingLineId && stationSchedule.Tour == tour
-                    select new
+                    where stationSchedule.DrivingLineId == drivingLineId && stationSchedule.Tour == tour
+                     select new
                     {
                         StationName = station.Name,
                         ArrivalTime = stationSchedule.ArrivalTime,
