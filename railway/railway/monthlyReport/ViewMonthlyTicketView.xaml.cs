@@ -241,18 +241,23 @@ namespace railway.monthlyReport
         private void showBySeatTypes(object sender, RoutedEventArgs e)
         {
             if (tickets == null)
+            {
                 MessageBox.Show("Prvo morate da izaberete interval.");
-            if (currentData == null)
-                FillInformationForGraphBySeatType();
+                return;
+            }
+            FillInformationForGraphBySeatType();
             PrepareGraph();
         }
 
         private void showByDrivingLines(object sender, RoutedEventArgs e)
         {
+            if (tickets == null)
+            {
+                MessageBox.Show("Prvo morate da izaberete interval.");
+                return;
+            }
             FillInformationForGraphByDrivingLine();
             PrepareGraph();
-            //if (currentData == null)
-            //    MessageBox.Show("Prvo morate da izaberete interval.");
         }
     }
 }

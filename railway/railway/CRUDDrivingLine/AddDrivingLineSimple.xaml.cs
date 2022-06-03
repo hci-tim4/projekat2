@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -9,6 +10,9 @@ using System.Windows.Shapes;
 using railway.database;
 using railway.defineDrivingLine;
 using railway.model;
+using GMap.NET;
+using GMap.NET.MapProviders;
+using GMap.NET.WindowsPresentation;
 
 namespace railway.CRUDDrivingLine
 {
@@ -18,36 +22,43 @@ namespace railway.CRUDDrivingLine
         public event DrivingGotSavedHandler drivingLineGotSaved;
         private Frame parentFrame;
         private ViewDrivingLines parentPage;
-        private List<Station> stations;
+        private ObservableCollection<Station> stations;
         private ObservableCollection<Station> stations2;
         private AddDrivingLine addDrivingLineDragAndDrop;
         private Station currentStation;
         private StationSchedule changedStationSchedule;
+        private PointLatLng? previous = null;
         
-        public AddDrivingLineSimple(Frame parentFrame, ViewDrivingLines viewDrivingLines, AddDrivingLine dragAndDrop, ObservableCollection<Station> stations2)
+        public AddDrivingLineSimple(Frame parentFrame, ViewDrivingLines viewDrivingLines, AddDrivingLine dragAndDrop,
+            ObservableCollection<Station> stations2, ObservableCollection<Station> stations)
         {
             InitializeComponent();
             this.drivingLineGotSaved += new DrivingGotSavedHandler(clearMap);
             this.parentFrame = parentFrame;
             this.parentFrame.Content = this;
             this.parentPage = viewDrivingLines;
+
+            this.DataContext = this;
+            this.stations2 = stations2;
+            this.stations = stations;
+            addDrivingLineDragAndDrop = dragAndDrop;
+        }
+
+        private void resetStations()
+        {
             using (var db = new RailwayContext())
             {
                 List<Station> s = (from st in db.stations orderby st.Name select st).ToList();
-                
-                stations = s;
-                stationsCmb.ItemsSource = s;
-                this.stations2 = stations2;
+                stations = new ObservableCollection<Station>(s);//s;
             }
-
-            this.DataContext = this;
-            addDrivingLineDragAndDrop = dragAndDrop;
         }
 
         private void clearMap()
         {
             stations2 = new ObservableCollection<Station>();
             setUpMapView();
+            resetStations();
+            this.DataContext = this;
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
@@ -98,10 +109,56 @@ namespace railway.CRUDDrivingLine
 
                 };
                 mapView.Markers.Add(marker);
+                
+                
+                if (previous == null)
+                {
+                    previous = new PointLatLng(current.Lat, current.Lng);
+                    continue;
+                }
+                else
+                {
+                    drawLineBetweenPoints(current, previous, mapView);
+                    previous = new PointLatLng(current.Lat, current.Lng);
+                }
             }
             
             
             
+        }
+
+        
+        private void drawLineBetweenPoints(PointLatLng current, PointLatLng? previous, GMapControl gMapControl)
+        {
+            double dis = CountDistanceBetweenPoints(current, (PointLatLng)previous);
+            if (dis < 0.001)
+                return;
+            PointLatLng middle = CountMiddlePoint(current, (PointLatLng)previous);
+            GMap.NET.WindowsPresentation.GMapMarker markerLine = new GMap.NET.WindowsPresentation.GMapMarker(middle);
+            markerLine.Shape = new Ellipse
+            {
+                Width = 3,
+                Height = 3,
+                Stroke = Brushes.Goldenrod,
+                StrokeThickness = 1.5,
+                ToolTip = "Put",
+                Visibility = Visibility.Visible,
+                Fill = Brushes.Goldenrod,
+
+            };
+            mapView.Markers.Add(markerLine);
+            drawLineBetweenPoints(current, middle, mapView);
+            drawLineBetweenPoints((PointLatLng)previous, middle, mapView);
+        }
+
+        private double CountDistanceBetweenPoints(PointLatLng p1, PointLatLng p2)
+        {
+            return Math.Sqrt(Math.Pow(p1.Lat - p2.Lat, 2) + Math.Pow(p1.Lng - p2.Lng, 2));
+        }
+        
+        private PointLatLng CountMiddlePoint(PointLatLng p1, PointLatLng p2)
+        {
+            return new PointLatLng((p1.Lat +p2.Lat)/2, (p1.Lng + p2.Lng)/2);
         }
 
 
@@ -125,7 +182,9 @@ namespace railway.CRUDDrivingLine
 
         private void BackToDragAndDrop_OnClick(object sender, RoutedEventArgs e)
         {
+            addDrivingLineDragAndDrop.stations = this.stations;
             addDrivingLineDragAndDrop.stations2 = this.stations2;
+            addDrivingLineDragAndDrop.setUpMapView();
             this.parentFrame.Content = addDrivingLineDragAndDrop;
         }
 

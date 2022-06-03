@@ -28,7 +28,7 @@ namespace railway.model
 
         public int Tour { get; set; }
 
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
         
         public bool deleted { get; set; }
         

@@ -54,18 +54,10 @@
             </DataGrid.ItemContainerStyle>
                 
             <DataGrid.Columns>
-                <DataGridTextColumn MinWidth="50" Header="Ime" Width="*" Binding="{Binding Name}"></DataGridTextColumn>
-                <DataGridTextColumn MinWidth="50" Header="Voz" Width="*" Binding="{Binding Path=TrainName}" x:Name="TrainName"></DataGridTextColumn>
+                <DataGridTextColumn Header="Ime" Width="Auto" Binding="{Binding Name}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Voz" Width="Auto" Binding="{Binding Path=TrainName}" x:Name="TrainName"></DataGridTextColumn>
                 
-                <DataGridTemplateColumn Header="Red vožnje" Width="*">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button x:Name="viewSchedule" ToolTip="Vidite red vožnje za liniju" Tag="{Binding Path=DrivingLineId}" Click="ViewSchedule_OnClick" Content="Red vožnje"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-                
-                <DataGridTemplateColumn Width="*" Header="">
+                <DataGridTemplateColumn Width="Auto" Header="">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button x:Name="deleteDrivingLine" ToolTip="Podesite krajnji datum važenja" Tag="{Binding Path=DrivingLineId}" Click="DeleteDrivingLine_OnClick" Content="Krajnji datum"/>

@@ -12,6 +12,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using GMap.NET;
+using GMap.NET;
+using GMap.NET.MapProviders;
+using GMap.NET.WindowsPresentation;
 
 namespace railway.CRUDDrivingLine
 {
@@ -21,6 +24,8 @@ namespace railway.CRUDDrivingLine
         public event DrivingGotSavedHandler drivingLineGotSaved;
         private Frame parentFrame;
         private ViewDrivingLines parentPage;
+        public PointLatLng? previous { get; set; }
+        
         
         public AddDrivingLine(Frame parentFrame, ViewDrivingLines viewDrivingLines)
         {
@@ -42,8 +47,20 @@ namespace railway.CRUDDrivingLine
 
         private void clearMap()
         {
+            addStationsBack();
             stations2 = new ObservableCollection<Station>();
             setUpMapView();
+            this.DataContext = this;
+        }
+
+        private void addStationsBack()
+        {
+            foreach (Station st in stations2)
+            {
+                stations.Add(st);
+            }
+
+            stations = new ObservableCollection<Station>(stations.OrderBy(x => x.Name).ToList());
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
@@ -133,12 +150,53 @@ namespace railway.CRUDDrivingLine
                 Station station = e.Data.GetData("myFormat") as Station;
                 stations.Remove(station);
                 stations2.Add(station);
-                setUpMapView();
-                
+                //setUpMapView();
+                addNewMarker(station);
             }
         }
 
-        private void setUpMapView()
+        private void addNewMarker(Station s)
+        {
+            
+            GMap.NET.PointLatLng current = new GMap.NET.PointLatLng(s.Latitude, s.Longitude);
+            GMap.NET.WindowsPresentation.GMapMarker marker = new GMap.NET.WindowsPresentation.GMapMarker(current);
+                
+            marker.Shape = new Ellipse
+            {
+                Width = 10,
+                Height = 10,
+                Stroke = Brushes.Firebrick,
+                StrokeThickness = 1.5,
+                ToolTip = "Stanica",
+                Visibility = Visibility.Visible,
+                Fill = Brushes.Firebrick,
+
+            };
+            mapView.Markers.Add(marker);
+                
+                
+            if (previous == null)
+            {
+                previous = new PointLatLng(current.Lat, current.Lng);
+            }
+            else
+            {
+                drawLineBetweenPoints(current, previous, mapView);
+                previous = new PointLatLng(current.Lat, current.Lng);
+            }
+
+        }
+        
+        private void resetStations()
+        {
+            using (var db = new RailwayContext())
+            {
+                List<Station> s = (from st in db.stations orderby st.Name select st).ToList();
+                stations = new ObservableCollection<Station>(s);//s;
+            }
+        }
+
+        public void setUpMapView()
         {
             
             GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerAndCache;
@@ -162,6 +220,7 @@ namespace railway.CRUDDrivingLine
             mapView.DragButton = MouseButton.Left;
             mapView.ShowCenter = false;
 
+            previous = null;
             foreach (Station s in stations2)
             {
                 GMap.NET.PointLatLng current = new GMap.NET.PointLatLng(s.Latitude, s.Longitude);
@@ -179,11 +238,58 @@ namespace railway.CRUDDrivingLine
 
                 };
                 mapView.Markers.Add(marker);
+                
+                
+                if (previous == null)
+                {
+                    previous = new PointLatLng(current.Lat, current.Lng);
+                    continue;
+                }
+                else
+                {
+                    drawLineBetweenPoints(current, previous, mapView);
+                    previous = new PointLatLng(current.Lat, current.Lng);
+                }
+                
             }
             
             
             
         }
+        
+        private void drawLineBetweenPoints(PointLatLng current, PointLatLng? previous, GMapControl gMapControl)
+        {
+            double dis = CountDistanceBetweenPoints(current, (PointLatLng)previous);
+            if (dis < 0.001)
+                return;
+            PointLatLng middle = CountMiddlePoint(current, (PointLatLng)previous);
+            GMap.NET.WindowsPresentation.GMapMarker markerLine = new GMap.NET.WindowsPresentation.GMapMarker(middle);
+            markerLine.Shape = new Ellipse
+            {
+                Width = 3,
+                Height = 3,
+                Stroke = Brushes.Goldenrod,
+                StrokeThickness = 1.5,
+                ToolTip = "Put",
+                Visibility = Visibility.Visible,
+                Fill = Brushes.Goldenrod,
+
+            };
+            mapView.Markers.Add(markerLine);
+            drawLineBetweenPoints(current, middle, mapView);
+            drawLineBetweenPoints((PointLatLng)previous, middle, mapView);
+        }
+
+        private double CountDistanceBetweenPoints(PointLatLng p1, PointLatLng p2)
+        {
+            return Math.Sqrt(Math.Pow(p1.Lat - p2.Lat, 2) + Math.Pow(p1.Lng - p2.Lng, 2));
+        }
+        
+        private PointLatLng CountMiddlePoint(PointLatLng p1, PointLatLng p2)
+        {
+            return new PointLatLng((p1.Lat +p2.Lat)/2, (p1.Lng + p2.Lng)/2);
+        }
+
 
 
         private void map_Loaded(object sender, RoutedEventArgs e)
@@ -223,7 +329,7 @@ namespace railway.CRUDDrivingLine
 
         private void ChangeDrivingLineDefView_OnClick(object sender, RoutedEventArgs e)
         {
-            this.parentFrame.Content = new AddDrivingLineSimple(parentFrame, parentPage, this, stations2);
+            this.parentFrame.Content = new AddDrivingLineSimple(parentFrame, parentPage, this, stations2, stations);
         }
     }
 }
