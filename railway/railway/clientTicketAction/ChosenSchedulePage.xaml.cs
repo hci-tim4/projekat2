@@ -39,14 +39,14 @@ namespace railway.client
                                     select stationSchedules).Single();
                 tDTO.fromStation = s1.Station.Name;
 
-                tDTO.depatureTime = s1.DepartureTime;
+                tDTO.depatureTime = (TimeSpan)s1.DepartureTime;
 
                 StationSchedule s2 = (from stationSchedules in db.stationsSchedules
                                      where stationSchedules.Id == untilStationScheduleId
                                      select stationSchedules).Single();
 
                 tDTO.untilStation = s2.Station.Name;
-                tDTO.arrivalTime = s2.ArrivalTime;
+                tDTO.arrivalTime = (TimeSpan)s2.ArrivalTime;
 
                 Schedule d = (Schedule)(from schedules in db.schedules
                                         where schedules.Id == scheduleId

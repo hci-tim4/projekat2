@@ -46,7 +46,7 @@ namespace railway.map
 
             using (var db = new RailwayContext())
             {
-                GMap.NET.PointLatLng previous = new GMap.NET.PointLatLng(0, 0);
+                GMap.NET.PointLatLng? previous = null;
                 GMap.NET.PointLatLng current = new GMap.NET.PointLatLng(0, 0);
                 foreach (StationSchedule s in stationSchedules)
                 {
@@ -102,20 +102,20 @@ namespace railway.map
                         };
                     }
                     mapView.Markers.Add(marker);
-                    
-                    //routesOverlay.Routes.Add(route);
-                    //mapView.Overlays.Add(routesOverlay);
 
-                    //mapView.Children.Add(route);
+                    if (previous == null)
+                    {
+                        previous = new PointLatLng(current.Lat, current.Lng);
+                        continue;
+                    }
+                    else
+                    {
+                        drawLineBetweenPoints(current, previous, mapView);
+                        previous = new PointLatLng(current.Lat, current.Lng);
+                    }
+
                 }
             }
-
-
-
-
-
-            // don't forget to add the marker to the map
-            //mapView.Markers.Add(routeMarker);
 
             mapView.MinZoom = 3;
             mapView.MaxZoom = 17;
@@ -132,6 +132,39 @@ namespace railway.map
 
         }
 
+        private void drawLineBetweenPoints(PointLatLng current, PointLatLng? previous, GMapControl gMapControl)
+        {
+            double dis = CountDistanceBetweenPoints(current, (PointLatLng)previous);
+            if (dis < 0.001)
+                return;
+            PointLatLng middle = CountMiddlePoint(current, (PointLatLng)previous);
+            GMap.NET.WindowsPresentation.GMapMarker markerLine = new GMap.NET.WindowsPresentation.GMapMarker(middle);
+            markerLine.Shape = new Ellipse
+            {
+                Width = 3,
+                Height = 3,
+                Stroke = Brushes.Goldenrod,
+                StrokeThickness = 1.5,
+                ToolTip = "Put",
+                Visibility = Visibility.Visible,
+                Fill = Brushes.Goldenrod,
+
+            };
+            mapView.Markers.Add(markerLine);
+            drawLineBetweenPoints(current, middle, mapView);
+            drawLineBetweenPoints((PointLatLng)previous, middle, mapView);
+        }
+
+        private double CountDistanceBetweenPoints(PointLatLng p1, PointLatLng p2)
+        {
+            return Math.Sqrt(Math.Pow(p1.Lat - p2.Lat, 2) + Math.Pow(p1.Lng - p2.Lng, 2));
+        }
+        
+        private PointLatLng CountMiddlePoint(PointLatLng p1, PointLatLng p2)
+        {
+            return new PointLatLng((p1.Lat +p2.Lat)/2, (p1.Lng + p2.Lng)/2);
+        }
+        
         private GMapControl addMarkers(GMapControl mapView)
         {
             

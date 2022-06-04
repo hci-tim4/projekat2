@@ -16,15 +16,21 @@ namespace railway.model
         [ForeignKey("Station")]
         public int StationId { get; set; }
         public virtual Station Station { get; set; }
-        public TimeSpan ArrivalTime { get; set; }
-        public TimeSpan DepartureTime { get; set; }
+        public TimeSpan? ArrivalTime { get; set; }
+        public TimeSpan? DepartureTime { get; set; }
 
-        
+
         [ForeignKey("DrivingLine")]
         public int DrivingLineId { get; set; }
-        
-        public virtual DrivingLine DrivingLine { get; set; }
-        
 
+        public virtual DrivingLine DrivingLine { get; set; }
+
+
+        public int Tour { get; set; }
+
+        public DateTime? StartDate { get; set; }
+        
+        public bool deleted { get; set; }
+        
     }
 }

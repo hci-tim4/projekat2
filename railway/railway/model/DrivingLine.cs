@@ -16,5 +16,10 @@ namespace railway.model
         public int TrainId { get; set; }
         public virtual Train Train { get; set; }
 
+        public bool deleted { get; set; }
+
+        public DateTime? startDate { get; set; }
+        public DateTime? endDate { get; set; }
+
     }
 }

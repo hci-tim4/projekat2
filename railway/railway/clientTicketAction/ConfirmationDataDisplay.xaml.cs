@@ -36,13 +36,13 @@ namespace railway.client
                                     where stationSchedules.Id == ticket.FromStationScheduleId
                                     select stationSchedules).Single();
                 confTicketDTO.fromStation = s1.Station.Name;
-                confTicketDTO.depatureTime = s1.DepartureTime;
+                confTicketDTO.depatureTime = (TimeSpan)s1.DepartureTime;
 
                 StationSchedule s2 = (from stationSchedules in db.stationsSchedules
                                      where stationSchedules.Id == ticket.UntilStationScheduleId
                                      select stationSchedules).Single();
                 confTicketDTO.untilStation = s2.Station.Name;
-                confTicketDTO.arrivalTime = s2.ArrivalTime;
+                confTicketDTO.arrivalTime = (TimeSpan)s2.ArrivalTime;
 
                 Schedule d = (Schedule)(from schedules in db.schedules
                                         where schedules.Id == ticket.ScheduleId
