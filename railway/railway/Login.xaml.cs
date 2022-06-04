@@ -29,7 +29,7 @@ namespace railway
 
         private void login_Click(object sender, RoutedEventArgs e)
         {
-            string username = textBoxUsername.Text;
+            string username = UsernameBox.Text;
             if (!LoginService.isExistUser(username))
             {
                 MessageBox.Show("Korisnicko ime nije ispravno!");
@@ -37,7 +37,7 @@ namespace railway
             }
             else
             {
-                string password = passwordBox1.Password;
+                string password = PasswordBox.Password;
                 LoginDTO dto = new LoginDTO { username = username, password = password };
                 User u = LoginService.logIn(dto);
                 if (u == null)
