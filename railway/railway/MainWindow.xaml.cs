@@ -26,7 +26,7 @@ namespace railway
     public partial class MainWindow : Window
     {
         private List<Window> openedWindows = new List<Window>();
-        private GetTicketPage getTicketPage;
+        //private GetTicketPage getTicketPage;
         public MainWindow()
         {
             InitializeComponent();

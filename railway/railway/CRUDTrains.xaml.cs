@@ -2,6 +2,7 @@
 using railway.services;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,9 +19,12 @@ namespace railway
     /// <summary>
     /// Interaction logic for CRUDTrains.xaml
     /// </summary>
-    public partial class CRUDTrains : Page
+    public partial class CRUDTrains : Page,INotifyPropertyChanged
     {
         List<TrainDTO> dto;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public CRUDTrains()
         {
             InitializeComponent();
@@ -38,6 +42,11 @@ namespace railway
         }
 
         private void delete_clicked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void save_clicked(object sender, RoutedEventArgs e)
         {
 
         }

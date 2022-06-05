@@ -8,20 +8,18 @@
         xmlns:cmd="clr-namespace:railway.Commands"
         mc:Ignorable="d"
         Closing="Window_Closing"
-        
-        Title="MainWindow" Height="450" Width="800">
+        Width="{x:Static SystemParameters.PrimaryScreenWidth}"
+        Height="{x:Static SystemParameters.PrimaryScreenHeight}"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized"
+        Title="MainWindow" >
 
     <Window.CommandBindings>
         <CommandBinding Command="cmd:RoutedCommands.CloseWindow" CanExecute="CloseWindow_CanExecute" Executed="CloseWindow_Executed"></CommandBinding>
     </Window.CommandBindings>
-    <Grid Background="Red">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
+    <Grid>
+      
+        
 
         <Frame x:Name="page" NavigationUIVisibility="Hidden" Margin="2,2,2,2" Grid.ColumnSpan="2"/>
 

@@ -21,8 +21,8 @@ namespace railway.services
                 foreach(Train t in allTrains)
                 {
                     TrainDTO dto = new TrainDTO { Color = t.Color, Name = t.Name };
-                    Dictionary<string, int> typeNumberSeats = getSeats(t);
-                    dto.typeNumberSeats = typeNumberSeats;
+                    getSeats(t,dto);
+                    getSeatPrices(t, dto);
                     List<string> drivingLines = getDrivingLines(t);
                     dto.drivingLineName = drivingLines;
                     allDTO.Add(dto);
@@ -31,9 +31,9 @@ namespace railway.services
             return allDTO;
         }
 
-        public static Dictionary<string, int> getSeats(Train t)
+        public static void getSeats(Train t, TrainDTO dto)
         {
-            Dictionary<string, int> dict = new Dictionary<string, int>();
+
             int vip = 0;
             int regular = 0;
             int bussines = 0;
@@ -53,13 +53,32 @@ namespace railway.services
                     else
                         regular++;
                 }
-
-                dict.Add("VIP", vip);
-                dict.Add("Biznis", bussines);
-                dict.Add("Regularan", regular);
+                dto.numberBUSINESS = bussines;
+                dto.numberREGULAR = regular;
+                dto.numberVIP = vip;
 
             }
-            return dict;
+          
+        }
+
+        public static void getSeatPrices(Train t, TrainDTO dto)
+        {
+            List<Seat> seats = t.Seats;
+            foreach (Seat s in seats)
+            {
+                if(s.SeatType.Name == "VIP")
+                {
+                    dto.priceVIP = s.SeatType.Price;
+                }
+                else if(s.SeatType.Name == "REGULAR")
+                {
+                    dto.priceREGULAR = s.SeatType.Price;
+                }
+                else
+                {
+                    dto.priceBUSINESS = s.SeatType.Price;
+                }
+            }
         }
 
         public static List<string> getDrivingLines(Train t)

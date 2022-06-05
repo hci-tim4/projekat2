@@ -10,6 +10,10 @@
     <PackageReference Include="EntityFramework" Version="6.4.4" />
     <PackageReference Include="GMap.NET.Core" Version="2.1.2" />
     <PackageReference Include="GMap.NET.WinPresentation" Version="2.1.2" />
+
+    <PackageReference Include="MaterialDesignColors" Version="2.0.6" />
+    <PackageReference Include="MaterialDesignThemes" Version="4.5.0" />
+
     <PackageReference Include="LiveCharts" Version="0.9.7" />
     <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="ResponsiveGrid" Version="0.3.3" />
