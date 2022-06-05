@@ -6,6 +6,7 @@ using railway.database;
 using railway.defineDrivingLine;
 using railway.model;
 using System.Linq;
+using System.Windows.Input;
 
 namespace railway.CRUDDrivingLine
 {
@@ -52,6 +53,16 @@ namespace railway.CRUDDrivingLine
                     viewDrivingLines.setDrivingLines(new RailwayContext());
                     this.Close();
                 }
+            }
+        }
+
+        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            IInputElement focusedControl = FocusManager.GetFocusedElement(Application.Current.Windows[2]);
+            if (focusedControl is DependencyObject)
+            {
+                string str = HelpProvider.GetHelpKey((DependencyObject)focusedControl);
+                HelpProvider.ShowHelp(str, this);
             }
         }
     }

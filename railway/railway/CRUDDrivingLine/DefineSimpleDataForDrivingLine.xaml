@@ -5,7 +5,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:railway.CRUDDrivingLine"
         mc:Ignorable="d"
+        xmlns:l="clr-namespace:railway"
         Title="DefineSimpleDataForDrivingLine" ResizeMode="NoResize" Height="200" Width="500">
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
+    </Window.CommandBindings>
     <Window.Resources>
         <Style TargetType="{x:Type Control}" x:Key="baseStyle">
             <Setter Property="FontSize" Value="20" />
@@ -34,20 +38,20 @@
             <Label>Datum početka važenja: </Label>
         </StackPanel>
         <StackPanel Grid.Row="0" Grid.Column="1" MinWidth="200">
-            <TextBox x:Name="drivingLineName"></TextBox>
-            <ComboBox FontSize="20" Margin="2" x:Name="trainNameCmb" Grid.Column="1" Grid.Row="1" SelectedValuePath="TrainName" Text="{Binding Path=trains}" IsEditable="True" DisplayMemberPath="Name">
+            <TextBox x:Name="drivingLineName" l:HelpProvider.HelpKey="newDrivingLineName"></TextBox >
+            <ComboBox FontSize="20" Margin="2" x:Name="trainNameCmb" Grid.Column="1" Grid.Row="1" SelectedValuePath="TrainName" Text="{Binding Path=trains}" IsEditable="True" DisplayMemberPath="Name" l:HelpProvider.HelpKey="newDravingLineTrain">
                 <ComboBox.Style>
                     <Style>
                         <EventSetter Event="TextBox.TextChanged" Handler="TrainNameChanged_TextChanged" />
                     </Style>
                 </ComboBox.Style>
             </ComboBox>
-            <DatePicker SelectedDate="{Binding Path=startSelectedDate, Mode=TwoWay}" x:Name="startDate" FirstDayOfWeek="Monday"/>
+            <DatePicker SelectedDate="{Binding Path=startSelectedDate, Mode=TwoWay}" x:Name="startDate" FirstDayOfWeek="Monday" l:HelpProvider.HelpKey="startDateNewLine"/>
         </StackPanel>
         
         <DockPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" MinWidth="300">
-            <Button Click="SaveDrivingLine_OnClick" x:Name="saveDrivingLine">Sačuvaj</Button>
-            <Button Click="SaveDrivingLineAndDefineSchedule_OnClick" x:Name="saveDrivingLineAndDefineSchedule">Sačuvaj i definiši red vožnje</Button>
+            <Button Click="SaveDrivingLine_OnClick" x:Name="saveDrivingLine" l:HelpProvider.HelpKey="btnSaveNewDrivingLine">Sačuvaj</Button>
+            <Button Click="SaveDrivingLineAndDefineSchedule_OnClick" x:Name="saveDrivingLineAndDefineSchedule" l:HelpProvider.HelpKey="btnSaveDefineNewDrivingLine">Sačuvaj i definiši red vožnje</Button>
         </DockPanel>
     </Grid>
 </Window>

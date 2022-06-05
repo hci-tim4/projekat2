@@ -5,8 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:railway.CRUDDrivingLine"
              mc:Ignorable="d"
+             xmlns:l="clr-namespace:railway"
              xmlns:gmaps="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
+    </UserControl.CommandBindings>
     <UserControl.Resources>
         <Style TargetType="{x:Type Control}" x:Key="baseStyle">
             <Setter Property="FontSize" Value="20" />
@@ -36,21 +40,21 @@
                     <Image Source="https://toppng.com/uploads/preview/back-arrow-icon-11550122033egydzyhmwy.png"></Image>
                 </Button>
             
-                <Button x:Name="backToDragAndDrop" Click="BackToDragAndDrop_OnClick" DockPanel.Dock="Right" HorizontalAlignment="Right" MaxWidth="100" MaxHeight="30" ToolTip="Prevuci pusti pristup">Prevučenje</Button>
+                <Button x:Name="backToDragAndDrop" Click="BackToDragAndDrop_OnClick" DockPanel.Dock="Right" HorizontalAlignment="Right" MaxWidth="100" MaxHeight="30" ToolTip="Prevuci pusti pristup" l:HelpProvider.HelpKey="dragDropWay">Prevlačenje</Button>
             </DockPanel>
-            <Button Content="Sačuvaj" MaxWidth="120" HorizontalAlignment="Right" x:Name="saveDrivingLine" Click="SaveDrivingLine_OnClick"></Button>
+            <Button Content="Sačuvaj" MaxWidth="120" HorizontalAlignment="Right" x:Name="saveDrivingLine" Click="SaveDrivingLine_OnClick" l:HelpProvider.HelpKey="btnSaveNewDrivingLine"></Button>
             
         </StackPanel>
         
         <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" MaxHeight="30" VerticalAlignment="Top" HorizontalAlignment="Right">
-            <ComboBox FontSize="20" x:Name="stationsCmb" DisplayMemberPath="Name" MinWidth="200" IsEditable="True">
+            <ComboBox FontSize="20" x:Name="stationsCmb" DisplayMemberPath="Name" MinWidth="200" IsEditable="True" l:HelpProvider.HelpKey="stationChoice">
                 <ComboBox.Style>
                     <Style>
                         <EventSetter Event="TextBox.TextChanged" Handler="EventSetter_OnHandler" />
                     </Style>
                 </ComboBox.Style>
             </ComboBox>
-            <Button Content="Dodaj" MinWidth="60" x:Name="addStation" Click="AddStation_OnClick"></Button>
+            <Button Content="Dodaj" MinWidth="60" x:Name="addStation" Click="AddStation_OnClick" l:HelpProvider.HelpKey="btnAddStationInDrivingLine"></Button>
         </StackPanel>
         
         <gmaps:GMapControl Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" x:Name="mapView" Loaded="map_Loaded"/>

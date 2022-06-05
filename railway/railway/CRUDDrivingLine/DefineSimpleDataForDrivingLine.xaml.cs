@@ -9,6 +9,7 @@ using System.Linq;
 using System.Windows.Controls;
 using railway.exception;
 using railway.services;
+using System.Windows.Input;
 
 namespace railway.CRUDDrivingLine
 {
@@ -101,5 +102,16 @@ namespace railway.CRUDDrivingLine
 
             trainNameCmb.IsDropDownOpen = true;
             }
+
+
+        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            IInputElement focusedControl = FocusManager.GetFocusedElement(Application.Current.Windows[0]);
+            if (focusedControl is DependencyObject)
+            {
+                string str = HelpProvider.GetHelpKey((DependencyObject)focusedControl);
+                HelpProvider.ShowHelp(str, this);
+            }
         }
+    }
 }
