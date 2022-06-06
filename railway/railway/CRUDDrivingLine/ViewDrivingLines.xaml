@@ -5,7 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:railway.defineDrivingLine"
              mc:Ignorable="d"
+             xmlns:l="clr-namespace:railway"
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
+    </UserControl.CommandBindings>
     <UserControl.Resources>
         <Style TargetType="{x:Type Control}" x:Key="baseStyle">
             <Setter Property="FontSize" Value="20" />
@@ -33,8 +37,8 @@
             <DockPanel>
                 <Label DockPanel.Dock="Left"> Mrežne linije</Label>
                 <Button MaxWidth="30" MaxHeight="30" DockPanel.Dock="Right" HorizontalAlignment="Right" x:Name="addDrivingLine"
-                        ToolTip="Dodaj mrežnu liniju" Click="AddDrivingLine_OnClick">
-                    <Image Source="https://www.iconpacks.net/icons/1/free-plus-icon-321-thumb.png"></Image>
+                        ToolTip="Dodaj mrežnu liniju" Click="AddDrivingLine_OnClick" l:HelpProvider.HelpKey="btnAddDrivingLine">
+                    <Image Source="https://www.iconpacks.net/icons/1/free-plus-icon-321-thumb.png" l:HelpProvider.HelpKey="btnAddDrivingLine"></Image>
                     
                 </Button>
             </DockPanel>
@@ -60,7 +64,7 @@
                 <DataGridTemplateColumn Width="Auto" Header="">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button x:Name="deleteDrivingLine" ToolTip="Podesite krajnji datum važenja" Tag="{Binding Path=DrivingLineId}" Click="DeleteDrivingLine_OnClick" Content="Krajnji datum"/>
+                                <Button x:Name="deleteDrivingLine" ToolTip="Podesite krajnji datum važenja" Tag="{Binding Path=DrivingLineId}" Click="DeleteDrivingLine_OnClick" Content="Krajnji datum" l:HelpProvider.HelpKey="btnDeleteDrivingLine"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -86,23 +90,23 @@
             <Label Grid.Column="0" Grid.Row="2">Datum početka važenja:</Label>
             <Label Grid.Column="0" Grid.Row="3">Datum kraja važenja:</Label>
             
-            <TextBox Grid.Column="1" Grid.Row="0" Text="" x:Name="newName"></TextBox>
-            <ComboBox FontSize="20" Margin="2,2,2,2" x:Name="trainNameCmb" Grid.Column="1" Grid.Row="1" SelectedValuePath="TrainName" Text="{Binding Path=trains}" IsEditable="True" DisplayMemberPath="Name">
+            <TextBox Grid.Column="1" Grid.Row="0" Text="" x:Name="newName" l:HelpProvider.HelpKey="drivingLineName"></TextBox>
+            <ComboBox FontSize="20" Margin="2,2,2,2" x:Name="trainNameCmb" Grid.Column="1" Grid.Row="1" SelectedValuePath="TrainName" Text="{Binding Path=trains}" IsEditable="True" DisplayMemberPath="Name" l:HelpProvider.HelpKey="changeTrainName">
                 <ComboBox.Style>
                     <Style>
-                        <EventSetter Event="TextBox.TextChanged" Handler="TrainNameChanged_TextChanged" />
+                        <EventSetter Event="TextBox.TextChanged" Handler="TrainNameChanged_TextChanged"/>
                     </Style>
                 </ComboBox.Style>
             </ComboBox>
-            <DatePicker Grid.Column="1" Grid.Row="2" x:Name="startDate" FirstDayOfWeek="Monday"/>
-            <DatePicker IsEnabled="False" Grid.Column="1" Grid.Row="3" x:Name="endDate" FirstDayOfWeek="Monday"/>
+            <DatePicker Grid.Column="1" Grid.Row="2" x:Name="startDate" FirstDayOfWeek="Monday" l:HelpProvider.HelpKey="startDate"/>
+            <DatePicker IsEnabled="False" Grid.Column="1" Grid.Row="3" x:Name="endDate" FirstDayOfWeek="Monday" l:HelpProvider.HelpKey="endDate"/>
 
             <!--ADD STANICU -->
             
             <!-- DATE OD KAD VAZI NOVI DRIVING LINE -->
             <!-- PROVERA DA LI IMA REZERVACIJA PRE TOGA -->
             
-            <Button x:Name="saveChanges" Click="SaveChanges_OnClick" Grid.Column="1" Grid.Row="4" ToolTip="Sačuvaje izmenjene podatke o mrežnoj liniji">Sačuvaj izmene</Button>
+            <Button x:Name="saveChanges" Click="SaveChanges_OnClick" Grid.Column="1" Grid.Row="4" ToolTip="Sačuvaje izmenjene podatke o mrežnoj liniji" l:HelpProvider.HelpKey="btnChangeDrivingLine">Sačuvaj izmene</Button>
         </Grid>
     </Grid>
 </UserControl>

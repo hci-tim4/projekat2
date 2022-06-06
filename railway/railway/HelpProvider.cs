@@ -1,8 +1,10 @@
 ﻿using railway.managerSchedule;
+using railway.CRUDDrivingLine;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
+using railway.defineDrivingLine;
 
 namespace railway
 {
@@ -44,5 +46,36 @@ namespace railway
             hh.Show();
         }
 
+        public static void ShowHelp(string key, ViewDrivingLines originator)
+        {
+            HelpViewer hh = new HelpViewer(key, originator);
+            hh.Show();
+        }
+
+        public static void ShowHelp(string key, DefineSimpleDataForDrivingLine originator)
+        {
+            HelpViewer hh = new HelpViewer(key, originator);
+            hh.Show();
+        }
+
+        public static void ShowHelp(string key, DefineEndDateForDrivingLine originator)
+        {
+            HelpViewer hh = new HelpViewer(key, originator);
+            hh.Show();
+        }
+
+        public static void ShowHelp(string key, AddDrivingLineSimple originator)
+        {
+            HelpViewer hh = new HelpViewer(key, originator);
+            hh.Show();
+        }
+
+        public static void ShowHelp(string key, AddDrivingLine originator)
+        {
+            HelpViewer hh = new HelpViewer(key, originator);
+            hh.Show();
+        }
+
     }
+    
 }

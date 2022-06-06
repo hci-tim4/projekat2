@@ -39,7 +39,7 @@ namespace railway.database
 
                 db.Database.ExecuteSqlCommand("Insert into Stations Values('Novi Sad', 45.25500000, 19.84472222)");
                 db.Database.ExecuteSqlCommand("Insert into Stations Values('Subotica', 46.10000000, 19.66361111)");
-                db.Database.ExecuteSqlCommand("Insert into Stations Values('Šid', 48.27472222, 19.88000000)");
+                db.Database.ExecuteSqlCommand("Insert into Stations Values('Šid', 45.127149, 19.22785)");
                 db.Database.ExecuteSqlCommand("Insert into Stations Values('Beograd', 44.81583333, 20.45944444)");
                 db.Database.ExecuteSqlCommand("Insert into Stations Values('Zrenjanin', 45.38222222, 20.39055556)");
                 db.Database.ExecuteSqlCommand("Insert into Stations Values('Šabac', 44.75583333, 19.69416667)");

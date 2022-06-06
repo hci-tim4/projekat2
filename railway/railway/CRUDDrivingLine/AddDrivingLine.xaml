@@ -5,8 +5,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:gmaps="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
         xmlns:local="clr-namespace:railway.CRUDDrivingLine"
+        xmlns:l="clr-namespace:railway"
         mc:Ignorable="d">
-    
+    <UserControl.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
+    </UserControl.CommandBindings>
     <UserControl.Resources>
         <Style TargetType="{x:Type Control}" x:Key="baseStyle">
             <Setter Property="FontSize" Value="20" />
@@ -75,12 +78,12 @@
                 <Button DockPanel.Dock="Left" ToolTip="Nazad na poslednji prozor" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="0" Click="ButtonBase_OnClick" MaxHeight="50px" MinHeight="50" MinWidth="50" MaxWidth="50">
                     <Image Source="https://toppng.com/uploads/preview/back-arrow-icon-11550122033egydzyhmwy.png"></Image>
                 </Button>
-            
+
                 <Button DockPanel.Dock="Right" HorizontalAlignment="Right" MaxWidth="100" MaxHeight="30" ToolTip="Ručna definicija mrežne linije"
-                        x:Name="changeDrivingLineDefView" Click="ChangeDrivingLineDefView_OnClick">Promeni</Button>
+                        x:Name="changeDrivingLineDefView" Click="ChangeDrivingLineDefView_OnClick" l:HelpProvider.HelpKey="goToSimpeWay">Promeni</Button>
             </DockPanel>
-            <Button Content="Sačuvaj" MaxWidth="120" HorizontalAlignment="Right" x:Name="saveDrivingLine" Click="SaveDrivingLine_OnClick"></Button>
-            <TextBox ToolTip="Pretražuj po imenu" KeyUp="searchForStation" x:Name="searchForStationTextBox">
+            <Button Content="Sačuvaj" MaxWidth="120" HorizontalAlignment="Right" x:Name="saveDrivingLine" Click="SaveDrivingLine_OnClick" l:HelpProvider.HelpKey="btnSaveNewDrivingLine"></Button>
+            <TextBox ToolTip="Pretražuj po imenu" KeyUp="searchForStation" x:Name="searchForStationTextBox"  l:HelpProvider.HelpKey="searchStation">
                 
             </TextBox>
         </StackPanel>
@@ -89,10 +92,10 @@
                   PreviewMouseLeftButtonDown="ListView_PreviewMouseLeftButtonDown" MouseMove="ListView_MouseMove"
                   ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible"
                   MaxHeight="700" MinHeight="200">
-            <ListView.ItemTemplate>
+            <ListView.ItemTemplate  > 
                 <DataTemplate>
-                    <WrapPanel>
-                        <TextBlock Text="{Binding Name}" FontWeight="Bold" />
+                    <WrapPanel l:HelpProvider.HelpKey="dragDrop">
+                        <TextBlock Text="{Binding Name}" FontWeight="Bold" l:HelpProvider.HelpKey="dragDrop"/>
                     </WrapPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>   

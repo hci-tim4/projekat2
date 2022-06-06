@@ -31,8 +31,13 @@ namespace railway
         {
             InitializeComponent();
 
+<<<<<<< HEAD
                  //FillDatabase fd = new FillDatabase();
                 //  fd.fill();
+=======
+              //   FillDatabase fd = new FillDatabase();
+               //   fd.fill();
+>>>>>>> 82a276f8ecfb11ff21f63a41d1ee433771454d7e
 
            // FillDatabase fd = new FillDatabase();
             //fd.fill();
