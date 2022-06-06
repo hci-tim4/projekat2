@@ -3,10 +3,18 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:railway"
         mc:Ignorable="d"
-        Title="ManagerHomePage" Height="450" Width="800">
-    <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
+        Title="ManagerHomePage" 
+        Width="{x:Static SystemParameters.PrimaryScreenWidth}"
+        Height="{x:Static SystemParameters.PrimaryScreenHeight}"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized"
+        MinWidth="500"
+        MinHeight="450"
+        >
+    <!--<ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
         <Grid>
 
 
@@ -37,7 +45,7 @@
                 </TabControl.Resources>
 
                 <TabItem Header="Red vožnje" Height="50"  Width="150" >
-                    <!--  <Label Content="Content goes here..." />   -->
+                   
                     <Frame x:Name="page1" NavigationUIVisibility="Hidden" Margin="2,2,2,2"  Grid.Row="0" Grid.ColumnSpan="2"/>
                 </TabItem>
                 <TabItem Header="Vozne linije" Height="50" Width="150" >
@@ -57,5 +65,53 @@
             </TabControl>
 
         </Grid>
-    </ScrollViewer>
+    </ScrollViewer>-->
+
+
+    <Grid Background="#FFEEEEEE">
+
+        <Grid Margin="250 55 0 0">
+            <!--<Grid x:Name="GridPrincipal" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
+            <Frame x:Name="page" Margin="0,-51,0,0"></Frame>
+        </Grid>
+
+        <Grid Width="250" HorizontalAlignment="Left" Background="DodgerBlue">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="13*"/>
+                <ColumnDefinition Width="12*"/>
+            </Grid.ColumnDefinitions>
+            <materialDesign:TransitioningContent x:Name="TrainsitionigContentSlide" OpeningEffect="{materialDesign:TransitionEffect SlideInFromLeft}" Grid.ColumnSpan="1">
+                <Grid x:Name="GridCursor" Margin="0,100,0,0" Background="White" Width="10" HorizontalAlignment="Left" Height="50" VerticalAlignment="Top"/>
+            </materialDesign:TransitioningContent>
+            <ListView x:Name="ListViewMenu" Margin="0,100,0,0" Foreground="White" FontWeight="Bold" SelectionChanged="ListViewMenu_SelectionChanged" FontFamily="Champagne &amp; Limousines" FontSize="18"  SelectedIndex="0" Grid.ColumnSpan="2">
+                <ListViewItem Height="50">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Timetable" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
+                        <TextBlock Text="Red vožnje" FontSize="17" VerticalAlignment="Center" Margin="10 0"/>
+                    </StackPanel>
+                </ListViewItem>
+                <ListViewItem Height="50">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Map" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
+                        <TextBlock Text="Vozne linije" FontSize="17" VerticalAlignment="Center" Margin="10 0"/>
+                    </StackPanel>
+                </ListViewItem>
+                <ListViewItem Height="50">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Train" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
+                        <TextBlock Text="Vozovi" FontSize="17" VerticalAlignment="Center" Margin="10 0"/>
+                    </StackPanel>
+                </ListViewItem>
+                <ListViewItem Height="50">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Report" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
+                        <TextBlock Text= "Izveštaji" FontSize="17" VerticalAlignment="Center" Margin="10 0"/>
+                    </StackPanel>
+                </ListViewItem>
+
+
+            </ListView>
+        </Grid>
+
+    </Grid>
 </Window>

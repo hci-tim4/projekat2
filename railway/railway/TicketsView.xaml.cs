@@ -44,7 +44,7 @@ namespace railway
         {
             ttype = TicketType.Bought;
             dto = TicketService.getTickets(loggedUser.Id, ttype);
-
+            resetData();
             this.DataContext = dto;
             dataGrid.ItemsSource = null;
             dataGrid.ItemsSource = dto;
@@ -53,16 +53,23 @@ namespace railway
         {
             ttype = TicketType.Reserved;
             dto = TicketService.getTickets(loggedUser.Id, ttype);
-
+            resetData();
             this.DataContext = dto;
             dataGrid.ItemsSource = null;
             dataGrid.ItemsSource = dto;
         }
 
+        private void resetData()
+        {
+            valuetb.Text = "";
+            sortBy.SelectedItem = "";
+            searchParameter.SelectedItem = "";
+        }
         private void sortBy_SelectionChanged(object sender, RoutedEventArgs e)
         {
             string chosedSortBy = ((System.Windows.Controls.ComboBoxItem)sortBy.SelectedItem).Content as string;
-            switch (chosedSortBy)
+            
+            /*switch(chosedSortBy)
             {
                 case "Ceni karti":
                     sortByPrice();
@@ -70,11 +77,17 @@ namespace railway
                 case "Datumu vožnje":
                     sortByDate();
                     break;
+            }*/
+            if(chosedSortBy == "Ceni karte")
+            {
+                sortByPrice();
+               
             }
-            this.DataContext = dto;
-            dataGrid.ItemsSource = null;
-
-            dataGrid.ItemsSource = dto;
+            else
+            {
+                sortByDate();
+            }
+            
 
         }
 
@@ -83,6 +96,10 @@ namespace railway
             dto = (from t in dto
                    orderby t.Price
                    select t).ToList();
+            this.DataContext = dto;
+            dataGrid.ItemsSource = null;
+
+            dataGrid.ItemsSource = dto;
 
         }
 
@@ -92,11 +109,15 @@ namespace railway
             dto = (from t in dto
                    orderby t.DepatureDate
                    select t).ToList();
+            this.DataContext = dto;
+            dataGrid.ItemsSource = null;
+
+            dataGrid.ItemsSource = dto;
         }
 
         private void updateDataGrid()
         {
-
+            
         }
 
         private void searchBtn(object sender, RoutedEventArgs e)
@@ -120,6 +141,16 @@ namespace railway
 
                 return;
             }
+        }
+
+        private void resetBtn(object sender, RoutedEventArgs e)
+        {
+            resetData();
+            dto = TicketService.getTickets(loggedUser.Id, ttype);
+
+            this.DataContext = dto;
+            dataGrid.ItemsSource = dto;
+
         }
 
         private void getSearchedData(string param, string value)

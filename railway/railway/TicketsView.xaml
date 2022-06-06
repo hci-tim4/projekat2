@@ -3,11 +3,14 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+       xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
       xmlns:local="clr-namespace:railway"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="TicketsView">
-    <Grid Background="Red">
+
+    <Grid >
 
 
 
@@ -22,33 +25,44 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="6*"/>
         </Grid.RowDefinitions>
-        <Label Name="searchParameterlbl" Content="Odaberite parametar pretrage" ></Label>
-        <ComboBox x:Name="searchParameter" Grid.Row="0" Grid.Column="0" Width="140" Height="25"
-                          IsReadOnly="True"  HorizontalAlignment="Left" SelectedItem="">
-            <ComboBoxItem>Polazištu</ComboBoxItem>
-            <ComboBoxItem>Odredištu</ComboBoxItem>
-        </ComboBox>
-        <Label Content="Unesite vrednost parametra pretrage" Grid.Row="0" Grid.Column="1"></Label>
-        <TextBox Name="valuetb" Height="25" Width="200" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="1"></TextBox>
-        <Button  Height="25" Width="100" VerticalAlignment="Bottom" Grid.Row="0" Grid.Column="1" Click="searchBtn">Pretraži</Button>
-        <Label Name="sortlbl" Content="Sortiranje po:" Grid.Row="0" Grid.Column="2"></Label>
-        <ComboBox x:Name="sortBy" Grid.Row="0" Grid.Column="2" Width="140" Height="25"
-                          IsReadOnly="True"  HorizontalAlignment="Left" SelectionChanged="sortBy_SelectionChanged">
-            <ComboBoxItem>Ceni karte</ComboBoxItem>
-            <ComboBoxItem>Datumu vožnje</ComboBoxItem>
 
-        </ComboBox>
-        <RadioButton  Name="buyrb" GroupName="Tickets" Grid.Row="1" VerticalAlignment="Top" FontSize="18" IsChecked="True">Kupljene karte</RadioButton >
-        <RadioButton Unchecked="buy_checked" Checked="reserve_checked" Name="reserverb" GroupName="Tickets" Grid.Row="1" VerticalAlignment="Bottom" FontSize="18" IsChecked="False">Rezervisane karte</RadioButton >
-        <DataGrid  ItemsSource="{Binding Path=dto }" AlternatingRowBackground="Gainsboro" AlternationCount="1"
-                    Width="783" ColumnWidth="87"  
+      
+            <ComboBox x:Name="searchParameter" Width="200" Height="40" Grid.Row="0" Grid.Column="0" FontSize="20"
+                          IsReadOnly="True"  SelectedItem="" materialDesign:HintAssist.Hint="Parametar pretrage" HorizontalAlignment="Center">
+                <ComboBoxItem>Polazištu</ComboBoxItem>
+                <ComboBoxItem>Odredištu</ComboBoxItem>
+            </ComboBox>
+
+        <TextBox  Width="300" Height="50"  Name="valuetb" materialDesign:HintAssist.Hint="Vrednost parametra pretrage" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontFamily="Champagne &amp; Limousines" FontSize="18" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="1" />
+       
+        <Button  Margin="10" Height="30" Width="100"   Click="searchBtn"  Grid.Row="0" Grid.Column="1"  VerticalAlignment="Bottom"  HorizontalAlignment="Left">
+            <StackPanel Orientation="Horizontal">
+
+                <materialDesign:PackIcon Kind="Search" Foreground="White" Width="20" Height="20" />
+                <TextBlock Text="Pretraži" Foreground="White"/>
+            </StackPanel>
+             
+        </Button>
+        <Button  Margin="10" Height="30" Width="100"   Click="resetBtn" Content="Resetuj"  Grid.Row="0" Grid.Column="1"  VerticalAlignment="Bottom"  HorizontalAlignment="Right"/>
+        <ComboBox x:Name="sortBy"  Width="200" Height="40" HorizontalAlignment="Center"  FontSize="20"
+                          IsReadOnly="True" SelectionChanged="sortBy_SelectionChanged" materialDesign:HintAssist.Hint="Sortiraj po" Grid.Row="0" Grid.Column="2" >
+                <ComboBoxItem Content="Ceni karte"/>
+                <ComboBoxItem Content="Datumu vožnje"/>
+
+            </ComboBox>
+            
+       
+        <RadioButton  Name="buyrb" GroupName="Tickets" VerticalAlignment="Top" Grid.Row="1" FontSize="18" IsChecked="True">Kupljene karte</RadioButton >
+        <RadioButton Unchecked="buy_checked" Checked="reserve_checked" Name="reserverb" Grid.Row="1"  GroupName="Tickets"  VerticalAlignment="Center" FontSize="18" IsChecked="False">Rezervisane karte</RadioButton >
+        <DataGrid  ItemsSource="{Binding Path=dto }" 
+                 ColumnWidth="*" Width="1100" Height="400"
                   SelectionUnit="FullRow" SelectionMode="Single" AutoGenerateColumns="False"
                    IsReadOnly="True" Name="dataGrid" ScrollViewer.CanContentScroll="True"
                     ScrollViewer.HorizontalScrollBarVisibility="Auto"
                     ScrollViewer.VerticalScrollBarVisibility="Auto"
-                   Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Background="#EEE2DC" CanUserSortColumns="False" RenderTransformOrigin="0.997,0.431">
+                   Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Background="DodgerBlue" CanUserSortColumns="False">
 
-            <DataGrid.Columns>
+            <DataGrid.Columns >
                 <DataGridTextColumn Header="Datum" Binding="{Binding Path=DepatureDate }"/>
                 <DataGridTextColumn Header="Vreme polaska" Binding="{Binding Path=ArrivalTime }"/>
                 <DataGridTextColumn Header="Polazište" Binding="{Binding Path=DepartureStationName}"/>
@@ -58,7 +72,17 @@
                 <DataGridTextColumn Header="Red" Binding="{Binding Path=row }"/>
                 <DataGridTextColumn Header="Broj sedišta" Binding="{Binding Path=col}"/>
                 <DataGridTextColumn Header="Cena" Binding="{Binding Path=Price}"/>
+
             </DataGrid.Columns>
+
+
+            <DataGrid.RowStyle>
+                <Style TargetType="{x:Type DataGridRow}" >
+                    <Setter Property="BorderBrush" Value="Transparent" />
+                    <Setter Property="BorderThickness" Value="1" />
+                </Style>
+            </DataGrid.RowStyle>
+
 
         </DataGrid>
 

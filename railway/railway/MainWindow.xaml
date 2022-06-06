@@ -8,11 +8,13 @@
         xmlns:cmd="clr-namespace:railway.Commands"
         mc:Ignorable="d"
         Closing="Window_Closing"
+        Icon="C:\Users\Anastasija\Desktop\hci2\projekat2\railway\railway\icon\trainIcon.png"
+        Title="ŽELEZNICE SRBIJE" 
         Width="{x:Static SystemParameters.PrimaryScreenWidth}"
         Height="{x:Static SystemParameters.PrimaryScreenHeight}"
         WindowStartupLocation="CenterScreen"
         WindowState="Maximized"
-        Title="MainWindow" >
+       >
 
     <Window.CommandBindings>
         <CommandBinding Command="cmd:RoutedCommands.CloseWindow" CanExecute="CloseWindow_CanExecute" Executed="CloseWindow_Executed"></CommandBinding>

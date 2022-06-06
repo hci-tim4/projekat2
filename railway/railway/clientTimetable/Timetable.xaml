@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:railway.clientTimetable"
+       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       MinWidth="1000"
       Title="Timetable" >
@@ -18,9 +19,10 @@
             <ColumnDefinition Width="4*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-            <StackPanel  Grid.Row="0" Grid.Column="0"  Orientation="Vertical"  Background="#be4249">
-                <Label FontSize="20"  Content="Polazište: " VerticalAlignment="Center" HorizontalAlignment="Center" Width="100" ></Label>
-                <ComboBox ToolTip="Unosite polazištu stanicu" x:Name="cmbDeparture" ItemsSource="{Binding Stations}" DisplayMemberPath="Name" IsEditable="True"  Width="120"  FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" >
+            <StackPanel  Grid.Row="0" Grid.Column="0"  Orientation="Vertical" VerticalAlignment="Center"  >
+                
+            <Label Foreground="DodgerBlue" HorizontalAlignment="Center" FontSize="20" FontWeight="Bold">RED VOŽNJE</Label>
+            <ComboBox  Margin="20" ToolTip="Unesite polazišnu stanicu" x:Name="cmbDeparture" ItemsSource="{Binding Stations}" DisplayMemberPath="Name" IsEditable="True"  Width="150"  FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center"  materialDesign:HintAssist.Hint="Polazište" FontWeight="Bold" Foreground="DodgerBlue">
                     <ComboBox.Style>
                         <Style>
                             <EventSetter Event="TextBox.TextChanged" Handler="TextBox_TextChanged1" />
@@ -28,20 +30,17 @@
                     </ComboBox.Style>
                 </ComboBox>
 
-                <Label Margin="2,2,2,2" Padding="2" FontSize="20" Content="Odredište: " VerticalAlignment="Center" HorizontalAlignment="Center" Width="100"></Label>
-
-                <ComboBox ToolTip="Unosite odredištu stanicu" x:Name="cmbArrival" ItemsSource="{Binding Stations}" DisplayMemberPath="Name" IsEditable="True" Width="120" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <ComboBox.Style>
-                        <Style>
-                            <EventSetter Event="TextBox.TextChanged" Handler="TextBox_TextChanged2" />
-                        </Style>
-                    </ComboBox.Style>
-                </ComboBox>
-
-                <Label Margin="2,2,2,2" Padding="2" FontSize="20" Content="Datum: " VerticalAlignment="Center" HorizontalAlignment="Center" Width="100"></Label>
-                <Viewbox HorizontalAlignment="Center" Width="150">
-                    <DatePicker ToolTip="Izaberite datum" SelectedDate="{Binding Path=date, Mode=TwoWay}"  x:Name="startDate" FirstDayOfWeek="Monday" SelectedDateChanged="StartDate_SelectedDateChanged" Text="SEEEEELEEECT" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                </Viewbox>
+            <ComboBox ToolTip="Unesite odredištu stanicu" x:Name="cmbArrival" ItemsSource="{Binding Stations}" DisplayMemberPath="Name" IsEditable="True" Width="150" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" materialDesign:HintAssist.Hint="Odredište" FontWeight="Bold" Foreground="DodgerBlue">
+                <ComboBox.Style>
+                    <Style>
+                        <EventSetter Event="TextBox.TextChanged" Handler="TextBox_TextChanged2" />
+                    </Style>
+                </ComboBox.Style>
+            </ComboBox>
+            <!--<Viewbox HorizontalAlignment="Center" Width="150">-->
+                   <!-- <DatePicker ToolTip="Izaberite datum" SelectedDate="{Binding Path=date, Mode=TwoWay}"  x:Name="startDate" FirstDayOfWeek="Monday" SelectedDateChanged="StartDate_SelectedDateChanged" Text="SEEEEELEEECT" VerticalAlignment="Center" HorizontalAlignment="Center" />-->
+            <DatePicker  Width ="150" Margin="20" materialDesign:HintAssist.Hint="Datum" SelectedDate="{Binding Path=date, Mode=TwoWay}"  x:Name="startDate" FirstDayOfWeek="Monday" SelectedDateChanged="StartDate_SelectedDateChanged" Foreground="DodgerBlue" Background="White" FontWeight="Bold" FontSize="20"></DatePicker>
+           <!-- </Viewbox>-->
                 <Button ToolTip="Pretražite postojeće linije" Margin="2,2,2,2" Padding="2" FontSize="20" Content="Pretraži" Click="btn_search" HorizontalAlignment="Center" VerticalAlignment="Center"></Button>
 
             </StackPanel>
@@ -51,39 +50,52 @@
 
 
 
-        <DataGrid  AlternatingRowBackground="Gainsboro" AlternationCount="1"
+        <DataGrid 
                    ItemsSource="{Binding Path=lines}" 
+                 
                   SelectionUnit="FullRow" SelectionMode="Single" AutoGenerateColumns="False"
                    IsReadOnly="True" Name="dataGrid" ScrollViewer.CanContentScroll="True"
                     ScrollViewer.HorizontalScrollBarVisibility="Auto"
                     ScrollViewer.VerticalScrollBarVisibility="Auto" FontSize="20"
-                   Grid.Row="0" Grid.Column="1"  Background="#EEE2DC" CanUserSortColumns="False" RenderTransformOrigin="0.997,0.431">
+                   Grid.Row="0" Grid.Column="1" Background="DodgerBlue" CanUserSortColumns="False" RenderTransformOrigin="0.997,0.431">
 
             <DataGrid.Columns>
-                <DataGridTextColumn  MinWidth="60" Header="Polazište" Binding="{Binding Path=Departure}"/>
-                <DataGridTextColumn MinWidth="60" Header="Odredište" Binding="{Binding Path=Arrival}"/>
-                <DataGridTextColumn MinWidth="60" Header="Date (dd.MM.yyyy. HH:mm)" Binding="{Binding Path=Date}"/>
+                <DataGridTextColumn Width="150"  Header="Polazište" Binding="{Binding Path=Departure}"/>
+                <DataGridTextColumn     Width="150" Header="Odredište" Binding="{Binding Path=Arrival}"/>
+                <!--<DataGridTextColumn MinWidth="60" Header="Datum" Binding="{Binding Path=Date}"/>-->
                 <!-- Binding="{Binding Path=Date, Converter={local:DateTimeToStringConverter}}"  -->
-                <DataGridTextColumn MinWidth="60" Header="Vreme" Binding="{Binding Path=Time}" />
-                <DataGridTextColumn MinWidth="60" Header="Voz" Binding="{Binding Path=Train}" />
-                <DataGridTemplateColumn Header="Uzmi">
+                <DataGridTextColumn Width="150" Header="Vreme" Binding="{Binding Path=Time}" />
+                <DataGridTextColumn Width="150" Header="Voz" Binding="{Binding Path=Train}" />
+                <DataGridTemplateColumn Width="350">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button ToolTip="Rezervišite ili kupite karte za liniju" x:Name="btnUzmi" Click="btnUzmi_Click" Content="Uzmi" Tag="{Binding Path=Id}"/>
+                            <StackPanel Orientation="Horizontal" Margin="5">
+                                <Button x:Name="buy"  Background="#FF44AFE3" Content="Kupi"
+                    Height="28" Width="100" Cursor="Hand"  HorizontalAlignment="Center"
+                    VerticalAlignment="Center" BorderThickness="0" Margin="5,0,1,0" Click="btnBuy_Click" Tag="{Binding Path = Id}">
+                                </Button>
+                                <Button x:Name="reserve"  Background="#198C19"  Content="Rezerviši" Tag="{Binding Path = Id}"
+                    Height="28" Width="100" Cursor="Hand"  HorizontalAlignment="Center"
+                    VerticalAlignment="Center" BorderThickness="0" Margin="5,0,1,0" Click="btnReserve_Click" >
+                                </Button>
+                                <Button x:Name="details"  Background="#FFA500" Content="Detalji" Tag="{Binding Path = Id}"
+                    Height="28" Width="100" Cursor="Hand"  HorizontalAlignment="Center"
+                    VerticalAlignment="Center"  BorderThickness="0" Margin="5,0,1,0" Click="btnDetalji_Click">
+                                </Button>
+                        </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn Header="Detalji">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button ToolTip="Vidite detalje za liniju" x:Name="btnDetalji"  Tag="{Binding Path=Id}" Click="btnDetalji_Click" Content="Detalji"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+             
 
             </DataGrid.Columns>
-
+            <DataGrid.RowStyle>
+                <Style TargetType="{x:Type DataGridRow}" >
+                    <Setter Property="BorderBrush" Value="Transparent" />
+                    <Setter Property="BorderThickness" Value="1" />
+                </Style>
+            </DataGrid.RowStyle>
         </DataGrid>
 
         <Frame x:Name="page" NavigationUIVisibility="Hidden" Margin="2,2,2,2"  Grid.Row="1"/>

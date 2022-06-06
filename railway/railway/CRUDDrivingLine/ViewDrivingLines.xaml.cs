@@ -23,11 +23,11 @@ namespace railway.defineDrivingLine
         private Station currentStation;
         private List<Station> stations;
         
-        public ViewDrivingLines(Frame frame)
+        public ViewDrivingLines()
         {
             InitializeComponent();
-            this.parentFrame = frame;
-            this.parentFrame.Content = this;
+            //this.parentFrame = frame;
+            //this.parentFrame.Content = this;
             this.DataContext = DrivingLines;
             using (var db = new RailwayContext())
             {

@@ -1,4 +1,5 @@
-﻿using railway.model;
+﻿using railway.clientTimetable;
+using railway.model;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -21,39 +22,79 @@ namespace railway
 
         string last = "";
         User loggedUser;
-        Page clientTimetable;
+
 
         public ClientHomePage(User user)
         {
             InitializeComponent();
             loggedUser = user;
-            clientTimetable = new clientTimetable.Timetable(loggedUser, page1);
+            //clientTimetable = new clientTimetable.Timetable(loggedUser, page1);
         }
-       private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string tabItem = ((sender as TabControl).SelectedItem as TabItem).Header as string;
 
             if (!tabItem.Equals(last))
-                {
+            {
                 switch (tabItem)
                 {
                     case "Red vožnje":
                         last = "Red vožnje";
-                        page1.Content = this.clientTimetable;
+                        //page1.Content = this.clientTimetable;
                         break;
 
                     case "Pregled karata":
                         last = "Pregled karata";
-                        page2.Content = new TicketsView(loggedUser);
+                        // page2.Content = new TicketsView(loggedUser);
                         break;
 
                     default:
                         return;
                 }
             }
+
+
         }
 
- 
 
+
+
+
+
+        private void ListViewMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int index = ListViewMenu.SelectedIndex;
+            MoveCursorMenu(index);
+
+            switch (index)
+            {
+                case 0:
+                    //GridPrincipal.Children.Clear();
+                    //GridPrincipal.Children.Add(new Timetable(loggedUser));
+                    page.Content = "";
+                    page.Content = new Timetable(loggedUser);
+
+                    break;
+                case 1:
+                    page.Content = "";
+                    page.Content = new TicketsView(loggedUser);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void MoveCursorMenu(int index)
+        {
+            TrainsitionigContentSlide.OnApplyTemplate();
+            GridCursor.Margin = new Thickness(0, (100 + (60 * index)), 0, 0);
+        }
+
+        private void btnLogOut_Click(object sender, RoutedEventArgs e)
+        {
+            Window login = new MainWindow();
+            App.Current.MainWindow.Close();
+            login.Show();
+        }
     }
 }

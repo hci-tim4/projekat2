@@ -33,10 +33,10 @@ namespace railway.clientTimetable
         private int id = 0;
         DrivingLineDTO currentSelected;
 
-        public Timetable(User user, Frame page1)
+        public Timetable(User user)
         {
             InitializeComponent();
-            parentFrame = page1;
+            //parentFrame = page1;
             cmbDeparture.ItemsSource = GetAllStations();
             cmbArrival.ItemsSource = GetAllStations();
             this.loggedUser = user;
@@ -399,7 +399,29 @@ namespace railway.clientTimetable
                 UntilStationScheduleId = dto.UntilStationScheduleId,
                 ScheduleId = dto.ScheduleId
             };
-            this.parentFrame.Content = new GetTicketPage(getTicketDTO, this.loggedUser, parentFrame, this);
+            //this.parentFrame.Content = new GetTicketPage(getTicketDTO, this.loggedUser, parentFrame, this);
+
+        }
+        private void btnReserve_Click(object sender, RoutedEventArgs e) { }
+
+        private GetTicketDTO getTicketDTO(int id)
+        {
+            DrivingLineDTO dto = findDTOById(id);
+            GetTicketDTO getTicketDTO = new GetTicketDTO
+            {
+                DrivingLineId = dto.drivingLine,
+                FromStationScheduleId = dto.FromStationScheduleId,
+                UntilStationScheduleId = dto.UntilStationScheduleId,
+                ScheduleId = dto.ScheduleId
+            };
+            return getTicketDTO;
+
+        }
+        private void btnBuy_Click(object sender, RoutedEventArgs e)
+        {
+            var dtoId = ((Button)sender).Tag;
+            GetTicketDTO TicketDTO = getTicketDTO((int)dtoId);
+
         }
 
         private void btnDetalji_Click(object sender, RoutedEventArgs e)

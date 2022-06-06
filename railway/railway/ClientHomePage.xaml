@@ -3,10 +3,18 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:railway"
         mc:Ignorable="d"
-        Title="Window1" Height="450" Width="800">
-    <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
+        Icon="C:\Users\Anastasija\Desktop\hci2\projekat2\railway\railway\icon\trainIcon.png"
+        Title="ŽELEZNICE SRBIJE" 
+         Width="{x:Static SystemParameters.PrimaryScreenWidth}"
+        Height="{x:Static SystemParameters.PrimaryScreenHeight}"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized"
+        MinWidth="1200"
+        MinHeight="350">
+    <!--<ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
     <Grid>
 
 
@@ -36,7 +44,7 @@
             </TabControl.Resources>
             
             <TabItem Header="Red vožnje" Height="50"  Width="150" FontSize="20">
-                <!--  <Label Content="Content goes here..." />   -->
+                <Label Content="Content goes here..." />   
                 <Frame x:Name="page1" NavigationUIVisibility="Hidden" Margin="2,2,2,2"  Grid.Row="0" Grid.ColumnSpan="2"/>
             </TabItem>
             <TabItem Header="Pregled karata" Height="50" Width="150" FontSize="20">
@@ -45,5 +53,58 @@
         </TabControl>
 
     </Grid>
-        </ScrollViewer>
+        </ScrollViewer>-->
+
+
+    <Grid Background="#FFEEEEEE">
+
+        <Grid Margin="250 55 0 0">
+            <!--<Grid x:Name="GridPrincipal" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
+            <Frame x:Name="page" Margin="0,-51,0,0"></Frame>
+        </Grid>
+
+        <Grid Width="250" HorizontalAlignment="Left" Background="DodgerBlue">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="13*"/>
+                <ColumnDefinition Width="12*"/>
+            </Grid.ColumnDefinitions>
+            <materialDesign:TransitioningContent x:Name="TrainsitionigContentSlide" OpeningEffect="{materialDesign:TransitionEffect SlideInFromLeft, Duration=0:0:0.2}" Grid.ColumnSpan="2">
+                <Grid x:Name="GridCursor" Margin="0 100 0 0" Background="White" Width="10" HorizontalAlignment="Left" Height="60" VerticalAlignment="Top"/>
+            </materialDesign:TransitioningContent>
+            <ListView x:Name="ListViewMenu" Margin="0,100,0,100" Foreground="White" FontWeight="Bold" SelectionChanged="ListViewMenu_SelectionChanged" FontFamily="Champagne &amp; Limousines" FontSize="18"  SelectedIndex="0" Grid.ColumnSpan="2">
+                <ListViewItem Height="60">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Search" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
+                        <TextBlock Text="Pretraga" FontSize="17" VerticalAlignment="Center" Margin="20 0"/>
+                    </StackPanel>
+                </ListViewItem>
+                <ListViewItem Height="60">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Table" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
+                        <TextBlock Text="Pregled karata" FontSize="17" VerticalAlignment="Center" Margin="20 0"/>
+                    </StackPanel>
+                </ListViewItem>
+            </ListView>
+            <StackPanel Orientation="Vertical" VerticalAlignment="Top" Margin="0,10,10,0">
+                <Button ToolTip="Odjavi se" Width="100" Height="60" Background="DodgerBlue" Click="btnLogOut_Click" >
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Logout" Width="40" Height="40" VerticalAlignment="Center" Margin="5"/>
+                        
+                    </StackPanel>
+                    </Button>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,20,10,0">
+               
+                <Button ToolTip="Pomoć" Width="140" Height="50" Margin="10" HorizontalAlignment="Center" Background="White" Foreground="DodgerBlue" >
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Help" Width="20" Height="20" VerticalAlignment="Center" Margin="5"/>
+                        <TextBlock Text="Pomoć" FontSize="20"></TextBlock>
+                    </StackPanel>
+                </Button>
+                
+            </StackPanel>
+            
+        </Grid>
+
+    </Grid>
 </Window>

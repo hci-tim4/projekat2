@@ -37,10 +37,10 @@ namespace railway
         {
             InitializeComponent();
             this.loggedUser = user;
-            this.managerSchedule = new ManagerSchedule();
-            this.viewDrivinglines = new ViewDrivingLines(page2);
-            this.monthlyReport = new ViewMonthlyTicketView();
-            this.drivingLineReport = new ViewDrivingLineTicketReport();
+            //this.managerSchedule = new ManagerSchedule();
+            //this.viewDrivinglines = new ViewDrivingLines(page2);
+            //this.monthlyReport = new ViewMonthlyTicketView();
+           // this.drivingLineReport = new ViewDrivingLineTicketReport();
         }
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -54,23 +54,23 @@ namespace railway
 
                     case "Red vožnje":
                         last = "Red vožnje";
-                        page1.Content = this.managerSchedule;
+                       // page1.Content = this.managerSchedule;
                         break;
                     case "Vozne linije":
                         last = "Vozne linije";
-                        page2.Content = this.viewDrivinglines;
+                        //page2.Content = this.viewDrivinglines;
                         break;
                     case "Vozovi":
                         last = "Vozovi";
-                        page3.Content = new CRUDTrains();
+                      //  page3.Content = new CRUDTrains();
                         break;
                     case "Mesečni izveštaj":
                         last = "Mesečni izveštaj";
-                        page4.Content = this.monthlyReport;
+                       // page4.Content = this.monthlyReport;
                         break;
                     case "Izveštaj za mrežu linija":
                         last = "Izveštaj za mrežu linija";
-                        page5.Content = this.drivingLineReport;
+                       // page5.Content = this.drivingLineReport;
                         break;
 
                     default:
@@ -78,5 +78,49 @@ namespace railway
                 }
             }
         }
+
+
+        private void ListViewMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            int index = ListViewMenu.SelectedIndex;
+            MoveCursorMenu(index);
+
+            switch (index)
+            {
+                case 0:
+                    //GridPrincipal.Children.Clear();
+                    //GridPrincipal.Children.Add(new Timetable(loggedUser));
+                    page.Content = "";
+                    page.Content = new ManagerSchedule();
+                    //page.Content = 
+
+                    break;
+                case 1:
+                    page.Content = "";
+                    page.Content = new ViewDrivingLines();
+                    break;
+                case 2:
+                    page.Content = new CRUDTrains();
+                    break;
+                case 3:
+                    page.Content = new ViewMonthlyTicketView();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void MoveCursorMenu(int index)
+        {
+            TrainsitionigContentSlide.OnApplyTemplate();
+            GridCursor.Margin = new Thickness(0, (100 + (50 * index)), 0, 0);
+        }
+
+        private void ListViewItem_Selected(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
+
+
 }
