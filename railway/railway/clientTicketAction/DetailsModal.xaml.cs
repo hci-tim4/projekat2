@@ -14,8 +14,9 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using railway.model;
 using System.Linq;
+using railway.clientTimetable;
 
-namespace railway.clientTimetable
+namespace railway.clientTicketAction
 {
     /// <summary>
     /// Interaction logic for DetailsModal.xaml
@@ -38,22 +39,7 @@ namespace railway.clientTimetable
             _parent = parent;
         }
 
-        #region Message
 
-        public string Message
-        {
-            get { return (string)GetValue(MessageProperty); }
-            set { SetValue(MessageProperty, value); }
-        }
-
-        // Using a DependencyProperty as the backing store for Message.
-        // This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty MessageProperty =
-            DependencyProperty.Register(
-                "Message", typeof(string), typeof(DetailsModal),
-                new UIPropertyMetadata(string.Empty));
-
-        #endregion
 
         public bool ShowHandlerDialog(int tour, int fromStationId, int arrivalId, int drivingLineId)
         {
@@ -151,11 +137,7 @@ namespace railway.clientTimetable
             _parent.IsEnabled = true;
         }
 
-        private void OkButton_Click(object sender, RoutedEventArgs e)
-        {
-            _result = true;
-            HideHandlerDialog();
-        }
+        
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {

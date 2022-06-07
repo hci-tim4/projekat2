@@ -14,6 +14,7 @@ using railway.model;
 using railway.database;
 using System.Linq;
 using railway.clientTimetable;
+using railway.clientTicketAction;
 
 namespace railway.client
 {
@@ -29,12 +30,13 @@ namespace railway.client
         private GetTicketDTO getTicketDTO;
         private User user;
         public List<Window> openedWindows;
-        private Frame parentFrame;
-        private Page parentPage;
+        private TicketConfirmationModal tickConfModal;
+       
         
-        public GetTicketPage(GetTicketDTO dto, User u)
+        public GetTicketPage(GetTicketDTO dto, User u, TicketConfirmationModal tickModal)
         {
             InitializeComponent();
+            this.tickConfModal = tickModal;
             this.ticketGotSaved += new TicketGotSavedHandler(rerenderSeatDisplay);
             openedWindows = new List<Window>();
             getTicketDTO = dto;
@@ -42,8 +44,7 @@ namespace railway.client
             seatsPage = new SeatDisplay(dto.DrivingLineId, dto.ScheduleId);;
             seatDisplay.Content = seatsPage;
             displayInfo.Content = new ChosenSchedulePage(dto.FromStationScheduleId, dto.UntilStationScheduleId, dto.ScheduleId);
-            //this.parentFrame = parentFrame;
-            //this.parentPage = timetable;
+            
         }
 
         private void rerenderSeatDisplay()
@@ -59,9 +60,10 @@ namespace railway.client
             if (t == null)
                 return;
             t.TicketType = TicketType.Reserved;
-            TicketConfirmationWindow confirmation = new TicketConfirmationWindow(t, "rezervišete", seatsPage.checkedSeatIds, ticketGotSaved);
-            openedWindows.Add(confirmation);
-            confirmation.Show();
+            //TicketConfirmationWindow confirmation = new TicketConfirmationWindow(t, "rezervišete", seatsPage.checkedSeatIds, ticketGotSaved);
+            // openedWindows.Add(confirmation);
+            //confirmation.Show();
+            tickConfModal.ShowHandlerDialog(t, "rezervacije", seatsPage.checkedSeatIds, ticketGotSaved);
 
         }
 
@@ -71,9 +73,10 @@ namespace railway.client
             if (t == null)
                 return;
             t.TicketType = TicketType.Bought;
-            TicketConfirmationWindow confirmation = new TicketConfirmationWindow(t, "kupite", seatsPage.checkedSeatIds, ticketGotSaved);
-            openedWindows.Add(confirmation);
-            confirmation.Show();
+            //TicketConfirmationWindow confirmation = new TicketConfirmationWindow(t, "kupite", seatsPage.checkedSeatIds, ticketGotSaved);
+            // openedWindows.Add(confirmation);
+            // confirmation.Show();
+            tickConfModal.ShowHandlerDialog(t, "kupovine", seatsPage.checkedSeatIds, ticketGotSaved);
         }
 
         private Ticket makeTicket()
@@ -147,9 +150,11 @@ namespace railway.client
             buyBtn_Click(sender, e);
         }
 
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+       /* private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
             this.parentFrame.Content = parentPage;
-        }
+        }*/
     }
+
+  
 }

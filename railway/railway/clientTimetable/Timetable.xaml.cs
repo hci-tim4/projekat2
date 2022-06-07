@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using railway.client;
+using railway.clientTicketAction;
 using railway.database;
 using railway.model;
 
@@ -32,6 +33,7 @@ namespace railway.clientTimetable
         private Frame parentFrame;
         private int id = 0;
         DrivingLineDTO currentSelected;
+        
 
         public Timetable(User user)
         {
@@ -41,6 +43,8 @@ namespace railway.clientTimetable
             cmbArrival.ItemsSource = GetAllStations();
             this.loggedUser = user;
             DetailsModal.SetParent(parent);
+            TicketConfirmationModal.SetParent(parent);
+           
         }
 
         private static List<Station> GetAllStations()
@@ -402,7 +406,7 @@ namespace railway.clientTimetable
                 ScheduleId = dto.ScheduleId
             };
             page.Content = "";
-            page.Content = new GetTicketPage(getTicketDTO, this.loggedUser);
+            page.Content = new GetTicketPage(getTicketDTO, this.loggedUser, TicketConfirmationModal);
 
         }
 

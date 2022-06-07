@@ -105,7 +105,7 @@ namespace railway.client
             CheckBox cb = new CheckBox();
             cb.Name = checkboxNamePrefix + s.Id.ToString();
 
-            Image i = getImageForId(-1);
+            //Image i = getImageForId(-1);
             if (this.occupiedSeats.Contains(s.Id))
             {
                 innerStack.Opacity = 50;
@@ -114,12 +114,12 @@ namespace railway.client
             else
             {
                 cb.Click += new RoutedEventHandler(checkbox_Click);
-                i = getImageForId(s.SeatTypeId);
+               // i = getImageForId(s.SeatTypeId);
             }
 
             
             innerStack.Children.Add(cb);
-            innerStack.Children.Add(i);
+            //innerStack.Children.Add(i);
 
             Grid.SetColumn(myBorder1,  ++s.Col);
             Grid.SetRow(myBorder1,  ++s.Row);
@@ -207,8 +207,8 @@ namespace railway.client
         {
             DockPanel dp = new DockPanel();
             dp.Margin = new Thickness(1, 1, 1, 1);
-            Image i = getImageForId(-1);
-            dp.Children.Add(i);
+          //  Image i = getImageForId(-1);
+           // dp.Children.Add(i);
             Label l = new Label
             {
                 FontSize= 20,
@@ -222,8 +222,8 @@ namespace railway.client
         {
             DockPanel dp = new DockPanel();
             dp.Margin = new Thickness(1, 1, 1, 1);
-            Image i = getImageForId(st.Id);
-            dp.Children.Add(i);
+            //Image i = getImageForId(st.Id);
+           // dp.Children.Add(i);
             Label l = new Label
             {
                 FontSize= 20,
