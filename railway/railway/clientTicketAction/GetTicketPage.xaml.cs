@@ -32,7 +32,7 @@ namespace railway.client
         private Frame parentFrame;
         private Page parentPage;
         
-        public GetTicketPage(GetTicketDTO dto, User u, Frame parentFrame, Page timetable)
+        public GetTicketPage(GetTicketDTO dto, User u)
         {
             InitializeComponent();
             this.ticketGotSaved += new TicketGotSavedHandler(rerenderSeatDisplay);
@@ -42,8 +42,8 @@ namespace railway.client
             seatsPage = new SeatDisplay(dto.DrivingLineId, dto.ScheduleId);;
             seatDisplay.Content = seatsPage;
             displayInfo.Content = new ChosenSchedulePage(dto.FromStationScheduleId, dto.UntilStationScheduleId, dto.ScheduleId);
-            this.parentFrame = parentFrame;
-            this.parentPage = timetable;
+            //this.parentFrame = parentFrame;
+            //this.parentPage = timetable;
         }
 
         private void rerenderSeatDisplay()

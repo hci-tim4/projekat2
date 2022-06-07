@@ -9,9 +9,11 @@
       MinWidth="1000"
       Title="Timetable" >
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"></RowDefinition>
+    <Grid >
+        <Grid  x:Name="parent">
+            <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -52,7 +54,7 @@
 
         <DataGrid 
                    ItemsSource="{Binding Path=lines}" 
-                 
+                 Height="330"
                   SelectionUnit="FullRow" SelectionMode="Single" AutoGenerateColumns="False"
                    IsReadOnly="True" Name="dataGrid" ScrollViewer.CanContentScroll="True"
                     ScrollViewer.HorizontalScrollBarVisibility="Auto"
@@ -70,17 +72,14 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" Margin="5">
-                                <Button x:Name="buy"  Background="#FF44AFE3" Content="Kupi"
+                                <Button x:Name="buy"  Background="#FF44AFE3" Content="Izaberi"
                     Height="28" Width="100" Cursor="Hand"  HorizontalAlignment="Center"
-                    VerticalAlignment="Center" BorderThickness="0" Margin="5,0,1,0" Click="btnBuy_Click" Tag="{Binding Path = Id}">
+                    VerticalAlignment="Center" BorderThickness="0" Margin="5,0,1,0" Click="btnChoose_Click" Tag="{Binding Path = Id}">
                                 </Button>
-                                <Button x:Name="reserve"  Background="#198C19"  Content="Rezerviši" Tag="{Binding Path = Id}"
-                    Height="28" Width="100" Cursor="Hand"  HorizontalAlignment="Center"
-                    VerticalAlignment="Center" BorderThickness="0" Margin="5,0,1,0" Click="btnReserve_Click" >
-                                </Button>
+                         
                                 <Button x:Name="details"  Background="#FFA500" Content="Detalji" Tag="{Binding Path = Id}"
                     Height="28" Width="100" Cursor="Hand"  HorizontalAlignment="Center"
-                    VerticalAlignment="Center"  BorderThickness="0" Margin="5,0,1,0" Click="btnDetalji_Click">
+                    VerticalAlignment="Center"  BorderThickness="0" Margin="5,0,1,0" Click="btnDetails_Click">
                                 </Button>
                         </StackPanel>
                         </DataTemplate>
@@ -97,9 +96,10 @@
                 </Style>
             </DataGrid.RowStyle>
         </DataGrid>
-
-        <Frame x:Name="page" NavigationUIVisibility="Hidden" Margin="2,2,2,2"  Grid.Row="1"/>
-
+            <Frame x:Name="page" NavigationUIVisibility="Hidden" Margin="2,2,2,2"  Grid.Row="1" Grid.Column="1"/>
+        </Grid>
+        
+        <local:DetailsModal x:Name="DetailsModal" />
 
     </Grid>
 </Page>

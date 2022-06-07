@@ -40,6 +40,7 @@ namespace railway.clientTimetable
             cmbDeparture.ItemsSource = GetAllStations();
             cmbArrival.ItemsSource = GetAllStations();
             this.loggedUser = user;
+            DetailsModal.SetParent(parent);
         }
 
         private static List<Station> GetAllStations()
@@ -89,7 +90,7 @@ namespace railway.clientTimetable
      
         private void btn_search(object sender, RoutedEventArgs e)
         {
-
+            page.Content = "";
             if ((this.departure == null) || (this.arrival == null) || (this.date == null))
             {
                 MessageBox.Show("Unesite sve podatke za pretragu");
@@ -388,21 +389,35 @@ namespace railway.clientTimetable
             this.date = picker.SelectedDate;
         }
 
-
-        private void btnUzmi_Click(object sender, RoutedEventArgs e)
-        {
+        
+       
+        private void btnChoose_Click(object sender, RoutedEventArgs e) {
             var dtoId = ((Button)sender).Tag;
             DrivingLineDTO dto = findDTOById((int)dtoId);
-            GetTicketDTO getTicketDTO = new GetTicketDTO {
-                DrivingLineId = dto.drivingLine, 
+            GetTicketDTO getTicketDTO = new GetTicketDTO
+            {
+                DrivingLineId = dto.drivingLine,
                 FromStationScheduleId = dto.FromStationScheduleId,
                 UntilStationScheduleId = dto.UntilStationScheduleId,
                 ScheduleId = dto.ScheduleId
             };
-            //this.parentFrame.Content = new GetTicketPage(getTicketDTO, this.loggedUser, parentFrame, this);
+            page.Content = "";
+            page.Content = new GetTicketPage(getTicketDTO, this.loggedUser);
 
         }
-        private void btnReserve_Click(object sender, RoutedEventArgs e) { }
+
+        private void btnDetails_Click(object sender, RoutedEventArgs e)
+        {
+            var dtoId = ((Button)sender).Tag;
+            DrivingLineDTO dto = findDTOById((int)dtoId);
+            //this.parentFrame.Content = new DetailsTimetable(dto.Tour, departure.Id, arrival.Id, parentFrame, this, dto.drivingLine);
+
+            var res = DetailsModal.ShowHandlerDialog(dto.Tour,departure.Id,arrival.Id,dto.drivingLine);
+            
+           
+        }
+
+        
 
         private GetTicketDTO getTicketDTO(int id)
         {
@@ -417,20 +432,8 @@ namespace railway.clientTimetable
             return getTicketDTO;
 
         }
-        private void btnBuy_Click(object sender, RoutedEventArgs e)
-        {
-            var dtoId = ((Button)sender).Tag;
-            GetTicketDTO TicketDTO = getTicketDTO((int)dtoId);
-
-        }
-
-        private void btnDetalji_Click(object sender, RoutedEventArgs e)
-        {
-            var dtoId = ((Button)sender).Tag;
-            DrivingLineDTO dto = findDTOById((int)dtoId);
-            this.parentFrame.Content = new DetailsTimetable(dto.Tour, departure.Id, arrival.Id, parentFrame, this, dto.drivingLine);
-        }
-
+  
+        
         private DrivingLineDTO findDTOById(int dtoId) {
             foreach (DrivingLineDTO dto in this.lines) {
                 if (dto.Id == dtoId) {
