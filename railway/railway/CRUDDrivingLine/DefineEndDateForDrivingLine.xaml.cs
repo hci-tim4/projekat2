@@ -13,13 +13,13 @@ namespace railway.CRUDDrivingLine
     public partial class DefineEndDateForDrivingLine : Window
     {
         private DrivingLineViewDTO drivingLine;
-        private ViewDrivingLines viewDrivingLines;
-        public DefineEndDateForDrivingLine(DrivingLineViewDTO dto, ViewDrivingLines viewDrivingLines)
+        private DrivingLines DrivingLinesView;
+        public DefineEndDateForDrivingLine(DrivingLineViewDTO dto, DrivingLines drivingLinesView)
         {
             InitializeComponent();
             this.DataContext = dto;
             drivingLine = dto;
-            this.viewDrivingLines = viewDrivingLines;
+            this.DrivingLinesView = drivingLinesView;
         }
 
         private void Save_OnClick(object sender, RoutedEventArgs e)
@@ -50,7 +50,7 @@ namespace railway.CRUDDrivingLine
                         "Uspešno ste sačuvali krajnji datum.");
                     
                     db.SaveChanges();
-                    viewDrivingLines.setDrivingLines(new RailwayContext());
+                    DrivingLinesView.setDrivingLines(new RailwayContext());
                     this.Close();
                 }
             }

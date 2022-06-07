@@ -23,11 +23,11 @@ namespace railway.CRUDDrivingLine
     {
         public event DrivingGotSavedHandler drivingLineGotSaved;
         private Frame parentFrame;
-        private ViewDrivingLines parentPage;
+        private DrivingLines parentPage;
         public PointLatLng? previous { get; set; }
         
         
-        public AddDrivingLine(Frame parentFrame, ViewDrivingLines viewDrivingLines)
+        public AddDrivingLine(Frame parentFrame, DrivingLines viewDrivingLines)
         {
             InitializeComponent();
             this.drivingLineGotSaved += new DrivingGotSavedHandler(clearMap);
@@ -340,6 +340,13 @@ namespace railway.CRUDDrivingLine
                 string str = HelpProvider.GetHelpKey((DependencyObject)focusedControl);
                 HelpProvider.ShowHelp(str, this);
             }
+        }
+        
+        
+        private void Back_OnClick(object sender, RoutedEventArgs e)
+        {
+            parentPage.setDrivingLines(new RailwayContext());
+            parentFrame.Content = parentPage;
         }
     }
 }

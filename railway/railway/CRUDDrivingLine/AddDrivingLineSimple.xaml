@@ -23,11 +23,63 @@
         <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource baseStyle}">
             <Setter Property="Margin" Value="0"></Setter>
         </Style>
+        <Style x:Key="CircleButton" TargetType="Button">
+     <Setter Property="OverridesDefaultStyle" Value="True"/>
+     <Setter Property="Margin" Value="2"/>
+     <Setter Property="FocusVisualStyle" Value="{StaticResource MyFocusVisual}"/>
+     <Setter Property="Background" Value="#FF6DB4EF"/>
+     <Setter Property="Template">
+        <Setter.Value>
+           <ControlTemplate TargetType="Button">
+              <Grid>
+                 <Ellipse Fill="{TemplateBinding Background}"/>
+                 <Ellipse>
+                    <Ellipse.Fill>
+                       <RadialGradientBrush>
+                          <GradientStop Offset="0" Color="#00000000"/>
+                          <GradientStop Offset="0.88" Color="#00000000"/>
+                          <GradientStop Offset="1" Color="#80000000"/>
+                       </RadialGradientBrush>
+                    </Ellipse.Fill>
+                 </Ellipse>
+                 <Ellipse Margin="10" x:Name="highlightCircle" >
+                    <Ellipse.Fill >
+                       <LinearGradientBrush >
+                          <GradientStop Offset="0" Color="#50FFFFFF"/>
+                          <GradientStop Offset="0.5" Color="#00FFFFFF"/>
+                          <GradientStop Offset="1" Color="#50FFFFFF"/>
+                       </LinearGradientBrush>
+                    </Ellipse.Fill>
+                 </Ellipse>
+                 <ContentPresenter x:Name="content" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+              </Grid>
+              <ControlTemplate.Triggers>
+                 <Trigger Property="IsPressed" Value="True">
+                    <Setter TargetName="highlightCircle" Property="Fill">
+                       <Setter.Value>
+                       <LinearGradientBrush StartPoint="0.3,0" EndPoint="0.7,1">
+                          <GradientStop Offset="0" Color="#50FFFFFF"/>
+                          <GradientStop Offset="0.5" Color="#00FFFFFF"/>
+                          <GradientStop Offset="1" Color="#50FFFFFF"/>
+                       </LinearGradientBrush>
+                       </Setter.Value>
+                    </Setter>
+                    <Setter TargetName="content" Property="RenderTransform">
+                       <Setter.Value>
+                          <TranslateTransform Y="0.5" X="0.5"/>
+                       </Setter.Value>
+                    </Setter>
+                 </Trigger>
+              </ControlTemplate.Triggers>
+           </ControlTemplate>
+        </Setter.Value>
+     </Setter>
+  </Style>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition MaxHeight="120"></RowDefinition>
-            <RowDefinition></RowDefinition>
+            <RowDefinition MinHeight="120" MaxHeight="120"></RowDefinition>
+            <RowDefinition ></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -35,12 +87,16 @@
         </Grid.ColumnDefinitions>
         
         <StackPanel Grid.Column="0" Grid.Row="0">
-            <DockPanel>
-                <Button DockPanel.Dock="Left" ToolTip="Nazad na poslednji prozor" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="0" Click="ButtonBase_OnClick" MaxHeight="50px" MinHeight="50" MinWidth="50" MaxWidth="50">
-                    <Image Source="https://toppng.com/uploads/preview/back-arrow-icon-11550122033egydzyhmwy.png"></Image>
-                </Button>
             
-                <Button x:Name="backToDragAndDrop" Click="BackToDragAndDrop_OnClick" DockPanel.Dock="Right" HorizontalAlignment="Right" MaxWidth="100" MaxHeight="30" ToolTip="Prevuci pusti pristup" l:HelpProvider.HelpKey="dragDropWay">Prevlačenje</Button>
+            
+            <DockPanel>
+                <Button x:Name="back" DockPanel.Dock="Left" Click="Back_OnClick" Style="{StaticResource CircleButton}" Width="35" Height="35">
+                    <Image Source="\icon\backbutton.png" Stretch="Fill">
+                    </Image>
+                </Button>
+
+            
+                <Button x:Name="backToDragAndDrop" Click="BackToDragAndDrop_OnClick" DockPanel.Dock="Right" HorizontalAlignment="Right" MaxWidth="110" MaxHeight="30" ToolTip="Prevuci pusti pristup" l:HelpProvider.HelpKey="dragDropWay">Prevlačenje</Button>
             </DockPanel>
             <Button Content="Sačuvaj" MaxWidth="120" HorizontalAlignment="Right" x:Name="saveDrivingLine" Click="SaveDrivingLine_OnClick" l:HelpProvider.HelpKey="btnSaveNewDrivingLine"></Button>
             
@@ -54,7 +110,7 @@
                     </Style>
                 </ComboBox.Style>
             </ComboBox>
-            <Button Content="Dodaj" MinWidth="60" x:Name="addStation" Click="AddStation_OnClick" l:HelpProvider.HelpKey="btnAddStationInDrivingLine"></Button>
+            <Button Content="Dodaj" MinWidth="60" Height="30" x:Name="addStation" Click="AddStation_OnClick" l:HelpProvider.HelpKey="btnAddStationInDrivingLine"></Button>
         </StackPanel>
         
         <gmaps:GMapControl Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" x:Name="mapView" Loaded="map_Loaded"/>
