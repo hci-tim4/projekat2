@@ -21,13 +21,13 @@ namespace railway
     {
 
         string last = "";
-        User loggedUser;
+        public User loggedUser { get; set; }
 
 
         public ClientHomePage(User user)
         {
-            InitializeComponent();
             loggedUser = user;
+            InitializeComponent();
             //clientTimetable = new clientTimetable.Timetable(loggedUser, page1);
         }
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)

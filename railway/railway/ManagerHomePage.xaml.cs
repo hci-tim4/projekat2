@@ -97,7 +97,7 @@ namespace railway
                     break;
                 case 1:
                     page.Content = "";
-                    page.Content = new ViewDrivingLines();
+                    page.Content = new ViewDrivingLines(page);
                     break;
                 case 2:
                     page.Content = new CRUDTrains();

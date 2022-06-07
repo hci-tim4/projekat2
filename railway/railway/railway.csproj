@@ -19,4 +19,9 @@
     <PackageReference Include="ResponsiveGrid" Version="0.3.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Resource Include="D:/fakultet/6.semestar/HCI/projekat/projekt-sminkanje-lvl200/projekat2/railway/railway/icon/*" />
+    <Resource Include="D:/fakultet/6.semestar/HCI/projekat/projekt-sminkanje-lvl200/projekat2/railway/railway/images/*" />
+  </ItemGroup>
+
 </Project>

@@ -6,7 +6,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:railway"
         mc:Ignorable="d"
-        Icon="C:\Users\Anastasija\Desktop\hci2\projekat2\railway\railway\icon\trainIcon.png"
+        Icon="\icon\trainIcon.png"
         Title="ŽELEZNICE SRBIJE" 
          Width="{x:Static SystemParameters.PrimaryScreenWidth}"
         Height="{x:Static SystemParameters.PrimaryScreenHeight}"
