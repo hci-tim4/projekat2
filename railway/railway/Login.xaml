@@ -12,7 +12,7 @@
 
 
 
-        <Image Source="C:\Users\Anastasija\Desktop\projekat2\railway\railway\images\srbijavoz.jpg" Stretch="Fill">
+        <Image Source="/srbijavoz.jpg" Stretch="Fill">
             <Image.Effect>
                 <BlurEffect Radius="15"/>
             </Image.Effect>

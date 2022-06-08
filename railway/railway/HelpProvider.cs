@@ -76,6 +76,12 @@ namespace railway
             hh.Show();
         }
 
+        public static void ShowHelp(string key, ManagerHomePage originator)
+        {
+            HelpViewer hh = new HelpViewer(key, originator);
+            hh.Show();
+        }
+
     }
     
 }

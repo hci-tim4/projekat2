@@ -109,7 +109,7 @@ namespace railway
                  stackPanel.Children.Add(tb);
 
                 Image img = new Image();
-                img.Source = new BitmapImage(new Uri("C:/Users/Anastasija/Desktop/hci2/projekat2/railway/railway/images/srbijavoz.jpg"));
+                img.Source = new BitmapImage(new Uri("D:/SYSTEM/Desktop/projekat 2/projekat2/railway/railway/images/srbijavoz.jpg"));
                 img.Width = 200;
                 img.Height = 150;
                 stackPanel.Children.Add(img);

@@ -14,6 +14,9 @@
         MinWidth="500"
         MinHeight="450"
         >
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
+    </Window.CommandBindings>
     <!--<ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
         <Grid>
 
@@ -106,6 +109,13 @@
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="Report" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
                         <TextBlock Text= "Izveštaji" FontSize="17" VerticalAlignment="Center" Margin="10 0"/>
+                    </StackPanel>
+                </ListViewItem>
+
+                <ListViewItem Height="50" local:HelpProvider.HelpKey="ManagerAppHelp">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Help" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
+                        <TextBlock Text= "Pomoć" FontSize="17" VerticalAlignment="Center" Margin="10 0"/>
                     </StackPanel>
                 </ListViewItem>
 

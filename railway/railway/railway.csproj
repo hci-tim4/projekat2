@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="srbijavoz.jpg" />
+    <None Remove="trainIcon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.4.4" />
     <PackageReference Include="GMap.NET.Core" Version="2.1.2" />
     <PackageReference Include="GMap.NET.WinPresentation" Version="2.1.2" />
@@ -17,6 +22,11 @@
     <PackageReference Include="LiveCharts" Version="0.9.7" />
     <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="ResponsiveGrid" Version="0.3.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="srbijavoz.jpg" />
+    <Resource Include="trainIcon.png" />
   </ItemGroup>
 
 </Project>
