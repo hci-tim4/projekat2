@@ -97,7 +97,7 @@ namespace railway
                     break;
                 case 1:
                     page.Content = "";
-                    page.Content = new ViewDrivingLines();
+                    page.Content = new ViewDrivingLines(page);
                     break;
                 case 2:
                     page.Content = new CRUDTrains();
@@ -106,7 +106,7 @@ namespace railway
                     page.Content = new ViewMonthlyTicketView();
                     break;
                 case 4:
-                    // online dokumentacija
+                    HelpProvider.ShowHelp("ManagerAppHelp", this);
                     break;
 
                 default:

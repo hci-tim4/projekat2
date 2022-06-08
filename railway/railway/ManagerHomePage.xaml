@@ -75,7 +75,7 @@
 
         <Grid Margin="250 55 0 0">
             <!--<Grid x:Name="GridPrincipal" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
-            <Frame x:Name="page" Margin="0,-51,0,0"></Frame>
+            <Frame x:Name="page" Margin="0,-51,0,0" NavigationUIVisibility="Hidden"></Frame>
         </Grid>
 
         <Grid Width="250" HorizontalAlignment="Left" Background="DodgerBlue">

@@ -12,7 +12,7 @@
 
 
 
-        <Image Source="/srbijavoz.jpg" Stretch="Fill">
+        <Image Source="\images\srbijavoz.jpg" Stretch="Fill">
             <Image.Effect>
                 <BlurEffect Radius="15"/>
             </Image.Effect>

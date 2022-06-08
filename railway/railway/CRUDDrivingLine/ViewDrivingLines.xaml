@@ -6,9 +6,13 @@
              xmlns:local="clr-namespace:railway.defineDrivingLine"
              mc:Ignorable="d"
              xmlns:l="clr-namespace:railway"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300"
+             xmlns:cmd="clr-namespace:railway.Commands"
+             MinWidth="400">
     <UserControl.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
+    <!--    <CommandBinding Command="cmd:RoutedCommands.MoveBack" x:Name="goBack" CanExecute="GoBack_OnCanExecute" Executed="GoBack_OnExecuted"></CommandBinding>
+        <CommandBinding Command="cmd:RoutedCommands.MoveForward" x:Name="goForward" CanExecute="GoForward_OnCanExecute" Executed="GoForward_OnExecuted"></CommandBinding>-->
     </UserControl.CommandBindings>
     <UserControl.Resources>
         <Style TargetType="{x:Type Control}" x:Key="baseStyle">
@@ -22,91 +26,21 @@
         <Style TargetType="{x:Type DatePicker}" BasedOn="{StaticResource baseStyle}"></Style>
 
         <!-- ComboBox, RadioButton, CheckBox, etc... -->
-    </UserControl.Resources>
+    
+</UserControl.Resources>
+    
+    <ScrollViewer>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         
-        <StackPanel>
-            <DockPanel>
-                <Label DockPanel.Dock="Left"> Mrežne linije</Label>
-                <Button MaxWidth="30" MaxHeight="30" DockPanel.Dock="Right" HorizontalAlignment="Right" x:Name="addDrivingLine"
-                        ToolTip="Dodaj mrežnu liniju" Click="AddDrivingLine_OnClick" l:HelpProvider.HelpKey="btnAddDrivingLine">
-                    <Image Source="https://www.iconpacks.net/icons/1/free-plus-icon-321-thumb.png" l:HelpProvider.HelpKey="btnAddDrivingLine"></Image>
-                    
-                </Button>
-            </DockPanel>
-        
-        </StackPanel>
-        
-        <ScrollViewer Grid.Row="1" Grid.Column="0">
-            <DataGrid FontSize="20" Grid.Column="0" SelectedItem="DrivingLineDataGrid_OnSelected" 
-                      x:Name="drivingLineDataGrid" ItemsSource="{Binding Path=DrivingLines}" 
-                      IsReadOnly="True" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True"
-                      MinHeight="200" MaxHeight="700">
-            
-            <DataGrid.ItemContainerStyle>
-                <Style TargetType="DataGridRow">
-                    <EventSetter Event="MouseUp" Handler="DrivingLineDataGrid_OnSelected"/>
-                </Style>
-            </DataGrid.ItemContainerStyle>
-                
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Ime" Width="Auto" Binding="{Binding Name}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Voz" Width="Auto" Binding="{Binding Path=TrainName}" x:Name="TrainName"></DataGridTextColumn>
-                
-                <DataGridTemplateColumn Width="Auto" Header="">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                                <Button x:Name="deleteDrivingLine" ToolTip="Podesite krajnji datum važenja" Tag="{Binding Path=DrivingLineId}" Click="DeleteDrivingLine_OnClick" Content="Krajnji datum" l:HelpProvider.HelpKey="btnDeleteDrivingLine"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
+        <Frame Grid.Row="0" x:Name="drivingLineViewPage" Margin="0,0,0,0" NavigationUIVisibility="Hidden"></Frame>
 
-        </DataGrid>
-        </ScrollViewer>
         
-        <Grid Grid.Column="1" Grid.Row="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" Grid.Row="0">Ime:</Label>
-            <Label Grid.Column="0" Grid.Row="1">Voz:</Label>
-            <Label Grid.Column="0" Grid.Row="2">Datum početka važenja:</Label>
-            <Label Grid.Column="0" Grid.Row="3">Datum kraja važenja:</Label>
-            
-            <TextBox Grid.Column="1" Grid.Row="0" Text="" x:Name="newName" l:HelpProvider.HelpKey="drivingLineName"></TextBox>
-            <ComboBox FontSize="20" Margin="2,2,2,2" x:Name="trainNameCmb" Grid.Column="1" Grid.Row="1" SelectedValuePath="TrainName" Text="{Binding Path=trains}" IsEditable="True" DisplayMemberPath="Name" l:HelpProvider.HelpKey="changeTrainName">
-                <ComboBox.Style>
-                    <Style>
-                        <EventSetter Event="TextBox.TextChanged" Handler="TrainNameChanged_TextChanged"/>
-                    </Style>
-                </ComboBox.Style>
-            </ComboBox>
-            <DatePicker Grid.Column="1" Grid.Row="2" x:Name="startDate" FirstDayOfWeek="Monday" l:HelpProvider.HelpKey="startDate"/>
-            <DatePicker IsEnabled="False" Grid.Column="1" Grid.Row="3" x:Name="endDate" FirstDayOfWeek="Monday" l:HelpProvider.HelpKey="endDate"/>
-
-            <!--ADD STANICU -->
-            
-            <!-- DATE OD KAD VAZI NOVI DRIVING LINE -->
-            <!-- PROVERA DA LI IMA REZERVACIJA PRE TOGA -->
-            
-            <Button x:Name="saveChanges" Click="SaveChanges_OnClick" Grid.Column="1" Grid.Row="4" ToolTip="Sačuvaje izmenjene podatke o mrežnoj liniji" l:HelpProvider.HelpKey="btnChangeDrivingLine">Sačuvaj izmene</Button>
-        </Grid>
-    </Grid>
+   </Grid>
+    </ScrollViewer>
 </UserControl>

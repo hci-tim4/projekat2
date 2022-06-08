@@ -156,19 +156,20 @@ namespace railway.client
 
         private Uri makeUri(int seatTypeId)
         {
-            var uri = new Uri("https://www.clipartmax.com/png/middle/112-1120561_black-x-transparent-background.png");
+            //var uri = new Uri("https://www.clipartmax.com/png/middle/112-1120561_black-x-transparent-background.png");
+            var uri = new Uri("/icon/taken.png", UriKind.Relative);
             try
             {
                 switch (seatTypeId)
                 {
                     case 1:
-                        uri = new Uri("https://www.seekpng.com/png/full/38-387704_star-vector-png-transparent-image-star-vector-png.png");
+                        uri = new Uri("/icon/vip.png", UriKind.Relative);//uri = new Uri("https://www.seekpng.com/png/full/38-387704_star-vector-png-transparent-image-star-vector-png.png");
                         break;
                     case 2:
-                        uri = new Uri("https://cdn-icons-png.flaticon.com/512/2345/2345130.png");
+                        uri = new Uri("/icon/buisness.png", UriKind.Relative);//uri = new Uri("https://cdn-icons-png.flaticon.com/512/2345/2345130.png");
                         break;
                     case 3:
-                        uri = new Uri("https://flyclipart.com/thumb2/black-circle-png-free-download-557178.png");
+                        uri = new Uri("/icon/economy.png", UriKind.Relative);//uri = new Uri("https://flyclipart.com/thumb2/black-circle-png-free-download-557178.png");
                         break;
                 }
             }

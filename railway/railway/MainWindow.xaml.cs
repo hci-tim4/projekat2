@@ -34,43 +34,10 @@ namespace railway
           //  FillDatabase fd = new FillDatabase();
           //  fd.fill();
 
+
+
             page.Content = new Login();
-            /*
-                        using (var db = new RailwayContext())
-                        {
-                            List<StationSchedule> ss = (from stationSchedules in db.stationsSchedules
-                                                        where stationSchedules.DrivingLineId == 1
-                                                        orderby stationSchedules.SerialNumber
-                                                        select stationSchedules).ToList();
 
-                            page.Content = new map.Map(ss);
-                        }
-            //*/
-
-
-        //    FillDatabase fd = new FillDatabase();
-            //fd.fill();
-
-            //page.Content 
-       //     Window w = new ManagerHomePage(new User());// new Login();
-        //    w.Show();
-         //   this.Close();
-
-
-      //      ViewDrivingLines v = new ViewDrivingLines(page);//new Login();
-         
-            
-            //page.Content = new Login();
-
-            /*
-            getTicketPage = new GetTicketPage(new GetTicketDTO()
-            {
-                FromStationScheduleId = 1,
-                UntilStationScheduleId = 2,
-                ScheduleId = 1,
-                DrivingLineId = 1
-            }, new model.User());
-            page.Content = getTicketPage;*/
         }
 
         private void CloseWindow_CanExecute(object sender, CanExecuteRoutedEventArgs e)
