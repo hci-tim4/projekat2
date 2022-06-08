@@ -56,6 +56,8 @@ namespace railway.database
                     DateTime newOne = start;
                     dates.Add(newOne);
                 }
+                
+                
                 start = start.AddDays(1);
             }
 

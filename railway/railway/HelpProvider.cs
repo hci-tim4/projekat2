@@ -81,6 +81,12 @@ namespace railway
             hh.Show();
         }
 
+        public static void ShowHelp(string key, ChangeTrafficDayModal originator)
+        {
+            HelpViewer hh = new HelpViewer(key, originator);
+            hh.Show();
+        }
+
     }
     
 }
