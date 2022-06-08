@@ -71,6 +71,7 @@ namespace railway.CRUDTrain
 
             gridTrains.RowDefinitions.Clear();
             gridTrains.ColumnDefinitions.Clear();
+           
             for(int i=0;i<4; i++) //4 kolone
             {
                 var colDef = new ColumnDefinition();
@@ -112,9 +113,12 @@ namespace railway.CRUDTrain
             Button addBtn = new Button();
             addBtn.FontSize = 20;
             addBtn.Height = 40;
+            BrushConverter bc = new BrushConverter();
+            addBtn.Background = (Brush)bc.ConvertFrom("#FF1E90FF");
+            addBtn.Foreground = new SolidColorBrush(Colors.White);
             addBtn.Content = "Dodaj novi voz";
             addBtn.Click += add_Clicked;
-
+         
             titlePanel.Children.Add(addBtn);
             gridTrains.Children.Add(titlePanel);
             Grid.SetRow(titlePanel, 0);
@@ -132,9 +136,11 @@ namespace railway.CRUDTrain
                 {
                     Grid grid = new Grid();
                     grid.Margin = new Thickness { Bottom = 10, Left = 10, Right = 10, Top = 10 };
+                    grid.Height = 400;
+                    grid.VerticalAlignment = VerticalAlignment.Top;
                     Grid.SetColumn(grid, j);
                     Grid.SetRow(grid, i);
-                    BrushConverter bc = new BrushConverter();
+                    
                     grid.Background = (Brush)bc.ConvertFrom("#FFF3F3F3");
 
 
@@ -155,6 +161,7 @@ namespace railway.CRUDTrain
                     tb.Text = dto[(i-1)*4+j].Name;
                     tb.FontSize = 20;
                     tb.FontWeight = FontWeights.Bold;
+                    tb.Foreground = new SolidColorBrush(Colors.DodgerBlue);
                     stackPanel.Children.Add(tb);
 
                     Image img = new Image();
@@ -166,19 +173,23 @@ namespace railway.CRUDTrain
 
                     TextBlock tbColor = new TextBlock();
                     tbColor.Text = "Boja: " + dto[(i - 1) * 4 + j].Color;
+                    tbColor.Foreground = new SolidColorBrush(Colors.DodgerBlue);
                     stackPanel.Children.Add(tbColor);
 
                     TextBlock tbRegular = new TextBlock();
-                    tbRegular.Text = "Broj sedišta REGULAR: " + dto[(i - 1) * 4 + j].numberREGULAR;
+                    tbRegular.Text = "Broj redova klasa REGULAR: " + dto[(i - 1) * 4 + j].numberREGULAR;
+                    tbRegular.Foreground = new SolidColorBrush(Colors.DodgerBlue);
                     stackPanel.Children.Add(tbRegular);
 
 
                     TextBlock tbBusiness = new TextBlock();
-                    tbBusiness.Text = "Broj sedišta BUSINESS: " + dto[(i - 1) * 4 + j].numberBUSINESS;
+                    tbBusiness.Text = "Broj redova klasa BUSINESS: " + dto[(i - 1) * 4 + j].numberBUSINESS;
+                    tbBusiness.Foreground = new SolidColorBrush(Colors.DodgerBlue);
                     stackPanel.Children.Add(tbBusiness);
 
                     TextBlock tbVip = new TextBlock();
-                    tbVip.Text = "Broj sedišta REGULAR: " + dto[(i - 1) * 4 + j].numberVIP;
+                    tbVip.Text = "Broj redova klasa REGULAR: " + dto[(i - 1) * 4 + j].numberVIP;
+                    tbVip.Foreground = new SolidColorBrush(Colors.DodgerBlue);
                     stackPanel.Children.Add(tbVip);
 
 
@@ -190,14 +201,20 @@ namespace railway.CRUDTrain
                     btnEdit.Content = "Izmeni";
                     btnEdit.Tag = dto[(i - 1) * 4 + j].Id;
                     btnEdit.Click += edit_Clicked;
+                    btnEdit.Foreground = new SolidColorBrush(Colors.White);
+                    btnEdit.Background = (Brush)bc.ConvertFrom("#FF1E90FF");
                     btnEdit.Margin = new Thickness { Bottom = 10, Left = 0, Right = 10, Top = 10 };
                     stackPanel2.Children.Add(btnEdit);
+
 
                     Button btnDelete = new Button();
                     btnDelete.Width = 80;
                     btnDelete.Content = "Obriši";
                     btnDelete.Click += delete_Clicked;
                     btnDelete.Tag = dto[(i - 1) * 4 + j].Id;
+                    btnDelete.Foreground = new SolidColorBrush(Colors.White);
+
+                    btnDelete.Background = (Brush)bc.ConvertFrom("#FF1E90FF");
                     btnDelete.Margin = new Thickness { Bottom = 10, Left = 10, Right = 0, Top = 10 };
                     stackPanel2.Children.Add(btnDelete);
                     stackPanel.Children.Add(stackPanel2);
@@ -214,7 +231,8 @@ namespace railway.CRUDTrain
         {
             var id = ((Button)sender).Tag;
             TrainDTO trainDTO = getTrainInfo((int)id);
-            EditTrainModal.ShowHandlerDialog(trainDTO);
+            Window edit = new EditTrain(trainDTO);
+            edit.Show();
             dto = TrainService.getTrains();
             reloadWindow();
 
@@ -236,7 +254,8 @@ namespace railway.CRUDTrain
         }
         private void add_Clicked(object sender, RoutedEventArgs e)
         {
-            AddTrainModal.ShowHandlerDialog();
+            Window add = new AddTrain();
+            add.Show();
             dto = TrainService.getTrains();
             reloadWindow();
         }
