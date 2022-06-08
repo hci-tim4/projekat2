@@ -68,20 +68,50 @@ namespace railway.CRUDTrain
 
         private void reloadWindow()
         {
+
             gridTrains.RowDefinitions.Clear();
             gridTrains.ColumnDefinitions.Clear();
+            for(int i=0;i<4; i++) //4 kolone
+            {
+                var colDef = new ColumnDefinition();
+                colDef.Width = new GridLength(1, GridUnitType.Star);
+                gridTrains.ColumnDefinitions.Add(colDef);
+            }
+           
+
+            int col = 4;
+            int rowNum = dto.Count() / 4; 
+
+            if (dto.Count() < 4)
+            {
+                col = dto.Count(); 
+                rowNum = dto.Count() / 4 + 1;
+            }
+            if(dto.Count() % 4 != 0)
+            {
+                rowNum = dto.Count() / 4 + 1;
+            
+             }
             var rowDef1 = new RowDefinition();
             rowDef1.Height = new GridLength(1, GridUnitType.Star);
-            gridTrains.RowDefinitions.Add(rowDef1);
-            
-            var rowDef2 = new RowDefinition();
-            rowDef2.Height = new GridLength(5, GridUnitType.Star);
-            gridTrains.RowDefinitions.Add(rowDef2);
 
+            gridTrains.RowDefinitions.Add(rowDef1);
+
+            for (int i = 0; i < rowNum; i++) 
+            {
+                var rowDef = new RowDefinition();
+                rowDef.Height = new GridLength(3, GridUnitType.Star);
+                gridTrains.RowDefinitions.Add(rowDef);
+            }
+    
             StackPanel titlePanel = new StackPanel();
             titlePanel.Orientation = Orientation.Horizontal;
             titlePanel.HorizontalAlignment = HorizontalAlignment.Center;
+            titlePanel.Margin= new Thickness { Bottom = 20, Left = 0, Right = 10, Top = 10 };
+
             Button addBtn = new Button();
+            addBtn.FontSize = 20;
+            addBtn.Height = 40;
             addBtn.Content = "Dodaj novi voz";
             addBtn.Click += add_Clicked;
 
@@ -90,90 +120,93 @@ namespace railway.CRUDTrain
             Grid.SetRow(titlePanel, 0);
 
 
-            foreach (TrainDTO t in dto)
+
+
+            for (int i = 1; i < rowNum+1; i++)
             {
-                var colDef = new ColumnDefinition();
-                colDef.Width = new GridLength(1, GridUnitType.Star);
-                gridTrains.ColumnDefinitions.Add(colDef);
-            }
-
-            for (int i = 0; i < dto.Count; i++)
-            {
-                Grid grid = new Grid();
-                grid.Margin = new Thickness { Bottom = 10, Left = 10, Right = 10, Top = 10 };
-                Grid.SetColumn(grid, i);
-                Grid.SetRow(grid, 1);
-                BrushConverter bc = new BrushConverter();
-                grid.Background = (Brush)bc.ConvertFrom("#FFF3F3F3");
-
-
-
-                grid.Effect = new DropShadowEffect()
+                if (dto.Count() - 4 * (i - 1) < 4)
                 {
-                    BlurRadius = 20,
-                    ShadowDepth = 1,
-                    Color = (Color)ColorConverter.ConvertFromString("#FFDEDEDE")
-                };
+                    col = dto.Count() - 4 * (i-1);
+                }
+                for (int j = 0; j < col; j++)
+                {
+                    Grid grid = new Grid();
+                    grid.Margin = new Thickness { Bottom = 10, Left = 10, Right = 10, Top = 10 };
+                    Grid.SetColumn(grid, j);
+                    Grid.SetRow(grid, i);
+                    BrushConverter bc = new BrushConverter();
+                    grid.Background = (Brush)bc.ConvertFrom("#FFF3F3F3");
 
 
-                StackPanel stackPanel = new StackPanel();
-                stackPanel.Width = 200;
+
+                    grid.Effect = new DropShadowEffect()
+                    {
+                        BlurRadius = 20,
+                        ShadowDepth = 1,
+                        Color = (Color)ColorConverter.ConvertFromString("#FFDEDEDE")
+                    };
 
 
-                TextBlock tb = new TextBlock();
-                tb.Text = dto[i].Name;
-                tb.FontSize = 20;
-                tb.FontWeight = FontWeights.Bold;
-                stackPanel.Children.Add(tb);
-
-                Image img = new Image();
-
-                img.Source = new BitmapImage(new Uri("/images/srbijavoz.jpg", UriKind.Relative));
-                img.Width = 200;
-                img.Height = 150;
-                stackPanel.Children.Add(img);
-
-                TextBlock tbColor = new TextBlock();
-                tbColor.Text = "Boja: " + dto[i].Color;
-                stackPanel.Children.Add(tbColor);
-
-                TextBlock tbRegular = new TextBlock();
-                tbRegular.Text = "Broj sedišta REGULAR: " + dto[i].numberREGULAR;
-                stackPanel.Children.Add(tbRegular);
+                    StackPanel stackPanel = new StackPanel();
+                    stackPanel.Width = 200;
 
 
-                TextBlock tbBusiness = new TextBlock();
-                tbBusiness.Text = "Broj sedišta BUSINESS: " + dto[i].numberBUSINESS;
-                stackPanel.Children.Add(tbBusiness);
+                    TextBlock tb = new TextBlock();
+                    tb.Text = dto[(i-1)*4+j].Name;
+                    tb.FontSize = 20;
+                    tb.FontWeight = FontWeights.Bold;
+                    stackPanel.Children.Add(tb);
 
-                TextBlock tbVip = new TextBlock();
-                tbVip.Text = "Broj sedišta REGULAR: " + dto[i].numberVIP;
-                stackPanel.Children.Add(tbVip);
+                    Image img = new Image();
 
+                    img.Source = new BitmapImage(new Uri("/images/srbijavoz.jpg", UriKind.Relative));
+                    img.Width = 200;
+                    img.Height = 150;
+                    stackPanel.Children.Add(img);
 
-                StackPanel stackPanel2 = new StackPanel();
-                stackPanel2.Orientation = Orientation.Horizontal;
-                stackPanel2.HorizontalAlignment = HorizontalAlignment.Center;
-                Button btnEdit = new Button();
-                btnEdit.Width = 80;
-                btnEdit.Content = "Izmeni";
-                btnEdit.Tag = dto[i].Id;
-                btnEdit.Click += edit_Clicked;
-                btnEdit.Margin = new Thickness { Bottom = 10, Left = 0, Right = 10, Top = 10 };
-                stackPanel2.Children.Add(btnEdit);
+                    TextBlock tbColor = new TextBlock();
+                    tbColor.Text = "Boja: " + dto[(i - 1) * 4 + j].Color;
+                    stackPanel.Children.Add(tbColor);
 
-                Button btnDelete = new Button();
-                btnDelete.Width = 80;
-                btnDelete.Content = "Obriši";
-                btnDelete.Click += delete_Clicked;
-                btnDelete.Tag = dto[i].Id;
-                btnDelete.Margin = new Thickness { Bottom = 10, Left = 10, Right = 0, Top = 10 };
-                stackPanel2.Children.Add(btnDelete);
-                stackPanel.Children.Add(stackPanel2);
+                    TextBlock tbRegular = new TextBlock();
+                    tbRegular.Text = "Broj sedišta REGULAR: " + dto[(i - 1) * 4 + j].numberREGULAR;
+                    stackPanel.Children.Add(tbRegular);
 
 
-                grid.Children.Add(stackPanel);
-                gridTrains.Children.Add(grid);
+                    TextBlock tbBusiness = new TextBlock();
+                    tbBusiness.Text = "Broj sedišta BUSINESS: " + dto[(i - 1) * 4 + j].numberBUSINESS;
+                    stackPanel.Children.Add(tbBusiness);
+
+                    TextBlock tbVip = new TextBlock();
+                    tbVip.Text = "Broj sedišta REGULAR: " + dto[(i - 1) * 4 + j].numberVIP;
+                    stackPanel.Children.Add(tbVip);
+
+
+                    StackPanel stackPanel2 = new StackPanel();
+                    stackPanel2.Orientation = Orientation.Horizontal;
+                    stackPanel2.HorizontalAlignment = HorizontalAlignment.Center;
+                    Button btnEdit = new Button();
+                    btnEdit.Width = 80;
+                    btnEdit.Content = "Izmeni";
+                    btnEdit.Tag = dto[(i - 1) * 4 + j].Id;
+                    btnEdit.Click += edit_Clicked;
+                    btnEdit.Margin = new Thickness { Bottom = 10, Left = 0, Right = 10, Top = 10 };
+                    stackPanel2.Children.Add(btnEdit);
+
+                    Button btnDelete = new Button();
+                    btnDelete.Width = 80;
+                    btnDelete.Content = "Obriši";
+                    btnDelete.Click += delete_Clicked;
+                    btnDelete.Tag = dto[(i - 1) * 4 + j].Id;
+                    btnDelete.Margin = new Thickness { Bottom = 10, Left = 10, Right = 0, Top = 10 };
+                    stackPanel2.Children.Add(btnDelete);
+                    stackPanel.Children.Add(stackPanel2);
+
+
+                    grid.Children.Add(stackPanel);
+                    gridTrains.Children.Add(grid);
+                    
+                }
             }
         }
 
@@ -183,6 +216,7 @@ namespace railway.CRUDTrain
             TrainDTO trainDTO = getTrainInfo((int)id);
             EditTrainModal.ShowHandlerDialog(trainDTO);
             dto = TrainService.getTrains();
+            reloadWindow();
 
 
         }
@@ -195,8 +229,10 @@ namespace railway.CRUDTrain
             db.trains.Remove(train);
             db.SaveChanges();
             DeleteTrainModal.ShowHandlerDialog(train.Name);
-            
-           
+            dto = TrainService.getTrains();
+            reloadWindow();
+
+
         }
         private void add_Clicked(object sender, RoutedEventArgs e)
         {
