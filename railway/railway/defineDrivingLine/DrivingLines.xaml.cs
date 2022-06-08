@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using railway.database;
 using railway.defineDrivingLine;
 using railway.exception;
@@ -22,8 +23,10 @@ namespace railway.defineDrivingLine
         private Station currentStation;
         private List<Station> stations;
         private DefineEndDateForDrivingLineModal defEndDateModal;
+        private DefineSimpleDataForDrivingLineModal defSimpleData;
         
-        public DrivingLines(Frame parentFrame, DefineEndDateForDrivingLineModal defineEndDateForDrivingLineModal)
+        public DrivingLines(Frame parentFrame, DefineEndDateForDrivingLineModal defineEndDateForDrivingLineModal,
+            DefineSimpleDataForDrivingLineModal defineSimpleDataForDrivingLineModal)
         {
             InitializeComponent();
             //this.parentFrame = frame;
@@ -40,6 +43,7 @@ namespace railway.defineDrivingLine
             }
 
             this.defEndDateModal = defineEndDateForDrivingLineModal;
+            this.defSimpleData = defineSimpleDataForDrivingLineModal;
         }
         
         
@@ -79,6 +83,8 @@ namespace railway.defineDrivingLine
                 }
                     
             }
+
+            send.newEndDate = send.endDate;
             defEndDateModal.ShowHandlerDialog(send, this);
 
             //DefineEndDateForDrivingLine window = new DefineEndDateForDrivingLine(send, this);
@@ -165,7 +171,7 @@ namespace railway.defineDrivingLine
         
         private void AddDrivingLine_OnClick(object sender, RoutedEventArgs e)
         {
-            UserControl add = new AddDrivingLine(parentFrame, this);
+            UserControl add = new AddDrivingLine(parentFrame, this, defSimpleData);
             //this.parentFrame.Content = add;
         }
 
@@ -266,6 +272,5 @@ namespace railway.defineDrivingLine
             cmbx.IsDropDownOpen = true;
         }
 
-        
     }
 }

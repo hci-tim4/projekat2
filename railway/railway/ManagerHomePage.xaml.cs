@@ -108,6 +108,9 @@ namespace railway
                 case 4:
                     HelpProvider.ShowHelp("ManagerAppHelp", this);
                     break;
+                case 5:
+                    page.Content = new ViewDrivingLineTicketReport();
+                    break;
 
                 default:
                     break;

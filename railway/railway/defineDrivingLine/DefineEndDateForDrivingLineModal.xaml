@@ -4,7 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
+             xmlns:cmd="clr-namespace:railway.Commands"
              d:DesignHeight="300" d:DesignWidth="300">
+    
+    <UserControl.CommandBindings>
+        <CommandBinding Command="cmd:RoutedCommands.Save" x:Name="save" CanExecute="Save_OnCanExecute" Executed="Save_OnExecuted"></CommandBinding>
+    </UserControl.CommandBindings>
     <Grid DataContext="{Binding ElementName=root}" >
         <Border Background="#90000000" Visibility="{Binding Visibility}">
             <Border BorderBrush="DodgerBlue" BorderThickness="1" Background="White" 
@@ -26,11 +31,12 @@
                         <RowDefinition Height="Auto"></RowDefinition>
                     </Grid.RowDefinitions>
               
-                    
-                    <Label FontSize="20" Grid.Row="0" Grid.ColumnSpan="2">Izaberite krajnji datum za mrežnu liniju: </Label>
-                   <!-- <Label FontSize="20" Grid.Row="2" Content="{Binding Path=Name}"></Label>-->
-                   <DatePicker Width ="100" Grid.Row="1" Grid.ColumnSpan="2"  x:Name="endDate"  FirstDayOfWeek="Monday"
-                                  IsEnabled="True"/>
+                    <StackPanel Grid.Row="0" Grid.ColumnSpan="2" x:Name="drivingLineStackPanel" Margin="2">
+                        <Label FontSize="20">Izaberite krajnji datum za mrežnu liniju: </Label>
+                       <Label FontSize="20" Content="{Binding Path=Name}"></Label>
+                       <DatePicker FontSize="20"  x:Name="endDate"  FirstDayOfWeek="Monday" SelectedDate="{Binding Path=newEndDate, Mode=TwoWay}"
+                                      IsEnabled="True"/>
+                    </StackPanel>
 
                     
      

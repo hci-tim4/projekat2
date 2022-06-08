@@ -70,5 +70,25 @@ namespace railway.Commands
                 new KeyGesture(Key.I, ModifierKeys.Control),
             }
         );
+        
+        public static readonly RoutedUICommand Insert = new RoutedUICommand(
+            "Insert",
+            "Insert",
+            typeof(RoutedCommands),
+            new InputGestureCollection()
+            {
+                new KeyGesture(Key.Insert, ModifierKeys.None),
+            }
+        );
+        
+        public static readonly RoutedUICommand Save = new RoutedUICommand(
+            "Save",
+            "Save",
+            typeof(RoutedCommands),
+            new InputGestureCollection()
+            {
+                new KeyGesture(Key.S, ModifierKeys.Control),
+            }
+        );
     }
 }

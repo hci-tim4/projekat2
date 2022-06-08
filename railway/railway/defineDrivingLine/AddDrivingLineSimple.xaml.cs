@@ -28,9 +28,11 @@ namespace railway.defineDrivingLine
         private Station currentStation;
         private StationSchedule changedStationSchedule;
         private PointLatLng? previous = null;
+        private DefineSimpleDataForDrivingLineModal defSimpleData;
         
         public AddDrivingLineSimple(Frame parentFrame, DrivingLines viewDrivingLines, AddDrivingLine dragAndDrop,
-            ObservableCollection<Station> stations2, ObservableCollection<Station> stations)
+            ObservableCollection<Station> stations2, ObservableCollection<Station> stations,
+            DefineSimpleDataForDrivingLineModal defineSimpleDataForDrivingLineModal)
         {
             InitializeComponent();
             this.drivingLineGotSaved += new DrivingGotSavedHandler(clearMap);
@@ -42,6 +44,7 @@ namespace railway.defineDrivingLine
             this.stations2 = stations2;
             this.stations = stations;
             addDrivingLineDragAndDrop = dragAndDrop;
+            this.defSimpleData = defineSimpleDataForDrivingLineModal;
         }
 
         private void resetStations()
@@ -176,8 +179,9 @@ namespace railway.defineDrivingLine
                 MessageBox.Show("Mrežna linija mora da sadrži barem 2 stanice");
                 return;
             }
-            Window def = new DefineSimpleDataForDrivingLine(stations2, drivingLineGotSaved);
-            def.Show();
+            //Window def = new DefineSimpleDataForDrivingLine(stations2, drivingLineGotSaved);
+            //def.Show();
+            defSimpleData.ShowHandlerDialog(stations2, drivingLineGotSaved);
         }
 
         private void BackToDragAndDrop_OnClick(object sender, RoutedEventArgs e)
@@ -231,7 +235,17 @@ namespace railway.defineDrivingLine
             parentPage.setDrivingLines(new RailwayContext());
             parentFrame.Content = parentPage;
         }
+     
         
+        private void Save_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void Save_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            SaveDrivingLine_OnClick(sender, e);
+        }
     }
     
     
