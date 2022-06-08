@@ -105,6 +105,10 @@ namespace railway
                 case 3:
                     page.Content = new ViewMonthlyTicketView();
                     break;
+                case 4:
+                    HelpProvider.ShowHelp("ManagerAppHelp", this);
+                    break;
+
                 default:
                     break;
             }
@@ -161,6 +165,22 @@ namespace railway
         private void Report_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             page.Content = new ViewMonthlyTicketView();
+        }
+
+        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            IInputElement focusedControl = FocusManager.GetFocusedElement(Application.Current.Windows[0]);
+            if (focusedControl is DependencyObject)
+            {
+                string str = HelpProvider.GetHelpKey((DependencyObject)focusedControl);
+                HelpProvider.ShowHelp(str, this);
+            }
+        }
+
+        public void doThings(string param)
+        {
+            //     btnOK.Background = new SolidColorBrush(Color.FromRgb(32, 64, 128));
+            Title = param;
         }
     }
 

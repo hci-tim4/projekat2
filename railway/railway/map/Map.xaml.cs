@@ -35,8 +35,6 @@ namespace railway.map
             InitializeComponent();
             this.fromStationId = fromStationId;
             this.untilStationId = arrivalId;
-            MessageBox.Show("From: " + fromStationId);
-            MessageBox.Show("Until: " + untilStationId);
             stationSchedules = ss;
             stations = new List<Station>();
         }

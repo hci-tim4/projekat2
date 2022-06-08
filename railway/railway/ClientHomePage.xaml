@@ -6,9 +6,10 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:railway"
         mc:Ignorable="d"
+
         Icon="\icon\trainIcon.png"
         Title="ŽELEZNICE SRBIJE" 
-         Width="{x:Static SystemParameters.PrimaryScreenWidth}"
+        Width="{x:Static SystemParameters.PrimaryScreenWidth}"
         Height="{x:Static SystemParameters.PrimaryScreenHeight}"
         WindowStartupLocation="CenterScreen"
         WindowState="Maximized"

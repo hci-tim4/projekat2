@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="srbijavoz.jpg" />
+    <None Remove="trainIcon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.4.4" />
     <PackageReference Include="GMap.NET.Core" Version="2.1.2" />
     <PackageReference Include="GMap.NET.WinPresentation" Version="2.1.2" />
@@ -20,8 +25,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="D:/fakultet/6.semestar/HCI/projekat/projekt-sminkanje-lvl200/projekat2/railway/railway/icon/*" />
-    <Resource Include="D:/fakultet/6.semestar/HCI/projekat/projekt-sminkanje-lvl200/projekat2/railway/railway/images/*" />
+    <Resource Include="D:/SYSTEM/Desktop/projekat 2/projekat2/railway/railway/icon/*" />
+    <Resource Include="D:/SYSTEM/Desktop/projekat 2/projekat2/railway/railway/images/*" />
   </ItemGroup>
+
+
 
 </Project>
