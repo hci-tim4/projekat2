@@ -8,11 +8,11 @@
         mc:Ignorable="d"
         Title="Login" >
     <Grid>
+    
 
 
 
-
-        <Image Source="\images\srbijavoz.jpg" Stretch="Fill">
+       <Image Source="\images\srbijavoz.jpg" Stretch="Fill" >
             <Image.Effect>
                 <BlurEffect Radius="15"/>
             </Image.Effect>

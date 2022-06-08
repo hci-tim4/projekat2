@@ -2,8 +2,8 @@
 using railway.model;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -11,82 +11,25 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Linq;
 
 namespace railway.CRUDTrain
 {
     /// <summary>
-    /// Interaction logic for AddTrainModal.xaml
+    /// Interaction logic for AddTrain.xaml
     /// </summary>
-    public partial class AddTrainModal : UserControl
+    public partial class AddTrain : Window
     {
-        public AddTrainModal()
+        public AddTrain()
         {
             InitializeComponent();
-            Visibility = Visibility.Hidden;
         }
-
-        private bool _hideRequest = false;
-        private bool _result = false;
-        private UIElement _parent;
-      
-
-        public void SetParent(UIElement parent)
-        {
-            _parent = parent;
-        }
-
-        public bool ShowHandlerDialog()
-        {
-
-            
-            Visibility = Visibility.Visible;
-
-            _parent.IsEnabled = false;
-
-            _hideRequest = false;
-            while (!_hideRequest)
-            {
-                // HACK: Stop the thread if the application is about to close
-                if (this.Dispatcher.HasShutdownStarted ||
-                    this.Dispatcher.HasShutdownFinished)
-                {
-                    break;
-                }
-
-                // HACK: Simulate "DoEvents"
-                this.Dispatcher.Invoke(
-                    System.Windows.Threading.DispatcherPriority.Background,
-                    new ThreadStart(delegate { }));
-                Thread.Sleep(20);
-            }
-
-            return _result;
-        }
-
-        
-          
-
-        private void CloseWindow_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = true;
-        }
-
-
 
         private void cancelBtn_Click(object sender, RoutedEventArgs e)
         {
-            HideHandlerDialog();
+            this.Close();
         }
 
-        private void HideHandlerDialog()
-        {
-            _hideRequest = true;
-            Visibility = Visibility.Hidden;
-            _parent.IsEnabled = true;
-        }
 
         private void addBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -124,7 +67,7 @@ namespace railway.CRUDTrain
                 vipNumber = int.Parse(VipNumberStr);
             }
             string BusNumberStr = businesstb.Text;
-           if (!IsNumeric(BusNumberStr))
+            if (!IsNumeric(BusNumberStr))
             {
                 MessageBox.Show("Mora biti broj");
             }
@@ -132,10 +75,10 @@ namespace railway.CRUDTrain
             {
                 busNumber = int.Parse(BusNumberStr);
             }
-           
+
             for (int i = 1; i <= vipNumber; i++)//redovi
             {
-                for(int j = 1; j <= col; j++)//kolone
+                for (int j = 1; j <= col; j++)//kolone
                 {
                     Seat s = new Seat();
                     s.Col = j;
@@ -146,7 +89,7 @@ namespace railway.CRUDTrain
                 }
             }
 
-            for (int i =vipNumber+1; i <= busNumber+vipNumber; i++)//redovi
+            for (int i = vipNumber + 1; i <= busNumber + vipNumber; i++)//redovi
             {
                 for (int j = 1; j <= col; j++)//kolone
                 {
@@ -159,7 +102,7 @@ namespace railway.CRUDTrain
                 }
             }
 
-            for (int i = vipNumber+busNumber+1; i <= busNumber+vipNumber+regNumber; i++)//redovi
+            for (int i = vipNumber + busNumber + 1; i <= busNumber + vipNumber + regNumber; i++)//redovi
             {
                 for (int j = 1; j <= col; j++)//kolone
                 {
@@ -172,9 +115,10 @@ namespace railway.CRUDTrain
                 }
             }
             db.SaveChanges();
-            
+            this.Close();
 
-            HideHandlerDialog();
+
+          
         }
 
         public bool IsNumeric(string value)

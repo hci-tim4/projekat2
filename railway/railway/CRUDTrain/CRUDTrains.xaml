@@ -98,7 +98,7 @@
     <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
         <Grid>
         
-            <materialDesign:TransitioningContent x:Name="TrainsitionigContentSlide" OpeningEffect="{materialDesign:TransitionEffect SlideInFromLeft, Duration=0:0:0.8}">
+        
             
 
           
@@ -106,7 +106,7 @@
                 
             </Grid>
           
-        </materialDesign:TransitioningContent>
+      
         <local:AddTrainModal x:Name="AddTrainModal"></local:AddTrainModal>
         <local:EditTrainModal x:Name="EditTrainModal"></local:EditTrainModal>
         <local:DeleteTrainModal x:Name="DeleteTrainModal"></local:DeleteTrainModal>
