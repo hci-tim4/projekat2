@@ -8,7 +8,7 @@
         xmlns:cmd="clr-namespace:railway.Commands"
         mc:Ignorable="d"
         Closing="Window_Closing"
-        Icon="\icon\trainIcon.png"
+        Icon="/icon/trainIcon.png"
         Title="ŽELEZNICE SRBIJE" 
         Width="{x:Static SystemParameters.PrimaryScreenWidth}"
         Height="{x:Static SystemParameters.PrimaryScreenHeight}"

@@ -1,8 +1,10 @@
-﻿using railway.dto.trains;
+﻿using railway.database;
+using railway.dto.trains;
 using railway.services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,7 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace railway
+namespace railway.CRUDTrain
 {
     /// <summary>
     /// Interaction logic for CRUDTrains.xaml
@@ -23,17 +25,23 @@ namespace railway
     public partial class CRUDTrains : Page
     {
         List<TrainDTO> dto;
+        Frame page;
 
        
 
         public CRUDTrains()
         {
             InitializeComponent();
+            AddTrainModal.SetParent(gridTrains);
+            EditTrainModal.SetParent(gridTrains);
+            DeleteTrainModal.SetParent(gridTrains);
+            dto = TrainService.getTrains();
+     
             //loggedUser = user;
 
-           
 
-           // this.DataContext = dto;
+
+            // this.DataContext = dto;
             //dataGrid.ItemsSource = dto;
         }
 
@@ -54,9 +62,18 @@ namespace railway
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            reloadWindow();
+           
+        }
+
+        private void reloadWindow()
+        {
+            gridTrains.RowDefinitions.Clear();
+            gridTrains.ColumnDefinitions.Clear();
             var rowDef1 = new RowDefinition();
             rowDef1.Height = new GridLength(1, GridUnitType.Star);
             gridTrains.RowDefinitions.Add(rowDef1);
+            
             var rowDef2 = new RowDefinition();
             rowDef2.Height = new GridLength(5, GridUnitType.Star);
             gridTrains.RowDefinitions.Add(rowDef2);
@@ -66,18 +83,19 @@ namespace railway
             titlePanel.HorizontalAlignment = HorizontalAlignment.Center;
             Button addBtn = new Button();
             addBtn.Content = "Dodaj novi voz";
-           
+            addBtn.Click += add_Clicked;
+
             titlePanel.Children.Add(addBtn);
             gridTrains.Children.Add(titlePanel);
             Grid.SetRow(titlePanel, 0);
-            
-            dto = TrainService.getTrains();
+
+
             foreach (TrainDTO t in dto)
-             {
-                 var colDef = new ColumnDefinition();
-                 colDef.Width = new GridLength(1, GridUnitType.Star);
-                 gridTrains.ColumnDefinitions.Add(colDef);
-             }
+            {
+                var colDef = new ColumnDefinition();
+                colDef.Width = new GridLength(1, GridUnitType.Star);
+                gridTrains.ColumnDefinitions.Add(colDef);
+            }
 
             for (int i = 0; i < dto.Count; i++)
             {
@@ -97,16 +115,16 @@ namespace railway
                     Color = (Color)ColorConverter.ConvertFromString("#FFDEDEDE")
                 };
 
-            
-                 StackPanel stackPanel = new StackPanel();
-                 stackPanel.Width = 200;
-             
 
-                 TextBlock tb = new TextBlock();
-                 tb.Text = dto[i].Name;
-                 tb.FontSize = 20;
-                 tb.FontWeight = FontWeights.Bold;
-                 stackPanel.Children.Add(tb);
+                StackPanel stackPanel = new StackPanel();
+                stackPanel.Width = 200;
+
+
+                TextBlock tb = new TextBlock();
+                tb.Text = dto[i].Name;
+                tb.FontSize = 20;
+                tb.FontWeight = FontWeights.Bold;
+                stackPanel.Children.Add(tb);
 
                 Image img = new Image();
 
@@ -131,7 +149,7 @@ namespace railway
                 TextBlock tbVip = new TextBlock();
                 tbVip.Text = "Broj sedišta REGULAR: " + dto[i].numberVIP;
                 stackPanel.Children.Add(tbVip);
-                
+
 
                 StackPanel stackPanel2 = new StackPanel();
                 stackPanel2.Orientation = Orientation.Horizontal;
@@ -139,12 +157,16 @@ namespace railway
                 Button btnEdit = new Button();
                 btnEdit.Width = 80;
                 btnEdit.Content = "Izmeni";
+                btnEdit.Tag = dto[i].Id;
+                btnEdit.Click += edit_Clicked;
                 btnEdit.Margin = new Thickness { Bottom = 10, Left = 0, Right = 10, Top = 10 };
                 stackPanel2.Children.Add(btnEdit);
 
                 Button btnDelete = new Button();
                 btnDelete.Width = 80;
                 btnDelete.Content = "Obriši";
+                btnDelete.Click += delete_Clicked;
+                btnDelete.Tag = dto[i].Id;
                 btnDelete.Margin = new Thickness { Bottom = 10, Left = 10, Right = 0, Top = 10 };
                 stackPanel2.Children.Add(btnDelete);
                 stackPanel.Children.Add(stackPanel2);
@@ -153,7 +175,46 @@ namespace railway
                 grid.Children.Add(stackPanel);
                 gridTrains.Children.Add(grid);
             }
+        }
+
+        private void edit_Clicked(object sender, RoutedEventArgs e)
+        {
+            var id = ((Button)sender).Tag;
+            TrainDTO trainDTO = getTrainInfo((int)id);
+            EditTrainModal.ShowHandlerDialog(trainDTO);
+            dto = TrainService.getTrains();
+
+
+        }
+
+        private void delete_Clicked(object sender, RoutedEventArgs e)
+        {
+            var db = new RailwayContext();
+            var id = ((Button)sender).Tag;
+            var train = db.trains.Where(t => t.Id == (int)id).FirstOrDefault();
+            db.trains.Remove(train);
+            db.SaveChanges();
+            DeleteTrainModal.ShowHandlerDialog(train.Name);
+            
            
         }
+        private void add_Clicked(object sender, RoutedEventArgs e)
+        {
+            AddTrainModal.ShowHandlerDialog();
+            dto = TrainService.getTrains();
+            reloadWindow();
         }
+
+        private TrainDTO getTrainInfo(int id)
+        {
+            TrainDTO trainInfo = null;
+            foreach(TrainDTO t in dto){
+                if(t.Id == id)
+                {
+                    trainInfo = t;
+                }
+            }
+            return trainInfo;
+        }
+    }
 }

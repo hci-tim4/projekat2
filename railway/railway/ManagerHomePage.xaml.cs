@@ -16,7 +16,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using railway.drivingLineReport;
 using railway.monthlyReport;
-
+using railway.CRUDTrain;
 
 namespace railway
 {

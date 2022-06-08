@@ -25,8 +25,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="D:/SYSTEM/Desktop/projekat 2/projekat2/railway/railway/icon/*" />
-    <Resource Include="D:/SYSTEM/Desktop/projekat 2/projekat2/railway/railway/images/*" />
+    <Resource Include="C:/Users/Anastasija/Desktop/hci2/projekat2/railway/railway/icon/*" />
+    <Resource Include="C:/Users/Anastasija/Desktop/hci2/projekat2/railway/railway/images/*" />
   </ItemGroup>
 
 

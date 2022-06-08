@@ -180,7 +180,6 @@ namespace railway
             {
                 dataGrid.ItemsSource = null;
                 dataGrid.ItemsSource = dto;
-                MessageBox.Show("Rezultati!");
             }
 
         }

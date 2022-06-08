@@ -19,8 +19,9 @@
     
 </UserControl.Resources>
     
-    <ScrollViewer x:Name="parent">
-    <Grid>
+    <ScrollViewer >
+        <Grid>
+            <Grid x:Name="parent">
         <Grid.RowDefinitions>
             <RowDefinition/>
         </Grid.RowDefinitions>
@@ -30,8 +31,9 @@
         
         <Frame Grid.Row="0" x:Name="drivingLineViewPage" Margin="0,0,0,0" NavigationUIVisibility="Hidden"></Frame>
 
-        <local:DefineEndDateForDrivingLineModal x:Name="DefineEndDateForDrivingLineModal"></local:DefineEndDateForDrivingLineModal>
-
-   </Grid>
+       
+            </Grid>
+            <local:DefineEndDateForDrivingLineModal x:Name="DefineEndDateForDrivingLineModal"></local:DefineEndDateForDrivingLineModal>
+        </Grid>
     </ScrollViewer>
 </UserControl>
