@@ -13,5 +13,7 @@ namespace railway.defineDrivingLine
         
         public DateTime? startDate { get; set; }
         public DateTime? endDate { get; set; }
+        
+        public DateTime? newEndDate { get; set; }
     }
 }

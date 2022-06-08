@@ -123,6 +123,13 @@
                 </ListViewItem>
 
 
+                <ListViewItem Height="50">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Help" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
+                        <TextBlock Text= "Privremeni izvestaj" FontSize="17" VerticalAlignment="Center" Margin="10 0"/>
+                    </StackPanel>
+                </ListViewItem>
+
             </ListView>
         </Grid>
 

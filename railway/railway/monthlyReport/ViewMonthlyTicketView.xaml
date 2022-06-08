@@ -8,22 +8,6 @@
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
-        <Style TargetType="{x:Type Control}" x:Key="baseStyle">
-            <Setter Property="FontSize" Value="20" />
-            <Setter Property="Margin" Value="2,3,2,3"></Setter>
-        </Style>
-        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource baseStyle}"></Style>
-        <Style TargetType="{x:Type Label}" BasedOn="{StaticResource baseStyle}"></Style>
-        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource baseStyle}"></Style>
-        <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource baseStyle}"></Style>
-        <Style TargetType="{x:Type DatePicker}" BasedOn="{StaticResource baseStyle}"></Style>
-        <Style TargetType="RadioButton">
-            <Setter Property="RenderTransform">
-                <Setter.Value>
-                    <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
-                </Setter.Value>
-            </Setter>
-        </Style>
         <!-- ComboBox, RadioButton, CheckBox, etc... -->
     </UserControl.Resources>
     <Grid>
@@ -36,15 +20,15 @@
         </Grid.ColumnDefinitions>
         <StackPanel  Grid.Column="0" Grid.Row="0"  MinWidth="100">
             <StackPanel Margin="3">
-                <DatePicker x:Name="fromDateDatePicker"></DatePicker>
-                <DatePicker x:Name="untilDateDatePicker"></DatePicker>
-                <Button x:Name="showReport" Click="ShowReport_OnClick" Content="Prikaži" Width="60" HorizontalAlignment="Right"></Button>
+                <DatePicker FontSize="20" MinWidth="200" x:Name="fromDateDatePicker"></DatePicker>
+                <DatePicker FontSize="20" MinWidth="200" x:Name="untilDateDatePicker"></DatePicker>
+                <Button FontSize="20" x:Name="showReport" Click="ShowReport_OnClick" Content="Prikaži" MinWidth="100" HorizontalAlignment="Right"></Button>
             </StackPanel>
             
             <StackPanel>
-                <Label>Tip podela</Label>
-                <RadioButton x:Name="seatTypeRadioButton" Margin="3" Content="Tip sedišta" Checked="showBySeatTypes"></RadioButton>
-                <RadioButton x:Name="drivingLineRadioButton" Margin="3" Checked="showByDrivingLines">Mrežna linija</RadioButton>
+                <Label FontSize="20">Tip podela</Label>
+                <RadioButton FontSize="20" x:Name="seatTypeRadioButton" Margin="3" Content="Tip sedišta" Checked="showBySeatTypes"></RadioButton>
+                <RadioButton FontSize="20" x:Name="drivingLineRadioButton" Margin="3" Checked="showByDrivingLines">Mrežna linija</RadioButton>
             </StackPanel>
         </StackPanel>
         
@@ -74,9 +58,9 @@
                     
                 
                 <DataGrid.Columns>
-                    <DataGridTextColumn Width="*" MinWidth="100" Header="Tip" Binding="{Binding Path=Type}"/>
-                    <DataGridTextColumn Width="*" MinWidth="100" Header="Broj karata" Binding="{Binding Path=NumberOfSelledTickets}"/>
-                    <DataGridTextColumn Width="*" MinWidth="100" Header="Iznos" Binding="{Binding Path=Price}"/>
+                    <DataGridTextColumn FontSize="20" Width="*" MinWidth="100" Header="Tip" Binding="{Binding Path=Type}"/>
+                    <DataGridTextColumn FontSize="20" Width="*" MinWidth="100" Header="Broj karata" Binding="{Binding Path=NumberOfSelledTickets}"/>
+                    <DataGridTextColumn FontSize="20" Width="*" MinWidth="100" Header="Iznos" Binding="{Binding Path=Price}"/>
                 </DataGrid.Columns>
 
             </DataGrid>
