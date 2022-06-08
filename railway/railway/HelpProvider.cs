@@ -80,6 +80,17 @@ namespace railway
             HelpViewer hh = new HelpViewer(key, originator);
             hh.Show();
         }
+        public static void ShowHelp(string key, DefineSimpleDataForDrivingLineModal originator)
+        {
+            HelpViewer hh = new HelpViewer(key, originator);
+            hh.Show();
+        }
+
+        public static void ShowHelp(string key, ChangeTrafficDayModal originator)
+        {
+            HelpViewer hh = new HelpViewer(key, originator);
+            hh.Show();
+        }
 
     }
     

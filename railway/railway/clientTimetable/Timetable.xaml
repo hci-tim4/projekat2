@@ -41,7 +41,7 @@
                 </ComboBox>
                 <!--<Viewbox HorizontalAlignment="Center" Width="150">-->
                 <!-- <DatePicker ToolTip="Izaberite datum" SelectedDate="{Binding Path=date, Mode=TwoWay}"  x:Name="startDate" FirstDayOfWeek="Monday" SelectedDateChanged="StartDate_SelectedDateChanged" Text="SEEEEELEEECT" VerticalAlignment="Center" HorizontalAlignment="Center" />-->
-                <DatePicker  Width ="150" Margin="20" materialDesign:HintAssist.Hint="Datum" SelectedDate="{Binding Path=date, Mode=TwoWay}"  x:Name="startDate" FirstDayOfWeek="Monday" SelectedDateChanged="StartDate_SelectedDateChanged" Foreground="DodgerBlue" Background="White" FontWeight="Bold" FontSize="20"></DatePicker>
+                <DatePicker Width ="150" Margin="20" materialDesign:HintAssist.Hint="Datum" SelectedDate="{Binding Path=date, Mode=TwoWay}"  x:Name="startDate" FirstDayOfWeek="Monday" SelectedDateChanged="StartDate_SelectedDateChanged" Foreground="DodgerBlue" Background="White" FontWeight="Bold" FontSize="20" Language=""></DatePicker>
                 <!-- </Viewbox>-->
                 <Button ToolTip="Pretražite postojeće linije" Margin="2,2,2,2" Padding="2" FontSize="20" Content="Pretraži" Click="btn_search" HorizontalAlignment="Center" VerticalAlignment="Center"></Button>
 

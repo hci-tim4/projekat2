@@ -6,10 +6,12 @@
              xmlns:local="clr-namespace:railway.defineDrivingLine"
              mc:Ignorable="d"
              xmlns:l="clr-namespace:railway"
+             xmlns:cmd="clr-namespace:railway.Commands"
              xmlns:gmaps="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
+        <CommandBinding Command="cmd:RoutedCommands.Save" x:Name="save" CanExecute="Save_OnCanExecute" Executed="Save_OnExecuted"></CommandBinding>
     </UserControl.CommandBindings>
     <UserControl.Resources>
         <Style TargetType="{x:Type Control}" x:Key="baseStyle">

@@ -38,6 +38,7 @@ namespace railway.managerSchedule
             drivingLineDataGrid.ItemsSource = this.lines;
          
             this.DataContext =this;
+            ChangeTrafficDayModal.SetParent(parent);
 
         }
 
@@ -183,9 +184,11 @@ namespace railway.managerSchedule
                  select dto).FirstOrDefault();
 
 
-            Window changeDays = new ChangeTrafficDay(dlDTO, this);
-            changeDays.Show();
-            changeDays.Focus();
+            ChangeTrafficDayModal.ShowHandlerDialog(dlDTO, this);
+
+            //   Window changeDays = new ChangeTrafficDay(dlDTO, this);
+            //  changeDays.Show();
+            //  changeDays.Focus();
 
         }
 

@@ -89,7 +89,7 @@ namespace railway.client
             }
             Ticket t = new Ticket()
             {
-                User = user,
+                UserId = user.Id,
                 FromStationScheduleId = getTicketDTO.FromStationScheduleId,
                 UntilStationScheduleId = getTicketDTO.UntilStationScheduleId,
                 ScheduleId = getTicketDTO.ScheduleId,

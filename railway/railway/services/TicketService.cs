@@ -22,6 +22,7 @@ namespace railway.services
 
             foreach (Ticket t in tickets) {
                 TicketsDTO dto = getTicketAttribute(t);
+                setDate(t, dto);
                 List<Seat> seats = getSeats(t.Id);
                 foreach (Seat s in seats)
                 {
@@ -82,13 +83,13 @@ namespace railway.services
             using (var db = new RailwayContext())
             {
                 StationSchedule ssDeparture = (StationSchedule)(from s in db.stationsSchedules
-                                   where s.StationId == ticket.FromStationScheduleId
+                                   where s.Id == ticket.FromStationScheduleId
                                    select s).FirstOrDefault();
                 dto.DepartureTime = (TimeSpan)ssDeparture.DepartureTime;
                 dto.DepartureStationName = getStationName(ssDeparture.StationId);
 
                 StationSchedule ssArrival = (StationSchedule)(from s in db.stationsSchedules
-                                                                where s.StationId == ticket.UntilStationScheduleId
+                                                                where s.Id == ticket.UntilStationScheduleId
                                                                 select s).FirstOrDefault();
                 dto.ArrivalTime= (TimeSpan)ssDeparture.ArrivalTime;
                 dto.ArrivalStationName = getStationName(ssArrival.StationId);
@@ -104,7 +105,6 @@ namespace railway.services
                                                where s.Id == ticket.ScheduleId
                                                select s).FirstOrDefault();
                 dto.DepatureDate = schedule.DepatureDate;
-
             }
         }
 

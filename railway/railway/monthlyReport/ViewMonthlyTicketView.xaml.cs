@@ -19,7 +19,7 @@ namespace railway.monthlyReport
         private List<InformationForGraphDisplay> currentData = null;
         private List<TicketForReportDTO> tickets = null;
         private TicketService ticketService;
-        public Func<int, string> Formatter { get; set; }
+        public Func<double, string> Formatter { get; set; }
 
         public ViewMonthlyTicketView()
         {

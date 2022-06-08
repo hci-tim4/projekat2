@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System;
+using System.Windows.Controls;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -40,7 +41,7 @@ namespace railway.defineDrivingLine
         {
             drivingLine = dto;
             this.DrivingLinesView = drivingLinesView;
-           // drivingLineStackPanel.DataContext = drivingLine;
+            drivingLineStackPanel.DataContext = drivingLine;
             //askingForConfirmLabel.Content = "Krajnji datum mrežne linije";
             //this.defineEndDate = new DefineEndDateForDrivingLine(dto, drivingLinesView);
             //confirmationDataFrame.Content = defineEndDate;
@@ -76,6 +77,38 @@ namespace railway.defineDrivingLine
         {
             //defineEndDate.saveDate();
             _result = true;
+            
+            DateTime? selectedEndDate = endDate.SelectedDate;
+            if (selectedEndDate == null)
+            {
+                MessageBox.Show("Morate da izaberete datum.");
+                return;
+            }
+
+            using (var db = new RailwayContext())
+            {
+                List<Ticket> tickets = (from t in db.tickets
+                    join s in db.schedules
+                        on t.ScheduleId equals s.Id
+                    where s.DepatureDate > DateTime.Now && s.DrivingLineId == drivingLine.DrivingLineId
+                    select t).ToList();
+                if (tickets.Count > 0)
+                    MessageBox.Show("Postoje prodate karte za liniju.");
+                else
+                {
+                    DrivingLine dl = (from d in db.drivingLines
+                        where d.Id == drivingLine.DrivingLineId
+                        select d).Single();
+                    dl.endDate = drivingLine.newEndDate;
+                    MessageBox.Show(
+                        "Uspešno ste sačuvali krajnji datum.");
+                    
+                    db.SaveChanges();
+                    DrivingLinesView.setDrivingLines(new RailwayContext());
+                    // this.Close();
+                }
+            }
+            //MessageBox.Show("Chosen date: " + drivingLine.newEndDate);
             //MessageBox.Show("Uspešno su sačuvani podaci.", "Uspeh");
             HideHandlerDialog();
         }
@@ -89,7 +122,7 @@ namespace railway.defineDrivingLine
 
         private void cancelBtn_Click(object sender, RoutedEventArgs e)
         {
-            _result = false;
+            //_result = false;
             HideHandlerDialog();
         }
 
@@ -104,8 +137,18 @@ namespace railway.defineDrivingLine
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            _result = false;
+            //_result = false;
             HideHandlerDialog();
+        }
+
+        private void Save_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void Save_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            confirmBtn_Click_1(sender, e);
         }
     }
 }

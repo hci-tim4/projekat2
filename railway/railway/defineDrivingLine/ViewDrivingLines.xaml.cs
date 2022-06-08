@@ -30,7 +30,8 @@ namespace railway.defineDrivingLine
             this.parentFrame.Content = this;
             //this.DataContext = DrivingLines;
             DefineEndDateForDrivingLineModal.SetParent(parent);
-            drivingLineViewPage.Content = new DrivingLines(drivingLineViewPage, DefineEndDateForDrivingLineModal);
+            DefineSimpleDataForDrivingLineModal.SetParent(parent);
+            drivingLineViewPage.Content = new DrivingLines(drivingLineViewPage, DefineEndDateForDrivingLineModal, DefineSimpleDataForDrivingLineModal);
             /*using (var db = new RailwayContext())
             {
                 setDrivingLines(db);
@@ -86,5 +87,17 @@ namespace railway.defineDrivingLine
             drivingLineViewPage.NavigationService.GoForward();
         }
 
+        
+
+        private void InsertDrivingLine_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void InsertDrivingLine_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            //UserControl add = new AddDrivingLine(parentFrame, (DrivingLines)drivingLineViewPage.Content, DefineSimpleDataForDrivingLineModal);
+
+        }
     }
 }

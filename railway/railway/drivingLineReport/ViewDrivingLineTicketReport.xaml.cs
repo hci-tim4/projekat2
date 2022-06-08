@@ -90,6 +90,7 @@ namespace railway.drivingLineReport
             lineChartData = new LineChartInformation();
             Formatter = value => value.ToString("N");
             lineChartPanel.DataContext = this;
+            dataGrid.DataContext = this;
         }
 
         private void setDrivingLinesInComboBox()
