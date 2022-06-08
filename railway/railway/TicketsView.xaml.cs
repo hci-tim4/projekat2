@@ -159,13 +159,13 @@ namespace railway
             if (param == "Polazištu")
             {
                 dto = (from t in dto
-                       where t.DepartureStationName == value
+                       where t.DepartureStationName.ToLower().Contains(value.ToLower())
                        select t).ToList();
             }
             else
             {
                 dto = (from t in dto
-                       where t.ArrivalStationName == value
+                       where t.ArrivalStationName.ToLower().Contains(value.ToLower())
                        select t).ToList();
             }
 
