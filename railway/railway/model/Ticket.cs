@@ -27,5 +27,7 @@ namespace railway.model
         public double Price { get; set; }
 
         public List<TicketSeats> ticketSeats;
+
+        public int Tour { get; set; }
     }
 }

@@ -93,7 +93,8 @@ namespace railway
         private void btnLogOut_Click(object sender, RoutedEventArgs e)
         {
             Window login = new MainWindow();
-            App.Current.MainWindow.Close();
+            //App.Current.MainWindow.Close();
+            this.Close();
             login.Show();
         }
     }

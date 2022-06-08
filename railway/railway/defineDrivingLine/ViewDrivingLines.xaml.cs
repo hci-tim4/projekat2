@@ -6,7 +6,6 @@ using System.Windows.Documents;
 using railway.database;
 using railway.model;
 using System.Linq;
-using railway.CRUDDrivingLine;
 using railway.exception;
 using railway.services;
 using System.Windows.Input;
@@ -30,7 +29,8 @@ namespace railway.defineDrivingLine
             this.parentFrame = frame;
             this.parentFrame.Content = this;
             //this.DataContext = DrivingLines;
-            drivingLineViewPage.Content = new DrivingLines(drivingLineViewPage);
+            DefineEndDateForDrivingLineModal.SetParent(parent);
+            drivingLineViewPage.Content = new DrivingLines(drivingLineViewPage, DefineEndDateForDrivingLineModal);
             /*using (var db = new RailwayContext())
             {
                 setDrivingLines(db);

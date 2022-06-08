@@ -9,7 +9,7 @@ using railway.exception;
 using railway.model;
 using railway.services;
 
-namespace railway.CRUDDrivingLine
+namespace railway.defineDrivingLine
 {
     public partial class DrivingLines : UserControl
     {
@@ -21,8 +21,9 @@ namespace railway.CRUDDrivingLine
         private DrivingLineViewDTO currentSelected = null;
         private Station currentStation;
         private List<Station> stations;
+        private DefineEndDateForDrivingLineModal defEndDateModal;
         
-        public DrivingLines(Frame parentFrame)
+        public DrivingLines(Frame parentFrame, DefineEndDateForDrivingLineModal defineEndDateForDrivingLineModal)
         {
             InitializeComponent();
             //this.parentFrame = frame;
@@ -37,6 +38,8 @@ namespace railway.CRUDDrivingLine
                 fullTrains = trains;
                 stations = (from st in db.stations orderby st.Name select st).ToList();
             }
+
+            this.defEndDateModal = defineEndDateForDrivingLineModal;
         }
         
         
@@ -76,8 +79,10 @@ namespace railway.CRUDDrivingLine
                 }
                     
             }
-            DefineEndDateForDrivingLine window = new DefineEndDateForDrivingLine(send, this);
-            window.Show();
+            defEndDateModal.ShowHandlerDialog(send, this);
+
+            //DefineEndDateForDrivingLine window = new DefineEndDateForDrivingLine(send, this);
+            //window.Show();
             /*
             using (var db = new RailwayContext())
             {

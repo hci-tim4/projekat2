@@ -89,6 +89,10 @@ namespace railway.map
                     }
                     else if (st.Id == untilStationId)
                     {
+                        if (center.Lat == 0 && center.Lng == 0)
+                        {
+                            center = current;
+                        }
                         marker.Shape = new Ellipse
                         {
                             Width = 10,
