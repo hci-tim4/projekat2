@@ -90,5 +90,15 @@ namespace railway.Commands
                 new KeyGesture(Key.S, ModifierKeys.Control),
             }
         );
+        
+        public static readonly RoutedUICommand StartTutorial = new RoutedUICommand(
+            "Save",
+            "Save",
+            typeof(RoutedCommands),
+            new InputGestureCollection()
+            {
+                new KeyGesture(Key.P, ModifierKeys.Control),
+            }
+        );
     }
 }

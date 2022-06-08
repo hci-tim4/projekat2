@@ -13,17 +13,6 @@
         <CommandBinding Command="cmd:RoutedCommands.Save" x:Name="save" CanExecute="Save_OnCanExecute" Executed="Save_OnExecuted"></CommandBinding>
     </UserControl.CommandBindings>
     <UserControl.Resources>
-        <Style TargetType="{x:Type Control}" x:Key="baseStyle">
-            <Setter Property="FontSize" Value="20" />
-            <Setter Property="Margin" Value="2,2,2,2"></Setter>
-            <Setter Property="FontStyle" Value="Normal"></Setter>
-        </Style>
-        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource baseStyle}"></Style>
-        <Style TargetType="{x:Type Label}" BasedOn="{StaticResource baseStyle}"></Style>
-        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource baseStyle}"></Style>
-        <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource baseStyle}">
-            <Setter Property="Margin" Value="0"></Setter>
-        </Style>
         <!-- ComboBox, RadioButton, CheckBox, etc... -->
         
         
@@ -129,25 +118,25 @@
         <StackPanel Grid.Column="0" Grid.Row="0">
             <DockPanel>
 
-                <Button x:Name="back" DockPanel.Dock="Left" Click="Back_OnClick" Style="{StaticResource CircleButton}" Width="35" Height="35">
+                <Button FontSize="20" x:Name="back" DockPanel.Dock="Left" Click="Back_OnClick" Style="{StaticResource CircleButton}" Width="35" Height="35">
                     <Image Source="\icon\backbutton.png" Stretch="Fill">
                     </Image>
                 </Button>
                 
-                <Button DockPanel.Dock="Right" HorizontalAlignment="Right" MaxWidth="100" MaxHeight="30" ToolTip="Ručna definicija mrežne linije"
+                <Button FontSize="20" DockPanel.Dock="Right" HorizontalAlignment="Right" MaxWidth="120" MaxHeight="30" ToolTip="Ručna definicija mrežne linije"
                         x:Name="changeDrivingLineDefView" Click="ChangeDrivingLineDefView_OnClick" l:HelpProvider.HelpKey="goToSimpeWay">Promeni</Button>
             </DockPanel>
-            <Button Content="Sačuvaj" MaxWidth="120" HorizontalAlignment="Right" x:Name="saveDrivingLine" Click="SaveDrivingLine_OnClick" l:HelpProvider.HelpKey="btnSaveNewDrivingLine"></Button>
-            <TextBox ToolTip="Pretražuj po imenu" KeyUp="searchForStation" x:Name="searchForStationTextBox"  l:HelpProvider.HelpKey="searchStation">
+            <Button FontSize="20" Content="Sačuvaj" MaxWidth="120" HorizontalAlignment="Right" x:Name="saveDrivingLine" Click="SaveDrivingLine_OnClick" l:HelpProvider.HelpKey="btnSaveNewDrivingLine"></Button>
+            <TextBox Margin="0,2,0,0" Background="White" FontSize="20" ToolTip="Pretražuj po imenu" KeyUp="searchForStation" x:Name="searchForStationTextBox"  l:HelpProvider.HelpKey="searchStation">
                 
             </TextBox>
         </StackPanel>
             
-        <ListView Grid.Row="1" Grid.Column="0"  ItemsSource="{Binding stations}" x:Name="stationList"
+        <ListView FontSize="20" Background="White" Grid.Row="1" Grid.Column="0"  ItemsSource="{Binding stations}" x:Name="stationList"
                   PreviewMouseLeftButtonDown="ListView_PreviewMouseLeftButtonDown" MouseMove="ListView_MouseMove"
                   ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible"
                   MaxHeight="700" MinHeight="200">
-            <ListView.ItemTemplate  > 
+            <ListView.ItemTemplate > 
                 <DataTemplate>
                     <WrapPanel l:HelpProvider.HelpKey="dragDrop">
                         <TextBlock Text="{Binding Name}" FontWeight="Bold" l:HelpProvider.HelpKey="dragDrop"/>

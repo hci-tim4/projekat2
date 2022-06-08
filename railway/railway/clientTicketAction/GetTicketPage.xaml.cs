@@ -117,6 +117,11 @@ namespace railway.client
                                        select stationSchedules).Single();
 
                 int numberOfStationsBetween = ss2.SerialNumber - ss1.SerialNumber;
+                if (numberOfStationsBetween < 0)
+                {
+                    MessageBox.Show("Greška se desilo.");
+                    return 0;
+                }
 
                 ticketSeats = new List<TicketSeats>();
 

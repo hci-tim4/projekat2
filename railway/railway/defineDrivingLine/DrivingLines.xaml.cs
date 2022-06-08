@@ -9,10 +9,13 @@ using railway.defineDrivingLine;
 using railway.exception;
 using railway.model;
 using railway.services;
+using ThinkSharp.FeatureTouring;
+using ThinkSharp.FeatureTouring.Models;
+using ThinkSharp.FeatureTouring.Navigation;
 
 namespace railway.defineDrivingLine
 {
-    public partial class DrivingLines : UserControl
+    public partial class DrivingLines : UserControl, TutorialInterface
     {
         public List<DrivingLineViewDTO> DrivingLinesList;
         private List<Train> trains;
@@ -24,6 +27,7 @@ namespace railway.defineDrivingLine
         private List<Station> stations;
         private DefineEndDateForDrivingLineModal defEndDateModal;
         private DefineSimpleDataForDrivingLineModal defSimpleData;
+        private Boolean Touring;
         
         public DrivingLines(Frame parentFrame, DefineEndDateForDrivingLineModal defineEndDateForDrivingLineModal,
             DefineSimpleDataForDrivingLineModal defineSimpleDataForDrivingLineModal)
@@ -148,7 +152,30 @@ namespace railway.defineDrivingLine
             if (currentSelected.startDate < DateTime.Now)
                 startDate.IsEnabled = false;
             endDate.SelectedDate = currentSelected.endDate;
+            setMap();
             setStationsOnDrivingLine();
+            
+            IFeatureTourNavigator navigator = FeatureTour.GetNavigator();
+            navigator.IfCurrentStepEquals("datagrid").GoNext();
+        }
+
+        private void setMap()
+        {
+            if (currentSelected == null)
+            {
+                MessageBox.Show("Prvo morate da izaberete mrežnu liniju");
+                return;
+            }
+
+            using (var db = new RailwayContext())
+            {
+                List<StationSchedule> ss = (from sts in db.stationsSchedules
+                    where currentSelected.DrivingLineId == sts.DrivingLineId && sts.Tour == 1
+                    orderby sts.SerialNumber
+                    select sts).ToList();
+                int lastIndex = ss.Count - 1;
+                mapPage.Content = new map.Map(ss, ss[0].StationId, ss[lastIndex].StationId);
+            }
         }
 
         private void setStationsOnDrivingLine()
@@ -272,5 +299,53 @@ namespace railway.defineDrivingLine
             cmbx.IsDropDownOpen = true;
         }
 
+        public void StartTour_OnClick(object sender, RoutedEventArgs e)
+        {
+            Touring = true;
+            TextLocalization.Close = "Zatvori";
+            TextLocalization.Next = "Sledeći";
+            var tour = new Tour()
+            {
+                Name = "My Demo Tour",
+                ShowNextButtonDefault = true,
+                EnableNextButtonAlways = true,
+                
+                Steps = new []
+                {
+                    new Step("wholeDataGrid", "Tebala mrežnih linija", "Prikazani su podaci za pojedinačne mrežne linije"),
+                    new Step("defEndDateButton", "Definisanje krajnjeg datuma", "Omogućeno je definisanje datuma do kad" +
+                        "će biti mrežna linija u koristi."),
+                    new Step("datagrid", "Tabela mrežnih linija", "Izaberite jednu od linija za nastavku.")
+                    {
+                        ShowNextButton = false
+                    },
+                    new Step("changeNameTextBox", "Ime", "Prikaz imena izabrane mrežne linije"),
+                    new Step("changeTrainComboBox", "Voz", "Prikaz voza izabrane mrežne linije"),
+                    new Step("startDateDatePicker", "Pocetni datum", "Izabrani datum, od kad će biti mrežna linija u koristi"),
+                    new Step("endDateDatePicker", "Krajnji datum", "Izabrani datum, do kad će biti voz u koristi"),
+                    new Step("saveChangesButton", "Sacuvaj", "Klikom na dugme sačuvaj, sačuvaju se napravljane izmene nad izabranim mrežnom linijom"),
+                    new Step("routeOnMap", "Ruta", "Stanice izabrane mrežne linije"),
+                    new Step("DefNewDrivingLineButton", "Definisanje nove mrežne linije", "Klikom na ovo dugme možete da nastavita postupak definisanje mrežne linije")
+                    // ...
+                },
+                
+            };
+
+            tour.Start();
+            
+            
+            
+            //Step s1 = 
+            //if (currentSelected != null)
+            //{ 
+            //navigator.ForStep("stepDataGrid").s;
+            //}
+
+            IFeatureTourNavigator navigator = FeatureTour.GetNavigator();
+            //navigator.
+
+            //navigator.IfCurrentStepEquals("datagrid").GoPrevious();
+            //navigator.IfCurrentStepEquals("datagrid").Close();
+        }
     }
 }

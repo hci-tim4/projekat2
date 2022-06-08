@@ -13,7 +13,7 @@ using railway.services;
 
 namespace railway.drivingLineReport
 {
-    public partial class ViewDrivingLineTicketReport : UserControl, INotifyPropertyChanged
+    public partial class ViewDrivingLineTicketReport : UserControl, INotifyPropertyChanged, TutorialInterface
     {
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged(string name)
@@ -124,12 +124,12 @@ namespace railway.drivingLineReport
 
         private void ShowDrivingLineReportButton_OnClick(object sender, RoutedEventArgs e)
         {
-            if (cmbDrivingLine == null)
+            if (currentDrivingLine == null)
             {
                 MessageBox.Show("Prvo morate da izaberete mrežnu liniju.");
                 return;
             }
-
+//PUKNE !!!!!!!!!
             tickets = ticketService.GetTicketByDrivingLine(currentDrivingLine.DrivingLineId);
             if (tickets.Count == 0)
             {
@@ -211,5 +211,9 @@ namespace railway.drivingLineReport
 
         }
 
+        public void StartTour_OnClick(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Tutorijal");
+        }
     }
 }

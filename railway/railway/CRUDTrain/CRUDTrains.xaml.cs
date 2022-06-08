@@ -22,7 +22,7 @@ namespace railway.CRUDTrain
     /// <summary>
     /// Interaction logic for CRUDTrains.xaml
     /// </summary>
-    public partial class CRUDTrains : Page
+    public partial class CRUDTrains : Page, TutorialInterface
     {
         List<TrainDTO> dto;
         Frame page;
@@ -251,6 +251,11 @@ namespace railway.CRUDTrain
                 }
             }
             return trainInfo;
+        }
+
+        public void StartTour_OnClick(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Tutorijal");
         }
     }
 }
