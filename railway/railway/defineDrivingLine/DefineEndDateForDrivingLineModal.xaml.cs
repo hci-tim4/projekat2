@@ -40,8 +40,8 @@ namespace railway.defineDrivingLine
         {
             drivingLine = dto;
             this.DrivingLinesView = drivingLinesView;
-            drivingLineStackPanel.DataContext = drivingLine;
-            askingForConfirmLabel.Content = "Krajnji datum mrežne linije";
+           // drivingLineStackPanel.DataContext = drivingLine;
+            //askingForConfirmLabel.Content = "Krajnji datum mrežne linije";
             //this.defineEndDate = new DefineEndDateForDrivingLine(dto, drivingLinesView);
             //confirmationDataFrame.Content = defineEndDate;
             Visibility = Visibility.Visible;
