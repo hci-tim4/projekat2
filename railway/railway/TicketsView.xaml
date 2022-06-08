@@ -63,7 +63,7 @@
                    Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Background="DodgerBlue" CanUserSortColumns="False">
 
             <DataGrid.Columns >
-                <DataGridTextColumn Header="Datum" Binding="{Binding Path=DepatureDate }"/>
+                <DataGridTextColumn Header="Datum" Binding="{Binding Path=DepatureDate}"/>
                 <DataGridTextColumn Header="Vreme polaska" Binding="{Binding Path=ArrivalTime }"/>
                 <DataGridTextColumn Header="Polazište" Binding="{Binding Path=DepartureStationName}"/>
                 <DataGridTextColumn Header="Vreme dolaska" Binding="{Binding Path=DepartureTime }"/>

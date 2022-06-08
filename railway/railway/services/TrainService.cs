@@ -20,7 +20,7 @@ namespace railway.services
 
                 foreach(Train t in allTrains)
                 {
-                    TrainDTO dto = new TrainDTO { Color = t.Color, Name = t.Name };
+                    TrainDTO dto = new TrainDTO { Color = t.Color, Name = t.Name, Id=t.Id};
                     getSeats(t,dto);
                     getSeatPrices(t, dto);
                     List<string> drivingLines = getDrivingLines(t);
