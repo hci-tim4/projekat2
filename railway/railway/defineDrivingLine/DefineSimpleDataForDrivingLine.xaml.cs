@@ -11,7 +11,7 @@ using railway.exception;
 using railway.services;
 using System.Windows.Input;
 
-namespace railway.CRUDDrivingLine
+namespace railway.defineDrivingLine
 {
     public partial class DefineSimpleDataForDrivingLine : Window
     {

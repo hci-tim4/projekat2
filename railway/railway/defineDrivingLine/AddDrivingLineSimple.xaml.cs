@@ -1,192 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using railway.database;
-using railway.defineDrivingLine;
-using railway.model;
-using System.Linq;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using GMap.NET;
+using railway.database;
+using railway.defineDrivingLine;
+using railway.model;
 using GMap.NET;
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsPresentation;
 
-namespace railway.CRUDDrivingLine
+namespace railway.defineDrivingLine
 {
-    public delegate void DrivingGotSavedHandler();
-    public partial class AddDrivingLine : UserControl
+    public partial class AddDrivingLineSimple : UserControl
     {
+        
         public event DrivingGotSavedHandler drivingLineGotSaved;
         private Frame parentFrame;
         private DrivingLines parentPage;
-        public PointLatLng? previous { get; set; }
+        private ObservableCollection<Station> stations;
+        private ObservableCollection<Station> stations2;
+        private AddDrivingLine addDrivingLineDragAndDrop;
+        private Station currentStation;
+        private StationSchedule changedStationSchedule;
+        private PointLatLng? previous = null;
         
-        
-        public AddDrivingLine(Frame parentFrame, DrivingLines viewDrivingLines)
+        public AddDrivingLineSimple(Frame parentFrame, DrivingLines viewDrivingLines, AddDrivingLine dragAndDrop,
+            ObservableCollection<Station> stations2, ObservableCollection<Station> stations)
         {
             InitializeComponent();
             this.drivingLineGotSaved += new DrivingGotSavedHandler(clearMap);
             this.parentFrame = parentFrame;
-            this.parentFrame.Content = this;
+            //this.parentFrame.Content = this;
             this.parentPage = viewDrivingLines;
-            using (var db = new RailwayContext())
-            {
-                List<Station> s = (from st in db.stations orderby st.Name select st).ToList();
-                
-                stations = new ObservableCollection<Station>(s);
-                stations2 = new ObservableCollection<Station>();
-            }
 
             this.DataContext = this;
+            this.stations2 = stations2;
+            this.stations = stations;
+            addDrivingLineDragAndDrop = dragAndDrop;
         }
 
-        private void clearMap()
-        {
-            addStationsBack();
-            stations2 = new ObservableCollection<Station>();
-            setUpMapView();
-            this.DataContext = this;
-        }
-
-        private void addStationsBack()
-        {
-            foreach (Station st in stations2)
-            {
-                stations.Add(st);
-            }
-
-            stations = new ObservableCollection<Station>(stations.OrderBy(x => x.Name).ToList());
-        }
-
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
-        {
-            parentPage.setDrivingLines(new RailwayContext());
-            this.parentFrame.Content = parentPage;
-        }
-        
-        
-        
-        
-        Point startPoint = new Point();
-
-        public ObservableCollection<Station> stations
-        {
-            get;
-            set;
-        }
-
-        public ObservableCollection<Station> stations2
-        {
-            get;
-            set;
-        }
-
-        private void ListView_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            startPoint = e.GetPosition(null);
-        }
-
-        private void ListView_MouseMove(object sender, MouseEventArgs e)
-        {
-            try
-            {
-                Point mousePos = e.GetPosition(null);
-                Vector diff = startPoint - mousePos;
-
-                if (e.LeftButton == MouseButtonState.Pressed &&
-                    (Math.Abs(diff.X) > SystemParameters.MinimumHorizontalDragDistance ||
-                     Math.Abs(diff.Y) > SystemParameters.MinimumVerticalDragDistance))
-                {
-                    // Get the dragged ListViewItem
-                    ListView listView = sender as ListView;
-                    ListViewItem listViewItem =
-                        FindAncestor<ListViewItem>((DependencyObject)e.OriginalSource);
-
-                    // Find the data behind the ListViewItem
-                    Station station = (Station)listView.ItemContainerGenerator.ItemFromContainer(listViewItem);
-
-                    // Initialize the drag & drop operation
-                    DataObject dragData = new DataObject("myFormat", station);
-                    DragDrop.DoDragDrop(listViewItem, dragData, DragDropEffects.Move);
-                }
-            }
-            catch (Exception)
-            {
-                
-            }
-        }
-
-        private static T FindAncestor<T>(DependencyObject current) where T : DependencyObject
-        {
-            do
-            {
-                if (current is T)
-                {
-                    return (T)current;
-                }
-                current = VisualTreeHelper.GetParent(current);
-            }
-            while (current != null);
-            return null;
-        }
-
-        private void ListView_DragEnter(object sender, DragEventArgs e)
-        {
-            if (!e.Data.GetDataPresent("myFormat") || sender == e.Source)
-            {
-                e.Effects = DragDropEffects.None;
-            }
-        }
-
-        private void ListView_Drop(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent("myFormat"))
-            {
-                Station station = e.Data.GetData("myFormat") as Station;
-                stations.Remove(station);
-                stations2.Add(station);
-                //setUpMapView();
-                addNewMarker(station);
-            }
-        }
-
-        private void addNewMarker(Station s)
-        {
-            
-            GMap.NET.PointLatLng current = new GMap.NET.PointLatLng(s.Latitude, s.Longitude);
-            GMap.NET.WindowsPresentation.GMapMarker marker = new GMap.NET.WindowsPresentation.GMapMarker(current);
-                
-            marker.Shape = new Ellipse
-            {
-                Width = 10,
-                Height = 10,
-                Stroke = Brushes.Firebrick,
-                StrokeThickness = 1.5,
-                ToolTip = "Stanica",
-                Visibility = Visibility.Visible,
-                Fill = Brushes.Firebrick,
-
-            };
-            mapView.Markers.Add(marker);
-                
-                
-            if (previous == null)
-            {
-                previous = new PointLatLng(current.Lat, current.Lng);
-            }
-            else
-            {
-                drawLineBetweenPoints(current, previous, mapView);
-                previous = new PointLatLng(current.Lat, current.Lng);
-            }
-
-        }
-        
         private void resetStations()
         {
             using (var db = new RailwayContext())
@@ -196,7 +53,22 @@ namespace railway.CRUDDrivingLine
             }
         }
 
-        public void setUpMapView()
+        private void clearMap()
+        {
+            stations2 = new ObservableCollection<Station>();
+            setUpMapView();
+            resetStations();
+            this.DataContext = this;
+        }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            parentPage.setDrivingLines(new RailwayContext());
+            this.parentFrame.Content = parentPage;
+        }
+        
+
+        private void setUpMapView()
         {
             
             GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerAndCache;
@@ -220,7 +92,6 @@ namespace railway.CRUDDrivingLine
             mapView.DragButton = MouseButton.Left;
             mapView.ShowCenter = false;
 
-            previous = null;
             foreach (Station s in stations2)
             {
                 GMap.NET.PointLatLng current = new GMap.NET.PointLatLng(s.Latitude, s.Longitude);
@@ -250,12 +121,12 @@ namespace railway.CRUDDrivingLine
                     drawLineBetweenPoints(current, previous, mapView);
                     previous = new PointLatLng(current.Lat, current.Lng);
                 }
-                
             }
             
             
             
         }
+
         
         private void drawLineBetweenPoints(PointLatLng current, PointLatLng? previous, GMapControl gMapControl)
         {
@@ -291,29 +162,11 @@ namespace railway.CRUDDrivingLine
         }
 
 
-
         private void map_Loaded(object sender, RoutedEventArgs e)
         {
             setUpMapView();
         }
 
-        private void searchForStation(object sender, KeyEventArgs e)
-        {
-            string input = searchForStationTextBox.Text;
-            using (var db = new RailwayContext())
-            {
-                List<Station> s = (from st in db.stations where st.Name.Contains(input) orderby st.Name select st).ToList();
-                foreach (Station s2 in stations2)
-                {
-                    if (s.Contains(s2))
-                    {
-                        s.Remove(s2);
-                    }
-                }
-                stations = new ObservableCollection<Station>(s);
-                stationList.ItemsSource = stations;
-            }
-        }
 
         private void SaveDrivingLine_OnClick(object sender, RoutedEventArgs e)
         {
@@ -327,9 +180,38 @@ namespace railway.CRUDDrivingLine
             def.Show();
         }
 
-        private void ChangeDrivingLineDefView_OnClick(object sender, RoutedEventArgs e)
+        private void BackToDragAndDrop_OnClick(object sender, RoutedEventArgs e)
         {
-            this.parentFrame.Content = new AddDrivingLineSimple(parentFrame, parentPage, this, stations2, stations);
+            addDrivingLineDragAndDrop.stations = this.stations;
+            addDrivingLineDragAndDrop.stations2 = this.stations2;
+            addDrivingLineDragAndDrop.setUpMapView();
+            this.parentFrame.Content = addDrivingLineDragAndDrop;
+        }
+
+        private void EventSetter_OnHandler(object sender, TextChangedEventArgs e)
+        {
+            var cmbx = sender as ComboBox;
+            cmbx.ItemsSource = from item in stations
+                where item.Name.ToLower().Contains(cmbx.Text.ToLower())
+                select item;
+            this.currentStation = (from item in stations
+                where item.Name.ToLower().Equals(cmbx.Text.ToLower())
+                select item).FirstOrDefault();
+
+            cmbx.IsDropDownOpen = true;
+        }
+
+        private void AddStation_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (currentStation == null)
+            {
+                MessageBox.Show("Prvo morate da izaberete stanicu");
+                return;
+            }
+            stations2.Add(currentStation);
+            stations.Remove(currentStation);
+            stationsCmb.ItemsSource = stations;
+            setUpMapView();
         }
 
         private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -343,10 +225,14 @@ namespace railway.CRUDDrivingLine
         }
         
         
+        
         private void Back_OnClick(object sender, RoutedEventArgs e)
         {
             parentPage.setDrivingLines(new RailwayContext());
             parentFrame.Content = parentPage;
         }
+        
     }
+    
+    
 }

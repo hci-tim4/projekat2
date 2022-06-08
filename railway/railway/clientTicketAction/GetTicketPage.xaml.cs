@@ -41,7 +41,7 @@ namespace railway.client
             openedWindows = new List<Window>();
             getTicketDTO = dto;
             user = u;
-            seatsPage = new SeatDisplay(dto.DrivingLineId, dto.ScheduleId);;
+            seatsPage = new SeatDisplay(dto.DrivingLineId, dto.ScheduleId, dto.FromStationScheduleId);;
             seatDisplay.Content = seatsPage;
             displayInfo.Content = new ChosenSchedulePage(dto.FromStationScheduleId, dto.UntilStationScheduleId, dto.ScheduleId);
             
@@ -49,7 +49,7 @@ namespace railway.client
 
         private void rerenderSeatDisplay()
         {
-            seatsPage = new SeatDisplay(getTicketDTO.DrivingLineId, getTicketDTO.ScheduleId);
+            seatsPage = new SeatDisplay(getTicketDTO.DrivingLineId, getTicketDTO.ScheduleId, getTicketDTO.FromStationScheduleId);
             seatDisplay.Content = seatsPage;
 
         }
@@ -81,12 +81,19 @@ namespace railway.client
 
         private Ticket makeTicket()
         {
+            StationSchedule fromStatSched = null;
+            using (var db = new RailwayContext())
+            {
+                fromStatSched =
+                    (from ss in db.stationsSchedules where ss.Id == getTicketDTO.FromStationScheduleId select ss).Single();
+            }
             Ticket t = new Ticket()
             {
                 User = user,
                 FromStationScheduleId = getTicketDTO.FromStationScheduleId,
                 UntilStationScheduleId = getTicketDTO.UntilStationScheduleId,
-                ScheduleId = getTicketDTO.ScheduleId
+                ScheduleId = getTicketDTO.ScheduleId,
+                Tour = fromStatSched.Tour
             };
             double price = countPrice();
             if (price == 0)

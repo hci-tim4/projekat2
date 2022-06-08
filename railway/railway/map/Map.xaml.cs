@@ -35,6 +35,8 @@ namespace railway.map
             InitializeComponent();
             this.fromStationId = fromStationId;
             this.untilStationId = arrivalId;
+            MessageBox.Show("From: " + fromStationId);
+            MessageBox.Show("Until: " + untilStationId);
             stationSchedules = ss;
             stations = new List<Station>();
         }
@@ -89,6 +91,10 @@ namespace railway.map
                     }
                     else if (st.Id == untilStationId)
                     {
+                        if (center.Lat == 0 && center.Lng == 0)
+                        {
+                            center = current;
+                        }
                         marker.Shape = new Ellipse
                         {
                             Width = 10,

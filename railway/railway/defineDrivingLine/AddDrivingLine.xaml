@@ -1,13 +1,12 @@
-﻿<UserControl x:Class="railway.CRUDDrivingLine.AddDrivingLineSimple"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:railway.CRUDDrivingLine"
-             mc:Ignorable="d"
-             xmlns:l="clr-namespace:railway"
-             xmlns:gmaps="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
-             d:DesignHeight="300" d:DesignWidth="300">
+﻿<UserControl x:Class="railway.defineDrivingLine.AddDrivingLine"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:gmaps="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
+        xmlns:local="clr-namespace:railway.defineDrivingLine"
+        xmlns:l="clr-namespace:railway"
+        mc:Ignorable="d">
     <UserControl.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
     </UserControl.CommandBindings>
@@ -23,6 +22,45 @@
         <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource baseStyle}">
             <Setter Property="Margin" Value="0"></Setter>
         </Style>
+        <!-- ComboBox, RadioButton, CheckBox, etc... -->
+        
+        
+        <Style x:Key="RepeatButtonTransparent" TargetType="{x:Type RepeatButton}">    
+            <Setter Property="OverridesDefaultStyle" Value="true"/>    
+            <Setter Property="Background" Value="LightGray"/>    
+            <Setter Property="Focusable" Value="false"/>    
+            <Setter Property="IsTabStop" Value="false"/>    
+            <Setter Property="Template">    
+                <Setter.Value>    
+                    <ControlTemplate TargetType="{x:Type RepeatButton}">    
+                        <Border Background="{TemplateBinding Background}" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}" CornerRadius="10"/>    
+                    </ControlTemplate>    
+                </Setter.Value>    
+            </Setter>    
+        </Style>    
+    
+        <Style x:Key="ScrollBarThumbVertical" TargetType="{x:Type Thumb}">    
+            <Setter Property="OverridesDefaultStyle" Value="true"/>    
+            <!--<Setter Property="Margin" Value="3"/>-->    
+    
+            <Setter Property="IsTabStop" Value="false"/>    
+            <Setter Property="Template">    
+                <Setter.Value>    
+                    <ControlTemplate TargetType="{x:Type Thumb}">    
+                        <Border x:Name="rectangle" Background="Gray" Height="{TemplateBinding Height}" SnapsToDevicePixels="True" Width="{TemplateBinding Width}" CornerRadius="8"/>    
+                        <ControlTemplate.Triggers>    
+                            <Trigger Property="IsMouseOver" Value="true">    
+                                <Setter Property="Background" TargetName="rectangle" Value="Gray"/>    
+                            </Trigger>    
+                            <Trigger Property="IsDragging" Value="true">    
+                                <Setter Property="Background" TargetName="rectangle" Value="Gray"/>    
+                            </Trigger>    
+                        </ControlTemplate.Triggers>    
+                    </ControlTemplate>    
+                </Setter.Value>    
+            </Setter>    
+        </Style>    
+
         <Style x:Key="CircleButton" TargetType="Button">
      <Setter Property="OverridesDefaultStyle" Value="True"/>
      <Setter Property="Margin" Value="2"/>
@@ -78,8 +116,8 @@
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition MinHeight="120" MaxHeight="120"></RowDefinition>
-            <RowDefinition ></RowDefinition>
+            <RowDefinition MaxHeight="120"></RowDefinition>
+            <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
@@ -87,33 +125,36 @@
         </Grid.ColumnDefinitions>
         
         <StackPanel Grid.Column="0" Grid.Row="0">
-            
-            
             <DockPanel>
+
                 <Button x:Name="back" DockPanel.Dock="Left" Click="Back_OnClick" Style="{StaticResource CircleButton}" Width="35" Height="35">
                     <Image Source="\icon\backbutton.png" Stretch="Fill">
                     </Image>
                 </Button>
-
-            
-                <Button x:Name="backToDragAndDrop" Click="BackToDragAndDrop_OnClick" DockPanel.Dock="Right" HorizontalAlignment="Right" MaxWidth="110" MaxHeight="30" ToolTip="Prevuci pusti pristup" l:HelpProvider.HelpKey="dragDropWay">Prevlačenje</Button>
+                
+                <Button DockPanel.Dock="Right" HorizontalAlignment="Right" MaxWidth="100" MaxHeight="30" ToolTip="Ručna definicija mrežne linije"
+                        x:Name="changeDrivingLineDefView" Click="ChangeDrivingLineDefView_OnClick" l:HelpProvider.HelpKey="goToSimpeWay">Promeni</Button>
             </DockPanel>
             <Button Content="Sačuvaj" MaxWidth="120" HorizontalAlignment="Right" x:Name="saveDrivingLine" Click="SaveDrivingLine_OnClick" l:HelpProvider.HelpKey="btnSaveNewDrivingLine"></Button>
+            <TextBox ToolTip="Pretražuj po imenu" KeyUp="searchForStation" x:Name="searchForStationTextBox"  l:HelpProvider.HelpKey="searchStation">
+                
+            </TextBox>
+        </StackPanel>
             
-        </StackPanel>
+        <ListView Grid.Row="1" Grid.Column="0"  ItemsSource="{Binding stations}" x:Name="stationList"
+                  PreviewMouseLeftButtonDown="ListView_PreviewMouseLeftButtonDown" MouseMove="ListView_MouseMove"
+                  ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible"
+                  MaxHeight="700" MinHeight="200">
+            <ListView.ItemTemplate  > 
+                <DataTemplate>
+                    <WrapPanel l:HelpProvider.HelpKey="dragDrop">
+                        <TextBlock Text="{Binding Name}" FontWeight="Bold" l:HelpProvider.HelpKey="dragDrop"/>
+                    </WrapPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>   
+        </ListView>   
         
-        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" MaxHeight="30" VerticalAlignment="Top" HorizontalAlignment="Right">
-            <ComboBox FontSize="20" x:Name="stationsCmb" DisplayMemberPath="Name" MinWidth="200" IsEditable="True" l:HelpProvider.HelpKey="stationChoice">
-                <ComboBox.Style>
-                    <Style>
-                        <EventSetter Event="TextBox.TextChanged" Handler="EventSetter_OnHandler" />
-                    </Style>
-                </ComboBox.Style>
-            </ComboBox>
-            <Button Content="Dodaj" MinWidth="60" Height="30" x:Name="addStation" Click="AddStation_OnClick" l:HelpProvider.HelpKey="btnAddStationInDrivingLine"></Button>
-        </StackPanel>
-        
-        <gmaps:GMapControl Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" x:Name="mapView" Loaded="map_Loaded"/>
+        <gmaps:GMapControl Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" x:Name="mapView" Loaded="map_Loaded" AllowDrop="True" DragEnter="ListView_DragEnter" Drop="ListView_Drop"/>
 
         
     </Grid>

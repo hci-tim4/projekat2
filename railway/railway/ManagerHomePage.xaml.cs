@@ -120,6 +120,48 @@ namespace railway
         {
 
         }
+
+        private void ScheduleLines_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void ScheduleLines_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            page.Content = "";
+            page.Content = new ManagerSchedule();
+        }
+
+        private void DrivingLines_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void DrivingLines_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            page.Content = "";
+            page.Content = new ViewDrivingLines(page);
+        }
+
+        private void Trains_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void Trains_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            page.Content = new CRUDTrains();
+        }
+
+        private void Report_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void Report_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            page.Content = new ViewMonthlyTicketView();
+        }
     }
 
 

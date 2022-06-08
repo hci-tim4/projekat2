@@ -15,21 +15,11 @@
         <CommandBinding Command="cmd:RoutedCommands.MoveForward" x:Name="goForward" CanExecute="GoForward_OnCanExecute" Executed="GoForward_OnExecuted"></CommandBinding>-->
     </UserControl.CommandBindings>
     <UserControl.Resources>
-        <Style TargetType="{x:Type Control}" x:Key="baseStyle">
-            <Setter Property="FontSize" Value="20" />
-            <Setter Property="Margin" Value="2,2,2,2"></Setter>
-        </Style>
-        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource baseStyle}"></Style>
-        <Style TargetType="{x:Type Label}" BasedOn="{StaticResource baseStyle}"></Style>
-        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource baseStyle}"></Style>
-        <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource baseStyle}"></Style>
-        <Style TargetType="{x:Type DatePicker}" BasedOn="{StaticResource baseStyle}"></Style>
-
         <!-- ComboBox, RadioButton, CheckBox, etc... -->
     
 </UserControl.Resources>
     
-    <ScrollViewer>
+    <ScrollViewer x:Name="parent">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -40,7 +30,8 @@
         
         <Frame Grid.Row="0" x:Name="drivingLineViewPage" Margin="0,0,0,0" NavigationUIVisibility="Hidden"></Frame>
 
-        
+        <local:DefineEndDateForDrivingLineModal x:Name="DefineEndDateForDrivingLineModal"></local:DefineEndDateForDrivingLineModal>
+
    </Grid>
     </ScrollViewer>
 </UserControl>

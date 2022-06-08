@@ -29,26 +29,29 @@ namespace railway.client
 
         public List<int> checkedSeatIds { get; set; }
 
-        public SeatDisplay(int drivingLineID, int scheduleId)
+        public SeatDisplay(int drivingLineID, int scheduleId, int dtoFromStationScheduleId)
         {
             InitializeComponent();
 
             checkedSeatIds = new List<int>();
 
-            getOccupiedSeats(scheduleId);
+            getOccupiedSeats(scheduleId, dtoFromStationScheduleId);
             displaySeats(drivingLineID);
             addLegend();
 
             addCol();
         }
 
-        private void getOccupiedSeats(int scheduleId)
+        private void getOccupiedSeats(int scheduleId, int dtoFromStationScheduleId)
         {
             using (var db = new RailwayContext())
             {
                 List<Ticket> tickets = (from schedules in db.schedules
                                         where schedules.Id == scheduleId
                                         select schedules.Tickets).Single().ToList();
+                StationSchedule fromStatSched =
+                    (from ss in db.stationsSchedules where ss.Id == dtoFromStationScheduleId select ss).Single();
+                tickets = (from t in tickets where t.Tour == fromStatSched.Tour select t).ToList();
                 List<int> seatIds = new List<int>();
                 foreach (Ticket t in tickets) {
                     List<Seat> seats = (from ticketSeats in db.ticketSeats
