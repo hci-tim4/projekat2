@@ -29,26 +29,29 @@ namespace railway.client
 
         public List<int> checkedSeatIds { get; set; }
 
-        public SeatDisplay(int drivingLineID, int scheduleId)
+        public SeatDisplay(int drivingLineID, int scheduleId, int dtoFromStationScheduleId)
         {
             InitializeComponent();
 
             checkedSeatIds = new List<int>();
 
-            getOccupiedSeats(scheduleId);
+            getOccupiedSeats(scheduleId, dtoFromStationScheduleId);
             displaySeats(drivingLineID);
             addLegend();
 
             addCol();
         }
 
-        private void getOccupiedSeats(int scheduleId)
+        private void getOccupiedSeats(int scheduleId, int dtoFromStationScheduleId)
         {
             using (var db = new RailwayContext())
             {
                 List<Ticket> tickets = (from schedules in db.schedules
                                         where schedules.Id == scheduleId
                                         select schedules.Tickets).Single().ToList();
+                StationSchedule fromStatSched =
+                    (from ss in db.stationsSchedules where ss.Id == dtoFromStationScheduleId select ss).Single();
+                tickets = (from t in tickets where t.Tour == fromStatSched.Tour select t).ToList();
                 List<int> seatIds = new List<int>();
                 foreach (Ticket t in tickets) {
                     List<Seat> seats = (from ticketSeats in db.ticketSeats
@@ -105,7 +108,7 @@ namespace railway.client
             CheckBox cb = new CheckBox();
             cb.Name = checkboxNamePrefix + s.Id.ToString();
 
-            //Image i = getImageForId(-1);
+            Image i = getImageForId(-1);
             if (this.occupiedSeats.Contains(s.Id))
             {
                 innerStack.Opacity = 50;
@@ -114,12 +117,12 @@ namespace railway.client
             else
             {
                 cb.Click += new RoutedEventHandler(checkbox_Click);
-               // i = getImageForId(s.SeatTypeId);
+                i = getImageForId(s.SeatTypeId);
             }
 
             
             innerStack.Children.Add(cb);
-            //innerStack.Children.Add(i);
+            innerStack.Children.Add(i);
 
             Grid.SetColumn(myBorder1,  ++s.Col);
             Grid.SetRow(myBorder1,  ++s.Row);
@@ -156,19 +159,20 @@ namespace railway.client
 
         private Uri makeUri(int seatTypeId)
         {
-            var uri = new Uri("https://www.clipartmax.com/png/middle/112-1120561_black-x-transparent-background.png");
+            //var uri = new Uri("https://www.clipartmax.com/png/middle/112-1120561_black-x-transparent-background.png");
+            var uri = new Uri("/icon/taken.png", UriKind.Relative);
             try
             {
                 switch (seatTypeId)
                 {
                     case 1:
-                        uri = new Uri("https://www.seekpng.com/png/full/38-387704_star-vector-png-transparent-image-star-vector-png.png");
+                        uri = new Uri("/icon/vip.png", UriKind.Relative);//uri = new Uri("https://www.seekpng.com/png/full/38-387704_star-vector-png-transparent-image-star-vector-png.png");
                         break;
                     case 2:
-                        uri = new Uri("https://cdn-icons-png.flaticon.com/512/2345/2345130.png");
+                        uri = new Uri("/icon/buisness.png", UriKind.Relative);//uri = new Uri("https://cdn-icons-png.flaticon.com/512/2345/2345130.png");
                         break;
                     case 3:
-                        uri = new Uri("https://flyclipart.com/thumb2/black-circle-png-free-download-557178.png");
+                        uri = new Uri("/icon/economy.png", UriKind.Relative);//uri = new Uri("https://flyclipart.com/thumb2/black-circle-png-free-download-557178.png");
                         break;
                 }
             }
@@ -207,8 +211,8 @@ namespace railway.client
         {
             DockPanel dp = new DockPanel();
             dp.Margin = new Thickness(1, 1, 1, 1);
-          //  Image i = getImageForId(-1);
-           // dp.Children.Add(i);
+            Image i = getImageForId(-1);
+            dp.Children.Add(i);
             Label l = new Label
             {
                 FontSize= 20,
@@ -222,8 +226,8 @@ namespace railway.client
         {
             DockPanel dp = new DockPanel();
             dp.Margin = new Thickness(1, 1, 1, 1);
-            //Image i = getImageForId(st.Id);
-           // dp.Children.Add(i);
+            Image i = getImageForId(st.Id);
+            dp.Children.Add(i);
             Label l = new Label
             {
                 FontSize= 20,

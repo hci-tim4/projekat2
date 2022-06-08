@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:railway.managerSchedule" xmlns:clienttimetable="clr-namespace:railway.clientTimetable" d:DataContext="{d:DesignInstance Type=clienttimetable:DetailDrivinglineDTO}"
         mc:Ignorable="d"
         xmlns:l="clr-namespace:railway"
-        Title="ChangeTrafficDay" Height="250" Width="500" MaxHeight="250" MaxWidth="500">
+        Title="ChangeTrafficDay" Height="500" Width="500" MaxHeight="500" MaxWidth="500">
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
     </Window.CommandBindings>
@@ -23,73 +23,77 @@
 
         
 
-        <StackPanel Orientation="Vertical" Grid.Row="1" Grid.ColumnSpan="2">
-            <Label Content="{Binding Path=Name}" FontSize="20" HorizontalAlignment="Left"></Label>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Border BorderBrush="Blue" BorderThickness="2"  l:HelpProvider.HelpKey="day">
-                    <StackPanel>
+        <StackPanel Orientation="Vertical" Grid.Row="1" Grid.ColumnSpan="2" >
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Naziv mrežne linije: " FontSize="20" />
+                <Label Content="{Binding Path=Name}" FontSize="20" HorizontalAlignment="Left"></Label>
+            </StackPanel>
+            <!--  <Border BorderBrush="Blue" BorderThickness="2"  l:HelpProvider.HelpKey="day">   -->
+            <StackPanel>
+                <Label Content="Dani kojima saobraća: " FontSize="20"></Label>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <CheckBox MaxHeight="200" MaxWidth="100" FontSize="20" BorderBrush="Blue" IsChecked="{Binding Path=Monday}"  l:HelpProvider.HelpKey="day"/>
                         <Label FontSize="20" l:HelpProvider.HelpKey="day">Ponedeljak</Label>
                     </StackPanel>
-                 </Border>
+               <!--  </Border>  -->
 
 
-                <Border BorderBrush="Blue" BorderThickness="2"  l:HelpProvider.HelpKey="day"> 
-                    <StackPanel Orientation="Horizontal" >
+            <!--    <Border BorderBrush="Blue" BorderThickness="2"  l:HelpProvider.HelpKey="day">    -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <CheckBox MaxHeight="200" MaxWidth="100" FontSize="20" BorderBrush="Blue" IsChecked="{Binding Path=Tuesday}"  l:HelpProvider.HelpKey="day" />
                         <Label FontSize="20" l:HelpProvider.HelpKey="day">Utorak</Label>
                     </StackPanel>
-                </Border>
+        <!--        </Border>   -->
 
 
-                <Border BorderBrush="Blue" BorderThickness="2"  l:HelpProvider.HelpKey="day">
-                    <StackPanel Orientation="Horizontal" >
+           <!--     <Border BorderBrush="Blue" BorderThickness="2"  l:HelpProvider.HelpKey="day">  -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <CheckBox MaxHeight="200" MaxWidth="100" FontSize="20" BorderBrush="Blue" IsChecked="{Binding Path=Wednesday}"  l:HelpProvider.HelpKey="day" />
                         <Label FontSize="20" l:HelpProvider.HelpKey="day">Sreda</Label>
                     </StackPanel>
-                </Border>
+           <!--     </Border>    -->
 
        <!--         <CheckBox MaxHeight="200" MaxWidth="100" Content="Utorak" FontSize="20" BorderBrush="Blue"  IsChecked="{Binding Path=Tuesday}" l:HelpProvider.HelpKey="day"/>
                 <CheckBox MaxHeight="200" MaxWidth="100" Content="Sreda" FontSize="20"  BorderBrush="Blue" IsChecked="{Binding Path=Wednesday}" l:HelpProvider.HelpKey="day"/>        -->
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Border BorderBrush="Blue" BorderThickness="2"  l:HelpProvider.HelpKey="day">
-                    <StackPanel Orientation="Horizontal" >
+           
+           
+          <!--      <Border BorderBrush="Blue" BorderThickness="2"  l:HelpProvider.HelpKey="day">    -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" >
                         <CheckBox MaxHeight="200" MaxWidth="100" FontSize="20" BorderBrush="Blue" IsChecked="{Binding Path=Thursday}"  l:HelpProvider.HelpKey="day" />
                         <Label FontSize="20" l:HelpProvider.HelpKey="day">Četvrtak</Label>
                     </StackPanel>
-                </Border>
+         <!--       </Border>    -->
 
-                <Border BorderBrush="Blue" BorderThickness="2"  l:HelpProvider.HelpKey="day">
-                    <StackPanel Orientation="Horizontal" >
+        <!--        <Border BorderBrush="Blue" BorderThickness="2"  l:HelpProvider.HelpKey="day">    -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" >
                         <CheckBox MaxHeight="200" MaxWidth="100" FontSize="20" BorderBrush="Blue" IsChecked="{Binding Path=Friday}"  l:HelpProvider.HelpKey="day"/>
                         <Label FontSize="20" l:HelpProvider.HelpKey="day">Petak</Label>
                     </StackPanel>
-                </Border>
+       <!--         </Border>   -->
 
-                <Border BorderBrush="Blue" BorderThickness="2"  l:HelpProvider.HelpKey="day">
-                    <StackPanel Orientation="Horizontal" >
+      <!--          <Border BorderBrush="Blue" BorderThickness="2"  l:HelpProvider.HelpKey="day">   -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <CheckBox MaxHeight="200" MaxWidth="100" FontSize="20" BorderBrush="Blue" IsChecked="{Binding Path=Saturday}"  l:HelpProvider.HelpKey="day"/>
                         <Label FontSize="20" l:HelpProvider.HelpKey="day">Subota</Label>
                     </StackPanel>
-                </Border>
+          <!--      </Border>   -->
 
-                <Border BorderBrush="Blue" BorderThickness="2"  l:HelpProvider.HelpKey="day">
-                    <StackPanel Orientation="Horizontal" >
+       <!--         <Border BorderBrush="Blue" BorderThickness="2"  l:HelpProvider.HelpKey="day">   -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                         <CheckBox MaxHeight="200" MaxWidth="100" FontSize="20" BorderBrush="Blue" IsChecked="{Binding Path=Sunday}"  l:HelpProvider.HelpKey="day"/>
                         <Label FontSize="20" l:HelpProvider.HelpKey="day">Nedelja</Label>
                     </StackPanel>
-                </Border>
+           <!--     </Border>   -->
 
        <!--         <CheckBox MaxHeight="200" MaxWidth="100" Content="Četvrtak" FontSize="20"  BorderBrush="Blue" IsChecked="{Binding Path=Thursday}" l:HelpProvider.HelpKey="day"/>
                 <CheckBox MaxHeight="200" MaxWidth="100" Content="Petak" FontSize="20"  BorderBrush="Blue" IsChecked="{Binding Path=Friday}" l:HelpProvider.HelpKey="day"/>
                 <CheckBox MaxHeight="200" MaxWidth="100" Content="Subota" FontSize="20"  BorderBrush="Blue" IsChecked="{Binding Path=Saturday}" l:HelpProvider.HelpKey="day"/>
                 <CheckBox MaxHeight="200" MaxWidth="100" Content="Nedelja" FontSize="20"  BorderBrush="Blue" IsChecked="{Binding Path=Sunday}" l:HelpProvider.HelpKey="day"/>     -->
-        </StackPanel>
 
+            </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="15,15,15,15">
-                <Button ToolTip="Izmeni dane u kojima saobraća linija" HorizontalAlignment="Right" Name="changeDays" Click="changeDays_Click" FontSize="20" Content="Izmeni" MaxWidth="100" Margin="2,2,2,2" l:HelpProvider.HelpKey="confirmChangeDays"></Button>
-                <Button ToolTip="Odustani od izmene dana" HorizontalAlignment="Right" Name="cancelchangeDays" Click="cancelChangeDays_Click" FontSize="20" Content="Odustani" MaxWidth="100" Margin="2,2,2,2" l:HelpProvider.HelpKey="cancelChangeDays"></Button>
+                <Button ToolTip="Izmeni dane u kojima saobraća linija" HorizontalAlignment="Right" Name="changeDays" Click="changeDays_Click" FontSize="20" Content="Izmeni" MaxWidth="150" Margin="2,2,2,2" l:HelpProvider.HelpKey="confirmChangeDays"></Button>
+                <Button ToolTip="Odustani od izmene dana" HorizontalAlignment="Right" Name="cancelchangeDays" Click="cancelChangeDays_Click" FontSize="20" Content="Odustani" MaxWidth="150" Margin="2,2,2,2" l:HelpProvider.HelpKey="cancelChangeDays"></Button>
             </StackPanel>
         </StackPanel>
 

@@ -1,0 +1,37 @@
+﻿<UserControl x:Class="railway.defineDrivingLine.ViewDrivingLines"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:railway.defineDrivingLine"
+             mc:Ignorable="d"
+             xmlns:l="clr-namespace:railway"
+             d:DesignHeight="300" d:DesignWidth="300"
+             xmlns:cmd="clr-namespace:railway.Commands"
+             MinWidth="400">
+    <UserControl.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
+    <!--    <CommandBinding Command="cmd:RoutedCommands.MoveBack" x:Name="goBack" CanExecute="GoBack_OnCanExecute" Executed="GoBack_OnExecuted"></CommandBinding>
+        <CommandBinding Command="cmd:RoutedCommands.MoveForward" x:Name="goForward" CanExecute="GoForward_OnCanExecute" Executed="GoForward_OnExecuted"></CommandBinding>-->
+    </UserControl.CommandBindings>
+    <UserControl.Resources>
+        <!-- ComboBox, RadioButton, CheckBox, etc... -->
+    
+</UserControl.Resources>
+    
+    <ScrollViewer x:Name="parent">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        
+        <Frame Grid.Row="0" x:Name="drivingLineViewPage" Margin="0,0,0,0" NavigationUIVisibility="Hidden"></Frame>
+
+        <local:DefineEndDateForDrivingLineModal x:Name="DefineEndDateForDrivingLineModal"></local:DefineEndDateForDrivingLineModal>
+
+   </Grid>
+    </ScrollViewer>
+</UserControl>

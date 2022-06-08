@@ -1,5 +1,4 @@
 ﻿using railway.managerSchedule;
-using railway.CRUDDrivingLine;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -71,6 +70,12 @@ namespace railway
         }
 
         public static void ShowHelp(string key, AddDrivingLine originator)
+        {
+            HelpViewer hh = new HelpViewer(key, originator);
+            hh.Show();
+        }
+
+        public static void ShowHelp(string key, ManagerHomePage originator)
         {
             HelpViewer hh = new HelpViewer(key, originator);
             hh.Show();

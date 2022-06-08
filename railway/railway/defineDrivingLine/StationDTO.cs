@@ -1,4 +1,4 @@
-﻿namespace railway.CRUDDrivingLine
+﻿namespace railway.defineDrivingLine
 {
     public class StationDTO
     {

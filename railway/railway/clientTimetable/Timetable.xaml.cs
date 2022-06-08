@@ -347,16 +347,17 @@ namespace railway.clientTimetable
 
 
 
-                                        DrivingLineDTO dto2 = new DrivingLineDTO
-                                        {
-                                            Id = ++id,
-                                            Departure = startMed.stationName,
+                                    DrivingLineDTO dto2 = new DrivingLineDTO
+                                    {
+                                        Id = ++id,
+                                        Departure = startMed.stationName,
 
-                                            Time = endMed.stationDepartureTime,
-                                            Train = endMed.trainName,
-                                            Date = endMed.date,
+                                        Time = endMed.stationDepartureTime,
+                                        Train = endMed.trainName,
+                                        Date = endMed.date,
 
-                                            FromStationScheduleId = endMed.stationScheduleId,
+                                        FromStationScheduleId = endMed.stationScheduleId,
+                                        UntilStationScheduleId = -1,
                                             ScheduleId = endMed.scheduleId,
                                             drivingLine = endMed.DrivingLineId,
                                             Tour = endMed.Tour

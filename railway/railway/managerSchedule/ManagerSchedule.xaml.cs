@@ -191,8 +191,8 @@ namespace railway.managerSchedule
 
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
-            var stationScheduleId = ((Button)sender).Tag;
-            updateStationSchedule((int)stationScheduleId);
+            var tour = ((Button)sender).Tag;
+            updateStationSchedule((int)tour);
 
         }
 
@@ -203,23 +203,31 @@ namespace railway.managerSchedule
 
         }
 
-        private void updateStationSchedule(int stationScheduleId) {
+        private void updateStationSchedule(int tour) {
             using (var db = new RailwayContext()) 
             {
                 var station = (from stationSchedule in db.stationsSchedules
-                      where stationSchedule.Id == stationScheduleId
-                      select stationSchedule).FirstOrDefault();
+                      where stationSchedule.Tour == tour
+                               select stationSchedule).ToList();
 
 
-                foreach (var s in currentSelected.schedule) {
-                    if (s.StationScheduleId == stationScheduleId) {
-                        station.ArrivalTime = s.ArrivalTime;            // ovde pravi noviii sa datumom od kada vayi
-                        station.DepartureTime = s.DepartureTime;
-                        station.StartDate = DateTime.Now.AddDays(30);
-                        break;
+                foreach (var selected in currentSelected.schedule) {
+                    foreach (var s in station)
+                    { 
+                        if (s.Tour == selected.Tour && s.Id == selected.StationScheduleId)
+                        {
+                            s.ArrivalTime = selected.ArrivalTime;            // ovde pravi noviii sa datumom od kada vayi
+                            s.DepartureTime = selected.DepartureTime;
+                            s.StartDate = DateTime.Now.AddDays(30);
+                            break;
+                        }
                     }
                 }
+
                 db.SaveChanges();
+                setAllDrivingLines();
+                MessageBox.Show("Izmenili ste red voznje za turu "+ tour +". Izmene će biti vidljive nakon mesec dana.");
+
             }
         }
 

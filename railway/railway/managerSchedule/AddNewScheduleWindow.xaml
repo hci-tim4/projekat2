@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:railway.managerSchedule"
         mc:Ignorable="d"
         xmlns:l="clr-namespace:railway"
-        Title="AddNewScheduleWindow" Height="450" Width="800">
+        Title="AddNewScheduleWindow" Height="450" Width="600" MaxWidth="600">
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
     </Window.CommandBindings>
@@ -27,16 +27,16 @@
                     Grid.Row="0" Grid.Column="0" ScrollViewer.HorizontalScrollBarVisibility="Auto"
                     ScrollViewer.VerticalScrollBarVisibility="Auto" FontSize="20"
                    CanUserAddRows="false"
-                    Background="#EEE2DC" CanUserSortColumns="False" RenderTransformOrigin="0.997,0.431">
+                    Background="White" CanUserSortColumns="False" RenderTransformOrigin="0.997,0.431">
 
             <DataGrid.Columns>
                 <DataGridTextColumn  MinWidth="60" Header="Stanica" Binding="{Binding Path=StationName}" IsReadOnly="True"/>
                 <DataGridTemplateColumn Header="Dolazak">
                     <DataGridTemplateColumn.CellTemplate >
                         <DataTemplate >
-                            <DataGridCell  l:HelpProvider.HelpKey="ArrivalTime">
-                                <TextBox Text="{Binding Path=ArrivalTime, Mode=TwoWay}" l:HelpProvider.HelpKey="ArrivalTime"/>
-                            </DataGridCell>
+                       <!--     <DataGridCell  l:HelpProvider.HelpKey="ArrivalTime">   -->
+                            <TextBox Text="{Binding Path=ArrivalTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" l:HelpProvider.HelpKey="ArrivalTime"/>
+                     <!--       </DataGridCell>   -->
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -44,9 +44,9 @@
                 <DataGridTemplateColumn Header="Polazak">
                     <DataGridTemplateColumn.CellTemplate >
                         <DataTemplate>
-                            <DataGridCell l:HelpProvider.HelpKey="DepartureTime">
-                                <TextBox Text="{Binding Path=DepartureTime, Mode=TwoWay}" l:HelpProvider.HelpKey="DepartureTime"/>
-                            </DataGridCell>
+                    <!--        <DataGridCell l:HelpProvider.HelpKey="DepartureTime">    -->
+                            <TextBox Text="{Binding Path=DepartureTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" l:HelpProvider.HelpKey="DepartureTime"/>
+                   <!--         </DataGridCell>    -->
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -58,8 +58,8 @@
         </DataGrid>
 
         <StackPanel Grid.Row="2"  Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button  ToolTip="Sačuvajte novi red vožnje" x:Name="btnSave" Click="btnSave_Click" Content="Sačuvaj" Margin="2,2,2,2" FontSize="20" MaxWidth="100" l:HelpProvider.HelpKey="btnSaveNewSchedule"/>
-            <Button ToolTip="Odustanite od kreiranja novog reda vožnje" x:Name="btnCancel" Click="btnCancel_Click" Content="Odustani" Margin="2,2,2,2"  MaxWidth="100" FontSize="20" l:HelpProvider.HelpKey="btnCancelNewschedule"/>
+            <Button  ToolTip="Sačuvajte novi red vožnje" x:Name="btnSave" Click="btnSave_Click" Content="Sačuvaj" Margin="2,2,2,2" FontSize="20" MaxWidth="150" MaxHeight="80" l:HelpProvider.HelpKey="btnSaveNewSchedule"/>
+            <Button ToolTip="Odustanite od kreiranja novog reda vožnje" x:Name="btnCancel" Click="btnCancel_Click" Content="Odustani" Margin="2,2,2,2"  MaxWidth="150" MaxHeight="80" FontSize="20" l:HelpProvider.HelpKey="btnCancelNewschedule"/>
         </StackPanel>
 
 

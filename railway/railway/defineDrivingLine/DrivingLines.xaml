@@ -1,0 +1,148 @@
+﻿<UserControl x:Class="railway.defineDrivingLine.DrivingLines"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:railway.defineDrivingLine"
+             xmlns:l="clr-namespace:railway"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <Style x:Key="CircleButton" TargetType="Button">
+     <Setter Property="OverridesDefaultStyle" Value="True"/>
+     <Setter Property="Margin" Value="2"/>
+     <Setter Property="FocusVisualStyle" Value="{StaticResource MyFocusVisual}"/>
+     <Setter Property="Background" Value="#FF6DB4EF"/>
+     <Setter Property="Template">
+        <Setter.Value>
+           <ControlTemplate TargetType="Button">
+              <Grid>
+                 <Ellipse Fill="{TemplateBinding Background}"/>
+                 <Ellipse>
+                    <Ellipse.Fill>
+                       <RadialGradientBrush>
+                          <GradientStop Offset="0" Color="#00000000"/>
+                          <GradientStop Offset="0.88" Color="#00000000"/>
+                          <GradientStop Offset="1" Color="#80000000"/>
+                       </RadialGradientBrush>
+                    </Ellipse.Fill>
+                 </Ellipse>
+                 <Ellipse Margin="10" x:Name="highlightCircle" >
+                    <Ellipse.Fill >
+                       <LinearGradientBrush >
+                          <GradientStop Offset="0" Color="#50FFFFFF"/>
+                          <GradientStop Offset="0.5" Color="#00FFFFFF"/>
+                          <GradientStop Offset="1" Color="#50FFFFFF"/>
+                       </LinearGradientBrush>
+                    </Ellipse.Fill>
+                 </Ellipse>
+                 <ContentPresenter x:Name="content" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+              </Grid>
+              <ControlTemplate.Triggers>
+                 <Trigger Property="IsPressed" Value="True">
+                    <Setter TargetName="highlightCircle" Property="Fill">
+                       <Setter.Value>
+                       <LinearGradientBrush StartPoint="0.3,0" EndPoint="0.7,1">
+                          <GradientStop Offset="0" Color="#50FFFFFF"/>
+                          <GradientStop Offset="0.5" Color="#00FFFFFF"/>
+                          <GradientStop Offset="1" Color="#50FFFFFF"/>
+                       </LinearGradientBrush>
+                       </Setter.Value>
+                    </Setter>
+                    <Setter TargetName="content" Property="RenderTransform">
+                       <Setter.Value>
+                          <TranslateTransform Y="0.5" X="0.5"/>
+                       </Setter.Value>
+                    </Setter>
+                 </Trigger>
+              </ControlTemplate.Triggers>
+           </ControlTemplate>
+        </Setter.Value>
+     </Setter>
+  </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <StackPanel>
+            <DockPanel>
+                <Label DockPanel.Dock="Left" FontSize="20"> Mrežne linije</Label>
+                <Button Width="35" Height="35" DockPanel.Dock="Right" HorizontalAlignment="Right" x:Name="addDrivingLine"
+                        ToolTip="Dodaj mrežnu liniju" Click="AddDrivingLine_OnClick" l:HelpProvider.HelpKey="btnAddDrivingLine"
+                        Style="{StaticResource CircleButton}">
+                    <Image Source="/icon/add.png" l:HelpProvider.HelpKey="btnAddDrivingLine"></Image>
+                    
+                </Button>
+            </DockPanel>
+        
+        </StackPanel>
+        
+            <DataGrid Grid.Row="1" FontSize="20" Grid.Column="0" SelectedItem="DrivingLineDataGrid_OnSelected" 
+                      x:Name="drivingLineDataGrid" ItemsSource="{Binding Path=DrivingLines}" 
+                      IsReadOnly="True" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True"
+                      MinHeight="200" MaxHeight="700" MinWidth="200">
+            
+            <DataGrid.ItemContainerStyle>
+                <Style TargetType="DataGridRow">
+                    <EventSetter Event="MouseUp" Handler="DrivingLineDataGrid_OnSelected"/>
+                </Style>
+            </DataGrid.ItemContainerStyle>
+                
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Ime" Width="Auto" FontSize="20" Binding="{Binding Name}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Voz" Width="Auto" FontSize="20" Binding="{Binding Path=TrainName}" x:Name="TrainName"></DataGridTextColumn>
+                
+                <DataGridTemplateColumn Width="Auto" Header="">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                                <Button x:Name="deleteDrivingLine" FontSize="20" ToolTip="Podesite krajnji datum važenja" Tag="{Binding Path=DrivingLineId}" Click="DeleteDrivingLine_OnClick" Content="Krajnji datum" l:HelpProvider.HelpKey="btnDeleteDrivingLine"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+
+        </DataGrid>
+            <Grid MinWidth="200" Grid.Column="1" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Label  FontSize="20" Grid.Column="0" Grid.Row="0">Ime:</Label>
+            <Label FontSize="20" Grid.Column="0" Grid.Row="1">Voz:</Label>
+            <Label FontSize="20" Grid.Column="0" Grid.Row="2">Datum početka važenja:</Label>
+            <Label FontSize="20" Grid.Column="0" Grid.Row="3">Datum kraja važenja:</Label>
+            
+            <TextBox FontSize="20" Grid.Column="1" Grid.Row="0" Text="" x:Name="newName" l:HelpProvider.HelpKey="drivingLineName"></TextBox>
+            <ComboBox FontSize="20" Margin="2,2,2,2" x:Name="trainNameCmb" Grid.Column="1" Grid.Row="1" SelectedValuePath="TrainName" Text="{Binding Path=trains}" IsEditable="True" DisplayMemberPath="Name" l:HelpProvider.HelpKey="changeTrainName">
+                <ComboBox.Style>
+                    <Style>
+                        <EventSetter Event="TextBox.TextChanged" Handler="TrainNameChanged_TextChanged"/>
+                    </Style>
+                </ComboBox.Style>
+            </ComboBox>
+            <DatePicker  FontSize="20" Grid.Column="1" Grid.Row="2" x:Name="startDate" FirstDayOfWeek="Monday" l:HelpProvider.HelpKey="startDate"/>
+            <DatePicker FontSize="20" IsEnabled="False" Grid.Column="1" Grid.Row="3" x:Name="endDate" FirstDayOfWeek="Monday" l:HelpProvider.HelpKey="endDate"/>
+
+            <!--ADD STANICU -->
+            
+            <!-- DATE OD KAD VAZI NOVI DRIVING LINE -->
+            <!-- PROVERA DA LI IMA REZERVACIJA PRE TOGA -->
+            
+            <Button  FontSize="20" x:Name="saveChanges" Click="SaveChanges_OnClick" Grid.Column="1" Grid.Row="4" ToolTip="Sačuvaje izmenjene podatke o mrežnoj liniji" l:HelpProvider.HelpKey="btnChangeDrivingLine">Sačuvaj izmene</Button>
+        </Grid>
+            
+    </Grid>
+</UserControl>

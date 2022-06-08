@@ -21,13 +21,13 @@ namespace railway
     {
 
         string last = "";
-        User loggedUser;
+        public User loggedUser { get; set; }
 
 
         public ClientHomePage(User user)
         {
-            InitializeComponent();
             loggedUser = user;
+            InitializeComponent();
             //clientTimetable = new clientTimetable.Timetable(loggedUser, page1);
         }
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -93,7 +93,8 @@ namespace railway
         private void btnLogOut_Click(object sender, RoutedEventArgs e)
         {
             Window login = new MainWindow();
-            App.Current.MainWindow.Close();
+            //App.Current.MainWindow.Close();
+            this.Close();
             login.Show();
         }
     }

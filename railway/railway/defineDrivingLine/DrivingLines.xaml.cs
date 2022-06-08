@@ -1,21 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Documents;
 using railway.database;
-using railway.model;
-using System.Linq;
-using railway.CRUDDrivingLine;
+using railway.defineDrivingLine;
 using railway.exception;
+using railway.model;
 using railway.services;
-using System.Windows.Input;
 
 namespace railway.defineDrivingLine
 {
-    public partial class ViewDrivingLines : UserControl
+    public partial class DrivingLines : UserControl
     {
-        public List<DrivingLineViewDTO> DrivingLines;
+        public List<DrivingLineViewDTO> DrivingLinesList;
         private List<Train> trains;
         private List<Train> fullTrains;
         private Train newTrain;
@@ -23,13 +21,14 @@ namespace railway.defineDrivingLine
         private DrivingLineViewDTO currentSelected = null;
         private Station currentStation;
         private List<Station> stations;
+        private DefineEndDateForDrivingLineModal defEndDateModal;
         
-        public ViewDrivingLines()
+        public DrivingLines(Frame parentFrame, DefineEndDateForDrivingLineModal defineEndDateForDrivingLineModal)
         {
             InitializeComponent();
             //this.parentFrame = frame;
-            //this.parentFrame.Content = this;
-            this.DataContext = DrivingLines;
+            this.parentFrame = parentFrame;
+            this.DataContext = DrivingLinesList;
             using (var db = new RailwayContext())
             {
                 setDrivingLines(db);
@@ -39,11 +38,14 @@ namespace railway.defineDrivingLine
                 fullTrains = trains;
                 stations = (from st in db.stations orderby st.Name select st).ToList();
             }
-        }
 
+            this.defEndDateModal = defineEndDateForDrivingLineModal;
+        }
+        
+        
         public void setDrivingLines(RailwayContext db)
         {
-            this.DrivingLines = (from dl in db.drivingLines
+            this.DrivingLinesList = (from dl in db.drivingLines
                 where dl.deleted == false
                 select new DrivingLineViewDTO()
                 {
@@ -53,7 +55,7 @@ namespace railway.defineDrivingLine
                     startDate = dl.startDate,
                     endDate = dl.endDate
                 }).ToList();
-            drivingLineDataGrid.ItemsSource = DrivingLines;
+            drivingLineDataGrid.ItemsSource = DrivingLinesList;
         }
 
         private void ViewSchedule_OnClick(object sender, RoutedEventArgs e)
@@ -68,7 +70,7 @@ namespace railway.defineDrivingLine
             //DrivingLineDTO dto = findDTOById((int)dtoId);
             int drivingLineId = (int)buttonId;
             DrivingLineViewDTO send = null;
-            foreach (DrivingLineViewDTO dto in DrivingLines)
+            foreach (DrivingLineViewDTO dto in DrivingLinesList)
             {
                 if (dto.DrivingLineId == drivingLineId)
                 {
@@ -77,8 +79,10 @@ namespace railway.defineDrivingLine
                 }
                     
             }
-            DefineEndDateForDrivingLine window = new DefineEndDateForDrivingLine(send, this);
-            window.Show();
+            defEndDateModal.ShowHandlerDialog(send, this);
+
+            //DefineEndDateForDrivingLine window = new DefineEndDateForDrivingLine(send, this);
+            //window.Show();
             /*
             using (var db = new RailwayContext())
             {
@@ -162,6 +166,7 @@ namespace railway.defineDrivingLine
         private void AddDrivingLine_OnClick(object sender, RoutedEventArgs e)
         {
             UserControl add = new AddDrivingLine(parentFrame, this);
+            //this.parentFrame.Content = add;
         }
 
         private void SaveChanges_OnClick(object sender, RoutedEventArgs e)
@@ -261,16 +266,6 @@ namespace railway.defineDrivingLine
             cmbx.IsDropDownOpen = true;
         }
 
-
-        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-            IInputElement focusedControl = FocusManager.GetFocusedElement(Application.Current.Windows[0]);
-            if (focusedControl is DependencyObject)
-            {
-                string str = HelpProvider.GetHelpKey((DependencyObject)focusedControl);
-                HelpProvider.ShowHelp(str, this);
-            }
-        }
-
+        
     }
 }

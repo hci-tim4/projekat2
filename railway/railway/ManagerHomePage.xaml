@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:railway"
+        xmlns:cmd="clr-namespace:railway.Commands"
         mc:Ignorable="d"
         Title="ManagerHomePage" 
         Width="{x:Static SystemParameters.PrimaryScreenWidth}"
@@ -14,6 +15,13 @@
         MinWidth="500"
         MinHeight="450"
         >
+    <Window.CommandBindings>
+        <CommandBinding Command="cmd:RoutedCommands.ScheduleLines" x:Name="ScheduleLines" CanExecute="ScheduleLines_OnCanExecute" Executed="ScheduleLines_OnExecuted"></CommandBinding>
+        <CommandBinding Command="cmd:RoutedCommands.DrivingLines" x:Name="DrivingLines" CanExecute="DrivingLines_OnCanExecute" Executed="DrivingLines_OnExecuted"></CommandBinding>
+        <CommandBinding Command="cmd:RoutedCommands.Trains" x:Name="Trains" CanExecute="Trains_OnCanExecute" Executed="Trains_OnExecuted"></CommandBinding>
+        <CommandBinding Command="cmd:RoutedCommands.Report" x:Name="Report" CanExecute="Report_OnCanExecute" Executed="Report_OnExecuted"></CommandBinding>
+        <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
+    </Window.CommandBindings>
     <!--<ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
         <Grid>
 
@@ -66,13 +74,11 @@
 
         </Grid>
     </ScrollViewer>-->
-
-
     <Grid Background="#FFEEEEEE">
 
         <Grid Margin="250 55 0 0">
             <!--<Grid x:Name="GridPrincipal" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
-            <Frame x:Name="page" Margin="0,-51,0,0"></Frame>
+            <Frame x:Name="page" Margin="0,-51,0,0" NavigationUIVisibility="Hidden"></Frame>
         </Grid>
 
         <Grid Width="250" HorizontalAlignment="Left" Background="DodgerBlue">
@@ -106,6 +112,13 @@
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="Report" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
                         <TextBlock Text= "Izveštaji" FontSize="17" VerticalAlignment="Center" Margin="10 0"/>
+                    </StackPanel>
+                </ListViewItem>
+
+                <ListViewItem Height="50" local:HelpProvider.HelpKey="ManagerAppHelp">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Help" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
+                        <TextBlock Text= "Pomoć" FontSize="17" VerticalAlignment="Center" Margin="10 0"/>
                     </StackPanel>
                 </ListViewItem>
 

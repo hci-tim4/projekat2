@@ -27,5 +27,48 @@ namespace railway.Commands
                 new KeyGesture(Key.B, ModifierKeys.Control),
             }
             );
+        
+        
+        public static readonly RoutedUICommand DrivingLines = new RoutedUICommand(
+            "Driving Lines",
+            "DrivingLines",
+            typeof(RoutedCommands),
+            new InputGestureCollection()
+            {
+                new KeyGesture(Key.M, ModifierKeys.Control),
+            }
+        );
+        
+        
+        public static readonly RoutedUICommand ScheduleLines = new RoutedUICommand(
+            "Schedule Lines",
+            "ScheduleLines",
+            typeof(RoutedCommands),
+            new InputGestureCollection()
+            {
+                new KeyGesture(Key.R, ModifierKeys.Control),
+            }
+        );
+        
+        public static readonly RoutedUICommand Trains = new RoutedUICommand(
+            "Trains",
+            "Trains",
+            typeof(RoutedCommands),
+            new InputGestureCollection()
+            {
+                new KeyGesture(Key.T, ModifierKeys.Control),
+            }
+        );
+        
+        
+        public static readonly RoutedUICommand Report = new RoutedUICommand(
+            "Report",
+            "Report",
+            typeof(RoutedCommands),
+            new InputGestureCollection()
+            {
+                new KeyGesture(Key.I, ModifierKeys.Control),
+            }
+        );
     }
 }

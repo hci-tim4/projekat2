@@ -14,14 +14,14 @@ using GMap.NET;
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsPresentation;
 
-namespace railway.CRUDDrivingLine
+namespace railway.defineDrivingLine
 {
     public partial class AddDrivingLineSimple : UserControl
     {
         
         public event DrivingGotSavedHandler drivingLineGotSaved;
         private Frame parentFrame;
-        private ViewDrivingLines parentPage;
+        private DrivingLines parentPage;
         private ObservableCollection<Station> stations;
         private ObservableCollection<Station> stations2;
         private AddDrivingLine addDrivingLineDragAndDrop;
@@ -29,13 +29,13 @@ namespace railway.CRUDDrivingLine
         private StationSchedule changedStationSchedule;
         private PointLatLng? previous = null;
         
-        public AddDrivingLineSimple(Frame parentFrame, ViewDrivingLines viewDrivingLines, AddDrivingLine dragAndDrop,
+        public AddDrivingLineSimple(Frame parentFrame, DrivingLines viewDrivingLines, AddDrivingLine dragAndDrop,
             ObservableCollection<Station> stations2, ObservableCollection<Station> stations)
         {
             InitializeComponent();
             this.drivingLineGotSaved += new DrivingGotSavedHandler(clearMap);
             this.parentFrame = parentFrame;
-            this.parentFrame.Content = this;
+            //this.parentFrame.Content = this;
             this.parentPage = viewDrivingLines;
 
             this.DataContext = this;
@@ -223,6 +223,15 @@ namespace railway.CRUDDrivingLine
                 HelpProvider.ShowHelp(str, this);
             }
         }
+        
+        
+        
+        private void Back_OnClick(object sender, RoutedEventArgs e)
+        {
+            parentPage.setDrivingLines(new RailwayContext());
+            parentFrame.Content = parentPage;
+        }
+        
     }
     
     
