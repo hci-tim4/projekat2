@@ -18,6 +18,9 @@ namespace railway.monthlyReport
         public double PriceOfBiznisSeats { get; set; }
         public double PriceOfRegularSeats { get; set; }
         
+        public int fromStationId { get; set; }
+        public int untilStationId { get; set; }
+        
         public List<TicketSeats> ticketSeats;
 
         public int GetNumberOfSeatType(string name)
@@ -40,7 +43,7 @@ namespace railway.monthlyReport
             {
                 if (ts.Seat.SeatType.Name == name)
                 {
-                    res += ts.Seat.SeatType.Price;
+                    res += ((untilStationId - fromStationId) * ts.Seat.SeatType.Price);
                 }
             }
             return res;

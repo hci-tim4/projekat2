@@ -145,12 +145,7 @@ namespace railway
 
         private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            IInputElement focusedControl = FocusManager.GetFocusedElement(Application.Current.Windows[0]);
-            if (focusedControl is DependencyObject)
-            {
-                string str = HelpProvider.GetHelpKey((DependencyObject)focusedControl);
-                HelpProvider.ShowHelp(str, this);
-            }
+            HelpProvider.ShowHelp("ManagerAppHelp", this);
         }
 
         public void doThings(string param)
@@ -173,6 +168,7 @@ namespace railway
         {
             CurrentContent.StartTour_OnClick(sender, e);
         }
+<<<<<<< HEAD
 
         private void help_clicked(object sender, RoutedEventArgs e)
         {
@@ -186,6 +182,10 @@ namespace railway
             this.Close();
             login.Show();
         }
+=======
+        
+        
+>>>>>>> 53e9b259e73e31cc9de46c3f403707d285cc8fbf
     }
 
 

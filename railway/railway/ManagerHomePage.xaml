@@ -1,4 +1,4 @@
-﻿<Window x:Class="railway.ManagerHomePage"
+﻿<Window x:Class="railway.ManagerHomePage "
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,15 +6,16 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:railway"
         xmlns:cmd="clr-namespace:railway.Commands"
+        xmlns:l="clr-namespace:railway"
         mc:Ignorable="d"
-        Title="ManagerHomePage" 
+        Icon="\icon\trainIcon.png"
+        Title="ŽELEZNICE SRBIJE" 
         Width="{x:Static SystemParameters.PrimaryScreenWidth}"
         Height="{x:Static SystemParameters.PrimaryScreenHeight}"
         WindowStartupLocation="CenterScreen"
         WindowState="Maximized"
         MinWidth="500"
-        MinHeight="450"
-        >
+        MinHeight="450">
     <Window.CommandBindings>
         <CommandBinding Command="cmd:RoutedCommands.ScheduleLines" x:Name="ScheduleLines" CanExecute="ScheduleLines_OnCanExecute" Executed="ScheduleLines_OnExecuted"></CommandBinding>
         <CommandBinding Command="cmd:RoutedCommands.DrivingLines" x:Name="DrivingLines" CanExecute="DrivingLines_OnCanExecute" Executed="DrivingLines_OnExecuted"></CommandBinding>
@@ -67,7 +68,7 @@
                 <ListViewItem Height="50"  Background="DodgerBlue" Foreground="White">
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="Map" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
-                        <TextBlock Text="Vozne linije" FontSize="17" VerticalAlignment="Center" Margin="10 0"/>
+                        <TextBlock Text="Mrežne linije" FontSize="17" VerticalAlignment="Center" Margin="10 0"/>
                     </StackPanel>
                 </ListViewItem>
                 <ListViewItem Height="50"  Background="DodgerBlue" Foreground="White">

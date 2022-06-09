@@ -6,7 +6,9 @@
         xmlns:local="clr-namespace:railway.managerSchedule"
         mc:Ignorable="d"
         xmlns:l="clr-namespace:railway"
-        Title="AddNewScheduleWindow" Height="450" Width="600" MaxWidth="600">
+        Icon="/icon/trainIcon.png"
+        Title="ŽELEZNICE SRBIJE" Height="450" Width="600" MaxWidth="600">
+        
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
     </Window.CommandBindings>

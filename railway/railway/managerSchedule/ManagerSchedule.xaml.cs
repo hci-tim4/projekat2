@@ -18,7 +18,9 @@ using System.Collections.ObjectModel;
 using railway.model;
 using System.Windows.Data;
 using MaterialDesignThemes.Wpf;
-
+using ThinkSharp.FeatureTouring;
+using ThinkSharp.FeatureTouring.Models;
+using ThinkSharp.FeatureTouring.Navigation;
 
 namespace railway.managerSchedule
 {
@@ -35,6 +37,8 @@ namespace railway.managerSchedule
         public event PropertyChangedEventHandler PropertyChanged;
 
         public UniqueTimestampValidator validator = new UniqueTimestampValidator();
+        private Boolean Touring;
+
         public ManagerSchedule()
         {
             InitializeComponent();
@@ -103,6 +107,9 @@ namespace railway.managerSchedule
             View = CollectionViewSource.GetDefaultView(Studenti);
             GroupView = true;
             dataGridStationSchedule.ItemsSource = Studenti;
+
+            IFeatureTourNavigator navigator = FeatureTour.GetNavigator();
+            navigator.IfCurrentStepEquals("drivingTable").GoNext();
         }
 
         public void setAllDrivingLines()
@@ -187,9 +194,6 @@ namespace railway.managerSchedule
                 (from dto in all
                  where dto.drivingLineId == (int)drivingLineId
                  select dto).FirstOrDefault();
-
-
-          //  ChangeTrafficDayModal.ShowHandlerDialog(dlDTO, this);
 
                Window changeDays = new ChangeTrafficDay(dlDTO, this);
               changeDays.Show();
@@ -306,6 +310,36 @@ namespace railway.managerSchedule
         public void StartTour_OnClick(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Tutorijal");
+
+            Touring = true;
+            TextLocalization.Close = "Zatvori";
+            TextLocalization.Next = "Sledeći";
+            var tour = new Tour()
+            {
+                Name = "My Demo Tour",
+                ShowNextButtonDefault = true,
+                EnableNextButtonAlways = true,
+
+                Steps = new[]
+                {
+                    new Step("drivingTable", "Tebala mrežnih linija", "Prikazan je naziv mrežne linije."),
+                    new Step("daysBtn", "Pregled i izmena dana u kojima saobraća linija", "Omogućen je pregled i promena dana u kojima saobraća mrežna linija."),
+                    new Step("addNewSchedule", "Dodavanje novog reda vožnje za mrežnu liniju", "Omogućeno je dodavanje novog reda vožnje za mrežnu liniju."),
+                    new Step("drivingTable", "Tabela mrežnih linija", "Izaberite jednu od linija za nastavak.")
+                    {
+                        ShowNextButton = false
+                    },
+                    new Step("scheduleDataGrid", "Redovi vožnje", "Prikaz svih redova vožnje izabrane mrežne linije"),
+                    new Step("arrTime", "Vreme dolaska", "Vreme dolaska predstavlja vreme kada voz stiže na stanicu. Ovo vreme je moguće izmeniti."),
+                    new Step("depTime", "Vreme polaska", "Vreme polaska predstavlja vreme kada voz polazi sa stanice. Ovo vreme je moguće izmeniti"),
+                    new Step("update", "Izmeni", "Klikom na dugme izmeni, biće sačuvani novo vreme polaska i vreme dolaska za red vožnje."),
+                    new Step("delete", "Obriši", "Klikom na dugme obriši, obrisaćete red vožnje.")
+
+                }
+
+            };
+
+            tour.Start();
         }
     }
 }

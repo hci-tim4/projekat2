@@ -8,19 +8,22 @@ using railway.model;
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Markup;
 
 namespace railway.defineDrivingLine
 {
-    public partial class DefineEndDateForDrivingLine : UserControl
+    public partial class DefineEndDateForDrivingLine : Window
     {
-        private DrivingLineViewDTO drivingLine;
+        public DrivingLineViewDTO drivingLine { get; set; }
         private DrivingLines DrivingLinesView;
         public DefineEndDateForDrivingLine(DrivingLineViewDTO dto, DrivingLines drivingLinesView)
         {
             InitializeComponent();
-            this.DataContext = dto;
             drivingLine = dto;
+            endDate.SelectedDate = drivingLine.newEndDate;
+            endDateStackPanel.DataContext = drivingLine;
             this.DrivingLinesView = drivingLinesView;
+            endDate.Language = XmlLanguage.GetLanguage(new System.Globalization.CultureInfo("sr-ME").IetfLanguageTag);
         }
 
         public void saveDate()
@@ -87,7 +90,7 @@ namespace railway.defineDrivingLine
                     
                     db.SaveChanges();
                     DrivingLinesView.setDrivingLines(new RailwayContext());
-                   // this.Close();
+                   this.Close();
                 }
             }
         }
@@ -100,6 +103,22 @@ namespace railway.defineDrivingLine
                 string str = HelpProvider.GetHelpKey((DependencyObject)focusedControl);
                 HelpProvider.ShowHelp(str, this);
             }
+        }
+
+        private void cancelBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+        
+        
+        private void Save_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void Save_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            Save_OnClick(sender, e);
         }
     }
 }

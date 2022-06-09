@@ -152,6 +152,8 @@ namespace railway.services
                         TicketId = tick.Id,
                         DrivingLineId = sched.DrivingLineId,
                         Price = tick.Price,
+                        fromStationId = tick.FromStationScheduleId,
+                        untilStationId = tick.UntilStationScheduleId
                         //ticketSeats = tick.ticketSeats
                     }).ToList();
                 foreach (TicketForReportDTO ticketForReport in res)

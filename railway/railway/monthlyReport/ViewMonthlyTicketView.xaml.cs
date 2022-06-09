@@ -292,23 +292,23 @@ namespace railway.monthlyReport
                 Steps = new []
                 {
                     //wait for dates
-                    new Step("StartDatePicker", "Početni datum", "Izaberite poćetni datum od kad krene izveštavanje")
+                    new Step("StartDatePicker", "Početni datum", "Izaberite početni datum za podatke koji će se prikazati u izveštaju.")
                     {
                         ShowNextButton = false
                     },
-                    new Step("EndDatePicker", "Krajnji datum", "Izaberite krajnji datum do kag datuma uzima u obzir izveštaj" +
-                        "će biti mrežna linija u koristi.")
+                    new Step("EndDatePicker", "Krajnji datum", "Izaberite krajnji datum za podatke koji će se prikazati u izveštaju.")
                     {
                         ShowNextButton = false
                     },
                     //wait for click
-                    new Step("ShowReportButton", "Prikaz izveštaja", "Kliknite na button, da biste videli izveštaj za izabrani interval")
+                    new Step("ShowReportButton", "Prikaz izveštaja", "Kliknite na dugme 'Prikaži' da biste videli izveštaj za izabrani period.")
                     {
                         ShowNextButton = false
                     },
-                    new Step("ReportChart", "Grafikon", "Za izabrani interfal, grafički prikaz"),
-                    new Step("ReportTable", "Tabela", "Tabelarni prikaz izveštaja izabranog intervala"),
-                    new Step("ChangeTypeOfMontlhyReport", "Promena tipa izveštaja", "Za promenu tipa izveštaja kliknite ocde.")
+                    new Step("ReportChart", "Grafikon", "Grafički prikaz za izabrani period."),
+                    new Step("ReportTable", "Tabela", "Tabelarni prikaz izveštaja za izabrani period."),
+                    new Step("ChangeTypeOfMontlhyReport", "Promena tipa izveštaja", "Za promenu tipa izveštaja izaberite jednu od ponuđenih opcija " +
+                        "'Tip sedišta' ili 'Mrežna linija'.")
                     {
                         ShowNextButton = false
                     },

@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using railway.exception;
 using railway.services;
 using System.Windows.Input;
+using System.Windows.Markup;
 
 namespace railway.defineDrivingLine
 {
@@ -37,7 +38,7 @@ namespace railway.defineDrivingLine
 
             this.stations = stations;
             this.drivingGotSavedHandler = drivingGotSavedHandler;
-
+            startDate.Language = XmlLanguage.GetLanguage(new System.Globalization.CultureInfo("sr-ME").IetfLanguageTag);
         }
 
         private void SaveDrivingLine_OnClick(object sender, RoutedEventArgs e)
@@ -112,6 +113,17 @@ namespace railway.defineDrivingLine
                 string str = HelpProvider.GetHelpKey((DependencyObject)focusedControl);
                 HelpProvider.ShowHelp(str, this);
             }
+        }
+        
+        
+        private void Save_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void Save_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            SaveDrivingLine_OnClick(sender, e);
         }
     }
 }

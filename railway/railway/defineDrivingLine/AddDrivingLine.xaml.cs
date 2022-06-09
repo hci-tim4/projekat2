@@ -13,22 +13,27 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 using GMap.NET;
 using GMap.NET;
-using GMap.NET.MapProviders;
 using GMap.NET.WindowsPresentation;
+using ThinkSharp.FeatureTouring;
+using ThinkSharp.FeatureTouring.Models;
+using ThinkSharp.FeatureTouring.Navigation;
+using ThinkSharp.FeatureTouring.ViewModels;
 
 namespace railway.defineDrivingLine
 {
     public delegate void DrivingGotSavedHandler();
-    public partial class AddDrivingLine : UserControl
+    public partial class AddDrivingLine : UserControl, TutorialInterface
     {
         public event DrivingGotSavedHandler drivingLineGotSaved;
         private Frame parentFrame;
         private DrivingLines parentPage;
         public PointLatLng? previous { get; set; }
         private DefineSimpleDataForDrivingLineModal defSimpleData;
+        private ViewDrivingLines greatParentPage;
+        private Boolean Touring;
         
         public AddDrivingLine(Frame parentFrame, DrivingLines viewDrivingLines,
-            DefineSimpleDataForDrivingLineModal defineSimpleDataForDrivingLineModal)
+            DefineSimpleDataForDrivingLineModal defineSimpleDataForDrivingLineModal, ViewDrivingLines drivingLines)
         {
             InitializeComponent();
             this.drivingLineGotSaved += new DrivingGotSavedHandler(clearMap);
@@ -45,6 +50,7 @@ namespace railway.defineDrivingLine
 
             this.defSimpleData = defineSimpleDataForDrivingLineModal;
             this.DataContext = this;
+            this.greatParentPage = drivingLines;
         }
 
         private void clearMap()
@@ -152,6 +158,12 @@ namespace railway.defineDrivingLine
                 Station station = e.Data.GetData("myFormat") as Station;
                 stations.Remove(station);
                 stations2.Add(station);
+                if (Touring)
+                {
+                    IFeatureTourNavigator navigator = FeatureTour.GetNavigator();
+                    navigator.IfCurrentStepEquals("m1").GoNext();
+                    navigator.IfCurrentStepEquals("m2").GoNext();
+                }
                 //setUpMapView();
                 addNewMarker(station);
             }
@@ -302,6 +314,11 @@ namespace railway.defineDrivingLine
         private void searchForStation(object sender, KeyEventArgs e)
         {
             string input = searchForStationTextBox.Text;
+            if (Touring)
+            {
+                IFeatureTourNavigator navigator = FeatureTour.GetNavigator();
+                navigator.IfCurrentStepEquals("SearchThroughDrivingLine").GoNext();
+            }
             using (var db = new RailwayContext())
             {
                 List<Station> s = (from st in db.stations where st.Name.Contains(input) orderby st.Name select st).ToList();
@@ -325,14 +342,15 @@ namespace railway.defineDrivingLine
                 MessageBox.Show("Mrežna linija mora da sadrži barem 2 stanice");
                 return;
             }
-            defSimpleData.ShowHandlerDialog(stations2, drivingLineGotSaved);
-            //Window def = new DefineSimpleDataForDrivingLine(stations2, drivingLineGotSaved);
-            //def.Show();
+            //defSimpleData.ShowHandlerDialog(stations2, drivingLineGotSaved);
+            Window def = new DefineSimpleDataForDrivingLine(stations2, drivingLineGotSaved);
+            def.Show();
         }
 
         private void ChangeDrivingLineDefView_OnClick(object sender, RoutedEventArgs e)
         {
-            this.parentFrame.Content = new AddDrivingLineSimple(parentFrame, parentPage, this, stations2, stations, defSimpleData);
+            greatParentPage.CurrentComponent = new AddDrivingLineSimple(parentFrame, parentPage, this, stations2, stations, defSimpleData, greatParentPage);
+            this.parentFrame.Content = greatParentPage.CurrentComponent;
         }
 
         private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -349,6 +367,7 @@ namespace railway.defineDrivingLine
         private void Back_OnClick(object sender, RoutedEventArgs e)
         {
             parentPage.setDrivingLines(new RailwayContext());
+            greatParentPage.CurrentComponent = parentPage;
             parentFrame.Content = parentPage;
         }
         
@@ -360,6 +379,47 @@ namespace railway.defineDrivingLine
         private void Save_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             SaveDrivingLine_OnClick(sender, e);
+        }
+
+        public void StartTour_OnClick(object sender, RoutedEventArgs e)
+        {
+            //MessageBox.Show("Trigered tutorijal on drag and drop");
+            Touring = true;
+            TextLocalization.Close = "Zatvori";
+            TextLocalization.Next = "Sledeći";
+            
+            var tour = new Tour()
+            {
+                Name = "My Demo Tour",
+                ShowNextButtonDefault = true,
+                EnableNextButtonAlways = true,
+                
+                Steps = new []
+                {
+                    new Step("AllDrivingLines", "Lista stanica", "U listi se nalaze stanice koje mogu da budu dodate u mrežnu liniju.", "st1"),
+                    new Step("MapOfDrivingLine", "Mapa", "Odaberite stainicu iz liste stanica, prevucite je na mapu i pustite da 'padne'.", "m1")
+                    {
+                        ShowNextButton = false
+                    },
+                    new Step("SearchThroughDrivingLine", "Pretraga stanica", "Za lakši pronalazak stanica kucajte ovde.")
+                    {
+                        ShowNextButton = false
+                    },
+                    new Step("MapOfDrivingLine", "Mapa", "Odaberite stanicu iz liste stanica, prevucite je na mapu i pustite da 'padne'.", "m2")
+                    {
+                        ShowNextButton = false
+                    },
+                    new Step("SaveDrivingLine", "Sačuvaj", "Kada završite sa dodavanjem stanica klikom na dugme 'Sačuvaj' sačuvaćete novu mrežnu liniju."),
+                    new Step("ChangeTypeOfDrivingLineDefinition", "Promeni tip definisanje", "Na raspolaganju imate i drugačiji način defnisanje mrežne linije. Kliknite na 'Promeni' da biste videli."),
+                    new Step("BackButton", "Vraćanje nazad", "Ako ste završili kliknite na strelicu da biste se vratili na listu mrežnih linija."),
+                    
+                },
+                
+            };
+
+            tour.Start();
+
+
         }
     }
 }

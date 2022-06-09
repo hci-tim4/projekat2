@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:railway.managerSchedule" xmlns:clienttimetable="clr-namespace:railway.clientTimetable" d:DataContext="{d:DesignInstance Type=clienttimetable:DetailDrivinglineDTO}"
         mc:Ignorable="d"
         xmlns:l="clr-namespace:railway"
-        Title="ChangeTrafficDay" Height="500" Width="500" MaxHeight="500" MaxWidth="500">
+        Icon="/icon/trainIcon.png"
+        Title="ŽELEZNICE SRBIJE" Height="500" Width="500" MaxHeight="500" MaxWidth="500">
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
     </Window.CommandBindings>
@@ -18,10 +19,8 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
-      
-        </Grid.ColumnDefinitions>
 
-        
+        </Grid.ColumnDefinitions>
 
         <StackPanel Orientation="Vertical" Grid.Row="1" Grid.ColumnSpan="2" >
             <StackPanel Orientation="Horizontal">

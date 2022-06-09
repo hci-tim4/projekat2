@@ -6,6 +6,8 @@
              xmlns:local="clr-namespace:railway.defineDrivingLine"
              mc:Ignorable="d"
              xmlns:l="clr-namespace:railway"
+             xmlns:tour="clr-namespace:ThinkSharp.FeatureTouring;assembly=ThinkSharp.FeatureTour"
+             xmlns:controls="clr-namespace:ThinkSharp.FeatureTouring.Controls;assembly=ThinkSharp.FeatureTour"
              xmlns:cmd="clr-namespace:railway.Commands"
              xmlns:gmaps="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
              d:DesignHeight="300" d:DesignWidth="300">
@@ -14,7 +16,14 @@
         <CommandBinding Command="cmd:RoutedCommands.Save" x:Name="save" CanExecute="Save_OnCanExecute" Executed="Save_OnExecuted"></CommandBinding>
     </UserControl.CommandBindings>
     <UserControl.Resources>
-        <Style x:Key="CircleButton" TargetType="Button">
+       <Style TargetType="controls:TourControl">
+          <Setter Property="Background" Value="White"/>
+          <Setter Property="Foreground" Value="Brown"/> 
+          <Setter Property="BorderBrush" Value="Brown" /> 
+          <Setter Property="CornerRadius" Value="10"/>
+          <Setter Property="BorderThickness" Value="3"/> 
+       </Style> 
+       <Style x:Key="CircleButton" TargetType="Button">
      <Setter Property="OverridesDefaultStyle" Value="True"/>
      <Setter Property="Margin" Value="2"/>
      <Setter Property="FocusVisualStyle" Value="{StaticResource MyFocusVisual}"/>
@@ -81,32 +90,57 @@
             
             
             <DockPanel>
-                <Button FontSize="20" x:Name="back" DockPanel.Dock="Left" Click="Back_OnClick" Style="{StaticResource CircleButton}" Width="35" Height="35">
+                <Button FontSize="20" x:Name="back" DockPanel.Dock="Left" 
+                        Click="Back_OnClick" Style="{StaticResource CircleButton}" 
+                        Width="35" Height="35"
+                        tour:TourHelper.ElementID="BackButton"
+                        tour:TourHelper.Placement="BottomCenter">
                     <Image Source="\icon\backbutton.png" Stretch="Fill">
                     </Image>
                 </Button>
 
             
                 <Button FontSize="20" x:Name="backToDragAndDrop" Click="BackToDragAndDrop_OnClick" DockPanel.Dock="Right" HorizontalAlignment="Right" 
-                        MaxWidth="160" MaxHeight="40" ToolTip="Prevuci pusti pristup" l:HelpProvider.HelpKey="dragDropWay">Prevlačenje</Button>
+                        MaxWidth="160" MaxHeight="40" ToolTip="Prevuci pusti pristup" l:HelpProvider.HelpKey="dragDropWay"
+                        tour:TourHelper.ElementID="ChangeTypeOfDrivingLineDefinition"
+                        tour:TourHelper.Placement="BottomCenter">Prevlačenje</Button>
             </DockPanel>
             <Button FontSize="20" Content="Sačuvaj" MaxWidth="120" HorizontalAlignment="Right" x:Name="saveDrivingLine" MaxHeight="40"
-                    Click="SaveDrivingLine_OnClick" l:HelpProvider.HelpKey="btnSaveNewDrivingLine"></Button>
+                    Click="SaveDrivingLine_OnClick" l:HelpProvider.HelpKey="btnSaveNewDrivingLine"
+                    tour:TourHelper.ElementID="SaveDrivingLine"
+                    tour:TourHelper.Placement="BottomCenter"></Button>
             
         </StackPanel>
         
-        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" MaxHeight="30" VerticalAlignment="Top" HorizontalAlignment="Right">
-            <ComboBox FontSize="20" x:Name="stationsCmb" DisplayMemberPath="Name" MinWidth="200" IsEditable="True" l:HelpProvider.HelpKey="stationChoice">
+        <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" MaxHeight="30" VerticalAlignment="Top" 
+                    HorizontalAlignment="Right" tour:TourHelper.ElementID="AllDrivingLinesStack"
+                    tour:TourHelper.Placement="LeftCenter">
+            <ComboBox x:Name="stationsCmb" DisplayMemberPath="Name" MinWidth="200" 
+                      IsEditable="True" 
+                         
+                      Width="150"  FontSize="20"  
+                      FontWeight="Bold" Foreground="DodgerBlue"
+                      
+                      l:HelpProvider.HelpKey="stationChoice"
+                      tour:TourHelper.ElementID="AllDrivingLines"
+                      tour:TourHelper.Placement="BottomCenter">
                 <ComboBox.Style>
                     <Style>
                         <EventSetter Event="TextBox.TextChanged" Handler="EventSetter_OnHandler" />
                     </Style>
                 </ComboBox.Style>
             </ComboBox>
-            <Button FontSize="20" Content="Dodaj" MinWidth="60" Height="40" x:Name="addStation" Click="AddStation_OnClick" l:HelpProvider.HelpKey="btnAddStationInDrivingLine"></Button>
+            <Button FontSize="20" Content="Dodaj" MinWidth="60" Height="40" 
+                    x:Name="addStation" Click="AddStation_OnClick" l:HelpProvider.HelpKey="btnAddStationInDrivingLine"
+                    tour:TourHelper.ElementID="AddStation"
+                    tour:TourHelper.Placement="BottomCenter"></Button>
         </StackPanel>
-        
-        <gmaps:GMapControl Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" x:Name="mapView" Loaded="map_Loaded"/>
+       
+       <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" 
+             tour:TourHelper.ElementID="MapOfDrivingLine"
+             tour:TourHelper.Placement="LeftCenter">
+          <gmaps:GMapControl x:Name="mapView" Loaded="map_Loaded"/>
+       </Grid>
 
         
     </Grid>

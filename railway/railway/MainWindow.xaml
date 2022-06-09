@@ -10,7 +10,7 @@
         xmlns:cmd="clr-namespace:railway.Commands"
         mc:Ignorable="d"
         Closing="Window_Closing"
-        Icon="/icon/trainIcon.png"
+        Icon="\icon\trainIcon.png"
         Title="ŽELEZNICE SRBIJE" 
         BorderBrush="{DynamicResource MahApps.Brushes.Accent}"
         BorderThickness="5"
