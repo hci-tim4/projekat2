@@ -44,41 +44,7 @@ namespace railway
            // this.drivingLineReport = new ViewDrivingLineTicketReport();
         }
 
-        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            string tabItem = ((sender as TabControl).SelectedItem as TabItem).Header as string;
-
-            if (!tabItem.Equals(last))
-            {
-                switch (tabItem)
-                {
-
-                    case "Red vožnje":
-                        last = "Red vožnje";
-                       // page1.Content = this.managerSchedule;
-                        break;
-                    case "Vozne linije":
-                        last = "Vozne linije";
-                        //page2.Content = this.viewDrivinglines;
-                        break;
-                    case "Vozovi":
-                        last = "Vozovi";
-                      //  page3.Content = new CRUDTrains();
-                        break;
-                    case "Mesečni izveštaj":
-                        last = "Mesečni izveštaj";
-                       // page4.Content = this.monthlyReport;
-                        break;
-                    case "Izveštaj za mrežu linija":
-                        last = "Izveštaj za mrežu linija";
-                       // page5.Content = this.drivingLineReport;
-                        break;
-
-                    default:
-                        return;
-                }
-            }
-        }
+       
 
 
         private void ListViewMenu_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -111,9 +77,6 @@ namespace railway
                     page.Content = CurrentContent;
                     break;
                 case 4:
-                    HelpProvider.ShowHelp("ManagerAppHelp", this);
-                    break;
-                case 5:
                     CurrentContent = new ViewDrivingLineTicketReport();
                     page.Content = CurrentContent;
                     break;
@@ -196,7 +159,7 @@ namespace railway
             Title = param;
         }
 
-        private void MenuItem_OnClick(object sender, RoutedEventArgs e)
+        private void tutorial_clicked(object sender, RoutedEventArgs e)
         {
             CurrentContent.StartTour_OnClick(sender, e);
         }
@@ -209,6 +172,19 @@ namespace railway
         private void StartTutorial_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             CurrentContent.StartTour_OnClick(sender, e);
+        }
+
+        private void help_clicked(object sender, RoutedEventArgs e)
+        {
+            HelpProvider.ShowHelp("ManagerAppHelp", this);
+        }
+
+        private void btnLogOut_Click(object sender, RoutedEventArgs e)
+        {
+            Window login = new MainWindow();
+            //App.Current.MainWindow.Close();
+            this.Close();
+            login.Show();
         }
     }
 

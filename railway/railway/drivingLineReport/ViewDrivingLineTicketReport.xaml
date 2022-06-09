@@ -32,7 +32,7 @@
                       ItemsSource="{Binding drivingLines}" DisplayMemberPath="Name" IsEditable="True" 
                       FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" 
                       tour:TourHelper.ElementID="ChoseDrivingLine"
-                      tour:TourHelper.Placement="BottomCenter">
+                      tour:TourHelper.Placement="BottomCenter" Margin="0,20,0,0">
                 <ComboBox.Style>
                     <Style>
                         <EventSetter Event="TextBox.TextChanged" Handler="TextBox_TextChanged" />
@@ -42,12 +42,12 @@
             <Button MinWidth="100" HorizontalAlignment="Right" Content="Prikaži" x:Name="showDrivingLineReportButton"
                     Click="ShowDrivingLineReportButton_OnClick" FontSize="20"
                     tour:TourHelper.ElementID="ShowReport"
-                    tour:TourHelper.Placement="BottomCenter"></Button>
+                    tour:TourHelper.Placement="BottomCenter" Margin="0,10,0,0"></Button>
         </StackPanel>
         
         <StackPanel x:Name="lineChartPanel" Grid.Row="0" Grid.Column="1"
                     tour:TourHelper.ElementID="ReportChart"
-                    tour:TourHelper.Placement="BottomCenter">
+                    tour:TourHelper.Placement="BottomCenter" Margin="2,2,20,2">
             <ScrollViewer>
             <lvc:CartesianChart x:Name="lineChart" Series="{Binding Path=lineChartData.LineSeriesCollection}" 
                                 Width="1100" Height="350" Margin="2,2,2,2">
@@ -68,15 +68,15 @@
                 
             </DockPanel >
             
-                <DataGrid  AlternatingRowBackground="Gainsboro" AlternationCount="1"
+                <DataGrid 
                            ItemsSource="{Binding Path=currentData }"
                            SelectionUnit="FullRow" SelectionMode="Single" AutoGenerateColumns="False"
                            IsReadOnly="True" Name="dataGrid" ScrollViewer.CanContentScroll="True"
                            ScrollViewer.HorizontalScrollBarVisibility="Auto"
                            ScrollViewer.VerticalScrollBarVisibility="Auto"
-                           Background="#EEE2DC" CanUserSortColumns="True"
+                           Background="DodgerBlue" CanUserSortColumns="True"
                            tour:TourHelper.ElementID="ReportTable"
-                           tour:TourHelper.Placement="LeftTop">
+                           tour:TourHelper.Placement="LeftTop" Margin="0,0,20,0">
                     
                 
                     <DataGrid.Columns>
@@ -85,7 +85,13 @@
                         <DataGridTextColumn Width="*" MinWidth="100" Header="Iznos" Binding="{Binding Path=Price}"/>
                     </DataGrid.Columns>
 
-                </DataGrid>
+                <DataGrid.RowStyle>
+                    <Style TargetType="{x:Type DataGridRow}" >
+                        <Setter Property="BorderBrush" Value="Transparent" />
+                        <Setter Property="BorderThickness" Value="1" />
+                    </Style>
+                </DataGrid.RowStyle>
+            </DataGrid>
         </StackPanel>
         
     </Grid>

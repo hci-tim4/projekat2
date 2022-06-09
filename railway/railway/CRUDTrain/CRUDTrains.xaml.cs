@@ -16,6 +16,9 @@ using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ThinkSharp.FeatureTouring;
+using ThinkSharp.FeatureTouring.Models;
+using ThinkSharp.FeatureTouring.Navigation;
 
 namespace railway.CRUDTrain
 {
@@ -24,17 +27,17 @@ namespace railway.CRUDTrain
     /// </summary>
     public partial class CRUDTrains : Page, TutorialInterface
     {
-        List<TrainDTO> dto;
+        public static List<TrainDTO> dto;
         Frame page;
+        private Boolean Touring;
+     
 
-       
+
 
         public CRUDTrains()
         {
             InitializeComponent();
-            AddTrainModal.SetParent(gridTrains);
-            EditTrainModal.SetParent(gridTrains);
-            DeleteTrainModal.SetParent(gridTrains);
+           
             dto = TrainService.getTrains();
      
             //loggedUser = user;
@@ -45,32 +48,21 @@ namespace railway.CRUDTrain
             //dataGrid.ItemsSource = dto;
         }
 
-        private void edit_clicked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void delete_clicked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void save_clicked(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+    
+        public void Window_Loaded(object sender, RoutedEventArgs e)
         {
             reloadWindow();
            
         }
 
-        private void reloadWindow()
+        public void reloadWindow()
         {
 
             gridTrains.RowDefinitions.Clear();
             gridTrains.ColumnDefinitions.Clear();
+
+            TourHelper.SetElementID(gridTrains, "allTrains");
+            TourHelper.SetPlacement(gridTrains, Placement.TopCenter);
            
             for(int i=0;i<4; i++) //4 kolone
             {
@@ -117,6 +109,9 @@ namespace railway.CRUDTrain
             addBtn.Background = (Brush)bc.ConvertFrom("#FF1E90FF");
             addBtn.Foreground = new SolidColorBrush(Colors.White);
             addBtn.Content = "Dodaj novi voz";
+            TourHelper.SetElementID(addBtn, "addTrain");
+            TourHelper.SetPlacement(addBtn, Placement.RightCenter);
+            
             addBtn.Click += add_Clicked;
          
             titlePanel.Children.Add(addBtn);
@@ -135,8 +130,8 @@ namespace railway.CRUDTrain
                 for (int j = 0; j < col; j++)
                 {
                     Grid grid = new Grid();
-                    grid.Margin = new Thickness { Bottom = 10, Left = 10, Right = 10, Top = 10 };
-                    grid.Height = 400;
+                    grid.Margin = new Thickness { Bottom = 0, Left = 10, Right = 10, Top = 10 };
+                    grid.Height = 250;
                     grid.VerticalAlignment = VerticalAlignment.Top;
                     Grid.SetColumn(grid, j);
                     Grid.SetRow(grid, i);
@@ -147,7 +142,7 @@ namespace railway.CRUDTrain
 
                     grid.Effect = new DropShadowEffect()
                     {
-                        BlurRadius = 20,
+                        BlurRadius = 10,
                         ShadowDepth = 1,
                         Color = (Color)ColorConverter.ConvertFromString("#FFDEDEDE")
                     };
@@ -156,40 +151,54 @@ namespace railway.CRUDTrain
                     StackPanel stackPanel = new StackPanel();
                     stackPanel.Width = 200;
 
+                    StackPanel stackPanelName = new StackPanel();
+                    stackPanelName.Orientation = Orientation.Horizontal;
+                    stackPanelName.Margin = new Thickness { Bottom = 20, Left = 0, Right = 0, Top = 10 };
+                    Image img = new Image();
+                    img.Width = 40;
+                    img.Height = 40;
+                    img.Source = new BitmapImage(new Uri("/icon/trainIcon.png", UriKind.Relative));
+                    stackPanelName.Children.Add(img);
 
                     TextBlock tb = new TextBlock();
                     tb.Text = dto[(i-1)*4+j].Name;
-                    tb.FontSize = 20;
+                    tb.FontSize = 30;
+                    tb.Margin = new Thickness { Bottom = 0, Left = 10, Right = 0, Top = 0 };
                     tb.FontWeight = FontWeights.Bold;
                     tb.Foreground = new SolidColorBrush(Colors.DodgerBlue);
-                    stackPanel.Children.Add(tb);
-
-                    Image img = new Image();
-
-                    img.Source = new BitmapImage(new Uri("/images/srbijavoz.jpg", UriKind.Relative));
-                    img.Width = 200;
-                    img.Height = 150;
-                    stackPanel.Children.Add(img);
-
+                    tb.HorizontalAlignment = HorizontalAlignment.Center;
+                    stackPanelName.Children.Add(tb);
+                    stackPanel.Children.Add(stackPanelName);
+                    
                     TextBlock tbColor = new TextBlock();
                     tbColor.Text = "Boja: " + dto[(i - 1) * 4 + j].Color;
                     tbColor.Foreground = new SolidColorBrush(Colors.DodgerBlue);
+                    tbColor.FontSize = 15;
                     stackPanel.Children.Add(tbColor);
+
+                    TextBlock tbCol = new TextBlock();
+                    tbCol.Text = "Broj kolona: " + dto[(i - 1) * 4 + j].col;
+                    tbCol.Foreground = new SolidColorBrush(Colors.DodgerBlue);
+                    tbCol.FontSize = 15;
+                    stackPanel.Children.Add(tbCol);
 
                     TextBlock tbRegular = new TextBlock();
                     tbRegular.Text = "Broj redova klasa REGULAR: " + dto[(i - 1) * 4 + j].numberREGULAR;
                     tbRegular.Foreground = new SolidColorBrush(Colors.DodgerBlue);
+                    tbRegular.FontSize = 15;
                     stackPanel.Children.Add(tbRegular);
 
 
                     TextBlock tbBusiness = new TextBlock();
                     tbBusiness.Text = "Broj redova klasa BUSINESS: " + dto[(i - 1) * 4 + j].numberBUSINESS;
                     tbBusiness.Foreground = new SolidColorBrush(Colors.DodgerBlue);
+                    tbBusiness.FontSize = 15;
                     stackPanel.Children.Add(tbBusiness);
 
                     TextBlock tbVip = new TextBlock();
                     tbVip.Text = "Broj redova klasa REGULAR: " + dto[(i - 1) * 4 + j].numberVIP;
                     tbVip.Foreground = new SolidColorBrush(Colors.DodgerBlue);
+                    tbVip.FontSize = 15;
                     stackPanel.Children.Add(tbVip);
 
 
@@ -203,7 +212,7 @@ namespace railway.CRUDTrain
                     btnEdit.Click += edit_Clicked;
                     btnEdit.Foreground = new SolidColorBrush(Colors.White);
                     btnEdit.Background = (Brush)bc.ConvertFrom("#FF1E90FF");
-                    btnEdit.Margin = new Thickness { Bottom = 10, Left = 0, Right = 10, Top = 10 };
+                    btnEdit.Margin = new Thickness { Bottom = 10, Left = 0, Right = 10, Top = 15 };
                     stackPanel2.Children.Add(btnEdit);
 
 
@@ -215,7 +224,7 @@ namespace railway.CRUDTrain
                     btnDelete.Foreground = new SolidColorBrush(Colors.White);
 
                     btnDelete.Background = (Brush)bc.ConvertFrom("#FF1E90FF");
-                    btnDelete.Margin = new Thickness { Bottom = 10, Left = 10, Right = 0, Top = 10 };
+                    btnDelete.Margin = new Thickness { Bottom = 10, Left = 10, Right = 0, Top = 15 };
                     stackPanel2.Children.Add(btnDelete);
                     stackPanel.Children.Add(stackPanel2);
 
@@ -232,10 +241,12 @@ namespace railway.CRUDTrain
             var id = ((Button)sender).Tag;
             TrainDTO trainDTO = getTrainInfo((int)id);
             Window edit = new EditTrain(trainDTO);
-            edit.Show();
-            dto = TrainService.getTrains();
-            reloadWindow();
+            edit.ShowDialog();
 
+            if (!edit.IsActive)
+            {
+                reloadWindow();
+            }
 
         }
 
@@ -244,20 +255,23 @@ namespace railway.CRUDTrain
             var db = new RailwayContext();
             var id = ((Button)sender).Tag;
             var train = db.trains.Where(t => t.Id == (int)id).FirstOrDefault();
-            db.trains.Remove(train);
+            train.Deleted = true;
             db.SaveChanges();
-            DeleteTrainModal.ShowHandlerDialog(train.Name);
             dto = TrainService.getTrains();
+            Window messageBox = new CustomMessageBox("Voz " + train.Name + " je obrisan!");
+            messageBox.ShowDialog();
             reloadWindow();
-
 
         }
         private void add_Clicked(object sender, RoutedEventArgs e)
         {
             Window add = new AddTrain();
-            add.Show();
-            dto = TrainService.getTrains();
-            reloadWindow();
+            add.ShowDialog();
+            if (!add.IsActive)
+            {
+                reloadWindow();
+            }
+           
         }
 
         private TrainDTO getTrainInfo(int id)
@@ -274,7 +288,44 @@ namespace railway.CRUDTrain
 
         public void StartTour_OnClick(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Tutorijal");
+            Touring = true;
+            TextLocalization.Close = "Zatvori";
+            TextLocalization.Next = "Sledeći";
+            
+            
+            var tour = new Tour()
+            {
+                Name = "My Demo Tour",
+                ShowNextButtonDefault = true,
+                EnableNextButtonAlways = true,
+            
+
+
+                Steps = new[]
+                {
+                    new Step("allTrains", "Prikaz svih vozova", "Prikazani su svi postojeći vozovi i informacije o njima, sa opcijama brisanja i izmene."),
+                    new Step("addTrain", "Dodavanje novog voza", "Klikom na dugme otvoriće se forma za dodavanje novog voza."),
+                    
+                    // ...
+                },
+
+            };
+
+            tour.Start();
+
+
+
+            //Step s1 = 
+            //if (currentSelected != null)
+            //{ 
+            //navigator.ForStep("stepDataGrid").s;
+            //}
+
+            IFeatureTourNavigator navigator = FeatureTour.GetNavigator();
+            //navigator.
+
+            //navigator.IfCurrentStepEquals("datagrid").GoPrevious();
+            //navigator.IfCurrentStepEquals("datagrid").Close();
         }
     }
 }

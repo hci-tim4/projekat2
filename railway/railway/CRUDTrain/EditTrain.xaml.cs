@@ -1,6 +1,7 @@
 ﻿using railway.database;
 using railway.dto.trains;
 using railway.model;
+using railway.services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -129,8 +130,11 @@ namespace railway.CRUDTrain
 
             db.SaveChanges();
             this.Close();
-        
-                }
+            CRUDTrains.dto = TrainService.getTrains();
+            Window messageBox = new CustomMessageBox("Voz " + valuetb.Text + " je izmenjen!");
+            messageBox.ShowDialog();
+
+        }
 
         public bool IsNumeric(string value)
         {

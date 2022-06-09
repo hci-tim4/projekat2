@@ -13,6 +13,7 @@ namespace railway.model
         public String Name { get; set; }
 
         public String Color { get; set; }
+        public bool Deleted { get; set; }
 
         public virtual List<Seat> Seats {get;set;}
 

@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
          xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:railway.CRUDTrain"
+        WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
         Icon="/icon/trainIcon.png"
         Title="ŽELEZNICE SRBIJE"  Height="350" Width="650" ResizeMode="NoResize">
-    
+        
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>

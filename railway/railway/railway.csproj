@@ -23,6 +23,7 @@
     <PackageReference Include="LiveCharts" Version="0.9.7" />
     <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="ResponsiveGrid" Version="0.3.3" />
+    <PackageReference Include="Thinksharp.FeatureTour" Version="2.1.0" />
   </ItemGroup>
 
   <ItemGroup>

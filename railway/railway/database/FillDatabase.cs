@@ -22,21 +22,25 @@ namespace railway.database
                 db.Database.ExecuteSqlCommand("Insert into SeatTypes Values('Biznis klasa', 120)");
                 db.Database.ExecuteSqlCommand("Insert into SeatTypes Values('Regularan', 80)");
 
-                db.Database.ExecuteSqlCommand("Insert into Trains Values('Sova', 'bela')");
-                db.Database.ExecuteSqlCommand("Insert into Trains Values('Orao', 'crn')");
-                db.Database.ExecuteSqlCommand("Insert into Trains Values('Soko', 'žuta')");
+                db.Database.ExecuteSqlCommand("Insert into Trains (Name,Color,Deleted) Values('Sova', 'bela', 0)");
+                db.Database.ExecuteSqlCommand("Insert into Trains (Name,Color,Deleted) Values('Orao', 'crna', 0)");
+                db.Database.ExecuteSqlCommand("Insert into Trains (Name,Color,Deleted) Values('Soko', 'žuta', 0)");
+                db.Database.ExecuteSqlCommand("Insert into Trains (Name,Color,Deleted) Values('Vrabac', 'crvena', 0)");
 
-                db.Database.ExecuteSqlCommand("Insert into Seats (SeatTypeId, TrainId, Row, Col) Values(1, 1, 1, 1)");
                 db.Database.ExecuteSqlCommand("Insert into Seats (SeatTypeId, TrainId, Row, Col) Values(1, 1, 1, 2)");
-                db.Database.ExecuteSqlCommand("Insert into Seats (SeatTypeId, TrainId, Row, Col) Values(1, 1, 1, 3)");
-                db.Database.ExecuteSqlCommand("Insert into Seats (SeatTypeId, TrainId, Row, Col) Values(1, 1, 1, 4)");
-                db.Database.ExecuteSqlCommand("Insert into Seats (SeatTypeId, TrainId, Row, Col) Values(1, 1, 1, 5)");
-                db.Database.ExecuteSqlCommand("Insert into Seats (SeatTypeId, TrainId, Row, Col) Values(1, 1, 2, 1)");
+                /*db.Database.ExecuteSqlCommand("Insert into Seats (SeatTypeId, TrainId, Row, Col) Values(2, 1, 2, 2)");
+                db.Database.ExecuteSqlCommand("Insert into Seats (SeatTypeId, TrainId, Row, Col) Values(3, 1, 2, 2)");
+                db.Database.ExecuteSqlCommand("Insert into Seats (SeatTypeId, TrainId, Row, Col) Values(1, 2, 1, 4)");
+                db.Database.ExecuteSqlCommand("Insert into Seats (SeatTypeId, TrainId, Row, Col) Values(5, 2, 3, 4)");
+                db.Database.ExecuteSqlCommand("Insert into Seats (SeatTypeId, TrainId, Row, Col) Values(3, 2, 2, 4)");
                 db.Database.ExecuteSqlCommand("Insert into Seats (SeatTypeId, TrainId, Row, Col) Values(1, 1, 2, 2)");
                 db.Database.ExecuteSqlCommand("Insert into Seats (SeatTypeId, TrainId, Row, Col) Values(1, 1, 2, 3)");
                 db.Database.ExecuteSqlCommand("Insert into Seats (SeatTypeId, TrainId, Row, Col) Values(1, 1, 2, 4)");
                 db.Database.ExecuteSqlCommand("Insert into Seats (SeatTypeId, TrainId, Row, Col) Values(1, 1, 2, 5)");
-
+                db.Database.ExecuteSqlCommand("Insert into Seats (SeatTypeId, TrainId, Row, Col) Values(3, 4, 2, 3)");
+                db.Database.ExecuteSqlCommand("Insert into Seats (SeatTypeId, TrainId, Row, Col) Values(2, 4, 2, 3)");
+                db.Database.ExecuteSqlCommand("Insert into Seats (SeatTypeId, TrainId, Row, Col) Values(1, 4, 1, 3)");
+                */
                 db.Database.ExecuteSqlCommand("Insert into Stations Values('Novi Sad', 45.25500000, 19.84472222)");
                 db.Database.ExecuteSqlCommand("Insert into Stations Values('Subotica', 46.10000000, 19.66361111)");
                 db.Database.ExecuteSqlCommand("Insert into Stations Values('Šid', 45.127149, 19.22785)");

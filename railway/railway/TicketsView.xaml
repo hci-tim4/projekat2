@@ -61,7 +61,7 @@
                    IsReadOnly="True" Name="dataGrid" ScrollViewer.CanContentScroll="True"
                     ScrollViewer.HorizontalScrollBarVisibility="Auto"
                     ScrollViewer.VerticalScrollBarVisibility="Auto"
-                   Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Background="DodgerBlue" CanUserSortColumns="False">
+                   Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Background="DodgerBlue" Foreground="White" CanUserSortColumns="False">
 
             <DataGrid.Columns >
                 <DataGridTextColumn Header="Datum" Binding="{Binding Path=DepatureDate, Converter={conv:DateTimeToStringConverter}}"/>

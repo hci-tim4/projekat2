@@ -16,6 +16,7 @@ namespace railway.services
             using(var db = new RailwayContext())
             {
                 List<Train> allTrains = (from t in db.trains
+                                         where t.Deleted == false
                                          select t).ToList();
 
                 foreach(Train t in allTrains)

@@ -1,5 +1,6 @@
 ﻿using railway.database;
 using railway.model;
+using railway.services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -75,7 +76,7 @@ namespace railway.CRUDTrain
             {
                 busNumber = int.Parse(BusNumberStr);
             }
-
+           /////////////////// ///PROVERE DA LI SU PODACI DOBRI//////////////////////////
             for (int i = 1; i <= vipNumber; i++)//redovi
             {
                 for (int j = 1; j <= col; j++)//kolone
@@ -116,8 +117,10 @@ namespace railway.CRUDTrain
             }
             db.SaveChanges();
             this.Close();
-
-
+            CRUDTrains.dto = TrainService.getTrains();
+            Window messageBox = new CustomMessageBox("Novi voz " + valuetb.Text + " je uspešno dodat!");
+            messageBox.ShowDialog();
+         
           
         }
 

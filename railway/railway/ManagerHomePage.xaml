@@ -28,26 +28,32 @@
             <RowDefinition Height="Auto"> </RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Grid.Column="0" Height="50">
-            <Menu>
-                <MenuItem Header="Tutorijal">
-                    <MenuItem Header="_Tutorijal" Command="cmd:RoutedCommands.StartTutorial" Click="MenuItem_OnClick" IsEnabled="True"></MenuItem>
+        <StackPanel Grid.Row="0" Grid.Column="0" Height="40" Background="DodgerBlue">
+            <Menu Background="DodgerBlue" Foreground="White" HorizontalAlignment="Right" Margin="0,0,20,0">
+                <MenuItem Header="Pomoć" >
+                    <MenuItem Width="200" Header="Pomoć" Command="ApplicationCommands.Help" Click="help_clicked" IsEnabled="True" Foreground="DodgerBlue">
+                        <MenuItem.Icon>
+                            <Image Source="/icon/help.png"></Image>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem Width="200" Header="Tutorijal" Command="cmd:RoutedCommands.StartTutorial" Click="tutorial_clicked" IsEnabled="True"  Foreground="DodgerBlue"></MenuItem>
                 </MenuItem>
             </Menu>
         </StackPanel>
-        
-        
-        
+
+
+
         <Grid Grid.Row="1" Margin="250 55 0 0">
             <!--<Grid x:Name="GridPrincipal" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
-            <Frame x:Name="page" Margin="0,-51,0,0" NavigationUIVisibility="Hidden"></Frame>
+            <Frame x:Name="page" Margin="20,-51,0,0" NavigationUIVisibility="Hidden"></Frame>
         </Grid>
 
-        <Grid Grid.Row="1" Width="250" HorizontalAlignment="Left" Background="DodgerBlue">
+        <Grid Grid.Row="1" Width="260" HorizontalAlignment="Left" Background="DodgerBlue">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="13*"/>
                 <ColumnDefinition Width="12*"/>
             </Grid.ColumnDefinitions>
+       
             <materialDesign:TransitioningContent x:Name="TrainsitionigContentSlide" OpeningEffect="{materialDesign:TransitionEffect SlideInFromLeft}" Grid.ColumnSpan="1">
                 <Grid x:Name="GridCursor" Margin="0,100,0,0" Background="White" Width="10" HorizontalAlignment="Left" Height="50" VerticalAlignment="Top"/>
             </materialDesign:TransitioningContent>
@@ -72,27 +78,27 @@
                 </ListViewItem>
                 <ListViewItem Height="50"  Background="DodgerBlue" Foreground="White">
                     <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="Report" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
-                        <TextBlock Text= "Izveštaji" FontSize="17" VerticalAlignment="Center" Margin="10 0"/>
+                        <materialDesign:PackIcon Kind="GraphBar" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
+                        <TextBlock Text= "Mesečni izveštaj" FontSize="17" VerticalAlignment="Center" Margin="10 0"/>
                     </StackPanel>
                 </ListViewItem>
-
-                <ListViewItem Height="50" local:HelpProvider.HelpKey="ManagerAppHelp"  Background="DodgerBlue" Foreground="White">
-                    <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="Help" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
-                        <TextBlock Text= "Pomoć" FontSize="17" VerticalAlignment="Center" Margin="10 0"/>
-                    </StackPanel>
-                </ListViewItem>
-
-
                 <ListViewItem Height="50"  Background="DodgerBlue" Foreground="White">
                     <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="Help" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
-                        <TextBlock Text= "Privremeni izvestaj" FontSize="17" VerticalAlignment="Center" Margin="10 0"/>
+                        <materialDesign:PackIcon Kind="GraphLine" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
+                        <TextBlock Text= "Izveštaj za voznu liniju" FontSize="17" VerticalAlignment="Center" Margin="10 0"/>
                     </StackPanel>
                 </ListViewItem>
-
+          
             </ListView>
+
+            <StackPanel Orientation="Vertical" VerticalAlignment="Top" Margin="0,10,10,0">
+                <Button ToolTip="Odjavi se" Width="100" Height="60" Background="DodgerBlue" Click="btnLogOut_Click" >
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Logout" Width="40" Height="40" VerticalAlignment="Center" Margin="5"/>
+
+                    </StackPanel>
+                </Button>
+            </StackPanel>
         </Grid>
 
     </Grid>

@@ -4,12 +4,24 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:railway.CRUDTrain"
+      xmlns:tour="clr-namespace:ThinkSharp.FeatureTouring;assembly=ThinkSharp.FeatureTour"
+      xmlns:controls="clr-namespace:ThinkSharp.FeatureTouring.Controls;assembly=ThinkSharp.FeatureTour"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
+      
       d:DesignHeight="450" d:DesignWidth="800"
       Title="CRUDTrains"
       Loaded="Window_Loaded"
       >
+    <Page.Resources>
+        <Style TargetType="controls:TourControl">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="Brown"/>
+            <Setter Property="BorderBrush" Value="Brown" />
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="BorderThickness" Value="3"/>
+        </Style>
+    </Page.Resources>
 
     <!--<Grid>
 
@@ -107,9 +119,7 @@
             </Grid>
           
       
-        <local:AddTrainModal x:Name="AddTrainModal"></local:AddTrainModal>
-        <local:EditTrainModal x:Name="EditTrainModal"></local:EditTrainModal>
-        <local:DeleteTrainModal x:Name="DeleteTrainModal"></local:DeleteTrainModal>
+      
         
     </Grid>
         </ScrollViewer >

@@ -6,6 +6,7 @@
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              xmlns:tour="clr-namespace:ThinkSharp.FeatureTouring;assembly=ThinkSharp.FeatureTour"
              xmlns:controls="clr-namespace:ThinkSharp.FeatureTouring.Controls;assembly=ThinkSharp.FeatureTour"
+              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:railway.monthlyReport"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
@@ -31,24 +32,27 @@
                 <DatePicker FontSize="20" MinWidth="200" x:Name="fromDateDatePicker"
                             SelectedDateChanged="FromDateDatePicker_OnSelectedDateChanged"
                             tour:TourHelper.ElementID="StartDatePicker"
-                            tour:TourHelper.Placement="BottomCenter"></DatePicker>
+                            tour:TourHelper.Placement="BottomCenter" Margin="0,10,0,0" materialDesign:HintAssist.Hint="Početni datum"></DatePicker>
                 <DatePicker FontSize="20" MinWidth="200" x:Name="untilDateDatePicker" 
                             SelectedDateChanged="UntilDateDatePicker_OnSelectedDateChanged"
                             tour:TourHelper.ElementID="EndDatePicker"
-                            tour:TourHelper.Placement="BottomCenter"></DatePicker>
+                            tour:TourHelper.Placement="BottomCenter"  materialDesign:HintAssist.Hint="Krajnji datum" Margin="0,10,0,0"></DatePicker>
                 <Button FontSize="20" x:Name="showReport" Click="ShowReport_OnClick" Content="Prikaži" MinWidth="100" 
                         HorizontalAlignment="Right" 
                         tour:TourHelper.ElementID="ShowReportButton"
-                        tour:TourHelper.Placement="BottomCenter"></Button>
+                        tour:TourHelper.Placement="BottomCenter" Margin="0,10,0,20"></Button>
             </StackPanel>
-            
-            <StackPanel>
-                <Label FontSize="20"  >Tip podela</Label>
-                <RadioButton FontSize="20" x:Name="seatTypeRadioButton" Margin="3" Content="Tip sedišta" Checked="showBySeatTypes"></RadioButton>
-                <RadioButton FontSize="20" x:Name="drivingLineRadioButton" Margin="3" Checked="showByDrivingLines"
+            <Border BorderBrush="DodgerBlue" BorderThickness="2"> 
+                <StackPanel Margin="0,0,0,0">
+
+                    <Label FontSize="20"  >Pregled karata po:</Label>
+                    <RadioButton FontSize="20" x:Name="seatTypeRadioButton" Margin="3" Content="Tipu sedišta" Checked="showBySeatTypes"></RadioButton>
+                    <RadioButton FontSize="20" x:Name="drivingLineRadioButton" Margin="3" Checked="showByDrivingLines"
                              tour:TourHelper.ElementID="ChangeTypeOfMontlhyReport"
-                             tour:TourHelper.Placement="LeftCenter">Mrežna linija</RadioButton>
-            </StackPanel>
+                             tour:TourHelper.Placement="LeftCenter">Mrežnim linijama</RadioButton>
+
+                </StackPanel>
+            </Border>
         </StackPanel>
         
         
@@ -69,13 +73,13 @@
             </StackPanel>
             
             <ScrollViewer>
-            <DataGrid  AlternatingRowBackground="Gainsboro" AlternationCount="1"
+            <DataGrid  Background="DodgerBlue"
                        ItemsSource="{Binding Path=currentData }"
                        SelectionUnit="FullRow" SelectionMode="Single" AutoGenerateColumns="False"
                        IsReadOnly="True" Name="dataGrid" ScrollViewer.CanContentScroll="True"
                        ScrollViewer.HorizontalScrollBarVisibility="Auto"
                        ScrollViewer.VerticalScrollBarVisibility="Auto"
-                       Background="#EEE2DC" CanUserSortColumns="True" 
+                     CanUserSortColumns="True" 
                        tour:TourHelper.ElementID="ReportTable"
                        tour:TourHelper.Placement="LeftTop">
                     
