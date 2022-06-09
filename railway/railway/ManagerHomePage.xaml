@@ -7,7 +7,8 @@
         xmlns:local="clr-namespace:railway"
         xmlns:cmd="clr-namespace:railway.Commands"
         mc:Ignorable="d"
-        Title="ManagerHomePage" 
+        Icon="\icon\trainIcon.png"
+        Title="ŽELEZNICE SRBIJE" 
         Width="{x:Static SystemParameters.PrimaryScreenWidth}"
         Height="{x:Static SystemParameters.PrimaryScreenHeight}"
         WindowStartupLocation="CenterScreen"
@@ -61,7 +62,7 @@
                 <ListViewItem Height="50"  Background="DodgerBlue" Foreground="White">
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="Map" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
-                        <TextBlock Text="Vozne linije" FontSize="17" VerticalAlignment="Center" Margin="10 0"/>
+                        <TextBlock Text="Mrežne linije" FontSize="17" VerticalAlignment="Center" Margin="10 0"/>
                     </StackPanel>
                 </ListViewItem>
                 <ListViewItem Height="50"  Background="DodgerBlue" Foreground="White">
