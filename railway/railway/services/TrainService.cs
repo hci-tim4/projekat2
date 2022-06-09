@@ -34,32 +34,63 @@ namespace railway.services
         public static void getSeats(Train t, TrainDTO dto)
         {
 
-            int vip = 0;
-            int regular = 0;
-            int bussines = 0;
-            using (var db = new RailwayContext())
+            dto.col = getColNum(t.Id);
+            if(dto.col == 0)
             {
-                List<Seat> seats = (from s in db.seats
-                                    where s.TrainId == t.Id
-                                    select s).ToList();
-                foreach (Seat s in seats)
-                {
-                    if (s.SeatTypeId == 1)
-                        vip++;
-                    else if (s.SeatTypeId == 2)
-                    {
-                        bussines++;
-                    }
-                    else
-                        regular++;
-                }
-                dto.numberBUSINESS = bussines;
-                dto.numberREGULAR = regular;
-                dto.numberVIP = vip;
+                dto.numberREGULAR = 0;
+                dto.numberBUSINESS = 0;
+                dto.numberVIP = 0;
+            }
+            else
+            {
+                dto.numberREGULAR = getRegNum(t.Id) / dto.col;
+                dto.numberBUSINESS = getBusNum(t.Id) / dto.col;
+                dto.numberVIP = getVipNum(t.Id) / dto.col;
 
             }
           
+
+
+            
         }
+
+        private static int getColNum(int id)
+        {
+            var db = new RailwayContext();
+            var seats = from s in db.seats
+                        where s.TrainId == id & s.Row == 1
+                        select s;
+            return seats.Count();
+        }
+
+
+        private static int getRegNum(int id)
+        {
+            var db = new RailwayContext();
+            var seats = from s in db.seats
+                        where s.TrainId == id & s.SeatTypeId == 3
+                        select s;
+            return seats.Count();
+        }
+
+        private static int getVipNum(int id)
+        {
+            var db = new RailwayContext();
+            var seats = from s in db.seats
+                        where s.TrainId == id & s.SeatTypeId == 1
+                        select s;
+            return seats.Count();
+        }
+
+        private static int getBusNum(int id)
+        {
+            var db = new RailwayContext();
+            var seats = from s in db.seats
+                        where s.TrainId == id & s.SeatTypeId == 2
+                        select s;
+            return seats.Count();
+        }
+
 
         public static void getSeatPrices(Train t, TrainDTO dto)
         {

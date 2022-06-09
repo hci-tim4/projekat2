@@ -14,17 +14,6 @@
         <CommandBinding Command="cmd:RoutedCommands.Save" x:Name="save" CanExecute="Save_OnCanExecute" Executed="Save_OnExecuted"></CommandBinding>
     </UserControl.CommandBindings>
     <UserControl.Resources>
-        <Style TargetType="{x:Type Control}" x:Key="baseStyle">
-            <Setter Property="FontSize" Value="20" />
-            <Setter Property="Margin" Value="2,2,2,2"></Setter>
-            <Setter Property="FontStyle" Value="Normal"></Setter>
-        </Style>
-        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource baseStyle}"></Style>
-        <Style TargetType="{x:Type Label}" BasedOn="{StaticResource baseStyle}"></Style>
-        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource baseStyle}"></Style>
-        <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource baseStyle}">
-            <Setter Property="Margin" Value="0"></Setter>
-        </Style>
         <Style x:Key="CircleButton" TargetType="Button">
      <Setter Property="OverridesDefaultStyle" Value="True"/>
      <Setter Property="Margin" Value="2"/>
@@ -92,15 +81,17 @@
             
             
             <DockPanel>
-                <Button x:Name="back" DockPanel.Dock="Left" Click="Back_OnClick" Style="{StaticResource CircleButton}" Width="35" Height="35">
+                <Button FontSize="20" x:Name="back" DockPanel.Dock="Left" Click="Back_OnClick" Style="{StaticResource CircleButton}" Width="35" Height="35">
                     <Image Source="\icon\backbutton.png" Stretch="Fill">
                     </Image>
                 </Button>
 
             
-                <Button x:Name="backToDragAndDrop" Click="BackToDragAndDrop_OnClick" DockPanel.Dock="Right" HorizontalAlignment="Right" MaxWidth="110" MaxHeight="30" ToolTip="Prevuci pusti pristup" l:HelpProvider.HelpKey="dragDropWay">Prevlačenje</Button>
+                <Button FontSize="20" x:Name="backToDragAndDrop" Click="BackToDragAndDrop_OnClick" DockPanel.Dock="Right" HorizontalAlignment="Right" 
+                        MaxWidth="160" MaxHeight="40" ToolTip="Prevuci pusti pristup" l:HelpProvider.HelpKey="dragDropWay">Prevlačenje</Button>
             </DockPanel>
-            <Button Content="Sačuvaj" MaxWidth="120" HorizontalAlignment="Right" x:Name="saveDrivingLine" Click="SaveDrivingLine_OnClick" l:HelpProvider.HelpKey="btnSaveNewDrivingLine"></Button>
+            <Button FontSize="20" Content="Sačuvaj" MaxWidth="120" HorizontalAlignment="Right" x:Name="saveDrivingLine" MaxHeight="40"
+                    Click="SaveDrivingLine_OnClick" l:HelpProvider.HelpKey="btnSaveNewDrivingLine"></Button>
             
         </StackPanel>
         
@@ -112,7 +103,7 @@
                     </Style>
                 </ComboBox.Style>
             </ComboBox>
-            <Button Content="Dodaj" MinWidth="60" Height="30" x:Name="addStation" Click="AddStation_OnClick" l:HelpProvider.HelpKey="btnAddStationInDrivingLine"></Button>
+            <Button FontSize="20" Content="Dodaj" MinWidth="60" Height="40" x:Name="addStation" Click="AddStation_OnClick" l:HelpProvider.HelpKey="btnAddStationInDrivingLine"></Button>
         </StackPanel>
         
         <gmaps:GMapControl Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" x:Name="mapView" Loaded="map_Loaded"/>

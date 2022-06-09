@@ -32,6 +32,7 @@ namespace railway
         UserControl viewDrivinglines;
         UserControl monthlyReport;
         private UserControl drivingLineReport;
+        private TutorialInterface CurrentContent;
         
         public ManagerHomePage(User user)
         {
@@ -91,25 +92,30 @@ namespace railway
                     //GridPrincipal.Children.Clear();
                     //GridPrincipal.Children.Add(new Timetable(loggedUser));
                     page.Content = "";
-                    page.Content = new ManagerSchedule();
+                    CurrentContent = new ManagerSchedule();
+                    page.Content = CurrentContent;
                     //page.Content = 
 
                     break;
                 case 1:
                     page.Content = "";
-                    page.Content = new ViewDrivingLines(page);
+                    CurrentContent = new ViewDrivingLines(page);
+                    page.Content = CurrentContent;
                     break;
                 case 2:
-                    page.Content = new CRUDTrains();
+                    CurrentContent = new CRUDTrains();
+                    page.Content = CurrentContent;
                     break;
                 case 3:
-                    page.Content = new ViewMonthlyTicketView();
+                    CurrentContent = new ViewMonthlyTicketView();
+                    page.Content = CurrentContent;
                     break;
                 case 4:
                     HelpProvider.ShowHelp("ManagerAppHelp", this);
                     break;
                 case 5:
-                    page.Content = new ViewDrivingLineTicketReport();
+                    CurrentContent = new ViewDrivingLineTicketReport();
+                    page.Content = CurrentContent;
                     break;
 
                 default:
@@ -136,7 +142,8 @@ namespace railway
         private void ScheduleLines_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             page.Content = "";
-            page.Content = new ManagerSchedule();
+            CurrentContent = new ManagerSchedule();
+            page.Content = CurrentContent;
         }
 
         private void DrivingLines_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -147,7 +154,8 @@ namespace railway
         private void DrivingLines_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             page.Content = "";
-            page.Content = new ViewDrivingLines(page);
+            CurrentContent = new ViewDrivingLines(page);
+            page.Content = CurrentContent;
         }
 
         private void Trains_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -157,7 +165,8 @@ namespace railway
 
         private void Trains_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            page.Content = new CRUDTrains();
+            CurrentContent = new CRUDTrains();
+            page.Content = CurrentContent;
         }
 
         private void Report_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -167,7 +176,8 @@ namespace railway
 
         private void Report_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            page.Content = new ViewMonthlyTicketView();
+            CurrentContent = new ViewMonthlyTicketView();
+            page.Content = CurrentContent;
         }
 
         private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -184,6 +194,21 @@ namespace railway
         {
             //     btnOK.Background = new SolidColorBrush(Color.FromRgb(32, 64, 128));
             Title = param;
+        }
+
+        private void MenuItem_OnClick(object sender, RoutedEventArgs e)
+        {
+            CurrentContent.StartTour_OnClick(sender, e);
+        }
+
+        private void StartTutorial_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void StartTutorial_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            CurrentContent.StartTour_OnClick(sender, e);
         }
     }
 

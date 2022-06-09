@@ -96,7 +96,8 @@ namespace railway.services
                         SerialNumber = serialNumber,
                         StationId = s.Id,
                         DrivingLineId = drivingLine.Id,
-                        StartDate = null
+                        StartDate = null,
+                        Tour = 1
                     };
                     serialNumber++;
                     db.stationsSchedules.Add(ss);

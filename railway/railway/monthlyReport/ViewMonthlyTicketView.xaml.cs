@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Markup;
 using LiveCharts;
 using LiveCharts.Wpf;
 using railway.client;
@@ -13,7 +14,7 @@ using railway.services;
 
 namespace railway.monthlyReport
 {
-    public partial class ViewMonthlyTicketView : UserControl
+    public partial class ViewMonthlyTicketView : UserControl, TutorialInterface
     {
         public barChartInformation barChartData { get; set; }//= new barChartInformation();
         private List<InformationForGraphDisplay> currentData = null;
@@ -29,6 +30,8 @@ namespace railway.monthlyReport
             Formatter = value => value.ToString("N");
             chartStackPanel.DataContext = this;
             dataGrid.DataContext = this;
+            fromDateDatePicker.Language = XmlLanguage.GetLanguage(new System.Globalization.CultureInfo("sr-ME").IetfLanguageTag);
+            untilDateDatePicker.Language = XmlLanguage.GetLanguage(new System.Globalization.CultureInfo("sr-ME").IetfLanguageTag);
         }
         
         
@@ -258,6 +261,11 @@ namespace railway.monthlyReport
             }
             FillInformationForGraphByDrivingLine();
             PrepareGraph();
+        }
+
+        public void StartTour_OnClick(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Tutorijal");
         }
     }
 }

@@ -21,67 +21,29 @@
         <CommandBinding Command="cmd:RoutedCommands.Trains" x:Name="Trains" CanExecute="Trains_OnCanExecute" Executed="Trains_OnExecuted"></CommandBinding>
         <CommandBinding Command="cmd:RoutedCommands.Report" x:Name="Report" CanExecute="Report_OnCanExecute" Executed="Report_OnExecuted"></CommandBinding>
         <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
+        <CommandBinding Command="cmd:RoutedCommands.StartTutorial" x:Name="startTutorial" CanExecute="StartTutorial_OnCanExecute" Executed="StartTutorial_OnExecuted"></CommandBinding>
     </Window.CommandBindings>
-    <!--<ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
-        <Grid>
-
-
-
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"></RowDefinition>
-            </Grid.RowDefinitions>
-
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="5*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-
-
-            <TabControl TabStripPlacement="Left" Grid.Row="0" Grid.ColumnSpan="2" SelectionChanged="TabControl_SelectionChanged">
-                <TabControl.Resources>
-                    <Style TargetType="{x:Type TabItem}">
-                        <Setter Property="HeaderTemplate">
-                            <Setter.Value>
-                                <DataTemplate>
-                                    <ContentPresenter Content="{TemplateBinding Content}">
-                                    </ContentPresenter>
-                                </DataTemplate>
-                            </Setter.Value>
-                        </Setter>
-                        <Setter Property="Padding" Value="3" />
-                    </Style>
-                </TabControl.Resources>
-
-                <TabItem Header="Red vožnje" Height="50"  Width="150" >
-                   
-                    <Frame x:Name="page1" NavigationUIVisibility="Hidden" Margin="2,2,2,2"  Grid.Row="0" Grid.ColumnSpan="2"/>
-                </TabItem>
-                <TabItem Header="Vozne linije" Height="50" Width="150" >
-                    <Frame x:Name="page2" NavigationUIVisibility="Hidden" Margin="2,2,2,2"  Grid.Row="0" Grid.ColumnSpan="2"/>
-                </TabItem>
-                <TabItem Header="Vozovi" Height="50" Width="150" >
-                    <Frame x:Name="page3" NavigationUIVisibility="Hidden" Margin="2,2,2,2"  Grid.Row="0" Grid.ColumnSpan="2"/>
-
-                </TabItem>
-                <TabItem Header="Mesečni izveštaj" Height="50" Width="150" >
-                    <Frame x:Name="page4" NavigationUIVisibility="Hidden" Margin="2,2,2,2"  Grid.Row="0" Grid.ColumnSpan="2"/>
-                </TabItem>
-                <TabItem Header="Izveštaj za mrežu linija" Height="50" Width="150" >
-                    <Frame x:Name="page5" NavigationUIVisibility="Hidden" Margin="2,2,2,2"  Grid.Row="0" Grid.ColumnSpan="2"/>
-                </TabItem>
-
-            </TabControl>
-
-        </Grid>
-    </ScrollViewer>-->
     <Grid Background="#FFEEEEEE">
-
-        <Grid Margin="250 55 0 0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"> </RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Grid.Column="0" Height="50">
+            <Menu>
+                <MenuItem Header="Tutorijal">
+                    <MenuItem Header="_Tutorijal" Command="cmd:RoutedCommands.StartTutorial" Click="MenuItem_OnClick" IsEnabled="True"></MenuItem>
+                </MenuItem>
+            </Menu>
+        </StackPanel>
+        
+        
+        
+        <Grid Grid.Row="1" Margin="250 55 0 0">
             <!--<Grid x:Name="GridPrincipal" HorizontalAlignment="Center" VerticalAlignment="Center"/>-->
             <Frame x:Name="page" Margin="0,-51,0,0" NavigationUIVisibility="Hidden"></Frame>
         </Grid>
 
-        <Grid Width="250" HorizontalAlignment="Left" Background="DodgerBlue">
+        <Grid Grid.Row="1" Width="250" HorizontalAlignment="Left" Background="DodgerBlue">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="13*"/>
                 <ColumnDefinition Width="12*"/>
@@ -89,33 +51,33 @@
             <materialDesign:TransitioningContent x:Name="TrainsitionigContentSlide" OpeningEffect="{materialDesign:TransitionEffect SlideInFromLeft}" Grid.ColumnSpan="1">
                 <Grid x:Name="GridCursor" Margin="0,100,0,0" Background="White" Width="10" HorizontalAlignment="Left" Height="50" VerticalAlignment="Top"/>
             </materialDesign:TransitioningContent>
-            <ListView x:Name="ListViewMenu" Margin="0,100,0,0" Foreground="White" FontWeight="Bold" SelectionChanged="ListViewMenu_SelectionChanged" FontFamily="Champagne &amp; Limousines" FontSize="18"  SelectedIndex="0" Grid.ColumnSpan="2">
-                <ListViewItem Height="50">
+            <ListView x:Name="ListViewMenu" Margin="0,100,0,0" Foreground="White" FontWeight="Bold" SelectionChanged="ListViewMenu_SelectionChanged" FontFamily="Champagne &amp; Limousines" FontSize="18"  SelectedIndex="0" Grid.ColumnSpan="2" Background="DodgerBlue">
+                <ListViewItem Height="50" Background="DodgerBlue" Foreground="White">
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="Timetable" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
                         <TextBlock Text="Red vožnje" FontSize="17" VerticalAlignment="Center" Margin="10 0"/>
                     </StackPanel>
                 </ListViewItem>
-                <ListViewItem Height="50">
+                <ListViewItem Height="50"  Background="DodgerBlue" Foreground="White">
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="Map" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
                         <TextBlock Text="Vozne linije" FontSize="17" VerticalAlignment="Center" Margin="10 0"/>
                     </StackPanel>
                 </ListViewItem>
-                <ListViewItem Height="50">
+                <ListViewItem Height="50"  Background="DodgerBlue" Foreground="White">
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="Train" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
                         <TextBlock Text="Vozovi" FontSize="17" VerticalAlignment="Center" Margin="10 0"/>
                     </StackPanel>
                 </ListViewItem>
-                <ListViewItem Height="50">
+                <ListViewItem Height="50"  Background="DodgerBlue" Foreground="White">
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="Report" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
                         <TextBlock Text= "Izveštaji" FontSize="17" VerticalAlignment="Center" Margin="10 0"/>
                     </StackPanel>
                 </ListViewItem>
 
-                <ListViewItem Height="50" local:HelpProvider.HelpKey="ManagerAppHelp">
+                <ListViewItem Height="50" local:HelpProvider.HelpKey="ManagerAppHelp"  Background="DodgerBlue" Foreground="White">
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="Help" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
                         <TextBlock Text= "Pomoć" FontSize="17" VerticalAlignment="Center" Margin="10 0"/>
@@ -123,7 +85,7 @@
                 </ListViewItem>
 
 
-                <ListViewItem Height="50">
+                <ListViewItem Height="50"  Background="DodgerBlue" Foreground="White">
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="Help" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
                         <TextBlock Text= "Privremeni izvestaj" FontSize="17" VerticalAlignment="Center" Margin="10 0"/>

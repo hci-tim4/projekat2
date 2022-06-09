@@ -12,7 +12,7 @@ using System.Windows.Input;
 
 namespace railway.defineDrivingLine
 {
-    public partial class ViewDrivingLines : UserControl
+    public partial class ViewDrivingLines : UserControl, TutorialInterface
     {
         //public List<DrivingLineViewDTO> DrivingLines;
         private List<Train> trains;
@@ -22,6 +22,7 @@ namespace railway.defineDrivingLine
         private DrivingLineViewDTO currentSelected = null;
         private Station currentStation;
         private List<Station> stations;
+        private DrivingLines drivingLines;
         
         public ViewDrivingLines(Frame frame)
         {
@@ -31,7 +32,9 @@ namespace railway.defineDrivingLine
             //this.DataContext = DrivingLines;
             DefineEndDateForDrivingLineModal.SetParent(parent);
             DefineSimpleDataForDrivingLineModal.SetParent(parent);
-            drivingLineViewPage.Content = new DrivingLines(drivingLineViewPage, DefineEndDateForDrivingLineModal, DefineSimpleDataForDrivingLineModal);
+            drivingLines = new DrivingLines(drivingLineViewPage, DefineEndDateForDrivingLineModal, DefineSimpleDataForDrivingLineModal);
+            drivingLineViewPage.Content = drivingLines;
+
             /*using (var db = new RailwayContext())
             {
                 setDrivingLines(db);
@@ -98,6 +101,11 @@ namespace railway.defineDrivingLine
         {
             //UserControl add = new AddDrivingLine(parentFrame, (DrivingLines)drivingLineViewPage.Content, DefineSimpleDataForDrivingLineModal);
 
+        }
+
+        public void StartTour_OnClick(object sender, RoutedEventArgs e)
+        {
+            drivingLines.StartTour_OnClick(sender, e);
         }
     }
 }

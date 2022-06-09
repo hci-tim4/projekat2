@@ -25,7 +25,8 @@ namespace railway.managerSchedule
     /// <summary>
     /// Interaction logic for ManagerSchedule.xaml
     /// </summary>
-    public partial class ManagerSchedule : Page, INotifyPropertyChanged
+    
+    public partial class ManagerSchedule : Page, INotifyPropertyChanged, TutorialInterface
     {
         public List<DrivingLineDTO> lines { get; set; }
         public DrivingLineDTO currentSelected { get; set; }
@@ -301,7 +302,10 @@ namespace railway.managerSchedule
             Title = param;
         }
 
-       
 
+        public void StartTour_OnClick(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Tutorijal");
+        }
     }
 }
