@@ -307,7 +307,7 @@ namespace railway.monthlyReport
                     },
                     new Step("ReportChart", "Grafikon", "Grafički prikaz za izabrani period."),
                     new Step("ReportTable", "Tabela", "Tabelarni prikaz izveštaja za izabrani period."),
-                    new Step("ChangeTypeOfMontlhyReport", "Promena tipa izveštaja", "Za promenu tipa izveštaja izaberite jedanu od ponuđenih opcija" +
+                    new Step("ChangeTypeOfMontlhyReport", "Promena tipa izveštaja", "Za promenu tipa izveštaja izaberite jednu od ponuđenih opcija " +
                         "'Tip sedišta' ili 'Mrežna linija'.")
                     {
                         ShowNextButton = false
