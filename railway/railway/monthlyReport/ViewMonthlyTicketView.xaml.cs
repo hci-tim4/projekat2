@@ -11,6 +11,9 @@ using railway.client;
 using railway.database;
 using railway.model;
 using railway.services;
+using ThinkSharp.FeatureTouring;
+using ThinkSharp.FeatureTouring.Models;
+using ThinkSharp.FeatureTouring.Navigation;
 
 namespace railway.monthlyReport
 {
@@ -20,6 +23,7 @@ namespace railway.monthlyReport
         private List<InformationForGraphDisplay> currentData = null;
         private List<TicketForReportDTO> tickets = null;
         private TicketService ticketService;
+        private bool Touring = false;
         public Func<double, string> Formatter { get; set; }
 
         public ViewMonthlyTicketView()
@@ -89,6 +93,8 @@ namespace railway.monthlyReport
                 MessageBox.Show("Početni datum je veći od krajnjeg.");
                 return;
             }
+            IFeatureTourNavigator navigator = FeatureTour.GetNavigator();
+            navigator.IfCurrentStepEquals("ShowReportButton").GoNext();
             tickets = ticketService.getTicketsInPeriod(fromDate, untilDate);
             if ((bool)seatType)
                 FillInformationForGraphBySeatType();
@@ -100,7 +106,9 @@ namespace railway.monthlyReport
                 FillInformationForGraphBySeatType();
                 return;
             }
-            PrepareGraph();
+            PrepareGraph(); 
+            
+
         }
 
         private void FillInformationForGraphBySeatType()
@@ -259,13 +267,85 @@ namespace railway.monthlyReport
                 MessageBox.Show("Prvo morate da izaberete interval.");
                 return;
             }
+
+            if (Touring)
+            {
+                IFeatureTourNavigator navigator = FeatureTour.GetNavigator();
+                navigator.IfCurrentStepEquals("ChangeTypeOfMontlhyReport").Close();
+            }
             FillInformationForGraphByDrivingLine();
             PrepareGraph();
         }
 
         public void StartTour_OnClick(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Tutorijal");
+            Touring = true;
+            //MessageBox.Show("Tutorijal");
+            TextLocalization.Close = "Zatvori";
+            TextLocalization.Next = "Sledeći";
+            var tour = new Tour()
+            {
+                Name = "My Demo Tour",
+                ShowNextButtonDefault = true,
+                EnableNextButtonAlways = true,
+                
+                Steps = new []
+                {
+                    //wait for dates
+                    new Step("StartDatePicker", "Početni datum", "Izaberite poćetni datum od kad krene izveštavanje")
+                    {
+                        ShowNextButton = false
+                    },
+                    new Step("EndDatePicker", "Krajnji datum", "Izaberite krajnji datum do kag datuma uzima u obzir izveštaj" +
+                        "će biti mrežna linija u koristi.")
+                    {
+                        ShowNextButton = false
+                    },
+                    //wait for click
+                    new Step("ShowReportButton", "Prikaz izveštaja", "Kliknite na button, da biste videli izveštaj za izabrani interval")
+                    {
+                        ShowNextButton = false
+                    },
+                    new Step("ReportChart", "Grafikon", "Za izabrani interfal, grafički prikaz"),
+                    new Step("ReportTable", "Tabela", "Tabelarni prikaz izveštaja izabranog intervala"),
+                    new Step("ChangeTypeOfMontlhyReport", "Promena tipa izveštaja", "Za promenu tipa izveštaja kliknite ocde.")
+                    {
+                        ShowNextButton = false
+                    },
+
+                },
+                
+            };
+
+            tour.Start();
+
+
+        }
+
+        private void UntilDateDatePicker_OnSelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (Touring)
+            {
+                DateTime? untilDate = untilDateDatePicker.SelectedDate;
+                if (untilDate != null)
+                {
+                    IFeatureTourNavigator navigator = FeatureTour.GetNavigator();
+                    navigator.IfCurrentStepEquals("EndDatePicker").GoNext();
+                }
+            }
+        }
+
+        private void FromDateDatePicker_OnSelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (Touring)
+            {
+                DateTime? fromDate = fromDateDatePicker.SelectedDate;
+                if (fromDate != null)
+                {
+                    IFeatureTourNavigator navigator = FeatureTour.GetNavigator();
+                    navigator.IfCurrentStepEquals("StartDatePicker").GoNext();
+                }
+            }
         }
     }
 }

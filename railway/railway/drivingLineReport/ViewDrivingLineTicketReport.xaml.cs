@@ -10,6 +10,9 @@ using railway.database;
 using railway.model;
 using railway.monthlyReport;
 using railway.services;
+using ThinkSharp.FeatureTouring;
+using ThinkSharp.FeatureTouring.Models;
+using ThinkSharp.FeatureTouring.Navigation;
 
 namespace railway.drivingLineReport
 {
@@ -27,6 +30,7 @@ namespace railway.drivingLineReport
         private List<drivingLineForReportDTO> drivingLines;
         private drivingLineForReportDTO currentDrivingLine;
         private List<TicketsForDrivingLineReportDTO> tickets;
+        private Boolean Touring = false;
         private TicketService ticketService;
         public List<InformationForLineChartDisplay> currentData { get; set; }
         
@@ -117,6 +121,15 @@ namespace railway.drivingLineReport
             this.currentDrivingLine = (from item in drivingLines
                 where item.Name.ToLower().Equals(cmbx.Text.ToLower())
                 select item).FirstOrDefault();
+            
+            if (Touring)
+            {
+                if (currentDrivingLine != null)
+                {
+                    IFeatureTourNavigator navigator = FeatureTour.GetNavigator();
+                    navigator.IfCurrentStepEquals("ChoseDrivingLine").GoNext();
+                }
+            }
 
             cmbx.IsDropDownOpen = true;
             
@@ -129,7 +142,11 @@ namespace railway.drivingLineReport
                 MessageBox.Show("Prvo morate da izaberete mrežnu liniju.");
                 return;
             }
-//PUKNE !!!!!!!!!
+            if (Touring)
+            {
+                IFeatureTourNavigator navigator = FeatureTour.GetNavigator();
+                navigator.IfCurrentStepEquals("ShowReport").GoNext();
+            }
             tickets = ticketService.GetTicketByDrivingLine(currentDrivingLine.DrivingLineId);
             if (tickets.Count == 0)
             {
@@ -213,7 +230,39 @@ namespace railway.drivingLineReport
 
         public void StartTour_OnClick(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Tutorijal");
+            Touring = true;
+            //MessageBox.Show("Tutorijal");
+            TextLocalization.Close = "Zatvori";
+            TextLocalization.Next = "Sledeći";
+            var tour = new Tour()
+            {
+                Name = "My Demo Tour",
+                ShowNextButtonDefault = true,
+                EnableNextButtonAlways = true,
+                
+                Steps = new []
+                {
+                    //wait for dates
+                    new Step("ChoseDrivingLine", "Početni datum", "Izaberite poćetni datum od kad krene izveštavanje")
+                    {
+                        ShowNextButton = false
+                    },
+                    new Step("ShowReport", "Krajnji datum", "Izaberite krajnji datum do kag datuma uzima u obzir izveštaj" +
+                                                               "će biti mrežna linija u koristi.")
+                    {
+                        ShowNextButton = false
+                    },
+                    //wait for click
+                    new Step("ReportChart", "GRAFIKON", ""),
+                    new Step("WholeProfit", "Prikaz izveštaja", "Kliknite na button, da biste videli izveštaj za izabrani interval"),
+                    new Step("ReportTable", "Tabela", "Tabelarni prikaz izveštaja izabranog intervala"),
+                    
+                },
+                
+            };
+
+            tour.Start();
+
         }
     }
 }

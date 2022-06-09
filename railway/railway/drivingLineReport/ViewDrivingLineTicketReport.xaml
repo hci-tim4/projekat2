@@ -4,9 +4,20 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:railway.drivingLineReport"
+             xmlns:tour="clr-namespace:ThinkSharp.FeatureTouring;assembly=ThinkSharp.FeatureTour"
+             xmlns:controls="clr-namespace:ThinkSharp.FeatureTouring.Controls;assembly=ThinkSharp.FeatureTour"
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <Style TargetType="controls:TourControl">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="Brown"/> 
+            <Setter Property="BorderBrush" Value="Brown" /> 
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="BorderThickness" Value="3"/> 
+        </Style> 
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
@@ -17,7 +28,11 @@
         </Grid.ColumnDefinitions>
         
         <StackPanel Grid.Row="0" Grid.Column="0">
-            <ComboBox MinWidth="200" ToolTip="Unosite polazištu stanicu" x:Name="cmbDrivingLine" ItemsSource="{Binding drivingLines}" DisplayMemberPath="Name" IsEditable="True" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" >
+            <ComboBox MinWidth="200" ToolTip="Unosite polazištu stanicu" x:Name="cmbDrivingLine" 
+                      ItemsSource="{Binding drivingLines}" DisplayMemberPath="Name" IsEditable="True" 
+                      FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                      tour:TourHelper.ElementID="ChoseDrivingLine"
+                      tour:TourHelper.Placement="BottomCenter">
                 <ComboBox.Style>
                     <Style>
                         <EventSetter Event="TextBox.TextChanged" Handler="TextBox_TextChanged" />
@@ -25,12 +40,17 @@
                 </ComboBox.Style>
             </ComboBox>
             <Button MinWidth="100" HorizontalAlignment="Right" Content="Prikaži" x:Name="showDrivingLineReportButton"
-                    Click="ShowDrivingLineReportButton_OnClick"></Button>
+                    Click="ShowDrivingLineReportButton_OnClick" FontSize="20"
+                    tour:TourHelper.ElementID="ShowReport"
+                    tour:TourHelper.Placement="BottomCenter"></Button>
         </StackPanel>
         
-        <StackPanel x:Name="lineChartPanel" Grid.Row="0" Grid.Column="1">
+        <StackPanel x:Name="lineChartPanel" Grid.Row="0" Grid.Column="1"
+                    tour:TourHelper.ElementID="ReportChart"
+                    tour:TourHelper.Placement="BottomCenter">
             <ScrollViewer>
-            <lvc:CartesianChart x:Name="lineChart" Series="{Binding Path=lineChartData.LineSeriesCollection}" Width="1100" Height="350" Margin="2,2,2,2">
+            <lvc:CartesianChart x:Name="lineChart" Series="{Binding Path=lineChartData.LineSeriesCollection}" 
+                                Width="1100" Height="350" Margin="2,2,2,2">
                 <lvc:CartesianChart.AxisY>
                     <lvc:Axis Title="Broj prodatih karata" LabelFormatter="{Binding Formatter}"></lvc:Axis>
                 </lvc:CartesianChart.AxisY>
@@ -41,9 +61,12 @@
             </ScrollViewer>
             
             <DockPanel>
-            <Label Content="Ukupna Zarada:"></Label>
+            <Label Content="Ukupna Zarada:" 
+                   tour:TourHelper.ElementID="WholeProfit"
+                   tour:TourHelper.Placement="BottomCenter"></Label>
             <Label x:Name="profitLabel" Content="{Binding Path=Profit}"></Label>
-            </DockPanel>
+                
+            </DockPanel >
             
                 <DataGrid  AlternatingRowBackground="Gainsboro" AlternationCount="1"
                            ItemsSource="{Binding Path=currentData }"
@@ -51,7 +74,9 @@
                            IsReadOnly="True" Name="dataGrid" ScrollViewer.CanContentScroll="True"
                            ScrollViewer.HorizontalScrollBarVisibility="Auto"
                            ScrollViewer.VerticalScrollBarVisibility="Auto"
-                           Background="#EEE2DC" CanUserSortColumns="True">
+                           Background="#EEE2DC" CanUserSortColumns="True"
+                           tour:TourHelper.ElementID="ReportTable"
+                           tour:TourHelper.Placement="LeftTop">
                     
                 
                     <DataGrid.Columns>
