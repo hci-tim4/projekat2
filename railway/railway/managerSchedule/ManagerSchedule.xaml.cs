@@ -22,6 +22,7 @@ using ThinkSharp.FeatureTouring;
 using ThinkSharp.FeatureTouring.Models;
 using ThinkSharp.FeatureTouring.Navigation;
 
+
 namespace railway.managerSchedule
 {
     /// <summary>
@@ -47,7 +48,6 @@ namespace railway.managerSchedule
             drivingLineDataGrid.ItemsSource = this.lines;
          
             this.DataContext =this;
-        //    ChangeTrafficDayModal.SetParent(parent);
 
         }
 
@@ -100,7 +100,6 @@ namespace railway.managerSchedule
         {
             
             currentSelected = drivingLineDataGrid.SelectedItem as DrivingLineDTO;
-
             
             Studenti = new ObservableCollection<DetailDrivinglineDTO>(currentSelected.schedule);
             
