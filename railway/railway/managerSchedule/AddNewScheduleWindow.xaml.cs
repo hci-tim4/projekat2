@@ -87,28 +87,54 @@ namespace railway.managerSchedule
 
 
         private void btnSave_Click(object sender, RoutedEventArgs e) {
-            using (var db = new RailwayContext())
-            {
-                foreach (ScheduleDTO schedule in this.newSchedule)
-                {
-                    StationSchedule s = new StationSchedule
-                    {
-                        DrivingLineId = schedule.DrivingLineId,
-                        StationId = schedule.StationId,
-                        SerialNumber = schedule.SerialNumber,
-                        DepartureTime = schedule.DepartureTime,
-                        ArrivalTime = schedule.ArrivalTime,
-                        Tour = schedule.Tour,
-                        StartDate = DateTime.Now
-                    };
 
-                    db.stationsSchedules.Add(s);
+            if (validate())
+            {
+
+                using (var db = new RailwayContext())
+                {
+                    foreach (ScheduleDTO schedule in this.newSchedule)
+                    {
+                        StationSchedule s = new StationSchedule
+                        {
+                            DrivingLineId = schedule.DrivingLineId,
+                            StationId = schedule.StationId,
+                            SerialNumber = schedule.SerialNumber,
+                            DepartureTime = schedule.DepartureTime,
+                            ArrivalTime = schedule.ArrivalTime,
+                            Tour = schedule.Tour,
+                            StartDate = DateTime.Now
+                        };
+
+                        db.stationsSchedules.Add(s);
+                    }
+                    db.SaveChanges();
+                    MessageBox.Show("Dadali ste novi red vožnje");
+                    parentPage.setAllDrivingLines();
+                    this.Close();
                 }
-                db.SaveChanges();
-                MessageBox.Show("Dadali ste novi red vožnje");
-                parentPage.setAllDrivingLines();
-                this.Close();
+
             }
+            else {
+                MessageBox.Show("Grška pri unosu vremena. Vreme dolaska je pre vremena polaska");
+            }
+        }
+
+        private bool validate()
+        {
+            for (int i = 0; i < this.newSchedule.Count - 1; i++)
+            {
+                if (newSchedule[i].ArrivalTime >= newSchedule[i].DepartureTime)
+                {
+                    return false;
+                }
+
+                if (newSchedule[i].DepartureTime >= newSchedule[i + 1].ArrivalTime)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

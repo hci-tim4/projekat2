@@ -14,33 +14,32 @@
     </Page.CommandBindings>
 
     <Grid>
-        <Grid x:Name="parent">
-            <Grid.RowDefinitions>
-                <RowDefinition></RowDefinition>
-            </Grid.RowDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
-            </Grid.ColumnDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
 
 
-            <DataGrid  AlternatingRowBackground="Gainsboro" AlternationCount="1"
+        <DataGrid  AlternatingRowBackground="Gainsboro" AlternationCount="1"
                   Grid.Row="0" Grid.Column="0" ItemsSource="{Binding Path=lines}" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True"
                   SelectionUnit="FullRow" SelectionMode="Single"
                    IsReadOnly="True" Name="drivingLineDataGrid" ScrollViewer.CanContentScroll="True"
                     ScrollViewer.HorizontalScrollBarVisibility="Auto"
                     ScrollViewer.VerticalScrollBarVisibility="Auto" FontSize="20"
                     Background="White" CanUserSortColumns="False" RenderTransformOrigin="0.997,0.431">
-                <DataGrid.ItemContainerStyle>
-                    <Style TargetType="DataGridRow">
-                        <EventSetter Event="MouseUp" Handler="DrivingLineDataGrid_OnSelected"/>
-                    </Style>
-                </DataGrid.ItemContainerStyle>
-                <DataGrid.Columns>
-                    <DataGridTextColumn  MinWidth="60" Header="Naziv" Binding="{Binding Path=Name}"/>
+            <DataGrid.ItemContainerStyle>
+                <Style TargetType="DataGridRow">
+                    <EventSetter Event="MouseUp" Handler="DrivingLineDataGrid_OnSelected"/>
+                </Style>
+            </DataGrid.ItemContainerStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn  MinWidth="60" Header="Naziv" Binding="{Binding Path=Name}"/>
 
-                    <!--    <DataGridTemplateColumn  Header="Ponedeljak">
+                <!--    <DataGridTemplateColumn  Header="Ponedeljak">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <DataGridCell l:HelpProvider.HelpKey="day">  
@@ -114,7 +113,7 @@
                         -->
 
 
-                    <!-- <DataGridCheckBoxColumn  x:Name="utoSelectedServer" Binding="{Binding Tuesday}"  Header="Utorak" l:HelpProvider.HelpKey="day"/>
+                <!-- <DataGridCheckBoxColumn  x:Name="utoSelectedServer" Binding="{Binding Tuesday}"  Header="Utorak" l:HelpProvider.HelpKey="day"/>
                 <DataGridCheckBoxColumn  x:Name="sreSelectedServer" Binding="{Binding Wednesday}"  Header="Sreda" l:HelpProvider.HelpKey="day"/>
                 <DataGridCheckBoxColumn  x:Name="cetSelectedServer" Binding="{Binding Thursday}"  Header="Četvrtak" l:HelpProvider.HelpKey="day"/>
                 <DataGridCheckBoxColumn  x:Name="petSelectedServer" Binding="{Binding Friday}"  Header="Petak" l:HelpProvider.HelpKey="day"/>
@@ -123,32 +122,32 @@
 
                     
                     -->
-                    <DataGridTemplateColumn Header="Izmeni">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <!--        <DataGridCell l:HelpProvider.HelpKey="btnChangeDays">  -->
-                                <Button ToolTip="Izmenite dane kojima saobraća linija" x:Name="btnChangeDays" Click="btnChangeDays_Click" Content="Vozni dani" Tag="{Binding Path=drivingLineId}" l:HelpProvider.HelpKey="btnChangeDays"/>
-                                <!--         </DataGridCell>   -->
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Izmeni">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <!--        <DataGridCell l:HelpProvider.HelpKey="btnChangeDays">  -->
+                            <Button ToolTip="Izmenite dane kojima saobraća linija" x:Name="btnChangeDays" Click="btnChangeDays_Click" Content="Vozni dani" Tag="{Binding Path=drivingLineId}" l:HelpProvider.HelpKey="btnChangeDays"/>
+                            <!--         </DataGridCell>   -->
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
 
 
-                    <DataGridTemplateColumn Header="Dodaj">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <!--      <DataGridCell l:HelpProvider.HelpKey="btnAddSchedule">   -->
-                                <Button ToolTip="Dodajte novi raspored vožnje" x:Name="btnAdd" Click="btnAdd_Click" Content="Dodaj" Tag="{Binding Path=drivingLineId}" l:HelpProvider.HelpKey="btnAddSchedule" />
-                                <!--         </DataGridCell>   -->
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
+                <DataGridTemplateColumn Header="Dodaj">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <!--      <DataGridCell l:HelpProvider.HelpKey="btnAddSchedule">   -->
+                            <Button ToolTip="Dodajte novi raspored vožnje" x:Name="btnAdd" Click="btnAdd_Click" Content="Dodaj" Tag="{Binding Path=drivingLineId}" l:HelpProvider.HelpKey="btnAddSchedule" />
+                            <!--         </DataGridCell>   -->
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
 
-            </DataGrid>
+        </DataGrid>
 
 
-            <DataGrid  AlternatingRowBackground="Gainsboro" AlternationCount="1"
+        <DataGrid  AlternatingRowBackground="Gainsboro" AlternationCount="1"
                        ItemsSource="{Binding Path=Studenti}"
                   SelectionUnit="FullRow" SelectionMode="Single" AutoGenerateColumns="False"
                   Name="dataGridStationSchedule" ScrollViewer.CanContentScroll="True"
@@ -157,32 +156,49 @@
                    CanUserAddRows="False"
                      Background="White" CanUserSortColumns="False" RenderTransformOrigin="0.997,0.431" l:HelpProvider.HelpKey="error">
 
-                <DataGrid.Columns>
-                    <DataGridTextColumn  MinWidth="60" Header="Stanica" Binding="{Binding Path=StationName}" IsReadOnly="True"/>
-                    <DataGridTemplateColumn Header="Dolazak">
-                        <DataGridTemplateColumn.CellTemplate >
-                            <DataTemplate >
-                                <!--         <DataGridCell l:HelpProvider.HelpKey="ArrivalTime">   -->
-                                <TextBox Text="{Binding Path=ArrivalTime, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" l:HelpProvider.HelpKey="ArrivalTime"/>
-                                <!--        </DataGridCell>    -->
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
+            <DataGrid.Columns>
+                <DataGridTextColumn  MinWidth="60" Header="Stanica" Binding="{Binding Path=StationName}" IsReadOnly="True"/>
+                <DataGridTemplateColumn Header="Dolazak">
+                    <DataGridTemplateColumn.CellTemplate >
+                        <DataTemplate >
 
-                    <DataGridTemplateColumn Header="Polazak">
-                        <DataGridTemplateColumn.CellTemplate >
-                            <DataTemplate >
-                                <!--       <DataGridCell  l:HelpProvider.HelpKey="DepartureTime">   -->
-                                <TextBox Text="{Binding Path=DepartureTime, Mode=TwoWay,  UpdateSourceTrigger=PropertyChanged}" l:HelpProvider.HelpKey="DepartureTime"/>
-                                <!--       </DataGridCell>   -->
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
+                         <!--   <TextBox Text="{Binding Path=ArrivalTime, Mode=TwoWay}" Loaded="arrTime_OnLoaded" />  -->
+                            <TextBox l:HelpProvider.HelpKey="ArrivalTime">
+                                <TextBox.Text >
+                                    <Binding Path="ArrivalTime" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <local:UniqueTimestampValidator/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
 
-                    <!--        <DataGridTextColumn MinWidth="60" Header="Dolazak" Binding="{Binding Path=ArrivalTime, Mode=TwoWay}" IsReadOnly="false" l:HelpProvider.HelpKey="ArrivalTime"/> -->
-                    <!-- <DataGridTextColumn MinWidth="60" Header="Polazak" Binding="{Binding Path=DepartureTime, Mode=TwoWay}" IsReadOnly="false" l:HelpProvider.HelpKey="DepartureTime"/>  -->
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
 
-                    <!-- <DataGridTemplateColumn Header="Izmeni">
+                <DataGridTemplateColumn Header="Polazak">
+                    <DataGridTemplateColumn.CellTemplate >
+                        <DataTemplate >
+                            <TextBox l:HelpProvider.HelpKey="DepartureTime">
+                                <TextBox.Text >
+                                    <Binding Path="DepartureTime" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <local:UniqueTimestampValidator/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+
+
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <!--        <DataGridTextColumn MinWidth="60" Header="Dolazak" Binding="{Binding Path=ArrivalTime, Mode=TwoWay}" IsReadOnly="false" l:HelpProvider.HelpKey="ArrivalTime"/> -->
+                <!-- <DataGridTextColumn MinWidth="60" Header="Polazak" Binding="{Binding Path=DepartureTime, Mode=TwoWay}" IsReadOnly="false" l:HelpProvider.HelpKey="DepartureTime"/>  -->
+
+                <!-- <DataGridTemplateColumn Header="Izmeni">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <DataGridCell l:HelpProvider.HelpKey="btnUpdateSchedule">   
@@ -192,27 +208,25 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>    -->
 
-                </DataGrid.Columns>
+            </DataGrid.Columns>
 
-                <DataGrid.GroupStyle>
-                    <GroupStyle>
-                        <GroupStyle.HeaderTemplate>
-                            <DataTemplate>
-                                <!--    <DataGridCell l:HelpProvider.HelpKey="btnDeleteSchedule">    -->
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Tura: " Margin="2,2,2,2"></TextBlock>
-                                    <TextBlock Text="{Binding Path=Name}" Margin="2,2,2,2"/>
-                                    <Button ToolTip="Izmenite vreme polaska i dolaska" x:Name="btnUpdate" Click="btnUpdate_Click" Content="Izmeni" Tag="{Binding Path=Name}" Margin="2,2,2,2" l:HelpProvider.HelpKey="btnUpdateSchedule"/>
-                                    <Button ToolTip="Obriši ovu turu" Content="Obriši" x:Name="btnDelete" Click="btnDelete_Click" Tag="{Binding Path=Name}" Margin="2,2,2,2" l:HelpProvider.HelpKey="btnDeleteSchedule"></Button>
-                                </StackPanel>
-                                <!--      </DataGridCell>    -->
-                            </DataTemplate>
-                        </GroupStyle.HeaderTemplate>
-                    </GroupStyle>
-                </DataGrid.GroupStyle>
+            <DataGrid.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <!--    <DataGridCell l:HelpProvider.HelpKey="btnDeleteSchedule">    -->
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Tura: " Margin="2,2,2,2"></TextBlock>
+                                <TextBlock Text="{Binding Path=Name}" Margin="2,2,2,2"/>
+                                <Button ToolTip="Izmenite vreme polaska i dolaska" x:Name="btnUpdate" Click="btnUpdate_Click" Content="Izmeni" Tag="{Binding Path=Name}" Margin="2,2,2,2" l:HelpProvider.HelpKey="btnUpdateSchedule"/>
+                                <Button ToolTip="Obriši ovu turu" Content="Obriši" x:Name="btnDelete" Click="btnDelete_Click" Tag="{Binding Path=Name}" Margin="2,2,2,2" l:HelpProvider.HelpKey="btnDeleteSchedule"></Button>
+                            </StackPanel>
+                            <!--      </DataGridCell>    -->
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                </GroupStyle>
+            </DataGrid.GroupStyle>
 
-            </DataGrid>
-        </Grid>
-        <local:ChangeTrafficDayModal x:Name="ChangeTrafficDayModal"></local:ChangeTrafficDayModal>
+        </DataGrid>
     </Grid>
 </Page>

@@ -16,6 +16,9 @@ using railway.clientTimetable;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
 using railway.model;
+using System.Windows.Data;
+using MaterialDesignThemes.Wpf;
+
 
 namespace railway.managerSchedule
 {
@@ -30,6 +33,7 @@ namespace railway.managerSchedule
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public UniqueTimestampValidator validator = new UniqueTimestampValidator();
         public ManagerSchedule()
         {
             InitializeComponent();
@@ -38,7 +42,7 @@ namespace railway.managerSchedule
             drivingLineDataGrid.ItemsSource = this.lines;
          
             this.DataContext =this;
-            ChangeTrafficDayModal.SetParent(parent);
+        //    ChangeTrafficDayModal.SetParent(parent);
 
         }
 
@@ -184,11 +188,11 @@ namespace railway.managerSchedule
                  select dto).FirstOrDefault();
 
 
-            ChangeTrafficDayModal.ShowHandlerDialog(dlDTO, this);
+          //  ChangeTrafficDayModal.ShowHandlerDialog(dlDTO, this);
 
-            //   Window changeDays = new ChangeTrafficDay(dlDTO, this);
-            //  changeDays.Show();
-            //  changeDays.Focus();
+               Window changeDays = new ChangeTrafficDay(dlDTO, this);
+              changeDays.Show();
+              changeDays.Focus();
 
         }
 
@@ -207,31 +211,55 @@ namespace railway.managerSchedule
         }
 
         private void updateStationSchedule(int tour) {
-            using (var db = new RailwayContext()) 
-            {
-                var station = (from stationSchedule in db.stationsSchedules
-                      where stationSchedule.Tour == tour
-                               select stationSchedule).ToList();
+           if (validate()) {
+                using (var db = new RailwayContext())
+                {
+                    var station = (from stationSchedule in db.stationsSchedules
+                                   where stationSchedule.Tour == tour
+                                   select stationSchedule).ToList();
 
 
-                foreach (var selected in currentSelected.schedule) {
-                    foreach (var s in station)
-                    { 
-                        if (s.Tour == selected.Tour && s.Id == selected.StationScheduleId)
+                    foreach (var selected in currentSelected.schedule)
+                    {
+                        foreach (var s in station)
                         {
-                            s.ArrivalTime = selected.ArrivalTime;            // ovde pravi noviii sa datumom od kada vayi
-                            s.DepartureTime = selected.DepartureTime;
-                            s.StartDate = DateTime.Now.AddDays(30);
-                            break;
+                            if (s.Tour == selected.Tour && s.Id == selected.StationScheduleId)
+                            {
+                                s.ArrivalTime = selected.ArrivalTime;            // ovde pravi noviii sa datumom od kada vayi
+                                s.DepartureTime = selected.DepartureTime;
+                                s.StartDate = DateTime.Now.AddDays(30);
+                                break;
+                            }
                         }
                     }
+
+                    db.SaveChanges();
+                    setAllDrivingLines();
+                    MessageBox.Show("Izmenili ste red voznje za turu " + tour + ". Izmene će biti vidljive nakon mesec dana.");
+
+                }
+            }else{
+                MessageBox.Show("Grška pri unosu vremena. Vreme dolaska je pre vremena polaska");
+            }
+           
+        }
+
+
+        private bool validate()
+        {
+            for (int i = 0; i < this.currentSelected.schedule.Count - 1; i++)
+            {
+                if (currentSelected.schedule[i].ArrivalTime >= currentSelected.schedule[i].DepartureTime)
+                {
+                    return false;
                 }
 
-                db.SaveChanges();
-                setAllDrivingLines();
-                MessageBox.Show("Izmenili ste red voznje za turu "+ tour +". Izmene će biti vidljive nakon mesec dana.");
-
+                if (currentSelected.schedule[i].DepartureTime >= currentSelected.schedule[i + 1].ArrivalTime)
+                {
+                    return false;
+                }
             }
+            return true;
         }
 
         private void deleteStationschedule(int tour) {
@@ -272,6 +300,8 @@ namespace railway.managerSchedule
        //     btnOK.Background = new SolidColorBrush(Color.FromRgb(32, 64, 128));
             Title = param;
         }
+
+       
 
     }
 }

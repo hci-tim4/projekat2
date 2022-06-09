@@ -34,9 +34,17 @@
                 <DataGridTemplateColumn Header="Dolazak">
                     <DataGridTemplateColumn.CellTemplate >
                         <DataTemplate >
-                       <!--     <DataGridCell  l:HelpProvider.HelpKey="ArrivalTime">   -->
-                            <TextBox Text="{Binding Path=ArrivalTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" l:HelpProvider.HelpKey="ArrivalTime"/>
-                     <!--       </DataGridCell>   -->
+             
+                            <TextBox l:HelpProvider.HelpKey="ArrivalTime">
+                                <TextBox.Text >
+                                    <Binding Path="ArrivalTime" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <local:UniqueTimestampValidator/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+                            
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -44,9 +52,17 @@
                 <DataGridTemplateColumn Header="Polazak">
                     <DataGridTemplateColumn.CellTemplate >
                         <DataTemplate>
-                    <!--        <DataGridCell l:HelpProvider.HelpKey="DepartureTime">    -->
-                            <TextBox Text="{Binding Path=DepartureTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" l:HelpProvider.HelpKey="DepartureTime"/>
-                   <!--         </DataGridCell>    -->
+
+                            <TextBox l:HelpProvider.HelpKey="DepartureTime">
+                                <TextBox.Text >
+                                    <Binding Path="DepartureTime" UpdateSourceTrigger="PropertyChanged">
+                                        <Binding.ValidationRules>
+                                            <local:UniqueTimestampValidator/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
+
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
