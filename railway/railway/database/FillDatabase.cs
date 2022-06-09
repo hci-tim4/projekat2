@@ -268,19 +268,19 @@ namespace railway.database
                 db.Database.ExecuteSqlCommand("Insert into Schedules Values(4, '05/24/2022')");
 
 
-                db.Database.ExecuteSqlCommand("Insert into Tickets Values(1,1,1,4,1,400,1)");
+                db.Database.ExecuteSqlCommand("Insert into Tickets Values(1,1,    2,3,  1,200,   1)");
                 db.Database.ExecuteSqlCommand("Insert into TicketSeats Values(1,1)");
-                db.Database.ExecuteSqlCommand("Insert into Tickets Values(0,1,10,4,21,500,1)");
+                db.Database.ExecuteSqlCommand("Insert into Tickets Values(0,1,  3,5,  21,400,  1)");
                 db.Database.ExecuteSqlCommand("Insert into TicketSeats Values(1,2)");
-                db.Database.ExecuteSqlCommand("Insert into Tickets Values(0,1,8,1,20,800,1)");
+                db.Database.ExecuteSqlCommand("Insert into Tickets Values(0,1,  2,4,  20,400,   1)");
                 db.Database.ExecuteSqlCommand("Insert into TicketSeats Values(1,3)");
                 
                 
-                db.Database.ExecuteSqlCommand("Insert into Tickets Values(1,1,1,4,27,400,1)");
+                db.Database.ExecuteSqlCommand("Insert into Tickets Values(1,1,  1,2,  27,200,1)");
                 db.Database.ExecuteSqlCommand("Insert into TicketSeats Values(1,4)");
-                db.Database.ExecuteSqlCommand("Insert into Tickets Values(0,1,10,4,39,500,1)");
+                db.Database.ExecuteSqlCommand("Insert into Tickets Values(0,1,  2,3,  39,200,1)");
                 db.Database.ExecuteSqlCommand("Insert into TicketSeats Values(1,5)");
-                db.Database.ExecuteSqlCommand("Insert into Tickets Values(0,1,8,1,38,800,1)");
+                db.Database.ExecuteSqlCommand("Insert into Tickets Values(0,1,  1,4,  38,600,1)");
                 db.Database.ExecuteSqlCommand("Insert into TicketSeats Values(1,6)");
                 db.SaveChanges();
             }
