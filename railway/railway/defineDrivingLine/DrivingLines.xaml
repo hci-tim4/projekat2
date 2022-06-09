@@ -168,7 +168,7 @@
                 </ComboBox.Style>
             </ComboBox>
             <DatePicker FontSize="20" Grid.Column="1" Grid.Row="2" x:Name="startDate" FirstDayOfWeek="Monday" 
-                        l:HelpProvider.HelpKey="startDate"
+                        l:HelpProvider.HelpKey="startDate" IsEnabled="False"
                         tour:TourHelper.ElementID="startDateDatePicker"
                         tour:TourHelper.Placement="BottomCenter"/>
             <DatePicker FontSize="20" IsEnabled="False" Grid.Column="1" Grid.Row="3" x:Name="endDate" 

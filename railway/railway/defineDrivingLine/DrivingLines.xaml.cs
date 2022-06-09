@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Markup;
 using railway.database;
 using railway.defineDrivingLine;
 using railway.exception;
@@ -22,6 +23,7 @@ namespace railway.defineDrivingLine
         private List<Train> fullTrains;
         private Train newTrain;
         private Frame parentFrame;
+        private ViewDrivingLines parentPage;
         private DrivingLineViewDTO currentSelected = null;
         private Station currentStation;
         private List<Station> stations;
@@ -30,11 +32,12 @@ namespace railway.defineDrivingLine
         private Boolean Touring;
         
         public DrivingLines(Frame parentFrame, DefineEndDateForDrivingLineModal defineEndDateForDrivingLineModal,
-            DefineSimpleDataForDrivingLineModal defineSimpleDataForDrivingLineModal)
+            DefineSimpleDataForDrivingLineModal defineSimpleDataForDrivingLineModal, ViewDrivingLines viewDrivingLines)
         {
             InitializeComponent();
             //this.parentFrame = frame;
             this.parentFrame = parentFrame;
+            this.parentPage = viewDrivingLines;
             this.DataContext = DrivingLinesList;
             using (var db = new RailwayContext())
             {
@@ -48,6 +51,9 @@ namespace railway.defineDrivingLine
 
             this.defEndDateModal = defineEndDateForDrivingLineModal;
             this.defSimpleData = defineSimpleDataForDrivingLineModal;
+            
+            startDate.Language = XmlLanguage.GetLanguage(new System.Globalization.CultureInfo("sr-ME").IetfLanguageTag);
+            endDate.Language = XmlLanguage.GetLanguage(new System.Globalization.CultureInfo("sr-ME").IetfLanguageTag);
         }
         
         
@@ -89,10 +95,10 @@ namespace railway.defineDrivingLine
             }
 
             send.newEndDate = send.endDate;
-            defEndDateModal.ShowHandlerDialog(send, this);
+            //defEndDateModal.ShowHandlerDialog(send, this);
 
-            //DefineEndDateForDrivingLine window = new DefineEndDateForDrivingLine(send, this);
-            //window.Show();
+            DefineEndDateForDrivingLine window = new DefineEndDateForDrivingLine(send, this);
+            window.Show();
             /*
             using (var db = new RailwayContext())
             {
@@ -198,7 +204,7 @@ namespace railway.defineDrivingLine
         
         private void AddDrivingLine_OnClick(object sender, RoutedEventArgs e)
         {
-            UserControl add = new AddDrivingLine(parentFrame, this, defSimpleData);
+            parentPage.CurrentComponent = new AddDrivingLine(parentFrame, this, defSimpleData, parentPage);
             //this.parentFrame.Content = add;
         }
 
@@ -312,20 +318,20 @@ namespace railway.defineDrivingLine
                 
                 Steps = new []
                 {
-                    new Step("wholeDataGrid", "Tebala mrežnih linija", "Prikazani su podaci za pojedinačne mrežne linije"),
-                    new Step("defEndDateButton", "Definisanje krajnjeg datuma", "Omogućeno je definisanje datuma do kad" +
-                        "će biti mrežna linija u koristi."),
-                    new Step("datagrid", "Tabela mrežnih linija", "Izaberite jednu od linija za nastavku.")
+                    new Step("wholeDataGrid", "Tebala mrežnih linija", "Prikazani su podaci za pojedinačne mrežne linije."),
+                    new Step("defEndDateButton", "Definisanje krajnjeg datuma", "Omogućeno je definisanje datuma do kad " +
+                        "će saobraćati mrežna linija."),
+                    new Step("datagrid", "Tabela mrežnih linija", "Izaberite jednu od linija za nastavak.")
                     {
                         ShowNextButton = false
                     },
                     new Step("changeNameTextBox", "Ime", "Prikaz imena izabrane mrežne linije"),
                     new Step("changeTrainComboBox", "Voz", "Prikaz voza izabrane mrežne linije"),
-                    new Step("startDateDatePicker", "Pocetni datum", "Izabrani datum, od kad će biti mrežna linija u koristi"),
-                    new Step("endDateDatePicker", "Krajnji datum", "Izabrani datum, do kad će biti voz u koristi"),
-                    new Step("saveChangesButton", "Sacuvaj", "Klikom na dugme sačuvaj, sačuvaju se napravljane izmene nad izabranim mrežnom linijom"),
-                    new Step("routeOnMap", "Ruta", "Stanice izabrane mrežne linije"),
-                    new Step("DefNewDrivingLineButton", "Definisanje nove mrežne linije", "Klikom na ovo dugme možete da nastavita postupak definisanje mrežne linije")
+                    new Step("startDateDatePicker", "Početni datum", "Datum kada mrežna linija počinje da saobraća."),
+                    new Step("endDateDatePicker", "Krajnji datum", "Datum kada mrežna linija prestaje da saobraća."),
+                    new Step("saveChangesButton", "Sačuvaj", "Klikom na dugme 'Sačuvaj izmene', sačuvaće se napravljane izmene nad izabranom mrežnom linijom."),
+                    new Step("routeOnMap", "Ruta", "Sve stanice izabrane mrežne linije."),
+                    new Step("DefNewDrivingLineButton", "Definisanje nove mrežne linije", "Klikom na dugme '+' možete da definišete novu mrežnu liniju.")
                     // ...
                 },
                 

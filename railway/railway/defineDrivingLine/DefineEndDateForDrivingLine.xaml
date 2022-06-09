@@ -1,33 +1,38 @@
-﻿<UserControl x:Class="railway.defineDrivingLine.DefineEndDateForDrivingLine"
+﻿<Window x:Class="railway.defineDrivingLine.DefineEndDateForDrivingLine"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:railway.defineDrivingLine"
+        xmlns:cmd="clr-namespace:railway.Commands"
         mc:Ignorable="d"
         xmlns:l="clr-namespace:railway"
+        Icon="\icon\trainIcon.png"
+        Title="ŽELEZNICE SRBIJE" ResizeMode="NoResize" Width="400" Height="200"
+        WindowStartupLocation="CenterScreen"
         >
-    <UserControl.CommandBindings>
+    <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
-    </UserControl.CommandBindings>
-    <UserControl.Resources>
-        <Style TargetType="{x:Type Control}" x:Key="baseStyle">
-            <Setter Property="FontSize" Value="20" />
-            <Setter Property="Margin" Value="2,2,2,2"></Setter>
-        </Style>
-        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource baseStyle}"></Style>
-        <Style TargetType="{x:Type Label}" BasedOn="{StaticResource baseStyle}"></Style>
-        <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource baseStyle}"></Style>
-        <Style TargetType="{x:Type ComboBox}" BasedOn="{StaticResource baseStyle}"></Style>
-        <Style TargetType="{x:Type DatePicker}" BasedOn="{StaticResource baseStyle}"></Style>
-        <!-- ComboBox, RadioButton, CheckBox, etc... -->
-    </UserControl.Resources>
+        <CommandBinding Command="cmd:RoutedCommands.Save" x:Name="save" CanExecute="Save_OnCanExecute" Executed="Save_OnExecuted"></CommandBinding>
+    </Window.CommandBindings>
+    <Window.Resources>
+    </Window.Resources>
     <Grid>
-        <StackPanel>
-            <Label>Izaberite krajnji datum za mrežnu liniju: </Label>
-            <Label Content="{Binding Path=Name}"></Label>
-            <DatePicker  x:Name="endDate" FirstDayOfWeek="Monday" Text="{Binding Path=startSelectedDate}" l:HelpProvider.HelpKey="endDateDelete"/>
+        <StackPanel x:Name="endDateStackPanel">
+            <Label FontSize="20">Izaberite krajnji datum za mrežnu liniju: </Label>
+            <Label FontSize="20" Content="{Binding Path=Name}"></Label>
+            <DatePicker FontSize="20" x:Name="endDate" FirstDayOfWeek="Monday" Text="{Binding Path=newEndDate}" l:HelpProvider.HelpKey="endDateDelete"/>
+            <DockPanel>
+                <Button FontSize="20" Grid.Row="2" Grid.Column="0" x:Name="cancelBtn"  Click="cancelBtn_Click"
+                        MinHeight="25" MaxHeight="50" Margin="2,20,30,2" Width="150">Odustajem</Button>
+
+                <Button FontSize="20" x:Name="Save" Click="Save_OnClick"
+                        MinHeight="20" MaxHeight="50" Margin="30,20,2,2" Width="150"
+                        IsDefault="True" IsEnabled="True">Potvrđujem</Button>
+
+
+            </DockPanel>
             <!--<Button Content="Sačuvaj" x:Name="Save" Click="Save_OnClick" l:HelpProvider.HelpKey="confirmDeleteDrivingLine"></Button>-->
         </StackPanel>
     </Grid>
-</UserControl>
+</Window>

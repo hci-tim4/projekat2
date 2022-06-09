@@ -22,7 +22,7 @@ namespace railway.defineDrivingLine
         private DrivingLineViewDTO currentSelected = null;
         private Station currentStation;
         private List<Station> stations;
-        private DrivingLines drivingLines;
+        public TutorialInterface CurrentComponent { get; set; }
         
         public ViewDrivingLines(Frame frame)
         {
@@ -32,8 +32,8 @@ namespace railway.defineDrivingLine
             //this.DataContext = DrivingLines;
             DefineEndDateForDrivingLineModal.SetParent(parent);
             DefineSimpleDataForDrivingLineModal.SetParent(parent);
-            drivingLines = new DrivingLines(drivingLineViewPage, DefineEndDateForDrivingLineModal, DefineSimpleDataForDrivingLineModal);
-            drivingLineViewPage.Content = drivingLines;
+            CurrentComponent = new DrivingLines(drivingLineViewPage, DefineEndDateForDrivingLineModal, DefineSimpleDataForDrivingLineModal, this);
+            drivingLineViewPage.Content = CurrentComponent;
 
             /*using (var db = new RailwayContext())
             {
@@ -105,7 +105,7 @@ namespace railway.defineDrivingLine
 
         public void StartTour_OnClick(object sender, RoutedEventArgs e)
         {
-            drivingLines.StartTour_OnClick(sender, e);
+            CurrentComponent.StartTour_OnClick(sender, e);
         }
     }
 }

@@ -243,19 +243,18 @@ namespace railway.drivingLineReport
                 Steps = new []
                 {
                     //wait for dates
-                    new Step("ChoseDrivingLine", "Početni datum", "Izaberite poćetni datum od kad krene izveštavanje")
+                    new Step("ChoseDrivingLine", "Mrežna linija", "Izaberite jedanu od ponuđenih mrežnih linija.")
                     {
                         ShowNextButton = false
                     },
-                    new Step("ShowReport", "Krajnji datum", "Izaberite krajnji datum do kag datuma uzima u obzir izveštaj" +
-                                                               "će biti mrežna linija u koristi.")
+                    new Step("ShowReport", "Prikaži", "Kliknite na dugme 'Prikaži' da biste videli izveštaj za izabrani period.")
                     {
                         ShowNextButton = false
                     },
                     //wait for click
-                    new Step("ReportChart", "GRAFIKON", ""),
-                    new Step("WholeProfit", "Prikaz izveštaja", "Kliknite na button, da biste videli izveštaj za izabrani interval"),
-                    new Step("ReportTable", "Tabela", "Tabelarni prikaz izveštaja izabranog intervala"),
+                    new Step("ReportChart", "Grafikon", "Grafički prikaz za izabranu mrežnu liniju."),
+                    new Step("WholeProfit", "Ukupan profit", "Ukupan profit za izabranu mrežnu liniju."),
+                    new Step("ReportTable", "Tabela", "Tabelarni prikaz izveštaja za izabranu mrežnu liniju."),
                     
                 },
                 

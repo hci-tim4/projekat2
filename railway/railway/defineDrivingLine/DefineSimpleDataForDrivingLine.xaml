@@ -4,16 +4,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:railway.defineDrivingLine"
+        xmlns:cmd="clr-namespace:railway.Commands"
         mc:Ignorable="d"
         xmlns:l="clr-namespace:railway"
-        Title="DefineSimpleDataForDrivingLine" ResizeMode="NoResize" Height="200" Width="500">
+        
+        Icon="\icon\trainIcon.png"
+        Title="ŽELEZNICE SRBIJE" WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize" Height="200" Width="500">
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
+        <CommandBinding Command="cmd:RoutedCommands.Save" x:Name="save" CanExecute="Save_OnCanExecute" Executed="Save_OnExecuted"></CommandBinding>
     </Window.CommandBindings>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -37,9 +42,8 @@
             <DatePicker FontSize="20" SelectedDate="{Binding Path=startSelectedDate, Mode=TwoWay}" x:Name="startDate" FirstDayOfWeek="Monday" l:HelpProvider.HelpKey="startDateNewLine"/>
         </StackPanel>
         
-        <DockPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" MinWidth="300">
-            <Button FontSize="20" Click="SaveDrivingLine_OnClick" x:Name="saveDrivingLine" l:HelpProvider.HelpKey="btnSaveNewDrivingLine">Sačuvaj</Button>
-            <Button FontSize="20" Click="SaveDrivingLineAndDefineSchedule_OnClick" x:Name="saveDrivingLineAndDefineSchedule" l:HelpProvider.HelpKey="btnSaveDefineNewDrivingLine">Sačuvaj i definiši red vožnje</Button>
+        <DockPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
+            <Button MaxWidth="100" DockPanel.Dock="Right" FontSize="20" Click="SaveDrivingLine_OnClick" x:Name="saveDrivingLine" l:HelpProvider.HelpKey="btnSaveNewDrivingLine">Sačuvaj</Button>
         </DockPanel>
     </Grid>
 </Window>
