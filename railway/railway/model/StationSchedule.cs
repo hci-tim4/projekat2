@@ -31,6 +31,7 @@ namespace railway.model
         public DateTime? StartDate { get; set; }
         
         public bool deleted { get; set; }
+
         
     }
 }

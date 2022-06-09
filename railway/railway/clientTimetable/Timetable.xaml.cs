@@ -218,6 +218,7 @@ namespace railway.clientTimetable
         private List<DrivingLineDTO> FindWithTransfer(Station departure, Station arrival, DateTime date) {
 
             List<DrivingLineDTO> DTOs = new List<DrivingLineDTO>();
+            int skipDrivingLine=0;
 
             using (var db = new RailwayContext())
             {
@@ -318,15 +319,32 @@ namespace railway.clientTimetable
 
                              }).ToList();
 
-                        foreach (var startMed in stationsForStartDrivinLine) 
+                        foreach (var startMed in stationsForStartDrivinLine)
                         {
+                            if (isLast(startMed.stationScheduleId, startMed.drivingLineId)) {
+                                if (startMed.stationId == departure.Id) {
+                                    skipDrivingLine = startMed.drivingLineId;
+                                }
+                                continue;
+                            }
+
                             foreach (var endMed in stationsForEndDrivingLine)
-                            { 
-                                    if (startMed.stationName == departure.Name) {
+                            {
+                                if ((startMed.stationName == departure.Name) || (startMed.drivingLineId == endMed.drivingLineId) ||
+                                    (startMed.drivingLineId==skipDrivingLine)) {
                                         continue;
                                     }
-                            
-                                    if (startMed.stationId == endMed.stationId && startMed.stationArrivalTime < endMed.stationDepartureTime &&
+
+                                if (notCorrect(start.FromScheduleStationId, startMed.stationScheduleId)) {
+                                    continue;
+                                }
+
+                                if (notCorrect(endMed.stationScheduleId, end.ToScheduleStationId))
+                                {
+                                    continue;
+                                }
+
+                                if (startMed.stationId == endMed.stationId && startMed.stationArrivalTime < endMed.stationDepartureTime &&
                                         startMed.date == endMed.date && startMed.date == date && start.DrivinglineId != endMed.DrivingLineId 
                                        )
                                     {
@@ -390,6 +408,67 @@ namespace railway.clientTimetable
             return DTOs;
         }
 
+        private bool isLast(int stationScheduleId, int drivingLineId) {
+            using (var db = new RailwayContext()) {
+                var schedules =
+                    (from stationSchedule in db.stationsSchedules
+                     where stationSchedule.DrivingLineId == drivingLineId
+                     select stationSchedule).ToList();
+
+
+                int serial =
+                    (from s in schedules
+                    where s.Id == stationScheduleId
+                    select s.SerialNumber).FirstOrDefault();
+
+
+                int max =
+                    (from s in schedules
+                     let maxSerial = schedules.Max(m => m.SerialNumber)
+                     where s.SerialNumber == maxSerial
+                     select s.SerialNumber).FirstOrDefault();
+
+                if (serial == max) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+
+        }
+
+        private bool notCorrect(int FromScheduleStationId, int UntilstationScheduleId) {
+
+            using (var db = new RailwayContext()) 
+            {
+                var first =
+                    (from s in db.stationsSchedules
+                     where s.Id == FromScheduleStationId
+                     select new
+                     {
+                         drivingLine = s.DrivingLineId,
+                         serial = s.SerialNumber
+                     }).FirstOrDefault();
+
+
+                var second =
+                    (from s in db.stationsSchedules
+                     where s.Id == UntilstationScheduleId
+                     select new
+                     {
+                         drivingLine = s.DrivingLineId,
+                         serial = s.SerialNumber
+                     }).FirstOrDefault();
+
+
+                if (first.drivingLine == second.drivingLine && first.serial > second.serial) {
+                    return true;
+                }
+                return false;
+            }
+
+        }
         private void StartDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             var picker = sender as DatePicker;
