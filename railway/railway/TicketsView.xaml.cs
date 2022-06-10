@@ -31,6 +31,11 @@ namespace railway
             loggedUser = user;
             ttype = TicketType.Bought;
             dto = TicketService.getTickets(loggedUser.Id, ttype);
+            if(dto.Count() == 0)
+            {
+                Window message = new CustomMessageBox("Nemate kupljene karte!");
+                message.ShowDialog();
+            }
 
             this.DataContext = dto;
             dataGrid.ItemsSource = dto;
@@ -122,13 +127,26 @@ namespace railway
 
         private void searchBtn(object sender, RoutedEventArgs e)
         {
-            string param = ((System.Windows.Controls.ComboBoxItem)searchParameter.SelectedItem).Content as string;
-            string value = valuetb.Text;
+            string param = "";
+            if (searchParameter.SelectedItem == null)
+            {
 
+                Window message = new CustomMessageBox("Niste odabrali parametar za pretragu");
+                message.ShowDialog();
+
+            }
+            else
+            {
+
+                param = ((System.Windows.Controls.ComboBoxItem)searchParameter.SelectedItem).Content as string;
+            }
+            string value = valuetb.Text;
+           
 
             if (value == "")
             {
-                MessageBox.Show("Niste uneli vrednost za pretragu");
+                Window message = new CustomMessageBox("Niste uneli vrednost za pretragu");
+                message.ShowDialog();
             }
             try
             {
@@ -171,7 +189,8 @@ namespace railway
 
             if (dto.Count() == 0)
             {
-                MessageBox.Show("Nema rezultata Vaše pretrage!");
+                Window message = new CustomMessageBox("Nema rezultata Vaše pretrage!");
+                message.ShowDialog();
                 dto = tickets_backup;
                 valuetb.Text = "";
                 searchParameter.SelectedIndex = 1;

@@ -8,14 +8,14 @@
         WindowStartupLocation="CenterScreen"
         Icon="/icon/trainIcon.png"
         Title="ŽELEZNICE SRBIJE" 
-        Height="150" Width="350"
+        Height="150" Width="400"
         ResizeMode="NoResize">
     <Grid Background="DodgerBlue">
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <Label Foreground="White" FontWeight="Bold" Grid.Row="0" FontSize="20" x:Name="messageLabel" VerticalAlignment="Center" HorizontalAlignment="Center" Width="280"></Label>
+        <Label Foreground="White" FontWeight="Bold" Grid.Row="0" FontSize="20" x:Name="messageLabel" VerticalAlignment="Center" HorizontalAlignment="Center" ></Label>
         <Button Click="ok_clicked" Grid.Row="1" Width="80" Height="25" Background="White" Foreground="DodgerBlue">OK</Button>
     </Grid>
 </Window>

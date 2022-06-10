@@ -22,7 +22,7 @@ namespace railway
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
-    /// </summary>
+    /// </summar
     public partial class MainWindow : Window
     {
         private List<Window> openedWindows = new List<Window>();
@@ -31,7 +31,7 @@ namespace railway
         {
             InitializeComponent();
 
-        //   FillDatabase fd = new FillDatabase();
+         //  FillDatabase fd = new FillDatabase();
          //  fd.fill();
 
 
