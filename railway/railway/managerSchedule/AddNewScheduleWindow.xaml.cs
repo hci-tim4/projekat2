@@ -109,14 +109,17 @@ namespace railway.managerSchedule
                         db.stationsSchedules.Add(s);
                     }
                     db.SaveChanges();
-                    MessageBox.Show("Dadali ste novi red vožnje");
+
+                    Window box = new CustomMessageBox("Doodali ste novi red vožnje");
+                    box.ShowDialog();
                     parentPage.setAllDrivingLines();
                     this.Close();
                 }
 
             }
             else {
-                MessageBox.Show("Grška pri unosu vremena. Vreme dolaska je pre vremena polaska");
+                Window box = new CustomMessageBox("Vreme dolaska je pre vremena polaska.");
+                box.ShowDialog();
             }
         }
 
@@ -157,6 +160,15 @@ namespace railway.managerSchedule
         {
             //     btnOK.Background = new SolidColorBrush(Color.FromRgb(32, 64, 128));
             Title = param;
+        }
+        private void Save_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void Save_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            btnSave_Click(sender, e);
         }
     }
 }

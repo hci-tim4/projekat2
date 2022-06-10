@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using railway.defineDrivingLine;
+using railway.CRUDTrain;
 
 namespace railway
 {
@@ -86,6 +87,22 @@ namespace railway
             hh.Show();
         }
 
+        public static void ShowHelp(string key, CRUDTrains originator)
+        {
+            HelpViewer hh = new HelpViewer(key, originator);
+            hh.Show();
+        }
+        public static void ShowHelp(string key, AddTrain originator)
+        {
+            HelpViewer hh = new HelpViewer(key, originator);
+            hh.Show();
+        }
+
+        public static void ShowHelp(string key, EditTrain originator)
+        {
+            HelpViewer hh = new HelpViewer(key, originator);
+            hh.Show();
+        }
 
     }
     

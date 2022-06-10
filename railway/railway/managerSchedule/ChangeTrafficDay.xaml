@@ -5,11 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:railway.managerSchedule" xmlns:clienttimetable="clr-namespace:railway.clientTimetable" d:DataContext="{d:DesignInstance Type=clienttimetable:DetailDrivinglineDTO}"
         mc:Ignorable="d"
+        xmlns:cmd="clr-namespace:railway.Commands"
         xmlns:l="clr-namespace:railway"
         Icon="/icon/trainIcon.png"
         Title="ŽELEZNICE SRBIJE" Height="500" Width="500" MaxHeight="500" MaxWidth="500">
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
+        <CommandBinding Command="cmd:RoutedCommands.Save" x:Name="save" CanExecute="Save_OnCanExecute" Executed="Save_OnExecuted"></CommandBinding>
     </Window.CommandBindings>
     <Grid>
         <Grid.RowDefinitions>
