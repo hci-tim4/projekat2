@@ -168,7 +168,7 @@ namespace railway
         {
             CurrentContent.StartTour_OnClick(sender, e);
         }
-<<<<<<< HEAD
+
 
         private void help_clicked(object sender, RoutedEventArgs e)
         {
@@ -182,10 +182,7 @@ namespace railway
             this.Close();
             login.Show();
         }
-=======
-        
-        
->>>>>>> 53e9b259e73e31cc9de46c3f403707d285cc8fbf
+
     }
 
 

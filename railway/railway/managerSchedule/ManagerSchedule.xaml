@@ -46,10 +46,8 @@
 
                      CanUserSortColumns="False" RenderTransformOrigin="0.997,0.431"  Grid.ColumnSpan="2">
 
-                    Background="White" CanUserSortColumns="False" RenderTransformOrigin="0.997,0.431"
-                   tour:TourHelper.ElementID="drivingTable"
-                   tour:TourHelper.Placement="BottomCenter"
-              >
+                   
+              
 
             <DataGrid.ItemContainerStyle>
                 <Style TargetType="DataGridRow">
