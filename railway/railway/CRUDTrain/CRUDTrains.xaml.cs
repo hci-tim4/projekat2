@@ -106,6 +106,8 @@ namespace railway.CRUDTrain
             Button addBtn = new Button();
             addBtn.FontSize = 20;
             addBtn.Height = 40;
+            addBtn.CommandParameter = "btnAddTrain";
+       
             BrushConverter bc = new BrushConverter();
             addBtn.Background = (Brush)bc.ConvertFrom("#FF1E90FF");
             addBtn.Foreground = new SolidColorBrush(Colors.White);
@@ -223,6 +225,7 @@ namespace railway.CRUDTrain
                     btnEdit.Foreground = new SolidColorBrush(Colors.White);
                     btnEdit.Background = (Brush)bc.ConvertFrom("#FF1E90FF");
                     btnEdit.Margin = new Thickness { Bottom = 10, Left = 0, Right = 10, Top = 15 };
+                    btnEdit.CommandParameter = "btnEditTrain";
                     stackPanel2.Children.Add(btnEdit);
 
 
@@ -235,6 +238,7 @@ namespace railway.CRUDTrain
 
                     btnDelete.Background = (Brush)bc.ConvertFrom("#FF1E90FF");
                     btnDelete.Margin = new Thickness { Bottom = 10, Left = 10, Right = 0, Top = 15 };
+                    btnDelete.CommandParameter = "btnDeleteTrain";
                     stackPanel2.Children.Add(btnDelete);
                     stackPanel.Children.Add(stackPanel2);
 
@@ -339,6 +343,29 @@ namespace railway.CRUDTrain
 
             //navigator.IfCurrentStepEquals("datagrid").GoPrevious();
             //navigator.IfCurrentStepEquals("datagrid").Close();
+        }
+
+        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            IInputElement focusedControl = FocusManager.GetFocusedElement(Application.Current.Windows[0]);
+
+                if (focusedControl is Button)
+                {
+                    Button b = (Button)focusedControl;
+                if (b.CommandParameter.Equals("btnAddTrain"))
+                {
+                    HelpProvider.ShowHelp("btnAddTrain", this);
+                }
+                else if (b.CommandParameter.Equals("btnEditTrain"))
+                {
+                    HelpProvider.ShowHelp("btnEditTrain", this);
+                }
+                else if (b.CommandParameter.Equals("btnDeleteTrain")) {
+                    HelpProvider.ShowHelp("btnDeleteTrain", this);
+                }
+            }
+                
+            
         }
     }
 }

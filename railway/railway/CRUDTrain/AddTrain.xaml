@@ -5,11 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
          xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:railway.CRUDTrain"
+        xmlns:l="clr-namespace:railway"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
         Icon="/icon/trainIcon.png"
         Title="ŽELEZNICE SRBIJE"  Height="350" Width="650" ResizeMode="NoResize">
-        
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
+    </Window.CommandBindings>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -24,9 +28,9 @@
         </Grid.RowDefinitions>
 
         <Label FontSize="20" FontWeight="Bold" Foreground="DodgerBlue" HorizontalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="2" Margin="0,0,0,15">DODAVANJE NOVOG VOZA</Label>
-        <TextBox  Width="200" Height="50"  Name="valuetb" materialDesign:HintAssist.Hint="Naziv voza" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontFamily="Champagne &amp; Limousines" FontSize="18" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="0" />
+        <TextBox  Width="200" Height="50"  Name="valuetb" materialDesign:HintAssist.Hint="Naziv voza" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontFamily="Champagne &amp; Limousines" FontSize="18" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="0" l:HelpProvider.HelpKey="trainNameADD"/>
         <ComboBox x:Name="colorTrain" Width="200" Height="40" Grid.Row="2" Grid.Column="0" FontSize="18"
-                          IsReadOnly="True"  SelectedItem="" materialDesign:HintAssist.Hint="Boja voza" HorizontalAlignment="Center">
+                          IsReadOnly="True"  SelectedItem="" materialDesign:HintAssist.Hint="Boja voza" HorizontalAlignment="Center" l:HelpProvider.HelpKey="choseColorTrain">
             <ComboBoxItem>crvena</ComboBoxItem>
             <ComboBoxItem>plava</ComboBoxItem>
             <ComboBoxItem>bela</ComboBoxItem>
@@ -35,11 +39,11 @@
             <ComboBoxItem>crna</ComboBoxItem>
             <ComboBoxItem>siva</ComboBoxItem>
         </ComboBox>
-        <TextBox  Width="300" Height="50"  Name="regulartb" materialDesign:HintAssist.Hint="Broj redova sedišta tipa REGULAR" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontFamily="Champagne &amp; Limousines" FontSize="18" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1" />
-        <TextBox  Width="300" Height="50"  Name="viptb" materialDesign:HintAssist.Hint="Broj redova sedišta tipa VIP" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontFamily="Champagne &amp; Limousines" FontSize="18" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1" />
-        <TextBox  Width="300" Height="50"  Name="businesstb" materialDesign:HintAssist.Hint="Broj redova sedišta tipa BUSINESS" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontFamily="Champagne &amp; Limousines" FontSize="18" HorizontalAlignment="Center" Grid.Row="3" Grid.Column="1" />
+        <TextBox  Width="300" Height="50"  Name="regulartb" materialDesign:HintAssist.Hint="Broj redova sedišta tipa REGULAR" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontFamily="Champagne &amp; Limousines" FontSize="18" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1" l:HelpProvider.HelpKey="numRowRegular"/>
+        <TextBox  Width="300" Height="50"  Name="viptb" materialDesign:HintAssist.Hint="Broj redova sedišta tipa VIP" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontFamily="Champagne &amp; Limousines" FontSize="18" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1" l:HelpProvider.HelpKey="numRowVip"/>
+        <TextBox  Width="300" Height="50"  Name="businesstb" materialDesign:HintAssist.Hint="Broj redova sedišta tipa BUSINESS" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontFamily="Champagne &amp; Limousines" FontSize="18" HorizontalAlignment="Center" Grid.Row="3" Grid.Column="1" l:HelpProvider.HelpKey="numRowBusiness" />
         <ComboBox x:Name="colNumber" Width="200" Height="40" Grid.Row="3" Grid.Column="0" FontSize="18"
-                          IsReadOnly="True"  SelectedItem="" materialDesign:HintAssist.Hint="Broj sedišta u redu" HorizontalAlignment="Center">
+                          IsReadOnly="True"  SelectedItem="" materialDesign:HintAssist.Hint="Broj sedišta u redu" HorizontalAlignment="Center" l:HelpProvider.HelpKey="numAllRows">
             <ComboBoxItem>1</ComboBoxItem>
             <ComboBoxItem>2</ComboBoxItem>
             <ComboBoxItem>3</ComboBoxItem>
@@ -49,10 +53,10 @@
             <ComboBoxItem>7</ComboBoxItem>
         </ComboBox>
         <Button x:Name="cancelBtn"  Click="cancelBtn_Click"  Width="150" 
-                 MinHeight="25" MaxHeight="50" Margin="2,40,0,2" Grid.Row="4" Grid.Column="0" >Nazad</Button>
+                 MinHeight="25" MaxHeight="50" Margin="2,40,0,2" Grid.Row="4" Grid.Column="0" l:HelpProvider.HelpKey="returnBtn" >Nazad</Button>
         <Button x:Name="addBtn" Grid.Row="4" Grid.Column="1" Click="addBtn_Click"
                  MinHeight="20" MaxHeight="50" Margin="0,40,2,2" Width="150"
-                IsDefault="True">Dodaj
+                IsDefault="True" l:HelpProvider.HelpKey="confirmAddTrain">Dodaj
 
         </Button>
     </Grid>
