@@ -28,7 +28,7 @@
             <Label Content="PRIJAVA" HorizontalAlignment="Center" VerticalAlignment="Top"  FontSize="30" FontWeight="Bold" FontFamily="Champagne &amp; Limousines" Foreground="DodgerBlue"/>
             <StackPanel VerticalAlignment="Center">
                 
-                <TextBox  Width="350"  Margin="40" Name="UsernameBox" materialDesign:HintAssist.Hint="KORISNIČKO IME" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontFamily="Champagne &amp; Limousines" FontSize="18"/>
+                <TextBox Width="350"  Margin="40" Name="UsernameBox" materialDesign:HintAssist.Hint="KORISNIČKO IME" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontFamily="Champagne &amp; Limousines" FontSize="18"/>
                 <PasswordBox Width="350" Margin="15" Name="PasswordBox" materialDesign:HintAssist.Hint="LOZINKA" Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" FontFamily="Champagne &amp; Limousines" FontSize="18"/>
                 <Button Width="250" Height="50"  FontSize="25" Content="Prijavi se" Margin="50" Background="DodgerBlue" Click="login_Click" IsDefault="True"/>
             
