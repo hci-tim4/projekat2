@@ -36,8 +36,6 @@
 
        
             </Grid>
-            <local:DefineEndDateForDrivingLineModal x:Name="DefineEndDateForDrivingLineModal"></local:DefineEndDateForDrivingLineModal>
-            <local:DefineSimpleDataForDrivingLineModal x:Name="DefineSimpleDataForDrivingLineModal"></local:DefineSimpleDataForDrivingLineModal>
         </Grid>
     </ScrollViewer>
 </UserControl>

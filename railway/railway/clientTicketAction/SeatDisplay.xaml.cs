@@ -203,7 +203,7 @@ namespace railway.client
             sp.Children.Add(occupiedLegend);
             Grid.SetRow(sp, rowCount++);
             Grid.SetColumn(sp, 0);
-            Grid.SetColumnSpan(sp, colCount - 1);
+            Grid.SetColumnSpan(sp, colCount + 1);
             grid1.Children.Add(sp);
         }
 

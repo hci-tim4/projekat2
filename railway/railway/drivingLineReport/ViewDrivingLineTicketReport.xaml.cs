@@ -150,7 +150,8 @@ namespace railway.drivingLineReport
             tickets = ticketService.GetTicketByDrivingLine(currentDrivingLine.DrivingLineId);
             if (tickets.Count == 0)
             {
-                MessageBox.Show("Nema prodatih karata za izabranu mrežnu liniju");
+                CustomMessageBox cmb = new CustomMessageBox("Nema prodatih karata za izabranu mrežnu liniju");
+                cmb.ShowDialog();
                 return;
             }
 
@@ -231,7 +232,6 @@ namespace railway.drivingLineReport
         public void StartTour_OnClick(object sender, RoutedEventArgs e)
         {
             Touring = true;
-            //MessageBox.Show("Tutorijal");
             TextLocalization.Close = "Zatvori";
             TextLocalization.Next = "Sledeći";
             var tour = new Tour()

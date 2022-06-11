@@ -32,7 +32,7 @@ namespace railway.client
             ticketsGotSaved = false;
             this.checkedSeatIds = checkedSeatIds;
             ticket = t;
-            askingForConfirmLabel.Content = "Potvrdite da hoćete da " + action + "izabranu kartu/izabrane karte.";
+            askingForConfirmLabel.Content = "Potvrdite da li hoćete da " + action + " izabranu kartu/izabrane karte.";
             confirmationDataFrame.Content = new ConfirmationDataDisplay(t, checkedSeatIds.Count);
         }
 
@@ -60,7 +60,8 @@ namespace railway.client
                 db.SaveChanges();
             }
             ticketGotSavedHandler();
-            MessageBox.Show("Uspešno su sačuvani podaci.", "Uspeh");
+            CustomMessageBox cmb = new CustomMessageBox("Uspešno su sačuvani podaci.");
+            cmb.ShowDialog();
             this.Close();
         }
 

@@ -99,7 +99,8 @@ namespace railway.clientTimetable
             page.Content = "";
             if ((this.departure == null) || (this.arrival == null) || (this.date == null))
             {
-                MessageBox.Show("Unesite sve podatke za pretragu");
+                CustomMessageBox cmb = new CustomMessageBox("Unesite sve podatke za pretragu");
+                cmb.ShowDialog();
             }
             else
             {
@@ -496,11 +497,11 @@ namespace railway.clientTimetable
         {
             var dtoId = ((Button)sender).Tag;
             DrivingLineDTO dto = findDTOById((int)dtoId);
-            //this.parentFrame.Content = new DetailsTimetable(dto.Tour, departure.Id, arrival.Id, parentFrame, this, dto.drivingLine);
+            Window win = new DetailsTimetable(dto.Tour, departure.Id, arrival.Id, parentFrame, this, dto.drivingLine);
+            win.ShowDialog();
+            //var res = DetailsModal.ShowHandlerDialog(dto.Tour,departure.Id,arrival.Id,dto.drivingLine);
 
-            var res = DetailsModal.ShowHandlerDialog(dto.Tour,departure.Id,arrival.Id,dto.drivingLine);
-            
-           
+
         }
 
         

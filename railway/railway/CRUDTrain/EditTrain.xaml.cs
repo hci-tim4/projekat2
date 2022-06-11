@@ -45,12 +45,11 @@ namespace railway.CRUDTrain
             {
                 train.Name = valuetb.Text;
 
-
                 if (colorTrain.SelectedItem == null)
                 {
 
-                    Window message = new CustomMessageBox("Niste izabrali boju voza!");
-                    message.ShowDialog();
+                    Window messageb = new CustomMessageBox("Niste izabrali boju voza!");
+                    messageb.ShowDialog();
                 }
                 else
                 {
@@ -66,11 +65,7 @@ namespace railway.CRUDTrain
 
         }
 
-        public bool IsNumeric(string value)
-        {
-            return value.All(char.IsNumber);
-        }
-
+        
         private void cancelBtn_Click(object sender, RoutedEventArgs e)
         {
             this.Close();

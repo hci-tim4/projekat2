@@ -99,7 +99,8 @@ namespace railway.clientTicketAction
                 db.SaveChanges();
             }
             ticketGotSavedHandler();
-            MessageBox.Show("Uspešno su sačuvani podaci.", "Uspeh");
+            CustomMessageBox cmb = new CustomMessageBox("Uspešno su sačuvani podaci.");
+            cmb.ShowDialog();
             HideHandlerDialog();
         }
 

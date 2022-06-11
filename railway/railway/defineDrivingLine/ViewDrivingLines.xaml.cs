@@ -30,9 +30,7 @@ namespace railway.defineDrivingLine
             this.parentFrame = frame;
             this.parentFrame.Content = this;
             //this.DataContext = DrivingLines;
-            DefineEndDateForDrivingLineModal.SetParent(parent);
-            DefineSimpleDataForDrivingLineModal.SetParent(parent);
-            CurrentComponent = new DrivingLines(drivingLineViewPage, DefineEndDateForDrivingLineModal, DefineSimpleDataForDrivingLineModal, this);
+            CurrentComponent = new DrivingLines(drivingLineViewPage, this);
             drivingLineViewPage.Content = CurrentComponent;
 
             /*using (var db = new RailwayContext())
@@ -68,29 +66,7 @@ namespace railway.defineDrivingLine
             if(drivingLineViewPage.NavigationService.CanGoForward)
                 drivingLineViewPage.NavigationService.GoForward();
         }
-
-        private void GoBack_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = drivingLineViewPage.NavigationService.CanGoBack;
-            MessageBox.Show(drivingLineViewPage.NavigationService.Source.ToString());
-        }
-
-        private void GoBack_OnExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            drivingLineViewPage.NavigationService.GoBack();
-        }
-
-        private void GoForward_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = drivingLineViewPage.NavigationService.CanGoForward;
-        }
-
-        private void GoForward_OnExecuted(object sender, ExecutedRoutedEventArgs e)
-        {
-            drivingLineViewPage.NavigationService.GoForward();
-        }
-
-        
+      
 
         private void InsertDrivingLine_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {

@@ -27,5 +27,15 @@ namespace railway
         {
             this.Close();
         }
+
+        private void CloseMeesageBox_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void CloseMeesageBox_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }
