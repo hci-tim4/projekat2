@@ -87,7 +87,7 @@
                 <ListViewItem Height="50"  Background="DodgerBlue" Foreground="White">
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="GraphLine" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
-                        <TextBlock Text= "Izveštaj za voznu liniju" FontSize="17" VerticalAlignment="Center" Margin="10 0"/>
+                        <TextBlock Text= "Izveštaj za mrežnu liniju" FontSize="17" VerticalAlignment="Center" Margin="10 0"/>
                     </StackPanel>
                 </ListViewItem>
           

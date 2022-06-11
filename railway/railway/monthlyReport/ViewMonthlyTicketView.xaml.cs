@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,14 +18,39 @@ using ThinkSharp.FeatureTouring.Navigation;
 
 namespace railway.monthlyReport
 {
-    public partial class ViewMonthlyTicketView : UserControl, TutorialInterface
+    public partial class ViewMonthlyTicketView : UserControl, TutorialInterface, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string name)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(name));
+            }
+        }
+
         public barChartInformation barChartData { get; set; }//= new barChartInformation();
         private List<InformationForGraphDisplay> currentData = null;
         private List<TicketForReportDTO> tickets = null;
         private TicketService ticketService;
         private bool Touring = false;
         public Func<double, string> Formatter { get; set; }
+        private double _profit;
+        public double Profit
+        {
+            get
+            {
+                return _profit;
+            }
+            set
+            {
+                if (value != _profit)
+                {
+                    _profit = value;
+                    OnPropertyChanged("Profit");
+                }
+            }
+        }
 
         public ViewMonthlyTicketView()
         {
@@ -35,6 +61,7 @@ namespace railway.monthlyReport
                 Formatter = value => value.ToString("N");
                 chartStackPanel.DataContext = this;
                 dataGrid.DataContext = this;
+                this.DataContext = this;
                 fromDateDatePicker.Language = XmlLanguage.GetLanguage(new System.Globalization.CultureInfo("sr-ME").IetfLanguageTag);
                 untilDateDatePicker.Language = XmlLanguage.GetLanguage(new System.Globalization.CultureInfo("sr-ME").IetfLanguageTag);
             }
@@ -131,6 +158,7 @@ namespace railway.monthlyReport
 
         private void FillInformationForGraphBySeatType()
         {
+            Profit = 0;
             currentData = new List<InformationForGraphDisplay>();
             InformationForGraphDisplay vip = new InformationForGraphDisplay()
             {
@@ -138,6 +166,7 @@ namespace railway.monthlyReport
                 NumberOfSelledTickets = GetNumberOfVIPCards(),
                 Price = CountPriceForVIPCards()
             };
+            Profit += vip.Price;
             currentData.Add(vip);
             InformationForGraphDisplay biz = new InformationForGraphDisplay()
             {
@@ -146,12 +175,14 @@ namespace railway.monthlyReport
                 Price = CountPriceForBiznisCards()
             };
             currentData.Add(biz);
+            Profit += biz.Price;
             InformationForGraphDisplay reg = new InformationForGraphDisplay()
             {
                 Type = "Regularan",
                 NumberOfSelledTickets = GetNumberOfRegularCards(),
                 Price = CountPriceForRegularCards()
             };
+            Profit += reg.Price;
             currentData.Add(reg);
         }
 
@@ -224,6 +255,7 @@ namespace railway.monthlyReport
         private void FillInformationForGraphByDrivingLine()
         {
             currentData = new List<InformationForGraphDisplay>();
+            Profit = 0;
             using (var db = new RailwayContext())
             {
                 foreach (DrivingLine dl in db.drivingLines)
@@ -234,6 +266,7 @@ namespace railway.monthlyReport
                     };
                     inf.NumberOfSelledTickets = CountTicketsForDrivingLine(dl.Id);
                     inf.Price = CountPriceForDrivingLine(dl.Id);
+                    Profit += inf.Price;
                     currentData.Add(inf);
                 }
             }
@@ -275,6 +308,12 @@ namespace railway.monthlyReport
                     CustomMessageBox cmb = new CustomMessageBox("Prvo morate da izaberete interval.");
                     cmb.ShowDialog();
                     return;
+                }
+                
+                if (Touring)
+                {
+                    IFeatureTourNavigator navigator = FeatureTour.GetNavigator();
+                    navigator.IfCurrentStepEquals("ChangeTypeOfMontlhyReport").Close();
                 }
                 FillInformationForGraphBySeatType();
                 PrepareGraph();
@@ -341,9 +380,10 @@ namespace railway.monthlyReport
                         ShowNextButton = false
                     },
                     new Step("ReportChart", "Grafikon", "Grafički prikaz za izabrani period."),
+                    new Step("WholeProfit", "Ukupan profit", "Ukupan profit za izabrani period."),
                     new Step("ReportTable", "Tabela", "Tabelarni prikaz izveštaja za izabrani period."),
                     new Step("ChangeTypeOfMontlhyReport", "Promena tipa izveštaja", "Za promenu tipa izveštaja izaberite jednu od ponuđenih opcija " +
-                        "'Tip sedišta' ili 'Mrežna linija'.")
+                        "'Tipu sedišta' ili 'Mrežnim linijama'.")
                     {
                         ShowNextButton = false
                     },
