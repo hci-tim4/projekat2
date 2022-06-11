@@ -93,35 +93,70 @@ namespace railway.managerSchedule
 
                 using (var db = new RailwayContext())
                 {
-                    foreach (ScheduleDTO schedule in this.newSchedule)
-                    {
-                        StationSchedule s = new StationSchedule
-                        {
-                            DrivingLineId = schedule.DrivingLineId,
-                            StationId = schedule.StationId,
-                            SerialNumber = schedule.SerialNumber,
-                            DepartureTime = schedule.DepartureTime,
-                            ArrivalTime = schedule.ArrivalTime,
-                            Tour = schedule.Tour,
-                            StartDate = DateTime.Now
-                        };
 
-                        db.stationsSchedules.Add(s);
+                    var ss =
+                           (from stationSchedule in db.stationsSchedules
+                           where stationSchedule.DrivingLineId == drivingLineId && stationSchedule.ArrivalTime == null && stationSchedule.DepartureTime == null
+                           orderby stationSchedule.SerialNumber
+                           select stationSchedule).ToList();
+                    if (ss.Count > 0)
+                    {
+
+                        foreach (var selected in this.newSchedule)
+                        {
+                            foreach (var s in ss)
+                            {
+                                if (s.StationId == selected.StationId)
+                                {
+                                    s.ArrivalTime = selected.ArrivalTime;            // ovde pravi noviii sa datumom od kada vayi
+                                    s.DepartureTime = selected.DepartureTime;
+                                    s.StartDate = getStartDate(drivingLineId);
+                                    break;
+                                }
+                            }
+                        }
+
+
+
+                    }
+                    else
+                    {
+                        foreach (ScheduleDTO schedule in this.newSchedule)
+                        {
+
+                            StationSchedule s = new StationSchedule
+                            {
+                                DrivingLineId = schedule.DrivingLineId,
+                                StationId = schedule.StationId,
+                                SerialNumber = schedule.SerialNumber,
+                                DepartureTime = schedule.DepartureTime,
+                                ArrivalTime = schedule.ArrivalTime,
+                                Tour = schedule.Tour,
+                                StartDate = DateTime.Now
+                            };
+
+                            db.stationsSchedules.Add(s);
+                        }
+
                     }
                     db.SaveChanges();
 
                     Window box = new CustomMessageBox("Doodali ste novi red vožnje");
                     box.ShowDialog();
+                    if (parentPage != null)
+
                     parentPage.setAllDrivingLines();
+                    
                     this.Close();
                 }
 
             }
             else {
-                Window box = new CustomMessageBox("Vreme dolaska je pre vremena polaska.");
+                Window box = new CustomMessageBox("Greška, potrebno je da vreme dolaska\n bude pre vremena polaska.");
                 box.ShowDialog();
             }
         }
+
 
         private bool validate()
         {
@@ -138,6 +173,17 @@ namespace railway.managerSchedule
                 }
             }
             return true;
+        }
+
+        private DateTime getStartDate(int drivingLineId) {
+            using (var db = new RailwayContext()) {
+                var d =
+                    (from drivingLine in db.drivingLines
+                    where drivingLine.Id == drivingLineId
+                    select drivingLine.startDate).FirstOrDefault();
+                return (DateTime)d;
+
+            }
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

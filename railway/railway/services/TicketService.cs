@@ -84,7 +84,7 @@ namespace railway.services
             }
             else 
             {
-                return "REGULAR";
+                return "REDOVNA";
             }
 
         }

@@ -8,7 +8,7 @@
         xmlns:cmd="clr-namespace:railway.Commands"
         xmlns:l="clr-namespace:railway"
         Icon="/icon/trainIcon.png"
-        Title="ŽELEZNICE SRBIJE" Height="450" Width="600" MaxWidth="600">
+        Title="ŽELEZNICE SRBIJE" Height="450" Width="600" MaxWidth="600" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
         
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>

@@ -206,7 +206,7 @@ namespace railway.CRUDTrain
                     stackPanel.Children.Add(tbCol);
 
                     TextBlock tbRegular = new TextBlock();
-                    tbRegular.Text = "Broj redova klasa REGULAR: " + dto[(i - 1) * 4 + j].numberREGULAR;
+                    tbRegular.Text = "Broj redova klasa redovna: " + dto[(i - 1) * 4 + j].numberREGULAR;
                     tbRegular.Foreground = new SolidColorBrush(Colors.DodgerBlue);
                     tbRegular.Width = 280;
                     tbRegular.FontSize = 15;
@@ -214,14 +214,14 @@ namespace railway.CRUDTrain
                      
 
                     TextBlock tbBusiness = new TextBlock();
-                    tbBusiness.Text = "Broj redova klasa BUSINESS: " + dto[(i - 1) * 4 + j].numberBUSINESS;
+                    tbBusiness.Text = "Broj redova klasa biznis: " + dto[(i - 1) * 4 + j].numberBUSINESS;
                     tbBusiness.Foreground = new SolidColorBrush(Colors.DodgerBlue);
                     tbBusiness.FontSize = 15;
                     tbBusiness.Width = 280;
                     stackPanel.Children.Add(tbBusiness);
 
                     TextBlock tbVip = new TextBlock();
-                    tbVip.Text = "Broj redova klasa VIP: " + dto[(i - 1) * 4 + j].numberVIP;
+                    tbVip.Text = "Broj redova klasa vip: " + dto[(i - 1) * 4 + j].numberVIP;
                     tbVip.Foreground = new SolidColorBrush(Colors.DodgerBlue);
                     tbVip.FontSize = 15;
                     tbVip.Width = 280;

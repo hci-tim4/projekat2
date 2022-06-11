@@ -181,5 +181,15 @@ namespace railway.CRUDTrain
                 HelpProvider.ShowHelp(str, this);
             }
         }
+
+        private void Save_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void Save_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            addBtn_Click(sender, e);
+        }
     }
 }
