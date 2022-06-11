@@ -32,7 +32,8 @@ namespace railway
             string username = UsernameBox.Text;
             if (!LoginService.isExistUser(username))
             {
-                MessageBox.Show("Korisnicko ime nije ispravno!");
+                CustomMessageBox cmb = new CustomMessageBox("Korisnicko ime nije ispravno!");
+                cmb.ShowDialog();
 
             }
             else
@@ -42,14 +43,13 @@ namespace railway
                 User u = LoginService.logIn(dto);
                 if (u == null)
                 {
-                    MessageBox.Show("Neispravna lozinka!");
+                    CustomMessageBox cmb = new CustomMessageBox("Neispravna lozinka!");
+                    cmb.ShowDialog();
                 }
                 else
                 {
                     if ((int)u.UserType == 0)
                     {
-                      //  MessageBox.Show("Ulogovan menadzer!");
-
                         Window managerhp = new ManagerHomePage(u);
                         App.Current.MainWindow.Close();
                         managerhp.Show();

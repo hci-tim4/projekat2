@@ -32,7 +32,8 @@ namespace railway.defineDrivingLine
             DateTime? selectedEndDate = endDate.SelectedDate;
             if (selectedEndDate == null)
             {
-                MessageBox.Show("Morate da izaberete datum.");
+                CustomMessageBox cmb = new CustomMessageBox("Morate da izaberete datum.");
+                cmb.ShowDialog();
                 return;
             }
 
@@ -44,17 +45,20 @@ namespace railway.defineDrivingLine
                     where s.DepatureDate > DateTime.Now && s.DrivingLineId == drivingLine.DrivingLineId
                     select t).ToList();
                 if (tickets.Count > 0)
-                    MessageBox.Show("Postoje prodate karte za liniju.");
+                {
+                    CustomMessageBox cmb = new CustomMessageBox("Postoje prodate karte za liniju.");
+                    cmb.ShowDialog();
+                }
                 else
                 {
                     DrivingLine dl = (from d in db.drivingLines
                         where d.Id == drivingLine.DrivingLineId
                         select d).Single();
                     dl.endDate = selectedEndDate;
-                    MessageBox.Show(
-                        "Uspešno ste sačuvali krajnji datum.");
-                    
                     db.SaveChanges();
+                    CustomMessageBox cmb = new CustomMessageBox(
+                        "Uspešno ste sačuvali krajnji datum.");
+                    cmb.ShowDialog();
                     DrivingLinesView.setDrivingLines(new RailwayContext());
                     // this.Close();
                 }
@@ -66,7 +70,8 @@ namespace railway.defineDrivingLine
             DateTime? selectedEndDate = endDate.SelectedDate;
             if (selectedEndDate == null)
             {
-                MessageBox.Show("Morate da izaberete datum.");
+                CustomMessageBox cmb = new CustomMessageBox("Morate da izaberete datum.");
+                cmb.ShowDialog();
                 return;
             }
 
@@ -77,18 +82,20 @@ namespace railway.defineDrivingLine
                         on t.ScheduleId equals s.Id
                     where s.DepatureDate > DateTime.Now && s.DrivingLineId == drivingLine.DrivingLineId
                     select t).ToList();
-                if (tickets.Count > 0)
-                    MessageBox.Show("Postoje prodate karte za liniju.");
+                if (tickets.Count > 0) {
+                    CustomMessageBox cmb = new CustomMessageBox("Postoje prodate karte za liniju.");
+                    cmb.ShowDialog();
+                }
                 else
                 {
                     DrivingLine dl = (from d in db.drivingLines
                         where d.Id == drivingLine.DrivingLineId
                         select d).Single();
                     dl.endDate = selectedEndDate;
-                    MessageBox.Show(
-                        "Uspešno ste sačuvali krajnji datum.");
-                    
                     db.SaveChanges();
+                    CustomMessageBox cmb = new CustomMessageBox(
+                        "Uspešno ste sačuvali krajnji datum.");
+                    cmb.ShowDialog();
                     DrivingLinesView.setDrivingLines(new RailwayContext());
                    this.Close();
                 }

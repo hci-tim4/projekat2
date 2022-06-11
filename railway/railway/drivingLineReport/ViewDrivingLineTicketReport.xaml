@@ -46,11 +46,11 @@
         </StackPanel>
         
         <StackPanel x:Name="lineChartPanel" Grid.Row="0" Grid.Column="1"
-                    tour:TourHelper.ElementID="ReportChart"
+                    tour:TourHelper.ElementID="ReportChart" MaxWidth="1000"
                     tour:TourHelper.Placement="BottomCenter" Margin="2,2,20,2">
             <ScrollViewer>
             <lvc:CartesianChart x:Name="lineChart" Series="{Binding Path=lineChartData.LineSeriesCollection}" 
-                                Width="1100" Height="350" Margin="2,2,2,2">
+                                Height="350" Margin="2,2,2,2">
                 <lvc:CartesianChart.AxisY>
                     <lvc:Axis Title="Broj prodatih karata" LabelFormatter="{Binding Formatter}"></lvc:Axis>
                 </lvc:CartesianChart.AxisY>

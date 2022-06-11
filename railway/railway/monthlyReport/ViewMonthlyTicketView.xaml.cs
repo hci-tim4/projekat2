@@ -78,19 +78,23 @@ namespace railway.monthlyReport
             DateTime? untilDate = untilDateDatePicker.SelectedDate;
             if (fromDate == null && untilDate == null)
             {
-                MessageBox.Show("Niste izabrali početni datum i krajnji datum.");
+                CustomMessageBox cmb = new CustomMessageBox("Niste izabrali početni datum i krajnji datum.");
+                cmb.ShowDialog();
                 return;
             }else if (fromDate == null)
             {
-                MessageBox.Show("Niste izabrali početni datum.");
+                CustomMessageBox cmb = new CustomMessageBox("Niste izabrali početni datum.");
+                cmb.ShowDialog();
                 return;
             }else if (untilDate == null)
             {
-                MessageBox.Show("Niste izabrali krajnji datum.");
+                CustomMessageBox cmb = new CustomMessageBox("Niste izabrali krajnji datum.");
+                cmb.ShowDialog();
                 return;
             }else if (fromDate > untilDate)
             {
-                MessageBox.Show("Početni datum je veći od krajnjeg.");
+                CustomMessageBox cmb = new CustomMessageBox("Početni datum je veći od krajnjeg.");
+                cmb.ShowDialog();
                 return;
             }
             IFeatureTourNavigator navigator = FeatureTour.GetNavigator();
@@ -253,7 +257,8 @@ namespace railway.monthlyReport
         {
             if (tickets == null)
             {
-                MessageBox.Show("Prvo morate da izaberete interval.");
+                CustomMessageBox cmb = new CustomMessageBox("Prvo morate da izaberete interval.");
+                cmb.ShowDialog();
                 return;
             }
             FillInformationForGraphBySeatType();
@@ -264,7 +269,8 @@ namespace railway.monthlyReport
         {
             if (tickets == null)
             {
-                MessageBox.Show("Prvo morate da izaberete interval.");
+                CustomMessageBox cmb = new CustomMessageBox("Prvo morate da izaberete interval.");
+                cmb.ShowDialog();
                 return;
             }
 
@@ -280,7 +286,6 @@ namespace railway.monthlyReport
         public void StartTour_OnClick(object sender, RoutedEventArgs e)
         {
             Touring = true;
-            //MessageBox.Show("Tutorijal");
             TextLocalization.Close = "Zatvori";
             TextLocalization.Next = "Sledeći";
             var tour = new Tour()

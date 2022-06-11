@@ -30,13 +30,11 @@ namespace railway.defineDrivingLine
         private Station currentStation;
         private StationSchedule changedStationSchedule;
         private PointLatLng? previous = null;
-        private DefineSimpleDataForDrivingLineModal defSimpleData;
         private ViewDrivingLines greatParentPage;
         private Boolean Touring = false;
         
         public AddDrivingLineSimple(Frame parentFrame, DrivingLines viewDrivingLines, AddDrivingLine dragAndDrop,
-            ObservableCollection<Station> stations2, ObservableCollection<Station> stations,
-            DefineSimpleDataForDrivingLineModal defineSimpleDataForDrivingLineModal, ViewDrivingLines greatParentPage)
+            ObservableCollection<Station> stations2, ObservableCollection<Station> stations, ViewDrivingLines greatParentPage)
         {
             InitializeComponent();
             this.greatParentPage = greatParentPage; 
@@ -50,7 +48,6 @@ namespace railway.defineDrivingLine
             this.DataContext = this;
             stationsCmb.ItemsSource = stations;
             addDrivingLineDragAndDrop = dragAndDrop;
-            this.defSimpleData = defineSimpleDataForDrivingLineModal;
         }
 
         private void resetStations()
@@ -182,7 +179,8 @@ namespace railway.defineDrivingLine
             //odabir voza i imena!
             if (stations2.Count < 2)
             {
-                MessageBox.Show("Mrežna linija mora da sadrži barem 2 stanice");
+                CustomMessageBox cmb = new CustomMessageBox("Mrežna linija mora da sadrži barem 2 stanice");
+                cmb.ShowDialog();
                 return;
             }
             Window def = new DefineSimpleDataForDrivingLine(stations2, drivingLineGotSaved);
@@ -222,7 +220,8 @@ namespace railway.defineDrivingLine
         {
             if (currentStation == null)
             {
-                MessageBox.Show("Prvo morate da izaberete stanicu");
+                CustomMessageBox cmb = new CustomMessageBox("Prvo morate da izaberete stanicu");
+                cmb.ShowDialog();
                 return;
             }
             if (Touring)

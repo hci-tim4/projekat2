@@ -91,6 +91,7 @@ namespace railway.Commands
             }
         );
 
+
         public static readonly RoutedUICommand Report2 = new RoutedUICommand(
             "Report2",
             "Report2",
@@ -100,5 +101,16 @@ namespace railway.Commands
                 new KeyGesture(Key.O, ModifierKeys.Control),
             }   
         );
+        
+        public static readonly RoutedUICommand CloseMessageBox = new RoutedUICommand(
+            "Close",
+            "Close",
+            typeof(RoutedCommands),
+            new InputGestureCollection()
+            {
+                new KeyGesture(Key.Enter),
+            }
+        );
+
     }
 }

@@ -53,30 +53,33 @@ namespace railway.defineDrivingLine
             DrivingLineService dlService = new DrivingLineService();
             try
             {
-                //MessageBox.Show(startSelectedDate+"");
                 DateTime ?startSelectedDate = startDate.SelectedDate;
                 if (startSelectedDate == null)
                 {
-                    MessageBox.Show("Početni datum mora da postoji");
+                    CustomMessageBox cmb1 = new CustomMessageBox("Početni datum mora da postoji");
+                    cmb1.ShowDialog();
                     return;
                 }
                 dlService.saveDrivingService(name, newTrain, (DateTime)startSelectedDate, stations);
-                MessageBox.Show("Mrežna linija je uspešno sačuvana");
+                CustomMessageBox cmb = new CustomMessageBox("Mrežna linija je uspešno sačuvana");
+                cmb.ShowDialog();
                 drivingGotSavedHandler();
                 this.Close();
             }
             catch (NotDefinedException nd)
             {
-                MessageBox.Show(nd.message);
+                CustomMessageBox cmb1 = new CustomMessageBox(nd.message);
+                cmb1.ShowDialog();
             }
             catch (AlreadyDefinedException ad)
             {
-                MessageBox.Show(ad.message);
+                CustomMessageBox cmb1 = new CustomMessageBox(ad.message);
+                cmb1.ShowDialog();
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message);
-                MessageBox.Show("Ups, neočekivana greška se desilo");
+                CustomMessageBox cmb1 = new CustomMessageBox("Ups, neočekivana greška se desilo");
+                cmb1.ShowDialog();
             }
         }
     

@@ -35,7 +35,6 @@ namespace railway.database
                         Schedule schedule = new Schedule();
                         schedule.DrivingLineId = i.drivingLineId;
                         schedule.DepatureDate = date;
-                        MessageBox.Show(schedule.DepatureDate.ToString());
                         db.schedules.Add(schedule);
                         db.SaveChanges();
                     }

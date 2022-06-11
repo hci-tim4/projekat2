@@ -28,12 +28,10 @@ namespace railway.defineDrivingLine
         private Frame parentFrame;
         private DrivingLines parentPage;
         public PointLatLng? previous { get; set; }
-        private DefineSimpleDataForDrivingLineModal defSimpleData;
         private ViewDrivingLines greatParentPage;
         private Boolean Touring;
         
-        public AddDrivingLine(Frame parentFrame, DrivingLines viewDrivingLines,
-            DefineSimpleDataForDrivingLineModal defineSimpleDataForDrivingLineModal, ViewDrivingLines drivingLines)
+        public AddDrivingLine(Frame parentFrame, DrivingLines viewDrivingLines, ViewDrivingLines drivingLines)
         {
             InitializeComponent();
             this.drivingLineGotSaved += new DrivingGotSavedHandler(clearMap);
@@ -48,7 +46,6 @@ namespace railway.defineDrivingLine
                 stations2 = new ObservableCollection<Station>();
             }
 
-            this.defSimpleData = defineSimpleDataForDrivingLineModal;
             this.DataContext = this;
             this.greatParentPage = drivingLines;
         }
@@ -339,7 +336,8 @@ namespace railway.defineDrivingLine
             //odabir voza i imena!
             if (stations2.Count < 2)
             {
-                MessageBox.Show("Mrežna linija mora da sadrži barem 2 stanice");
+                CustomMessageBox cmb = new CustomMessageBox("Mrežna linija mora da sadrži barem 2 stanice");
+                cmb.ShowDialog();
                 return;
             }
             //defSimpleData.ShowHandlerDialog(stations2, drivingLineGotSaved);
@@ -349,7 +347,7 @@ namespace railway.defineDrivingLine
 
         private void ChangeDrivingLineDefView_OnClick(object sender, RoutedEventArgs e)
         {
-            greatParentPage.CurrentComponent = new AddDrivingLineSimple(parentFrame, parentPage, this, stations2, stations, defSimpleData, greatParentPage);
+            greatParentPage.CurrentComponent = new AddDrivingLineSimple(parentFrame, parentPage, this, stations2, stations, greatParentPage);
             this.parentFrame.Content = greatParentPage.CurrentComponent;
         }
 
