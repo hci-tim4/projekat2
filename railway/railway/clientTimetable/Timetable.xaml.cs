@@ -121,7 +121,7 @@ namespace railway.clientTimetable
                 page.Content = "";
                 if ((this.departure == null) || (this.arrival == null) || (this.date == null))
                 {
-                    CustomMessageBox cmb = new CustomMessageBox("Unesite sve podatke za pretragu");
+                    CustomMessageBox cmb = new CustomMessageBox("Unesite sve podatke za pretragu.");
                     cmb.ShowDialog();
                 }
                 else
@@ -135,7 +135,7 @@ namespace railway.clientTimetable
                     }
                     dataGrid.ItemsSource = this.lines;
                     if (this.lines.Count == 0) {
-                        Window box = new CustomMessageBox("Nema nijedne vožnje za izabrano polazište,\n odredište i datum.");
+                        Window box = new CustomMessageBox("Nema nijedne vožnje za izabrano polazište,\nodredište i datum.");
                         box.ShowDialog();
                     }
                 }
@@ -360,8 +360,9 @@ namespace railway.clientTimetable
                             if (isLast(startMed.stationScheduleId, startMed.drivingLineId)) {
                                 if (startMed.stationId == departure.Id) {
                                     skipDrivingLine = startMed.drivingLineId;
+                                    continue;
                                 }
-                                continue;
+                               
                             }
 
                             foreach (var endMed in stationsForEndDrivingLine)

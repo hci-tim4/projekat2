@@ -31,14 +31,14 @@
             <StackPanel Margin="3">
                 <DatePicker FontSize="20" MinWidth="200" x:Name="fromDateDatePicker"
                             SelectedDateChanged="FromDateDatePicker_OnSelectedDateChanged"
-                            tour:TourHelper.ElementID="StartDatePicker"
+                            tour:TourHelper.ElementID="StartDatePicker" ToolTip="Unesite početni datum"
                             tour:TourHelper.Placement="BottomCenter" Margin="0,10,0,0" materialDesign:HintAssist.Hint="Početni datum"></DatePicker>
                 <DatePicker FontSize="20" MinWidth="200" x:Name="untilDateDatePicker" 
                             SelectedDateChanged="UntilDateDatePicker_OnSelectedDateChanged"
-                            tour:TourHelper.ElementID="EndDatePicker"
+                            tour:TourHelper.ElementID="EndDatePicker" ToolTip="Unesite krajnji datum"
                             tour:TourHelper.Placement="BottomCenter"  materialDesign:HintAssist.Hint="Krajnji datum" Margin="0,10,0,0"></DatePicker>
                 <Button FontSize="20" x:Name="showReport" Click="ShowReport_OnClick" Content="Prikaži" MinWidth="100" 
-                        HorizontalAlignment="Right" 
+                        HorizontalAlignment="Right" ToolTip="Prikaži izveštaj"
                         tour:TourHelper.ElementID="ShowReportButton"
                         tour:TourHelper.Placement="BottomCenter" Margin="0,10,0,20"></Button>
             </StackPanel>
@@ -46,9 +46,9 @@
                 <StackPanel Margin="0,0,0,0">
 
                     <Label FontSize="20"  >Pregled karata po:</Label>
-                    <RadioButton FontSize="20" x:Name="seatTypeRadioButton" Margin="3" Content="Tipu sedišta" Checked="showBySeatTypes"></RadioButton>
+                    <RadioButton FontSize="20" x:Name="seatTypeRadioButton" Margin="3" Content="Tipu sedišta" Checked="showBySeatTypes" ToolTip="Izveštaj o broju prodatih karata prema tipu sedišta"></RadioButton>
                     <RadioButton FontSize="20" x:Name="drivingLineRadioButton" Margin="3" Checked="showByDrivingLines"
-                             tour:TourHelper.ElementID="ChangeTypeOfMontlhyReport"
+                             tour:TourHelper.ElementID="ChangeTypeOfMontlhyReport" ToolTip="Izveštaj o broju prodatih karata po mrežnim linijama "
                              tour:TourHelper.Placement="LeftCenter">Mrežnim linijama</RadioButton>
 
                 </StackPanel>

@@ -32,7 +32,7 @@
                       ItemsSource="{Binding drivingLines}" DisplayMemberPath="Name" IsEditable="True" 
                       FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" 
                       tour:TourHelper.ElementID="ChoseDrivingLine"
-                      tour:TourHelper.Placement="BottomCenter" Margin="0,20,0,0">
+                      tour:TourHelper.Placement="BottomCenter" Margin="0,20,0,0" ToolTip="Izaberi mrežnu liniju">
                 <ComboBox.Style>
                     <Style>
                         <EventSetter Event="TextBox.TextChanged" Handler="TextBox_TextChanged" />
@@ -41,7 +41,7 @@
             </ComboBox>
             <Button MinWidth="100" HorizontalAlignment="Right" Content="Prikaži" x:Name="showDrivingLineReportButton"
                     Click="ShowDrivingLineReportButton_OnClick" FontSize="20"
-                    tour:TourHelper.ElementID="ShowReport"
+                    tour:TourHelper.ElementID="ShowReport" ToolTip="Prikaži izveštaj o broju prodatih karata i zaradi za mrežnu liniju"
                     tour:TourHelper.Placement="BottomCenter" Margin="0,10,0,0"></Button>
         </StackPanel>
         
