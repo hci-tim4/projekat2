@@ -71,16 +71,6 @@ namespace railway.Commands
             }
         );
         
-        public static readonly RoutedUICommand Insert = new RoutedUICommand(
-            "Insert",
-            "Insert",
-            typeof(RoutedCommands),
-            new InputGestureCollection()
-            {
-                new KeyGesture(Key.Insert, ModifierKeys.None),
-            }
-        );
-        
         public static readonly RoutedUICommand Save = new RoutedUICommand(
             "Save",
             "Save",
@@ -99,6 +89,16 @@ namespace railway.Commands
             {
                 new KeyGesture(Key.P, ModifierKeys.Control),
             }
+        );
+
+        public static readonly RoutedUICommand Report2 = new RoutedUICommand(
+            "Report2",
+            "Report2",
+            typeof(RoutedCommands),
+            new InputGestureCollection()
+            {
+                new KeyGesture(Key.O, ModifierKeys.Control),
+            }   
         );
     }
 }

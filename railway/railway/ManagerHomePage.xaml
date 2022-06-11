@@ -21,6 +21,7 @@
         <CommandBinding Command="cmd:RoutedCommands.DrivingLines" x:Name="DrivingLines" CanExecute="DrivingLines_OnCanExecute" Executed="DrivingLines_OnExecuted"></CommandBinding>
         <CommandBinding Command="cmd:RoutedCommands.Trains" x:Name="Trains" CanExecute="Trains_OnCanExecute" Executed="Trains_OnExecuted"></CommandBinding>
         <CommandBinding Command="cmd:RoutedCommands.Report" x:Name="Report" CanExecute="Report_OnCanExecute" Executed="Report_OnExecuted"></CommandBinding>
+        <CommandBinding Command="cmd:RoutedCommands.Report2" x:Name="Report2" CanExecute="Report2_OnCanExecute" Executed="Report2_OnExecuted"></CommandBinding>
         <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
         <CommandBinding Command="cmd:RoutedCommands.StartTutorial" x:Name="startTutorial" CanExecute="StartTutorial_OnCanExecute" Executed="StartTutorial_OnExecuted"></CommandBinding>
     </Window.CommandBindings>
@@ -31,13 +32,13 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="0" Height="40" Background="DodgerBlue">
             <Menu Background="DodgerBlue" Foreground="White" HorizontalAlignment="Right" Margin="0,0,20,0">
-                <MenuItem Header="Pomoć" >
-                    <MenuItem Width="200" Header="Pomoć" Command="ApplicationCommands.Help" Click="help_clicked" IsEnabled="True" Foreground="DodgerBlue">
+                <MenuItem Header="Pomoć" x:Name="MenuItem" >
+                    <MenuItem Width="200" Header="Pomoć" Command="ApplicationCommands.Help" Click="help_clicked" IsEnabled="True" x:Name="menuPomoc" Foreground="DodgerBlue">
                         <MenuItem.Icon>
                             <Image Source="/icon/help.png"></Image>
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Width="200" Header="Tutorijal" Command="cmd:RoutedCommands.StartTutorial" Click="tutorial_clicked" IsEnabled="True"  Foreground="DodgerBlue"></MenuItem>
+                    <MenuItem Width="200" Header="Tutorijal" Command="cmd:RoutedCommands.StartTutorial" IsEnabled="True"  Foreground="DodgerBlue"></MenuItem>
                 </MenuItem>
             </Menu>
         </StackPanel>

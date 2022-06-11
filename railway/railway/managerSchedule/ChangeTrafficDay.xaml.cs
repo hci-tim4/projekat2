@@ -94,8 +94,7 @@ namespace railway.managerSchedule
                     db.TrafficDays.Add(td);
                 }
                 db.SaveChanges();
-
-                Window box = new CustomMessageBox("Izmenili ste dane u kojima saobraća linija.");
+                Window box = new CustomMessageBox("Izmenili ste dane u kojima \nsaobraća linija.");
                 box.ShowDialog();
                 this.Close();
                 this.parentPage.setAllDrivingLines();
@@ -105,7 +104,7 @@ namespace railway.managerSchedule
         }
 
         private void cancelChangeDays_Click(object sender, RoutedEventArgs e) {
-            Window box = new CustomMessageBox("Odustali ste od izmene dana u kojima saobraća linija.");
+            Window box = new CustomMessageBox("Odustali ste od izmene dana \nu kojima saobraća linija.");
             box.ShowDialog();
             this.parentPage.setAllDrivingLines();
 

@@ -106,14 +106,16 @@
                       MinHeight="200" MaxHeight="700" MinWidth="200"
                       tour:TourHelper.ElementID="datagrid"
                       tour:TourHelper.Placement="BottomCenter">
-            
-            <DataGrid.ItemContainerStyle>
-                <Style TargetType="DataGridRow">
-                    <EventSetter Event="MouseUp" Handler="DrivingLineDataGrid_OnSelected"/>
-                </Style>
-            </DataGrid.ItemContainerStyle>
-                
-            <DataGrid.Columns>
+
+                <DataGrid.RowStyle>
+                    <Style TargetType="{x:Type DataGridRow}" >
+                        <Setter Property="BorderBrush" Value="DodgerBlue" />
+                        <Setter Property="BorderThickness" Value="1" />
+                        <EventSetter Event="MouseUp" Handler="DrivingLineDataGrid_OnSelected"/>
+                    </Style>
+                </DataGrid.RowStyle>
+
+                <DataGrid.Columns>
                 <DataGridTextColumn Header="Ime" Width="Auto" FontSize="20" Binding="{Binding Name}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Voz" Width="Auto" FontSize="20" Binding="{Binding Path=TrainName}" x:Name="TrainName"></DataGridTextColumn>
                 

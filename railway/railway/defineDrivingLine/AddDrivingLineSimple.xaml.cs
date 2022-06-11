@@ -140,7 +140,7 @@ namespace railway.defineDrivingLine
         private void drawLineBetweenPoints(PointLatLng current, PointLatLng? previous, GMapControl gMapControl)
         {
             double dis = CountDistanceBetweenPoints(current, (PointLatLng)previous);
-            if (dis < 0.001)
+            if (dis < 0.01)
                 return;
             PointLatLng middle = CountMiddlePoint(current, (PointLatLng)previous);
             GMap.NET.WindowsPresentation.GMapMarker markerLine = new GMap.NET.WindowsPresentation.GMapMarker(middle);

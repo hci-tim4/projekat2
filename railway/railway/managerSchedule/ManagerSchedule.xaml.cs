@@ -239,12 +239,12 @@ namespace railway.managerSchedule
 
                     db.SaveChanges();
                     setAllDrivingLines();
-                    Window box = new CustomMessageBox("Izmenili ste red voznje za turu " + tour + ". Izmene će biti vidljive nakon mesec dana.");
+                    Window box = new CustomMessageBox("Izmenili ste red voznje za turu " + tour + "\n. Izmene će biti vidljive nakon mesec dana.");
                     box.ShowDialog();
 
                 }
             }else{
-                Window box = new CustomMessageBox("Vreme dolaska je pre vremena polaska.");
+                Window box = new CustomMessageBox("Greška, potrebno je da vreme dolaska\n bude pre vremena polaska.");
                 box.ShowDialog();
 
             }
