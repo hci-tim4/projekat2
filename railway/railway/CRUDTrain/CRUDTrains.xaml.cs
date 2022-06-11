@@ -60,6 +60,7 @@ namespace railway.CRUDTrain
 
             gridTrains.RowDefinitions.Clear();
             gridTrains.ColumnDefinitions.Clear();
+            gridTrains.Children.Clear();
 
             TourHelper.SetElementID(gridTrains, "allTrains");
             TourHelper.SetPlacement(gridTrains, Placement.TopCenter);
@@ -105,6 +106,8 @@ namespace railway.CRUDTrain
             Button addBtn = new Button();
             addBtn.FontSize = 20;
             addBtn.Height = 40;
+            addBtn.CommandParameter = "btnAddTrain";
+       
             BrushConverter bc = new BrushConverter();
             addBtn.Background = (Brush)bc.ConvertFrom("#FF1E90FF");
             addBtn.Foreground = new SolidColorBrush(Colors.White);
@@ -130,8 +133,9 @@ namespace railway.CRUDTrain
                 for (int j = 0; j < col; j++)
                 {
                     Grid grid = new Grid();
-                    grid.Margin = new Thickness { Bottom = 0, Left = 10, Right = 10, Top = 10 };
+                    grid.Margin = new Thickness { Bottom = 0, Left =10, Right = 10, Top = 10 };
                     grid.Height = 250;
+                    grid.Width = 300;
                     grid.VerticalAlignment = VerticalAlignment.Top;
                     Grid.SetColumn(grid, j);
                     Grid.SetRow(grid, i);
@@ -149,13 +153,14 @@ namespace railway.CRUDTrain
 
 
                     StackPanel stackPanel = new StackPanel();
-                    stackPanel.Width = 200;
+                    stackPanel.Width = 300;
 
                     StackPanel stackPanelName = new StackPanel();
                     stackPanelName.Orientation = Orientation.Horizontal;
+              
                     stackPanelName.Margin = new Thickness { Bottom = 20, Left = 0, Right = 0, Top = 10 };
                     Image img = new Image();
-                    img.Width = 40;
+                    img.Width = 50;
                     img.Height = 40;
                     img.Source = new BitmapImage(new Uri("/icon/trainIcon.png", UriKind.Relative));
                     stackPanelName.Children.Add(img);
@@ -165,6 +170,7 @@ namespace railway.CRUDTrain
                     tb.FontSize = 30;
                     tb.Margin = new Thickness { Bottom = 0, Left = 10, Right = 0, Top = 0 };
                     tb.FontWeight = FontWeights.Bold;
+                    tb.Width = 280;
                     tb.Foreground = new SolidColorBrush(Colors.DodgerBlue);
                     tb.HorizontalAlignment = HorizontalAlignment.Center;
                     stackPanelName.Children.Add(tb);
@@ -173,32 +179,38 @@ namespace railway.CRUDTrain
                     TextBlock tbColor = new TextBlock();
                     tbColor.Text = "Boja: " + dto[(i - 1) * 4 + j].Color;
                     tbColor.Foreground = new SolidColorBrush(Colors.DodgerBlue);
+                    tbColor.Width = 280;
                     tbColor.FontSize = 15;
+                    
                     stackPanel.Children.Add(tbColor);
 
                     TextBlock tbCol = new TextBlock();
                     tbCol.Text = "Broj kolona: " + dto[(i - 1) * 4 + j].col;
                     tbCol.Foreground = new SolidColorBrush(Colors.DodgerBlue);
                     tbCol.FontSize = 15;
+                    tbCol.Width = 280;
                     stackPanel.Children.Add(tbCol);
 
                     TextBlock tbRegular = new TextBlock();
                     tbRegular.Text = "Broj redova klasa REGULAR: " + dto[(i - 1) * 4 + j].numberREGULAR;
                     tbRegular.Foreground = new SolidColorBrush(Colors.DodgerBlue);
+                    tbRegular.Width = 280;
                     tbRegular.FontSize = 15;
                     stackPanel.Children.Add(tbRegular);
-
+                     
 
                     TextBlock tbBusiness = new TextBlock();
                     tbBusiness.Text = "Broj redova klasa BUSINESS: " + dto[(i - 1) * 4 + j].numberBUSINESS;
                     tbBusiness.Foreground = new SolidColorBrush(Colors.DodgerBlue);
                     tbBusiness.FontSize = 15;
+                    tbBusiness.Width = 280;
                     stackPanel.Children.Add(tbBusiness);
 
                     TextBlock tbVip = new TextBlock();
-                    tbVip.Text = "Broj redova klasa REGULAR: " + dto[(i - 1) * 4 + j].numberVIP;
+                    tbVip.Text = "Broj redova klasa VIP: " + dto[(i - 1) * 4 + j].numberVIP;
                     tbVip.Foreground = new SolidColorBrush(Colors.DodgerBlue);
                     tbVip.FontSize = 15;
+                    tbVip.Width = 280;
                     stackPanel.Children.Add(tbVip);
 
 
@@ -213,6 +225,7 @@ namespace railway.CRUDTrain
                     btnEdit.Foreground = new SolidColorBrush(Colors.White);
                     btnEdit.Background = (Brush)bc.ConvertFrom("#FF1E90FF");
                     btnEdit.Margin = new Thickness { Bottom = 10, Left = 0, Right = 10, Top = 15 };
+                    btnEdit.CommandParameter = "btnEditTrain";
                     stackPanel2.Children.Add(btnEdit);
 
 
@@ -225,6 +238,7 @@ namespace railway.CRUDTrain
 
                     btnDelete.Background = (Brush)bc.ConvertFrom("#FF1E90FF");
                     btnDelete.Margin = new Thickness { Bottom = 10, Left = 10, Right = 0, Top = 15 };
+                    btnDelete.CommandParameter = "btnDeleteTrain";
                     stackPanel2.Children.Add(btnDelete);
                     stackPanel.Children.Add(stackPanel2);
 
@@ -261,6 +275,9 @@ namespace railway.CRUDTrain
             Window messageBox = new CustomMessageBox("Voz " + train.Name + " je obrisan!");
             messageBox.ShowDialog();
             reloadWindow();
+
+           
+           
 
         }
         private void add_Clicked(object sender, RoutedEventArgs e)
@@ -326,6 +343,29 @@ namespace railway.CRUDTrain
 
             //navigator.IfCurrentStepEquals("datagrid").GoPrevious();
             //navigator.IfCurrentStepEquals("datagrid").Close();
+        }
+
+        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            IInputElement focusedControl = FocusManager.GetFocusedElement(Application.Current.Windows[0]);
+
+                if (focusedControl is Button)
+                {
+                    Button b = (Button)focusedControl;
+                if (b.CommandParameter.Equals("btnAddTrain"))
+                {
+                    HelpProvider.ShowHelp("btnAddTrain", this);
+                }
+                else if (b.CommandParameter.Equals("btnEditTrain"))
+                {
+                    HelpProvider.ShowHelp("btnEditTrain", this);
+                }
+                else if (b.CommandParameter.Equals("btnDeleteTrain")) {
+                    HelpProvider.ShowHelp("btnDeleteTrain", this);
+                }
+            }
+                
+            
         }
     }
 }

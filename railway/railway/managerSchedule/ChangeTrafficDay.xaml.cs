@@ -95,7 +95,8 @@ namespace railway.managerSchedule
                 }
                 db.SaveChanges();
 
-                MessageBox.Show("Izmenili ste dane u kojima saobraća linija.");
+                Window box = new CustomMessageBox("Izmenili ste dane u kojima saobraća linija.");
+                box.ShowDialog();
                 this.Close();
                 this.parentPage.setAllDrivingLines();
             }
@@ -104,7 +105,8 @@ namespace railway.managerSchedule
         }
 
         private void cancelChangeDays_Click(object sender, RoutedEventArgs e) {
-            MessageBox.Show("Odustali ste od izmene dana u kojima saobraća linija.");
+            Window box = new CustomMessageBox("Odustali ste od izmene dana u kojima saobraća linija.");
+            box.ShowDialog();
             this.parentPage.setAllDrivingLines();
 
         }
@@ -124,6 +126,16 @@ namespace railway.managerSchedule
         {
             //     btnOK.Background = new SolidColorBrush(Color.FromRgb(32, 64, 128));
             Title = param;
+        }
+
+        private void Save_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void Save_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            changeDays_Click(sender, e);
         }
     }
 }

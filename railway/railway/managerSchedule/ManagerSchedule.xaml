@@ -49,6 +49,7 @@
                    tour:TourHelper.Placement="BottomCenter">
 
 
+
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="drivingLineName" MinWidth="60" Header="Naziv" Binding="{Binding Path=Name}"/>
 

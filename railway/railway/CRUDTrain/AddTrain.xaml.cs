@@ -36,13 +36,37 @@ namespace railway.CRUDTrain
         {
             var db = new RailwayContext();
             string name = valuetb.Text;
-            string color = ((System.Windows.Controls.ComboBoxItem)colorTrain.SelectedItem).Content as string;
+            if (name == "")
+            {
+                Window box = new CustomMessageBox("Unesite naziv voza!");
+                box.ShowDialog();
+                
+            }
+            string color = "";
+            if (colorTrain.SelectedItem == null)
+            {
+                Window box = new CustomMessageBox("Izaberite boju voza!");
+                box.ShowDialog();
+            }
+            else
+            {
+                color = ((System.Windows.Controls.ComboBoxItem)colorTrain.SelectedItem).Content as string;
+            }
+
             Train t = new Train();
             t.Color = color;
             t.Name = name;
             db.trains.Add(t);
-
-            string colStr = ((System.Windows.Controls.ComboBoxItem)colNumber.SelectedItem).Content as string;
+            string colStr = "";
+            if (colNumber.SelectedItem == null)
+            {
+                Window box = new CustomMessageBox("Broj kolona nije izabran!");
+                box.ShowDialog();
+            }
+            else
+            {
+                colStr = ((System.Windows.Controls.ComboBoxItem)colNumber.SelectedItem).Content as string;
+            }
             int col = int.Parse(colStr);
 
             int regNumber = 0;
@@ -52,7 +76,8 @@ namespace railway.CRUDTrain
 
             if (!IsNumeric(RegNumberStr))
             {
-                MessageBox.Show("Mora biti broj");
+                Window box = new CustomMessageBox("Polje broj sedišta REGULAR mora biti ceo broj!" );
+                box.ShowDialog();
             }
             else
             {
@@ -61,7 +86,8 @@ namespace railway.CRUDTrain
             string VipNumberStr = viptb.Text;
             if (!IsNumeric(VipNumberStr))
             {
-                MessageBox.Show("Mora biti broj");
+                Window box = new CustomMessageBox("Polje broj sedišta VIP mora biti ceo broj");
+                box.ShowDialog();
             }
             else
             {
@@ -70,7 +96,8 @@ namespace railway.CRUDTrain
             string BusNumberStr = businesstb.Text;
             if (!IsNumeric(BusNumberStr))
             {
-                MessageBox.Show("Mora biti broj");
+                Window box = new CustomMessageBox("Polje broj sedišta BUSINESS mora biti ceo broj");
+                box.ShowDialog();
             }
             else
             {
@@ -127,6 +154,17 @@ namespace railway.CRUDTrain
         public bool IsNumeric(string value)
         {
             return value.All(char.IsNumber);
+        }
+
+
+        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            IInputElement focusedControl = FocusManager.GetFocusedElement(Application.Current.Windows[2]);
+            if (focusedControl is DependencyObject)
+            {
+                string str = HelpProvider.GetHelpKey((DependencyObject)focusedControl);
+                HelpProvider.ShowHelp(str, this);
+            }
         }
     }
 }

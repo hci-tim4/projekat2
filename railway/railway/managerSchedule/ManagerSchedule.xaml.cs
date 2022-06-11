@@ -239,13 +239,16 @@ namespace railway.managerSchedule
 
                     db.SaveChanges();
                     setAllDrivingLines();
-                    MessageBox.Show("Izmenili ste red voznje za turu " + tour + ". Izmene će biti vidljive nakon mesec dana.");
+                    Window box = new CustomMessageBox("Izmenili ste red voznje za turu " + tour + ". Izmene će biti vidljive nakon mesec dana.");
+                    box.ShowDialog();
 
                 }
             }else{
-                MessageBox.Show("Grška pri unosu vremena. Vreme dolaska je pre vremena polaska");
+                Window box = new CustomMessageBox("Vreme dolaska je pre vremena polaska.");
+                box.ShowDialog();
+
             }
-           
+
         }
 
 
@@ -284,7 +287,8 @@ namespace railway.managerSchedule
                 }
                 db.SaveChanges();
                 setAllDrivingLines();
-                MessageBox.Show("Obrisali ste red voznje. Izmene će biti vidljive nakon mesec dana.");
+                Window box = new CustomMessageBox("Obrisali ste red voznje. Izmene će biti vidljive nakon mesec dana.");
+                box.ShowDialog();
 
             }
         }
@@ -305,10 +309,9 @@ namespace railway.managerSchedule
             Title = param;
         }
 
-
         public void StartTour_OnClick(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Tutorijal");
+        //MessageBox.Show("Tutorijal");
 
             Touring = true;
             TextLocalization.Close = "Zatvori";

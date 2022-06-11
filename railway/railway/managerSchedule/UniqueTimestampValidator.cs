@@ -23,11 +23,11 @@ namespace railway.managerSchedule
                 }
                 if (Int32.Parse(nums[2]) > 60 || Int32.Parse(nums[2]) < 0)
                 {
-                    return new ValidationResult(false, "Neodgovara format");
+                    return new ValidationResult(false, "Neodgovara format. Pravilan format je 00:00:00");
                 }
             }
             catch (Exception e) { 
-                return new ValidationResult(false, "Neodgovara format");
+                return new ValidationResult(false, "Neodgovara format. Pravilan format je 00:00:00");
             }
             return new ValidationResult(true, null);
         }
