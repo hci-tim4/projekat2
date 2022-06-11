@@ -28,7 +28,7 @@
         </Grid.ColumnDefinitions>
         
         <StackPanel Grid.Row="0" Grid.Column="0">
-            <ComboBox MinWidth="200" ToolTip="Unosite polazištu stanicu" x:Name="cmbDrivingLine" 
+            <ComboBox MinWidth="200" x:Name="cmbDrivingLine" 
                       ItemsSource="{Binding drivingLines}" DisplayMemberPath="Name" IsEditable="True" 
                       FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" 
                       tour:TourHelper.ElementID="ChoseDrivingLine"
