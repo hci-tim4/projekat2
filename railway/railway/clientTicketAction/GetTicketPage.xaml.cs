@@ -30,13 +30,13 @@ namespace railway.client
         private GetTicketDTO getTicketDTO;
         private User user;
         public List<Window> openedWindows;
-        private TicketConfirmationModal tickConfModal;
+        //private TicketConfirmationModal tickConfModal;
        
         
         public GetTicketPage(GetTicketDTO dto, User u, TicketConfirmationModal tickModal)
         {
             InitializeComponent();
-            this.tickConfModal = tickModal;
+            //this.tickConfModal = tickModal;
             this.ticketGotSaved += new TicketGotSavedHandler(rerenderSeatDisplay);
             openedWindows = new List<Window>();
             getTicketDTO = dto;
@@ -60,10 +60,10 @@ namespace railway.client
             if (t == null)
                 return;
             t.TicketType = TicketType.Reserved;
-            //TicketConfirmationWindow confirmation = new TicketConfirmationWindow(t, "rezervišete", seatsPage.checkedSeatIds, ticketGotSaved);
-            // openedWindows.Add(confirmation);
-            //confirmation.Show();
-            tickConfModal.ShowHandlerDialog(t, "rezervacije", seatsPage.checkedSeatIds, ticketGotSaved);
+            TicketConfirmationWindow confirmation = new TicketConfirmationWindow(t, "rezervišete", seatsPage.checkedSeatIds, ticketGotSaved);
+            //openedWindows.Add(confirmation);
+            confirmation.ShowDialog();
+            //tickConfModal.ShowHandlerDialog(t, "rezervacije", seatsPage.checkedSeatIds, ticketGotSaved);
 
         }
 
@@ -73,10 +73,10 @@ namespace railway.client
             if (t == null)
                 return;
             t.TicketType = TicketType.Bought;
-            //TicketConfirmationWindow confirmation = new TicketConfirmationWindow(t, "kupite", seatsPage.checkedSeatIds, ticketGotSaved);
+            TicketConfirmationWindow confirmation = new TicketConfirmationWindow(t, "kupite", seatsPage.checkedSeatIds, ticketGotSaved);
             // openedWindows.Add(confirmation);
-            // confirmation.Show();
-            tickConfModal.ShowHandlerDialog(t, "kupovine", seatsPage.checkedSeatIds, ticketGotSaved);
+            confirmation.Show();
+            //tickConfModal.ShowHandlerDialog(t, "kupovine", seatsPage.checkedSeatIds, ticketGotSaved);
         }
 
         private Ticket makeTicket()
@@ -119,7 +119,8 @@ namespace railway.client
                 int numberOfStationsBetween = ss2.SerialNumber - ss1.SerialNumber;
                 if (numberOfStationsBetween < 0)
                 {
-                    MessageBox.Show("Greška se desilo.");
+                    CustomMessageBox cmb = new CustomMessageBox("Greška se desilo.");
+                    cmb.ShowDialog();
                     return 0;
                 }
 
@@ -127,7 +128,8 @@ namespace railway.client
 
                 if (chosenSeatsId.Count == 0)
                 {
-                    MessageBox.Show("Niste izabrali sedište! Pre nastavka morate da izaberete sedište");
+                    CustomMessageBox cmb = new CustomMessageBox("Niste izabrali sedište! \nPre nastavka morate da izaberete sedište.");
+                    cmb.ShowDialog();
                     return 0;
                 }
 
@@ -150,7 +152,8 @@ namespace railway.client
             List<int> chosenSeatsId = seatsPage.checkedSeatIds;
             if (chosenSeatsId.Count == 0)
             {
-                MessageBox.Show("Niste izabrali sedište! Pre nastavka morate da izaberete sedište");
+                CustomMessageBox cmb = new CustomMessageBox("Niste izabrali sedište! \nPre nastavka morate da izaberete sedište");
+                cmb.ShowDialog();
                 e.CanExecute = false;
                 return;
             }

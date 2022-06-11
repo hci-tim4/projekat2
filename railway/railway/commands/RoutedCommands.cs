@@ -100,5 +100,16 @@ namespace railway.Commands
                 new KeyGesture(Key.P, ModifierKeys.Control),
             }
         );
+        
+        public static readonly RoutedUICommand CloseMessageBox = new RoutedUICommand(
+            "Close",
+            "Close",
+            typeof(RoutedCommands),
+            new InputGestureCollection()
+            {
+                new KeyGesture(Key.Enter),
+            }
+        );
+
     }
 }

@@ -4,18 +4,22 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:railway"
+        xmlns:cmd="clr-namespace:railway.Commands"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Icon="/icon/trainIcon.png"
         Title="ŽELEZNICE SRBIJE" 
-        Height="150" Width="400"
+        Height="150" Width="450"
         ResizeMode="NoResize">
+    <Window.CommandBindings>
+        <CommandBinding Command="cmd:RoutedCommands.CloseMessageBox" x:Name="closeMeesageBox" CanExecute="CloseMeesageBox_OnCanExecute" Executed="CloseMeesageBox_OnExecuted"></CommandBinding>
+    </Window.CommandBindings>
     <Grid Background="DodgerBlue">
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <Label Foreground="White" FontWeight="Bold" Grid.Row="0" FontSize="20" x:Name="messageLabel" VerticalAlignment="Center" HorizontalAlignment="Center" ></Label>
+        <Label Foreground="White" Width="400" FontWeight="Bold" Grid.Row="0" FontSize="18" x:Name="messageLabel" VerticalAlignment="Center" HorizontalAlignment="Center" ></Label>
         <Button Click="ok_clicked" Grid.Row="1" Width="80" Height="25" Background="White" Foreground="DodgerBlue">OK</Button>
     </Grid>
 </Window>

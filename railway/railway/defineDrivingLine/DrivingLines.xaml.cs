@@ -27,12 +27,9 @@ namespace railway.defineDrivingLine
         private DrivingLineViewDTO currentSelected = null;
         private Station currentStation;
         private List<Station> stations;
-        private DefineEndDateForDrivingLineModal defEndDateModal;
-        private DefineSimpleDataForDrivingLineModal defSimpleData;
         private Boolean Touring;
         
-        public DrivingLines(Frame parentFrame, DefineEndDateForDrivingLineModal defineEndDateForDrivingLineModal,
-            DefineSimpleDataForDrivingLineModal defineSimpleDataForDrivingLineModal, ViewDrivingLines viewDrivingLines)
+        public DrivingLines(Frame parentFrame, ViewDrivingLines viewDrivingLines)
         {
             InitializeComponent();
             //this.parentFrame = frame;
@@ -49,8 +46,6 @@ namespace railway.defineDrivingLine
                 stations = (from st in db.stations orderby st.Name select st).ToList();
             }
 
-            this.defEndDateModal = defineEndDateForDrivingLineModal;
-            this.defSimpleData = defineSimpleDataForDrivingLineModal;
             
             startDate.Language = XmlLanguage.GetLanguage(new System.Globalization.CultureInfo("sr-ME").IetfLanguageTag);
             endDate.Language = XmlLanguage.GetLanguage(new System.Globalization.CultureInfo("sr-ME").IetfLanguageTag);
@@ -205,7 +200,7 @@ namespace railway.defineDrivingLine
         
         private void AddDrivingLine_OnClick(object sender, RoutedEventArgs e)
         {
-            parentPage.CurrentComponent = new AddDrivingLine(parentFrame, this, defSimpleData, parentPage);
+            parentPage.CurrentComponent = new AddDrivingLine(parentFrame, this, parentPage);
             //this.parentFrame.Content = add;
         }
 
@@ -238,7 +233,6 @@ namespace railway.defineDrivingLine
             }
             catch (Exception ex)
             {
-                //MessageBox.Show(ex.Message);
                 CustomMessageBox cmb = new CustomMessageBox("Ups, neočekivana greška se desilo");
                 cmb.Show();
             }

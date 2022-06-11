@@ -64,7 +64,8 @@ namespace railway.CRUDTrain
 
             if (!IsNumeric(RegNumberStr))
             {
-                MessageBox.Show("Mora biti broj");
+                CustomMessageBox cmb = new CustomMessageBox("Mora biti broj");
+                cmb.ShowDialog();
             }
             else
             {
@@ -73,7 +74,7 @@ namespace railway.CRUDTrain
             string VipNumberStr = viptb.Text;
             if (!IsNumeric(VipNumberStr))
             {
-                MessageBox.Show("Mora biti broj");
+                CustomMessageBox cmb = new CustomMessageBox("Mora biti broj");
             }
             else
             {
@@ -82,7 +83,8 @@ namespace railway.CRUDTrain
             string BusNumberStr = businesstb.Text;
             if (!IsNumeric(BusNumberStr))
             {
-                MessageBox.Show("Mora biti broj");
+                CustomMessageBox cmb = new CustomMessageBox("Mora biti broj");
+                cmb.ShowDialog();
             }
             else
             {

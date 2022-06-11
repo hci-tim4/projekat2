@@ -53,7 +53,6 @@ namespace railway.defineDrivingLine
             DrivingLineService dlService = new DrivingLineService();
             try
             {
-                //MessageBox.Show(startSelectedDate+"");
                 DateTime ?startSelectedDate = startDate.SelectedDate;
                 if (startSelectedDate == null)
                 {
@@ -79,7 +78,6 @@ namespace railway.defineDrivingLine
             }
             catch (Exception e)
             {
-                //MessageBox.Show(e.Message);
                 CustomMessageBox cmb1 = new CustomMessageBox("Ups, neočekivana greška se desilo");
                 cmb1.ShowDialog();
             }

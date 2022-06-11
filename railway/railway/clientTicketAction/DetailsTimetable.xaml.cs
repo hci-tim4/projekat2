@@ -19,7 +19,7 @@ namespace railway.clientTimetable
     /// <summary>
     /// Interaction logic for DetailsTimetable.xaml
     /// </summary>
-    public partial class DetailsTimetable : Page
+    public partial class DetailsTimetable : Window
     {
         List<DetailDrivinglineDTO> detailLine = new List<DetailDrivinglineDTO>();
         //private List<StationSchedule> stationSchedules;
