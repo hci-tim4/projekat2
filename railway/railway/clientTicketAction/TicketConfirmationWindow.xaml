@@ -30,7 +30,7 @@
                 MaxWidth="120px" MinHeight="30" MaxHeight="60" Margin="2,2,6,2">Odustajem</Button>
             <Button x:Name="confirmBtn" Grid.Row="2" Grid.Column="0" Click="confirmBtn_Click_1"
                 MaxWidth="120px" MinHeight="30" MaxHeight="60" Margin="6,2,2,2"
-                IsDefault="True"> Potvrdim
+                IsDefault="True"> Potvrđujem
             
             </Button>
         </DockPanel>

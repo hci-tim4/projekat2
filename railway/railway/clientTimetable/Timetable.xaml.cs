@@ -107,9 +107,16 @@ namespace railway.clientTimetable
                 this.lines = Find(this.departure, this.arrival, (DateTime)this.date);
                 if (this.lines.Count == 0)
                 {
+                    Window box = new CustomMessageBox("Pretraga je u toku. Molimo sačekajte.");
+                    box.ShowDialog();
                     this.lines.AddRange(FindWithTransfer(this.departure, this.arrival, (DateTime)this.date));
                 }
                 dataGrid.ItemsSource = this.lines;
+
+                if (this.lines.Count == 0) {
+                    Window box = new CustomMessageBox("Nema nijedne vožnje za izabrano polazište,\n odredište i datum.");
+                    box.ShowDialog();
+                }
             }
 
         }

@@ -32,10 +32,11 @@ namespace railway
             InitializeComponent();
 
 
-           FillDatabase fd = new FillDatabase();
-           fd.fill();
+            // FillDatabase fd = new FillDatabase();
+            // fd.fill();
 
-
+            GenerateSchedule g = new GenerateSchedule();
+         //   g.Generate();
 
 
             page.Content = new Login();

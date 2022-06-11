@@ -121,6 +121,7 @@ namespace railway.managerSchedule
                      join traffic in db.TrafficDays
                      on drivingLine.Id equals traffic.DrivingLineId
                      into groupDays
+                     where drivingLine.deleted == false
                      select new
                      {
                          drivingLineName = drivingLine.Name,

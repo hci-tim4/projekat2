@@ -10,17 +10,19 @@ namespace railway.database
 {
     public class GenerateSchedule
     {
-        public GenerateSchedule() { 
-        
+        public GenerateSchedule()
+        {
+
         }
 
-        public void Generate() {
-            using (var db = new RailwayContext()) 
+        public void Generate()
+        {
+            using (var db = new RailwayContext())
             {
                 var info =
                     (from trafficDays in db.TrafficDays
                      join drivingLine in db.drivingLines
-                     on trafficDays.DrivingLineId equals drivingLine.Id 
+                     on trafficDays.DrivingLineId equals drivingLine.Id
                      where drivingLine.startDate <= DateTime.Now
                      select new
                      {
@@ -29,34 +31,39 @@ namespace railway.database
                      }).ToList();
 
 
-                foreach(var i in info) {
+                foreach (var i in info)
+                {
                     List<DateTime> dates = GetDatesForDay(i.day);
-                    foreach (DateTime date in dates) {
+                    foreach (DateTime date in dates)
+                    {
                         Schedule schedule = new Schedule();
                         schedule.DrivingLineId = i.drivingLineId;
                         schedule.DepatureDate = date;
                         db.schedules.Add(schedule);
                         db.SaveChanges();
                     }
-                    
+
                 }
-                
+
             }
         }
 
-        private List<DateTime> GetDatesForDay(Days day) {
+        private List<DateTime> GetDatesForDay(Days day)
+        {
             List<DateTime> dates = new List<DateTime>();
 
             DateTime start = DateTime.Now.Date;
             DateTime end = start.AddDays(30);
 
-            for (int i = 0; i < 10; i++) {
-                if (start.DayOfWeek.ToString().Equals(day.ToString())) {
+            for (int i = 0; i < 10; i++)
+            {
+                if (start.DayOfWeek.ToString().Equals(day.ToString()))
+                {
                     DateTime newOne = start;
                     dates.Add(newOne);
                 }
-                
-                
+
+
                 start = start.AddDays(1);
             }
 
