@@ -141,7 +141,7 @@ namespace railway.managerSchedule
                     }
                     db.SaveChanges();
 
-                    Window box = new CustomMessageBox("Doodali ste novi red vožnje");
+                    Window box = new CustomMessageBox("Dodali ste novi red vožnje");
                     box.ShowDialog();
                     if (parentPage != null)
 

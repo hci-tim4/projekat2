@@ -72,6 +72,13 @@
                 
             </StackPanel>
             
+            <DockPanel>
+                <Label Content="Ukupna Zarada:" 
+                       tour:TourHelper.ElementID="WholeProfit"
+                       tour:TourHelper.Placement="BottomCenter"></Label>
+                <Label x:Name="profitLabel" Content="{Binding Path=Profit}"></Label>
+                
+            </DockPanel >
             <ScrollViewer>
             <DataGrid  Background="DodgerBlue"
                        ItemsSource="{Binding Path=currentData }"
