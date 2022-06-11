@@ -339,7 +339,8 @@ namespace railway.defineDrivingLine
             //odabir voza i imena!
             if (stations2.Count < 2)
             {
-                MessageBox.Show("Mrežna linija mora da sadrži barem 2 stanice");
+                CustomMessageBox cmb = new CustomMessageBox("Mrežna linija mora da sadrži barem 2 stanice");
+                cmb.ShowDialog();
                 return;
             }
             //defSimpleData.ShowHandlerDialog(stations2, drivingLineGotSaved);

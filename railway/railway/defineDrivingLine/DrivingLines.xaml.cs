@@ -98,7 +98,7 @@ namespace railway.defineDrivingLine
             //defEndDateModal.ShowHandlerDialog(send, this);
 
             DefineEndDateForDrivingLine window = new DefineEndDateForDrivingLine(send, this);
-            window.Show();
+            window.ShowDialog();
             /*
             using (var db = new RailwayContext())
             {
@@ -169,7 +169,8 @@ namespace railway.defineDrivingLine
         {
             if (currentSelected == null)
             {
-                MessageBox.Show("Prvo morate da izaberete mrežnu liniju");
+                CustomMessageBox cmb = new CustomMessageBox("Prvo morate da izaberete mrežnu liniju");
+                cmb.ShowDialog();
                 return;
             }
 
@@ -212,7 +213,8 @@ namespace railway.defineDrivingLine
         {
             if (currentSelected == null)
             {
-                MessageBox.Show("Prvo morate da izaberete mrežnu liniju koji hoćete da editujete");
+                CustomMessageBox cmb = new CustomMessageBox("Prvo morate da izaberete mrežnu liniju koji hoćete da editujete");
+                cmb.ShowDialog();
                 return;
             }
             string name = newName.Text;
@@ -220,21 +222,25 @@ namespace railway.defineDrivingLine
             try
             {
                 dlService.updateBasicDrivingService(name, newTrain, currentSelected.DrivingLineId);
-                MessageBox.Show("Mrežna linija je uspešno sačuvana");
+                CustomMessageBox cmb = new CustomMessageBox("Mrežna linija je uspešno sačuvana");
+                cmb.ShowDialog();
                 setDrivingLines(new RailwayContext());
             }
             catch (NotDefinedException nd)
             {
-                MessageBox.Show(nd.message);
+                CustomMessageBox cmb = new CustomMessageBox(nd.message);
+                cmb.ShowDialog();
             }
             catch (AlreadyDefinedException ad)
             {
-                MessageBox.Show(ad.message);
+                CustomMessageBox cmb = new CustomMessageBox(ad.message);
+                cmb.ShowDialog();
             }
             catch (Exception ex)
             {
                 //MessageBox.Show(ex.Message);
-                MessageBox.Show("Ups, neočekivana greška se desilo");
+                CustomMessageBox cmb = new CustomMessageBox("Ups, neočekivana greška se desilo");
+                cmb.Show();
             }
 
         }
