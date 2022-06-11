@@ -33,23 +33,6 @@ namespace railway.drivingLineReport
         private Boolean Touring = false;
         private TicketService ticketService;
         public List<InformationForLineChartDisplay> currentData { get; set; }
-        
-        /*
-        public List<InformationForLineChartDisplay> currentData
-        {
-            get
-            {
-                return _currentData;
-            }
-            set
-            {
-                if (value != _currentData)
-                {
-                    _currentData = value;
-                    OnPropertyChanged("currentData");
-                }
-            }
-        }*/
 
         private LineChartInformation _lineChartData;// { get; set; }
         public LineChartInformation lineChartData
@@ -88,75 +71,107 @@ namespace railway.drivingLineReport
         
         public ViewDrivingLineTicketReport()
         {
-            InitializeComponent();
-            setDrivingLinesInComboBox();
-            ticketService = new TicketService();
-            lineChartData = new LineChartInformation();
-            Formatter = value => value.ToString("N");
-            lineChartPanel.DataContext = this;
-            dataGrid.DataContext = this;
+            try{
+                InitializeComponent();
+                setDrivingLinesInComboBox();
+                ticketService = new TicketService();
+                lineChartData = new LineChartInformation();
+                Formatter = value => value.ToString("N");
+                lineChartPanel.DataContext = this;
+                dataGrid.DataContext = this;
+                
+            }
+            catch (Exception e)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
         }
 
         private void setDrivingLinesInComboBox()
         {
-            using (var db = new RailwayContext())
+            try{
+                using (var db = new RailwayContext())
+                {
+                    drivingLines = (from dl in db.drivingLines
+                        select new drivingLineForReportDTO()
+                        {
+                            DrivingLineId = dl.Id,
+                            Name = dl.Name
+                        }).ToList();
+                    cmbDrivingLine.ItemsSource = drivingLines;
+                }
+                
+            }
+            catch (Exception e)
             {
-                drivingLines = (from dl in db.drivingLines
-                    select new drivingLineForReportDTO()
-                    {
-                        DrivingLineId = dl.Id,
-                        Name = dl.Name
-                    }).ToList();
-                cmbDrivingLine.ItemsSource = drivingLines;
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
             }
             
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            var cmbx = sender as ComboBox;
-            cmbx.ItemsSource = from item in drivingLines
-                where item.Name.ToLower().Contains(cmbx.Text.ToLower())
-                select item;
-            this.currentDrivingLine = (from item in drivingLines
-                where item.Name.ToLower().Equals(cmbx.Text.ToLower())
-                select item).FirstOrDefault();
-            
-            if (Touring)
+            try
             {
-                if (currentDrivingLine != null)
-                {
-                    IFeatureTourNavigator navigator = FeatureTour.GetNavigator();
-                    navigator.IfCurrentStepEquals("ChoseDrivingLine").GoNext();
-                }
-            }
+                var cmbx = sender as ComboBox;
+                cmbx.ItemsSource = from item in drivingLines
+                    where item.Name.ToLower().Contains(cmbx.Text.ToLower())
+                    select item;
+                this.currentDrivingLine = (from item in drivingLines
+                    where item.Name.ToLower().Equals(cmbx.Text.ToLower())
+                    select item).FirstOrDefault();
 
-            cmbx.IsDropDownOpen = true;
+                if (Touring)
+                {
+                    if (currentDrivingLine != null)
+                    {
+                        IFeatureTourNavigator navigator = FeatureTour.GetNavigator();
+                        navigator.IfCurrentStepEquals("ChoseDrivingLine").GoNext();
+                    }
+                }
+
+                cmbx.IsDropDownOpen = true;
             
+            }
+            catch (Exception ex)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
         }
 
         private void ShowDrivingLineReportButton_OnClick(object sender, RoutedEventArgs e)
         {
-            if (currentDrivingLine == null)
-            {
-                MessageBox.Show("Prvo morate da izaberete mrežnu liniju.");
-                return;
-            }
-            if (Touring)
-            {
-                IFeatureTourNavigator navigator = FeatureTour.GetNavigator();
-                navigator.IfCurrentStepEquals("ShowReport").GoNext();
-            }
-            tickets = ticketService.GetTicketByDrivingLine(currentDrivingLine.DrivingLineId);
-            if (tickets.Count == 0)
-            {
-                CustomMessageBox cmb = new CustomMessageBox("Nema prodatih karata za izabranu mrežnu liniju");
-                cmb.ShowDialog();
-                return;
-            }
+            try{
+                if (currentDrivingLine == null)
+                {
+                    MessageBox.Show("Prvo morate da izaberete mrežnu liniju.");
+                    return;
+                }
+                if (Touring)
+                {
+                    IFeatureTourNavigator navigator = FeatureTour.GetNavigator();
+                    navigator.IfCurrentStepEquals("ShowReport").GoNext();
+                }
+                tickets = ticketService.GetTicketByDrivingLine(currentDrivingLine.DrivingLineId);
+                if (tickets.Count == 0)
+                {
+                    CustomMessageBox cmb = new CustomMessageBox("Nema prodatih karata za izabranu mrežnu liniju");
+                    cmb.ShowDialog();
+                    return;
+                }
 
-            ConvertTicketsToGraphInformation();
-            PrepareGraph();
+                ConvertTicketsToGraphInformation();
+                PrepareGraph();
+                
+            }
+            catch (Exception ex)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
         }
 
         private void ConvertTicketsToGraphInformation()

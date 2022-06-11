@@ -31,15 +31,23 @@ namespace railway.client
 
         public SeatDisplay(int drivingLineID, int scheduleId, int dtoFromStationScheduleId)
         {
-            InitializeComponent();
+            try{
+                InitializeComponent();
 
-            checkedSeatIds = new List<int>();
+                checkedSeatIds = new List<int>();
 
-            getOccupiedSeats(scheduleId, dtoFromStationScheduleId);
-            displaySeats(drivingLineID);
-            addLegend();
+                getOccupiedSeats(scheduleId, dtoFromStationScheduleId);
+                displaySeats(drivingLineID);
+                addLegend();
 
-            addCol();
+                addCol();
+            
+            }
+            catch (Exception e)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
         }
 
         private void getOccupiedSeats(int scheduleId, int dtoFromStationScheduleId)

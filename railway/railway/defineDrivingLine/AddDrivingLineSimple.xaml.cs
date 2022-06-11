@@ -36,26 +36,43 @@ namespace railway.defineDrivingLine
         public AddDrivingLineSimple(Frame parentFrame, DrivingLines viewDrivingLines, AddDrivingLine dragAndDrop,
             ObservableCollection<Station> stations2, ObservableCollection<Station> stations, ViewDrivingLines greatParentPage)
         {
-            InitializeComponent();
-            this.greatParentPage = greatParentPage; 
-            this.drivingLineGotSaved += new DrivingGotSavedHandler(clearMap);
-            this.parentFrame = parentFrame;
-            //this.parentFrame.Content = this;
-            this.parentPage = viewDrivingLines;
+            try
+            {
+                InitializeComponent();
+                this.greatParentPage = greatParentPage;
+                this.drivingLineGotSaved += new DrivingGotSavedHandler(clearMap);
+                this.parentFrame = parentFrame;
+                //this.parentFrame.Content = this;
+                this.parentPage = viewDrivingLines;
 
-            this.stations2 = stations2;
-            this.stations = stations;
-            this.DataContext = this;
-            stationsCmb.ItemsSource = stations;
-            addDrivingLineDragAndDrop = dragAndDrop;
+                this.stations2 = stations2;
+                this.stations = stations;
+                this.DataContext = this;
+                stationsCmb.ItemsSource = stations;
+                addDrivingLineDragAndDrop = dragAndDrop;
+            
+            }
+            catch (Exception ex)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
         }
 
         private void resetStations()
         {
-            using (var db = new RailwayContext())
+            try{
+                using (var db = new RailwayContext())
+                {
+                    List<Station> s = (from st in db.stations orderby st.Name select st).ToList();
+                    stations = new ObservableCollection<Station>(s);//s;
+                }
+                
+            }
+            catch (Exception e)
             {
-                List<Station> s = (from st in db.stations orderby st.Name select st).ToList();
-                stations = new ObservableCollection<Station>(s);//s;
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
             }
         }
 
@@ -76,61 +93,67 @@ namespace railway.defineDrivingLine
 
         private void setUpMapView()
         {
+            try{
+                GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerAndCache;
+                // choose your provider here
+                mapView.MapProvider = GMap.NET.MapProviders.OpenStreetMapProvider.Instance;
+                mapView.Markers.Clear();
+
+                // don't forget to add the marker to the map
+                //mapView.Markers.Add(routeMarker);
+
+                mapView.MinZoom = 3;
+                mapView.MaxZoom = 17;
+                // whole world zoom
+                mapView.Zoom = 7;
+                mapView.Position = new GMap.NET.PointLatLng(44.81583333, 20.45944444);
+                // lets the map use the mousewheel to zoom
+                mapView.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
+                // lets the user drag the map
+                mapView.CanDragMap = true;
+                // lets the user drag the map with the left mouse button
+                mapView.DragButton = MouseButton.Left;
+                mapView.ShowCenter = false;
+
+                foreach (Station s in stations2)
+                {
+                    GMap.NET.PointLatLng current = new GMap.NET.PointLatLng(s.Latitude, s.Longitude);
+                    GMap.NET.WindowsPresentation.GMapMarker marker = new GMap.NET.WindowsPresentation.GMapMarker(current);
+                    
+                    marker.Shape = new Ellipse
+                    {
+                        Width = 10,
+                        Height = 10,
+                        Stroke = Brushes.Firebrick,
+                        StrokeThickness = 1.5,
+                        ToolTip = "Stanica",
+                        Visibility = Visibility.Visible,
+                        Fill = Brushes.Firebrick,
+
+                    };
+                    mapView.Markers.Add(marker);
+                    
+                    
+                    if (previous == null)
+                    {
+                        previous = new PointLatLng(current.Lat, current.Lng);
+                        continue;
+                    }
+                    else
+                    {
+                        drawLineBetweenPoints(current, previous, mapView);
+                        previous = new PointLatLng(current.Lat, current.Lng);
+                    }
+                }
+                
+                
             
-            GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerAndCache;
-            // choose your provider here
-            mapView.MapProvider = GMap.NET.MapProviders.OpenStreetMapProvider.Instance;
-            mapView.Markers.Clear();
-
-            // don't forget to add the marker to the map
-            //mapView.Markers.Add(routeMarker);
-
-            mapView.MinZoom = 3;
-            mapView.MaxZoom = 17;
-            // whole world zoom
-            mapView.Zoom = 7;
-            mapView.Position = new GMap.NET.PointLatLng(44.81583333, 20.45944444);
-            // lets the map use the mousewheel to zoom
-            mapView.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
-            // lets the user drag the map
-            mapView.CanDragMap = true;
-            // lets the user drag the map with the left mouse button
-            mapView.DragButton = MouseButton.Left;
-            mapView.ShowCenter = false;
-
-            foreach (Station s in stations2)
-            {
-                GMap.NET.PointLatLng current = new GMap.NET.PointLatLng(s.Latitude, s.Longitude);
-                GMap.NET.WindowsPresentation.GMapMarker marker = new GMap.NET.WindowsPresentation.GMapMarker(current);
-                
-                marker.Shape = new Ellipse
-                {
-                    Width = 10,
-                    Height = 10,
-                    Stroke = Brushes.Firebrick,
-                    StrokeThickness = 1.5,
-                    ToolTip = "Stanica",
-                    Visibility = Visibility.Visible,
-                    Fill = Brushes.Firebrick,
-
-                };
-                mapView.Markers.Add(marker);
-                
-                
-                if (previous == null)
-                {
-                    previous = new PointLatLng(current.Lat, current.Lng);
-                    continue;
-                }
-                else
-                {
-                    drawLineBetweenPoints(current, previous, mapView);
-                    previous = new PointLatLng(current.Lat, current.Lng);
-                }
             }
-            
-            
-            
+            catch (Exception e)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }    
         }
 
         
@@ -170,69 +193,102 @@ namespace railway.defineDrivingLine
 
         private void map_Loaded(object sender, RoutedEventArgs e)
         {
-            setUpMapView();
+                setUpMapView();
+                
         }
 
 
         private void SaveDrivingLine_OnClick(object sender, RoutedEventArgs e)
         {
-            //odabir voza i imena!
-            if (stations2.Count < 2)
-            {
-                CustomMessageBox cmb = new CustomMessageBox("Mrežna linija mora da sadrži barem 2 stanice");
-                cmb.ShowDialog();
-                return;
-            }
-            Window def = new DefineSimpleDataForDrivingLine(stations2, drivingLineGotSaved);
-            def.Show();
+            try{
+                //odabir voza i imena!
+                if (stations2.Count < 2)
+                {
+                    CustomMessageBox cmb = new CustomMessageBox("Mrežna linija mora da sadrži barem 2 stanice");
+                    cmb.ShowDialog();
+                    return;
+                }
+                Window def = new DefineSimpleDataForDrivingLine(stations2, drivingLineGotSaved);
+                def.Show();
             //defSimpleData.ShowHandlerDialog(stations2, drivingLineGotSaved);
+            
+            }
+            catch (Exception ex)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
         }
 
         private void BackToDragAndDrop_OnClick(object sender, RoutedEventArgs e)
         {
-            addDrivingLineDragAndDrop.stations = this.stations;
-            addDrivingLineDragAndDrop.stations2 = this.stations2;
-            addDrivingLineDragAndDrop.setUpMapView();
-            this.parentFrame.Content = addDrivingLineDragAndDrop;
-            this.greatParentPage.CurrentComponent = addDrivingLineDragAndDrop;
+            try{
+                addDrivingLineDragAndDrop.stations = this.stations;
+                addDrivingLineDragAndDrop.stations2 = this.stations2;
+                addDrivingLineDragAndDrop.setUpMapView();
+                this.parentFrame.Content = addDrivingLineDragAndDrop;
+                this.greatParentPage.CurrentComponent = addDrivingLineDragAndDrop;
+                
+            }
+            catch (Exception ex)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
         }
 
         private void EventSetter_OnHandler(object sender, TextChangedEventArgs e)
         {
-            var cmbx = sender as ComboBox;
-            cmbx.ItemsSource = (from item in stations
-                where item.Name.ToLower().Contains(cmbx.Text.ToLower())
-                select item).ToList();
-            this.currentStation  = (from item in stations
-                where item.Name.ToLower().Equals(cmbx.Text.ToLower())
-                select item).FirstOrDefault();
+            try{
+                var cmbx = sender as ComboBox;
+                cmbx.ItemsSource = (from item in stations
+                    where item.Name.ToLower().Contains(cmbx.Text.ToLower())
+                    select item).ToList();
+                this.currentStation  = (from item in stations
+                    where item.Name.ToLower().Equals(cmbx.Text.ToLower())
+                    select item).FirstOrDefault();
 
-            if (Touring && currentStation != null)
-            {
-                IFeatureTourNavigator navigator = FeatureTour.GetNavigator();
-                navigator.IfCurrentStepEquals("AllDrivingLines").GoNext();
+                if (Touring && currentStation != null)
+                {
+                    IFeatureTourNavigator navigator = FeatureTour.GetNavigator();
+                    navigator.IfCurrentStepEquals("AllDrivingLines").GoNext();
+                }
+
+                cmbx.IsDropDownOpen = true;
+                
             }
-
-            cmbx.IsDropDownOpen = true;
+            catch (Exception ex)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
         }
 
         private void AddStation_OnClick(object sender, RoutedEventArgs e)
         {
-            if (currentStation == null)
+            try{
+                if (currentStation == null)
+                {
+                    CustomMessageBox cmb = new CustomMessageBox("Prvo morate da izaberete stanicu");
+                    cmb.ShowDialog();
+                    return;
+                }
+                if (Touring)
+                {
+                    IFeatureTourNavigator navigator = FeatureTour.GetNavigator();
+                    navigator.IfCurrentStepEquals("AddStation").GoNext();
+                }
+                stations2.Add(currentStation);
+                stations.Remove(currentStation);
+                stationsCmb.ItemsSource = stations;
+                setUpMapView();
+                
+            }
+            catch (Exception ex)
             {
-                CustomMessageBox cmb = new CustomMessageBox("Prvo morate da izaberete stanicu");
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
                 cmb.ShowDialog();
-                return;
             }
-            if (Touring)
-            {
-                IFeatureTourNavigator navigator = FeatureTour.GetNavigator();
-                navigator.IfCurrentStepEquals("AddStation").GoNext();
-            }
-            stations2.Add(currentStation);
-            stations.Remove(currentStation);
-            stationsCmb.ItemsSource = stations;
-            setUpMapView();
         }
 
         private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -249,9 +305,17 @@ namespace railway.defineDrivingLine
         
         private void Back_OnClick(object sender, RoutedEventArgs e)
         {
-            parentPage.setDrivingLines(new RailwayContext());
-            greatParentPage.CurrentComponent = parentPage;
-            parentFrame.Content = parentPage;
+            try{
+                parentPage.setDrivingLines(new RailwayContext());
+                greatParentPage.CurrentComponent = parentPage;
+                parentFrame.Content = parentPage;
+                
+            }
+            catch (Exception ex)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
         }
      
         

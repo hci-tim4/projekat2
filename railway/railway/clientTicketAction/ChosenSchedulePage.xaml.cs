@@ -24,9 +24,17 @@ namespace railway.client
         
         public ChosenSchedulePage(int fromStationScheduleId, int untilStationScheduleId, int scheduleId)
         {
-            InitializeComponent();
-            TicketDTO t = createTicketDTO(fromStationScheduleId, untilStationScheduleId, scheduleId);
-            this.DataContext = t;
+            try
+            {
+                InitializeComponent();
+                TicketDTO t = createTicketDTO(fromStationScheduleId, untilStationScheduleId, scheduleId);
+                this.DataContext = t;
+            }
+            catch (Exception e)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
         }
 
         private TicketDTO createTicketDTO(int fromStationScheduleId, int untilStationScheduleId, int scheduleId)

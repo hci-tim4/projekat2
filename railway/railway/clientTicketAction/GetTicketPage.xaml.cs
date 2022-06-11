@@ -35,16 +35,23 @@ namespace railway.client
         
         public GetTicketPage(GetTicketDTO dto, User u, TicketConfirmationModal tickModal)
         {
-            InitializeComponent();
-            //this.tickConfModal = tickModal;
-            this.ticketGotSaved += new TicketGotSavedHandler(rerenderSeatDisplay);
-            openedWindows = new List<Window>();
-            getTicketDTO = dto;
-            user = u;
-            seatsPage = new SeatDisplay(dto.DrivingLineId, dto.ScheduleId, dto.FromStationScheduleId);;
-            seatDisplay.Content = seatsPage;
-            displayInfo.Content = new ChosenSchedulePage(dto.FromStationScheduleId, dto.UntilStationScheduleId, dto.ScheduleId);
-            
+            try{
+                InitializeComponent();
+                //this.tickConfModal = tickModal;
+                this.ticketGotSaved += new TicketGotSavedHandler(rerenderSeatDisplay);
+                openedWindows = new List<Window>();
+                getTicketDTO = dto;
+                user = u;
+                seatsPage = new SeatDisplay(dto.DrivingLineId, dto.ScheduleId, dto.FromStationScheduleId);;
+                seatDisplay.Content = seatsPage;
+                displayInfo.Content = new ChosenSchedulePage(dto.FromStationScheduleId, dto.UntilStationScheduleId, dto.ScheduleId);
+                
+            }
+            catch (Exception e)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
         }
 
         private void rerenderSeatDisplay()
@@ -56,27 +63,41 @@ namespace railway.client
 
         private void reserveBtn_Click(object sender, RoutedEventArgs e)
         {
-            Ticket t = makeTicket();
-            if (t == null)
-                return;
-            t.TicketType = TicketType.Reserved;
-            TicketConfirmationWindow confirmation = new TicketConfirmationWindow(t, "rezervišete", seatsPage.checkedSeatIds, ticketGotSaved);
-            //openedWindows.Add(confirmation);
-            confirmation.ShowDialog();
-            //tickConfModal.ShowHandlerDialog(t, "rezervacije", seatsPage.checkedSeatIds, ticketGotSaved);
+            try{
+                Ticket t = makeTicket();
+                if (t == null)
+                    return;
+                t.TicketType = TicketType.Reserved;
+                TicketConfirmationWindow confirmation = new TicketConfirmationWindow(t, "rezervišete", seatsPage.checkedSeatIds, ticketGotSaved);
+                //openedWindows.Add(confirmation);
+                confirmation.ShowDialog();
+                //tickConfModal.ShowHandlerDialog(t, "rezervacije", seatsPage.checkedSeatIds, ticketGotSaved);
 
+            }
+            catch (Exception ex)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
         }
 
         private void buyBtn_Click(object sender, RoutedEventArgs e)
         {
-            Ticket t = makeTicket();
-            if (t == null)
-                return;
-            t.TicketType = TicketType.Bought;
-            TicketConfirmationWindow confirmation = new TicketConfirmationWindow(t, "kupite", seatsPage.checkedSeatIds, ticketGotSaved);
-            // openedWindows.Add(confirmation);
-            confirmation.Show();
-            //tickConfModal.ShowHandlerDialog(t, "kupovine", seatsPage.checkedSeatIds, ticketGotSaved);
+            try{
+                Ticket t = makeTicket();
+                if (t == null)
+                    return;
+                t.TicketType = TicketType.Bought;
+                TicketConfirmationWindow confirmation = new TicketConfirmationWindow(t, "kupite", seatsPage.checkedSeatIds, ticketGotSaved);
+                // openedWindows.Add(confirmation);
+                confirmation.Show();
+                //tickConfModal.ShowHandlerDialog(t, "kupovine", seatsPage.checkedSeatIds, ticketGotSaved);
+            }
+            catch (Exception ex)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
         }
 
         private Ticket makeTicket()

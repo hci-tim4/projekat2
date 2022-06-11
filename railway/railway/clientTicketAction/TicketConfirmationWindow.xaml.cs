@@ -27,42 +27,55 @@ namespace railway.client
 
         public TicketConfirmationWindow(Ticket t, string action, List<int> checkedSeatIds, TicketGotSavedHandler ticketGotSaved)
         {
-            InitializeComponent();
-            this.ticketGotSavedHandler = ticketGotSaved;
-            ticketsGotSaved = false;
-            this.checkedSeatIds = checkedSeatIds;
-            ticket = t;
-            askingForConfirmLabel.Content = "Potvrdite da li hoćete da " + action + " izabranu kartu/izabrane karte.";
-            confirmationDataFrame.Content = new ConfirmationDataDisplay(t, checkedSeatIds.Count);
+            try{
+                InitializeComponent();
+                this.ticketGotSavedHandler = ticketGotSaved;
+                ticketsGotSaved = false;
+                this.checkedSeatIds = checkedSeatIds;
+                ticket = t;
+                askingForConfirmLabel.Content = "Potvrdite da li hoćete da " + action + " izabranu kartu/izabrane karte.";
+                confirmationDataFrame.Content = new ConfirmationDataDisplay(t, checkedSeatIds.Count);
+            }
+            catch (Exception e)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
         }
 
         private void confirmBtn_Click_1(object sender, RoutedEventArgs e)
         {
-
-            using (var db = new RailwayContext())
-            {
-                //save ticket
-                //save ticketseats
-                db.tickets.Add(ticket);
-                db.SaveChanges();
-                foreach (int seatId in checkedSeatIds)
+            try{
+                using (var db = new RailwayContext())
                 {
-                    Seat seat = (from seats in db.seats
-                                 where seats.Id == seatId
-                                 select seats).Single();
-                    TicketSeats ts = new TicketSeats()
-                    {
-                        SeatId = seatId,
-                        TicketId = ticket.Id
-                    };
-                    db.ticketSeats.Add(ts);
+                        //save ticket
+                        //save ticketseats
+                        db.tickets.Add(ticket);
+                        db.SaveChanges();
+                        foreach (int seatId in checkedSeatIds)
+                        {
+                            Seat seat = (from seats in db.seats
+                                         where seats.Id == seatId
+                                         select seats).Single();
+                            TicketSeats ts = new TicketSeats()
+                            {
+                                SeatId = seatId,
+                                TicketId = ticket.Id
+                            };
+                            db.ticketSeats.Add(ts);
+                        }
+                        db.SaveChanges();
                 }
-                db.SaveChanges();
+                ticketGotSavedHandler(); 
+                CustomMessageBox cmb = new CustomMessageBox("Uspešno su sačuvani podaci."); 
+                cmb.ShowDialog(); 
+                this.Close();
             }
-            ticketGotSavedHandler();
-            CustomMessageBox cmb = new CustomMessageBox("Uspešno su sačuvani podaci.");
-            cmb.ShowDialog();
-            this.Close();
+            catch (Exception ex)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
         }
 
         private void CloseWindow_CanExecute(object sender, CanExecuteRoutedEventArgs e)

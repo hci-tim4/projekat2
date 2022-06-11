@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:cmd="clr-namespace:railway.Commands"
         xmlns:local="clr-namespace:railway.client"
-        mc:Ignorable="d" Height="310" Width="570"
+        mc:Ignorable="d" Height="310" Width="630"
         Icon="\icon\trainIcon.png"
         Title="ŽELEZNICE SRBIJE" WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"

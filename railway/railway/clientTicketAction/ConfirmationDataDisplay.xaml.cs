@@ -23,9 +23,17 @@ namespace railway.client
     {
         public ConfirmationDataDisplay(Ticket ticket, int numberOfTickets)
         {
-            InitializeComponent();
-            ConfirmationTicketDTO confTicketDTO = createConfirmationTicketDTO(ticket, numberOfTickets);
-            this.DataContext = confTicketDTO;
+            try{
+                InitializeComponent();
+                ConfirmationTicketDTO confTicketDTO = createConfirmationTicketDTO(ticket, numberOfTickets);
+                this.DataContext = confTicketDTO;
+                
+            }
+            catch (Exception e)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
         }
         private ConfirmationTicketDTO createConfirmationTicketDTO(Ticket ticket, int numberOfTickets)
         {

@@ -18,12 +18,22 @@ namespace railway.defineDrivingLine
         private DrivingLines DrivingLinesView;
         public DefineEndDateForDrivingLine(DrivingLineViewDTO dto, DrivingLines drivingLinesView)
         {
-            InitializeComponent();
-            drivingLine = dto;
-            endDate.SelectedDate = drivingLine.newEndDate;
-            endDateStackPanel.DataContext = drivingLine;
-            this.DrivingLinesView = drivingLinesView;
-            endDate.Language = XmlLanguage.GetLanguage(new System.Globalization.CultureInfo("sr-ME").IetfLanguageTag);
+            try
+            {
+                InitializeComponent();
+                drivingLine = dto;
+                endDate.SelectedDate = drivingLine.newEndDate;
+                endDateStackPanel.DataContext = drivingLine;
+                this.DrivingLinesView = drivingLinesView;
+                endDate.Language =
+                    XmlLanguage.GetLanguage(new System.Globalization.CultureInfo("sr-ME").IetfLanguageTag);
+            
+            }
+            catch (Exception e)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
         }
 
         public void saveDate()
@@ -67,38 +77,46 @@ namespace railway.defineDrivingLine
 
         private void Save_OnClick(object sender, RoutedEventArgs e)
         {
-            DateTime? selectedEndDate = endDate.SelectedDate;
-            if (selectedEndDate == null)
-            {
-                CustomMessageBox cmb = new CustomMessageBox("Morate da izaberete datum.");
-                cmb.ShowDialog();
-                return;
-            }
-
-            using (var db = new RailwayContext())
-            {
-                List<Ticket> tickets = (from t in db.tickets
-                    join s in db.schedules
-                        on t.ScheduleId equals s.Id
-                    where s.DepatureDate > DateTime.Now && s.DrivingLineId == drivingLine.DrivingLineId
-                    select t).ToList();
-                if (tickets.Count > 0) {
-                    CustomMessageBox cmb = new CustomMessageBox("Postoje prodate karte za liniju.");
-                    cmb.ShowDialog();
-                }
-                else
+            try{
+                DateTime? selectedEndDate = endDate.SelectedDate;
+                if (selectedEndDate == null)
                 {
-                    DrivingLine dl = (from d in db.drivingLines
-                        where d.Id == drivingLine.DrivingLineId
-                        select d).Single();
-                    dl.endDate = selectedEndDate;
-                    db.SaveChanges();
-                    CustomMessageBox cmb = new CustomMessageBox(
-                        "Uspešno ste sačuvali krajnji datum.");
+                    CustomMessageBox cmb = new CustomMessageBox("Morate da izaberete datum.");
                     cmb.ShowDialog();
-                    DrivingLinesView.setDrivingLines(new RailwayContext());
-                   this.Close();
+                    return;
                 }
+
+                using (var db = new RailwayContext())
+                {
+                    List<Ticket> tickets = (from t in db.tickets
+                        join s in db.schedules
+                            on t.ScheduleId equals s.Id
+                        where s.DepatureDate > DateTime.Now && s.DrivingLineId == drivingLine.DrivingLineId
+                        select t).ToList();
+                    if (tickets.Count > 0) {
+                        CustomMessageBox cmb = new CustomMessageBox("Postoje prodate karte za liniju.");
+                        cmb.ShowDialog();
+                    }
+                    else
+                    {
+                        DrivingLine dl = (from d in db.drivingLines
+                            where d.Id == drivingLine.DrivingLineId
+                            select d).Single();
+                        dl.endDate = selectedEndDate;
+                        db.SaveChanges();
+                        CustomMessageBox cmb = new CustomMessageBox(
+                            "Uspešno ste sačuvali krajnji datum.");
+                        cmb.ShowDialog();
+                        DrivingLinesView.setDrivingLines(new RailwayContext());
+                       this.Close();
+                    }
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
             }
         }
 

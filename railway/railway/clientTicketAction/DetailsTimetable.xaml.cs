@@ -29,21 +29,28 @@ namespace railway.clientTimetable
 
         public DetailsTimetable(int tour, int fromStationId, int arrivalId, Frame parentFrame, Page timetable, int drivingLineId)
         {
-            InitializeComponent();
-            showDrivingLineDetails(tour, drivingLineId);
-            using (var db = new RailwayContext())
-            {
-                List<StationSchedule> ss = (from stationSchedules in db.stationsSchedules
-                    where stationSchedules.DrivingLineId == drivingLineId
-                    orderby stationSchedules.SerialNumber
-                    select stationSchedules).ToList();
-                
-                
+            try{
+                InitializeComponent();
+                showDrivingLineDetails(tour, drivingLineId);
+                using (var db = new RailwayContext())
+                {
+                    List<StationSchedule> ss = (from stationSchedules in db.stationsSchedules
+                        where stationSchedules.DrivingLineId == drivingLineId
+                        orderby stationSchedules.SerialNumber
+                        select stationSchedules).ToList();
+                    
+                    
 
-                page.Content = new map.Map(ss, fromStationId, arrivalId);
+                    page.Content = new map.Map(ss, fromStationId, arrivalId);
+                }
+                this.parentFrame = parentFrame;
+                this.parentPage = timetable;
             }
-            this.parentFrame = parentFrame;
-            this.parentPage = timetable;
+            catch (Exception e)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
         }
 
         private void showDrivingLineDetails(int tour, int drivingLine) {

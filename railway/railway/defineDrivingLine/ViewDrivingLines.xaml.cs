@@ -26,22 +26,20 @@ namespace railway.defineDrivingLine
         
         public ViewDrivingLines(Frame frame)
         {
-            InitializeComponent();
-            this.parentFrame = frame;
-            this.parentFrame.Content = this;
-            //this.DataContext = DrivingLines;
-            CurrentComponent = new DrivingLines(drivingLineViewPage, this);
-            drivingLineViewPage.Content = CurrentComponent;
+            try{
+                InitializeComponent();
+                this.parentFrame = frame;
+                this.parentFrame.Content = this;
+                //this.DataContext = DrivingLines;
+                CurrentComponent = new DrivingLines(drivingLineViewPage, this);
+                drivingLineViewPage.Content = CurrentComponent;
 
-            /*using (var db = new RailwayContext())
+            }
+            catch (Exception e)
             {
-                setDrivingLines(db);
-                trains = (from trains in db.trains
-                    select trains).ToList();
-                trainNameCmb.ItemsSource = trains;
-                fullTrains = trains;
-                stations = (from st in db.stations orderby st.Name select st).ToList();
-            }*/
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
         }
 
 

@@ -28,14 +28,21 @@ namespace railway.monthlyReport
 
         public ViewMonthlyTicketView()
         {
-            InitializeComponent();
-            ticketService = new TicketService();
-            barChartData = new barChartInformation();
-            Formatter = value => value.ToString("N");
-            chartStackPanel.DataContext = this;
-            dataGrid.DataContext = this;
-            fromDateDatePicker.Language = XmlLanguage.GetLanguage(new System.Globalization.CultureInfo("sr-ME").IetfLanguageTag);
-            untilDateDatePicker.Language = XmlLanguage.GetLanguage(new System.Globalization.CultureInfo("sr-ME").IetfLanguageTag);
+            try{
+                InitializeComponent();
+                ticketService = new TicketService();
+                barChartData = new barChartInformation();
+                Formatter = value => value.ToString("N");
+                chartStackPanel.DataContext = this;
+                dataGrid.DataContext = this;
+                fromDateDatePicker.Language = XmlLanguage.GetLanguage(new System.Globalization.CultureInfo("sr-ME").IetfLanguageTag);
+                untilDateDatePicker.Language = XmlLanguage.GetLanguage(new System.Globalization.CultureInfo("sr-ME").IetfLanguageTag);
+            }
+            catch (Exception e)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
         }
         
         
@@ -72,46 +79,53 @@ namespace railway.monthlyReport
 
         private void ShowReport_OnClick(object sender, RoutedEventArgs e)
         {
-            bool ?seatType = seatTypeRadioButton.IsChecked;
-            bool ?driving = drivingLineRadioButton.IsChecked;
-            DateTime? fromDate = fromDateDatePicker.SelectedDate;
-            DateTime? untilDate = untilDateDatePicker.SelectedDate;
-            if (fromDate == null && untilDate == null)
-            {
-                CustomMessageBox cmb = new CustomMessageBox("Niste izabrali početni datum i krajnji datum.");
-                cmb.ShowDialog();
-                return;
-            }else if (fromDate == null)
-            {
-                CustomMessageBox cmb = new CustomMessageBox("Niste izabrali početni datum.");
-                cmb.ShowDialog();
-                return;
-            }else if (untilDate == null)
-            {
-                CustomMessageBox cmb = new CustomMessageBox("Niste izabrali krajnji datum.");
-                cmb.ShowDialog();
-                return;
-            }else if (fromDate > untilDate)
-            {
-                CustomMessageBox cmb = new CustomMessageBox("Početni datum je veći od krajnjeg.");
-                cmb.ShowDialog();
-                return;
-            }
-            IFeatureTourNavigator navigator = FeatureTour.GetNavigator();
-            navigator.IfCurrentStepEquals("ShowReportButton").GoNext();
-            tickets = ticketService.getTicketsInPeriod(fromDate, untilDate);
-            if ((bool)seatType)
-                FillInformationForGraphBySeatType();
-            else if ((bool)driving)
-                FillInformationForGraphByDrivingLine();
-            else
-            {
-                seatTypeRadioButton.IsChecked = true;
-                FillInformationForGraphBySeatType();
-                return;
-            }
-            PrepareGraph(); 
+            try{
+                bool ?seatType = seatTypeRadioButton.IsChecked;
+                bool ?driving = drivingLineRadioButton.IsChecked;
+                DateTime? fromDate = fromDateDatePicker.SelectedDate;
+                DateTime? untilDate = untilDateDatePicker.SelectedDate;
+                if (fromDate == null && untilDate == null)
+                {
+                    CustomMessageBox cmb = new CustomMessageBox("Niste izabrali početni datum i krajnji datum.");
+                    cmb.ShowDialog();
+                    return;
+                }else if (fromDate == null)
+                {
+                    CustomMessageBox cmb = new CustomMessageBox("Niste izabrali početni datum.");
+                    cmb.ShowDialog();
+                    return;
+                }else if (untilDate == null)
+                {
+                    CustomMessageBox cmb = new CustomMessageBox("Niste izabrali krajnji datum.");
+                    cmb.ShowDialog();
+                    return;
+                }else if (fromDate > untilDate)
+                {
+                    CustomMessageBox cmb = new CustomMessageBox("Početni datum je veći od krajnjeg.");
+                    cmb.ShowDialog();
+                    return;
+                }
+                IFeatureTourNavigator navigator = FeatureTour.GetNavigator();
+                navigator.IfCurrentStepEquals("ShowReportButton").GoNext();
+                tickets = ticketService.getTicketsInPeriod(fromDate, untilDate);
+                if ((bool)seatType)
+                    FillInformationForGraphBySeatType();
+                else if ((bool)driving)
+                    FillInformationForGraphByDrivingLine();
+                else
+                {
+                    seatTypeRadioButton.IsChecked = true;
+                    FillInformationForGraphBySeatType();
+                    return;
+                }
+                PrepareGraph(); 
             
+            }
+            catch (Exception ex)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }    
 
         }
 
@@ -255,32 +269,48 @@ namespace railway.monthlyReport
 
         private void showBySeatTypes(object sender, RoutedEventArgs e)
         {
-            if (tickets == null)
-            {
-                CustomMessageBox cmb = new CustomMessageBox("Prvo morate da izaberete interval.");
-                cmb.ShowDialog();
-                return;
+            try{
+                if (tickets == null)
+                {
+                    CustomMessageBox cmb = new CustomMessageBox("Prvo morate da izaberete interval.");
+                    cmb.ShowDialog();
+                    return;
+                }
+                FillInformationForGraphBySeatType();
+                PrepareGraph();
+            
             }
-            FillInformationForGraphBySeatType();
-            PrepareGraph();
+            catch (Exception ex)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
         }
 
         private void showByDrivingLines(object sender, RoutedEventArgs e)
         {
-            if (tickets == null)
-            {
-                CustomMessageBox cmb = new CustomMessageBox("Prvo morate da izaberete interval.");
-                cmb.ShowDialog();
-                return;
-            }
+            try{
+                if (tickets == null)
+                {
+                    CustomMessageBox cmb = new CustomMessageBox("Prvo morate da izaberete interval.");
+                    cmb.ShowDialog();
+                    return;
+                }
 
-            if (Touring)
-            {
-                IFeatureTourNavigator navigator = FeatureTour.GetNavigator();
-                navigator.IfCurrentStepEquals("ChangeTypeOfMontlhyReport").Close();
+                if (Touring)
+                {
+                    IFeatureTourNavigator navigator = FeatureTour.GetNavigator();
+                    navigator.IfCurrentStepEquals("ChangeTypeOfMontlhyReport").Close();
+                }
+                FillInformationForGraphByDrivingLine();
+                PrepareGraph();
+                
             }
-            FillInformationForGraphByDrivingLine();
-            PrepareGraph();
+            catch (Exception ex)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
         }
 
         public void StartTour_OnClick(object sender, RoutedEventArgs e)
