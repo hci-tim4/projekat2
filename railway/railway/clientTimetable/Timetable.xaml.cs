@@ -38,15 +38,21 @@ namespace railway.clientTimetable
 
         public Timetable(User user)
         {
-            InitializeComponent();
-            startDate.Language = XmlLanguage.GetLanguage(new System.Globalization.CultureInfo("sr-ME").IetfLanguageTag);
-            //parentFrame = page1;
-            cmbDeparture.ItemsSource = GetAllStations();
-            cmbArrival.ItemsSource = GetAllStations();
-            this.loggedUser = user;
-            DetailsModal.SetParent(parent);
-            TicketConfirmationModal.SetParent(parent);
-           
+            try{
+                InitializeComponent();
+                startDate.Language = XmlLanguage.GetLanguage(new System.Globalization.CultureInfo("sr-ME").IetfLanguageTag);
+                //parentFrame = page1;
+                cmbDeparture.ItemsSource = GetAllStations();
+                cmbArrival.ItemsSource = GetAllStations();
+                this.loggedUser = user;
+                DetailsModal.SetParent(parent);
+                TicketConfirmationModal.SetParent(parent);
+            }
+            catch (Exception e)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
         }
 
         private static List<Station> GetAllStations()
@@ -59,29 +65,44 @@ namespace railway.clientTimetable
         }
         private void TextBox_TextChanged1(object sender, TextChangedEventArgs e)
         {
-            var cmbx = sender as ComboBox;
-            cmbx.ItemsSource = from item in stations
-                               where item.Name.ToLower().Contains(cmbx.Text.ToLower())
-                               select item;
-            this.departure = (from item in stations
-                            where item.Name.ToLower().Equals(cmbx.Text.ToLower())
-                            select item).FirstOrDefault();
+            try{
+                var cmbx = sender as ComboBox;
+                cmbx.ItemsSource = from item in stations
+                                   where item.Name.ToLower().Contains(cmbx.Text.ToLower())
+                                   select item;
+                this.departure = (from item in stations
+                                where item.Name.ToLower().Equals(cmbx.Text.ToLower())
+                                select item).FirstOrDefault();
 
-            cmbx.IsDropDownOpen = true;
+                cmbx.IsDropDownOpen = true;
+            
+            }
+            catch (Exception ex)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
         }
 
         private void TextBox_TextChanged2(object sender, TextChangedEventArgs e)
         {
-            var cmbx = sender as ComboBox;
-            cmbx.ItemsSource = from item in stations
-                               where item.Name.ToLower().Contains(cmbx.Text.ToLower())
-                               select item;
+            try{
+                var cmbx = sender as ComboBox;
+                cmbx.ItemsSource = from item in stations
+                                   where item.Name.ToLower().Contains(cmbx.Text.ToLower())
+                                   select item;
 
-            this.arrival = (from item in stations
-                           where item.Name.ToLower().Equals(cmbx.Text.ToLower())
-                           select item).FirstOrDefault();
+                this.arrival = (from item in stations
+                               where item.Name.ToLower().Equals(cmbx.Text.ToLower())
+                               select item).FirstOrDefault();
 
-            cmbx.IsDropDownOpen = true;
+                cmbx.IsDropDownOpen = true;
+            }
+            catch (Exception ex)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
         }
 
         private void cmbDeparture_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
@@ -96,22 +117,36 @@ namespace railway.clientTimetable
      
         private void btn_search(object sender, RoutedEventArgs e)
         {
-            page.Content = "";
-            if ((this.departure == null) || (this.arrival == null) || (this.date == null))
+            try{
+                page.Content = "";
+                if ((this.departure == null) || (this.arrival == null) || (this.date == null))
+                {
+                    CustomMessageBox cmb = new CustomMessageBox("Unesite sve podatke za pretragu.");
+                    cmb.ShowDialog();
+                }
+                else
+                {
+                    this.lines = Find(this.departure, this.arrival, (DateTime)this.date);
+                    if (this.lines.Count == 0)
+                    {
+                        Window box = new CustomMessageBox("Pretraga je u toku. Molimo sačekajte.");
+                        box.ShowDialog();
+                        this.lines.AddRange(FindWithTransfer(this.departure, this.arrival, (DateTime)this.date));
+                    }
+                    dataGrid.ItemsSource = this.lines;
+                    if (this.lines.Count == 0) {
+                        Window box = new CustomMessageBox("Nema nijedne vožnje za izabrano polazište,\nodredište i datum.");
+                        box.ShowDialog();
+                    }
+                }
+            }
+              
+
+            catch (Exception ex)
             {
-                CustomMessageBox cmb = new CustomMessageBox("Unesite sve podatke za pretragu");
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
                 cmb.ShowDialog();
             }
-            else
-            {
-                this.lines = Find(this.departure, this.arrival, (DateTime)this.date);
-                if (this.lines.Count == 0)
-                {
-                    this.lines.AddRange(FindWithTransfer(this.departure, this.arrival, (DateTime)this.date));
-                }
-                dataGrid.ItemsSource = this.lines;
-            }
-
         }
 
         private List<DrivingLineDTO> Find(Station departure, Station arrival, DateTime date)
@@ -325,8 +360,9 @@ namespace railway.clientTimetable
                             if (isLast(startMed.stationScheduleId, startMed.drivingLineId)) {
                                 if (startMed.stationId == departure.Id) {
                                     skipDrivingLine = startMed.drivingLineId;
+                                    continue;
                                 }
-                                continue;
+                               
                             }
 
                             foreach (var endMed in stationsForEndDrivingLine)
@@ -479,28 +515,42 @@ namespace railway.clientTimetable
         
        
         private void btnChoose_Click(object sender, RoutedEventArgs e) {
-            var dtoId = ((Button)sender).Tag;
-            DrivingLineDTO dto = findDTOById((int)dtoId);
-            GetTicketDTO getTicketDTO = new GetTicketDTO
-            {
-                DrivingLineId = dto.drivingLine,
-                FromStationScheduleId = dto.FromStationScheduleId,
-                UntilStationScheduleId = dto.UntilStationScheduleId,
-                ScheduleId = dto.ScheduleId
-            };
-            page.Content = "";
-            page.Content = new GetTicketPage(getTicketDTO, this.loggedUser, TicketConfirmationModal);
+            try{
+                var dtoId = ((Button)sender).Tag;
+                DrivingLineDTO dto = findDTOById((int)dtoId);
+                GetTicketDTO getTicketDTO = new GetTicketDTO
+                {
+                    DrivingLineId = dto.drivingLine,
+                    FromStationScheduleId = dto.FromStationScheduleId,
+                    UntilStationScheduleId = dto.UntilStationScheduleId,
+                    ScheduleId = dto.ScheduleId
+                };
+                page.Content = "";
+                page.Content = new GetTicketPage(getTicketDTO, this.loggedUser, TicketConfirmationModal);
 
+            }
+            catch (Exception ex)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
         }
 
         private void btnDetails_Click(object sender, RoutedEventArgs e)
         {
-            var dtoId = ((Button)sender).Tag;
-            DrivingLineDTO dto = findDTOById((int)dtoId);
-            Window win = new DetailsTimetable(dto.Tour, departure.Id, arrival.Id, parentFrame, this, dto.drivingLine);
-            win.ShowDialog();
-            //var res = DetailsModal.ShowHandlerDialog(dto.Tour,departure.Id,arrival.Id,dto.drivingLine);
+            try{
+                var dtoId = ((Button)sender).Tag;
+                DrivingLineDTO dto = findDTOById((int)dtoId);
+                Window win = new DetailsTimetable(dto.Tour, departure.Id, arrival.Id, parentFrame, this, dto.drivingLine);
+                win.ShowDialog();
+                //var res = DetailsModal.ShowHandlerDialog(dto.Tour,departure.Id,arrival.Id,dto.drivingLine);
 
+            }
+            catch (Exception ex)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
 
         }
 

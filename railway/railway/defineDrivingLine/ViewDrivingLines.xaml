@@ -11,7 +11,6 @@
              MinWidth="400">
     <UserControl.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
-        <CommandBinding Command="cmd:RoutedCommands.Insert" x:Name="InsertDrivingLine" CanExecute="InsertDrivingLine_OnCanExecute" Executed="InsertDrivingLine_OnExecuted"></CommandBinding>
 
     <!--    <CommandBinding Command="cmd:RoutedCommands.MoveBack" x:Name="goBack" CanExecute="GoBack_OnCanExecute" Executed="GoBack_OnExecuted"></CommandBinding>
         <CommandBinding Command="cmd:RoutedCommands.MoveForward" x:Name="goForward" CanExecute="GoForward_OnCanExecute" Executed="GoForward_OnExecuted"></CommandBinding>-->

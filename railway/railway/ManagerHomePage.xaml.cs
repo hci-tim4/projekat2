@@ -33,6 +33,7 @@ namespace railway
         UserControl monthlyReport;
         private UserControl drivingLineReport;
         private TutorialInterface CurrentContent;
+        public bool helpClick = false;
         
         public ManagerHomePage(User user)
         {
@@ -152,10 +153,32 @@ namespace railway
             page.Content = CurrentContent;
         }
 
+        private void Report2_OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void Report2_OnExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            CurrentContent = new ViewDrivingLineTicketReport();
+            page.Content = CurrentContent;
+        }
         private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            HelpProvider.ShowHelp("ManagerAppHelp", this);
+            if (helpClick) {
+                helpClick = false;
+                return;
+            }
+
+            IInputElement focusedControl = FocusManager.GetFocusedElement(Application.Current.Windows[0]);
+            if (focusedControl is null)
+            {
+                HelpProvider.ShowHelp("ManagerAppHelp", this);
+            }
+           
         }
+
+
 
         public void doThings(string param)
         {
@@ -181,7 +204,9 @@ namespace railway
 
         private void help_clicked(object sender, RoutedEventArgs e)
         {
+
             HelpProvider.ShowHelp("ManagerAppHelp", this);
+            helpClick = true;
         }
 
         private void btnLogOut_Click(object sender, RoutedEventArgs e)

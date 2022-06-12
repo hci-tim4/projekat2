@@ -36,9 +36,17 @@ namespace railway.CRUDTrain
 
         public CRUDTrains()
         {
-            InitializeComponent();
-           
-            dto = TrainService.getTrains();
+            try{
+                InitializeComponent();
+               
+                dto = TrainService.getTrains();
+                
+            }
+            catch (Exception e)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
      
             //loggedUser = user;
 
@@ -51,13 +59,19 @@ namespace railway.CRUDTrain
     
         public void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            reloadWindow();
+            try{
+                reloadWindow();
            
+            }
+            catch (Exception ex)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
         }
 
         public void reloadWindow()
         {
-
             gridTrains.RowDefinitions.Clear();
             gridTrains.ColumnDefinitions.Clear();
             gridTrains.Children.Clear();
@@ -192,7 +206,9 @@ namespace railway.CRUDTrain
                     stackPanel.Children.Add(tbCol);
 
                     TextBlock tbRegular = new TextBlock();
+
                     tbRegular.Text = "Broj redova regularne klase: " + dto[(i - 1) * 4 + j].numberREGULAR;
+
                     tbRegular.Foreground = new SolidColorBrush(Colors.DodgerBlue);
                     tbRegular.Width = 280;
                     tbRegular.FontSize = 15;
@@ -200,7 +216,9 @@ namespace railway.CRUDTrain
                      
 
                     TextBlock tbBusiness = new TextBlock();
+
                     tbBusiness.Text = "Broj redova biznis klase: " + dto[(i - 1) * 4 + j].numberBUSINESS;
+
                     tbBusiness.Foreground = new SolidColorBrush(Colors.DodgerBlue);
                     tbBusiness.FontSize = 15;
                     tbBusiness.Width = 280;
@@ -208,6 +226,7 @@ namespace railway.CRUDTrain
 
                     TextBlock tbVip = new TextBlock();
                     tbVip.Text = "Broj redova vip klase: " + dto[(i - 1) * 4 + j].numberVIP;
+
                     tbVip.Foreground = new SolidColorBrush(Colors.DodgerBlue);
                     tbVip.FontSize = 15;
                     tbVip.Width = 280;
@@ -252,43 +271,75 @@ namespace railway.CRUDTrain
 
         private void edit_Clicked(object sender, RoutedEventArgs e)
         {
-            var id = ((Button)sender).Tag;
-            TrainDTO trainDTO = getTrainInfo((int)id);
-            Window edit = new EditTrain(trainDTO);
-            edit.ShowDialog();
-
-            if (!edit.IsActive)
+            try
             {
-                reloadWindow();
-            }
+                var id = ((Button)sender).Tag;
+                TrainDTO trainDTO = getTrainInfo((int)id);
+                Window edit = new EditTrain(trainDTO);
+                edit.ShowDialog();
 
+                if (!edit.IsActive)
+                {
+                    reloadWindow();
+                }
+            
+            }
+            catch (Exception ex)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
         }
 
         private void delete_Clicked(object sender, RoutedEventArgs e)
         {
-            var db = new RailwayContext();
-            var id = ((Button)sender).Tag;
-            var train = db.trains.Where(t => t.Id == (int)id).FirstOrDefault();
-            train.Deleted = true;
-            db.SaveChanges();
-            dto = TrainService.getTrains();
-            Window messageBox = new CustomMessageBox("Voz " + train.Name + " je obrisan!");
-            messageBox.ShowDialog();
-            reloadWindow();
+            try{
+                
+                ConfirmDelete conf = new ConfirmDelete();
+                conf.ShowDialog();
+                if (!conf.delete)
+                {
+                    return;
+                }
 
+                var db = new RailwayContext();
+                var id = ((Button)sender).Tag;
+                var train = db.trains.Where(t => t.Id == (int)id).FirstOrDefault();
+                train.Deleted = true;
+                db.SaveChanges();
+                dto = TrainService.getTrains();
+                Window messageBox = new CustomMessageBox("Voz " + train.Name + " je obrisan!");
+                messageBox.ShowDialog();
+                reloadWindow();
+
+            }
+            catch (Exception ex)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
            
            
 
         }
         private void add_Clicked(object sender, RoutedEventArgs e)
         {
-            Window add = new AddTrain();
-            add.ShowDialog();
-            if (!add.IsActive)
+            try
             {
-                reloadWindow();
+                Window add = new AddTrain();
+                add.ShowDialog();
+                if (!add.IsActive)
+                {
+                    reloadWindow();
+                }
+            
             }
-           
+            catch (Exception ex)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
+
         }
 
         private TrainDTO getTrainInfo(int id)

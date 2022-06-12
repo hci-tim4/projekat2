@@ -8,10 +8,12 @@
         xmlns:l="clr-namespace:railway"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
+        xmlns:cmd="clr-namespace:railway.Commands"
         Icon="/icon/trainIcon.png"
         Title="ŽELEZNICE SRBIJE"  Height="350" Width="650" ResizeMode="NoResize">
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
+        <CommandBinding Command="cmd:RoutedCommands.Save" x:Name="save" CanExecute="Save_OnCanExecute" Executed="Save_OnExecuted"></CommandBinding>
     </Window.CommandBindings>
 
     <Grid >
@@ -52,6 +54,7 @@
             <ComboBoxItem>6</ComboBoxItem>
             <ComboBoxItem>7</ComboBoxItem>
         </ComboBox>
+
         <Button  BorderBrush="White" Foreground="White" Background="DodgerBlue" ToolTip="Odustani od dodavanja novog voza" x:Name="cancelBtn"  Click="cancelBtn_Click"  Width="150" 
                  MinHeight="25" MaxHeight="50" Margin="2,40,0,2" Grid.Row="4" Grid.Column="0" l:HelpProvider.HelpKey="returnBtn">Odustani</Button>
         <Button BorderBrush="White" Foreground="White" Background="DodgerBlue" ToolTip="Dodajte novi voz" x:Name="addBtn" Grid.Row="4" Grid.Column="1" Click="addBtn_Click"

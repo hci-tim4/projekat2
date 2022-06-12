@@ -11,6 +11,7 @@ using railway.exception;
 using railway.services;
 using System.Windows.Input;
 using System.Windows.Markup;
+using railway.managerSchedule;
 
 namespace railway.defineDrivingLine
 {
@@ -25,25 +26,46 @@ namespace railway.defineDrivingLine
         public DefineSimpleDataForDrivingLine(ObservableCollection<Station> stations,
             DrivingGotSavedHandler drivingGotSavedHandler)
         {
-            InitializeComponent();
-            this.DataContext = this;
-            using (var db = new RailwayContext())
-            {
-                trains = (from trains in db.trains
-                    select trains).ToList();
-                trainNameCmb.ItemsSource = trains;
-                this.fullTrains = (from trains in db.trains
-                    select trains).ToList();
-            }
+            try{
+                InitializeComponent();
+                this.DataContext = this;
+                using (var db = new RailwayContext())
+                {
+                    trains = (from trains in db.trains
+                        select trains).ToList();
+                    trainNameCmb.ItemsSource = trains;
+                    this.fullTrains = (from trains in db.trains
+                        select trains).ToList();
+                }
 
-            this.stations = stations;
-            this.drivingGotSavedHandler = drivingGotSavedHandler;
-            startDate.Language = XmlLanguage.GetLanguage(new System.Globalization.CultureInfo("sr-ME").IetfLanguageTag);
+                this.stations = stations;
+                this.drivingGotSavedHandler = drivingGotSavedHandler;
+                startDate.Language = XmlLanguage.GetLanguage(new System.Globalization.CultureInfo("sr-ME").IetfLanguageTag);
+                
+            }
+            catch (Exception e)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
         }
 
         private void SaveDrivingLine_OnClick(object sender, RoutedEventArgs e)
         {
-            saveDrivingLineInDB();
+            try{
+                saveDrivingLineInDB();
+                
+            }
+            catch (Exception ex)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
+        }
+
+        private void CancelDrivingLine_OnClick(object sender, RoutedEventArgs e) 
+        {
+            this.Close();
         }
 
         private void saveDrivingLineInDB()
@@ -59,8 +81,16 @@ namespace railway.defineDrivingLine
                     CustomMessageBox cmb1 = new CustomMessageBox("Početni datum mora da postoji");
                     cmb1.ShowDialog();
                     return;
+                }else if (startSelectedDate < DateTime.Now)
+                {
+                    CustomMessageBox cmb2 =
+                        new CustomMessageBox("Početni datum mora da bude \nnakon današnjeg datuma");
+                    cmb2.ShowDialog();
+                    return;
                 }
-                dlService.saveDrivingService(name, newTrain, (DateTime)startSelectedDate, stations);
+                DrivingLine dl = dlService.saveDrivingService(name, newTrain, (DateTime)startSelectedDate, stations);
+                Window win = new AddNewScheduleWindow(dl.Id, null);
+                win.ShowDialog();
                 CustomMessageBox cmb = new CustomMessageBox("Mrežna linija je uspešno sačuvana");
                 cmb.ShowDialog();
                 drivingGotSavedHandler();
@@ -91,26 +121,35 @@ namespace railway.defineDrivingLine
 
         private void TrainNameChanged_TextChanged(object sender, TextChangedEventArgs e)
         {
-            var trainNameCmb = sender as ComboBox;
+            try
+            {
+                var trainNameCmb = sender as ComboBox;
 
-            //this. = trainNameCmb.Text.ToLower();
-            this.newTrain = (from item in trains
-                where item.Name.ToLower().Equals(trainNameCmb.Text.ToLower())
-                select item).FirstOrDefault();
+                //this. = trainNameCmb.Text.ToLower();
+                this.newTrain = (from item in trains
+                    where item.Name.ToLower().Equals(trainNameCmb.Text.ToLower())
+                    select item).FirstOrDefault();
 
 
-            this.trains = (from item in fullTrains
-                where item.Name.ToLower().Contains(trainNameCmb.Text.ToLower())
-                select item).ToList();
-            trainNameCmb.ItemsSource = trains;
+                this.trains = (from item in fullTrains
+                    where item.Name.ToLower().Contains(trainNameCmb.Text.ToLower())
+                    select item).ToList();
+                trainNameCmb.ItemsSource = trains;
 
-            trainNameCmb.IsDropDownOpen = true;
+                trainNameCmb.IsDropDownOpen = true;
+
             }
+            catch (Exception ex)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
+        }
 
 
         private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            IInputElement focusedControl = FocusManager.GetFocusedElement(Application.Current.Windows[0]);
+            IInputElement focusedControl = FocusManager.GetFocusedElement(Application.Current.Windows[2]);
             if (focusedControl is DependencyObject)
             {
                 string str = HelpProvider.GetHelpKey((DependencyObject)focusedControl);

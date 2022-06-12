@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using railway.model;
 
 namespace railway.monthlyReport
@@ -43,7 +44,7 @@ namespace railway.monthlyReport
             {
                 if (ts.Seat.SeatType.Name == name)
                 {
-                    res += ((untilStationId - fromStationId) * ts.Seat.SeatType.Price);
+                    res += (Math.Abs(untilStationId - fromStationId) * ts.Seat.SeatType.Price);
                 }
             }
             return res;

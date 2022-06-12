@@ -21,8 +21,20 @@ namespace railway.services
             List<Ticket> tickets = getTicketsFromDb(userId,ticketType);
 
             foreach (Ticket t in tickets) {
-                TicketsDTO dto = getTicketAttribute(t);
-                setDate(t, dto);
+                List<Seat> seats = getTicketSeats(t.Id);
+                foreach (Seat s in seats)
+                {
+                    TicketsDTO dto = getTicketAttribute(t);
+                    setDate(t, dto);
+                    dto.row = s.Row;
+                    dto.col = s.Col;
+                    dto.seatType = getSeatType(s.SeatTypeId);
+                    dto.Price = countPriceOfTicket(t, s);
+                    dtos.Add(dto);
+                }
+                
+                
+                /*
                 List<Seat> seats = getSeats(t.Id);
                 foreach (Seat s in seats)
                 {
@@ -30,9 +42,34 @@ namespace railway.services
                     dto.row = s.Row;
                     dto.seatType = getSeatType(s.SeatTypeId);
                     dtos.Add(dto);
-                }
+                }*/
             }
             return dtos;
+        }
+
+        private static List<Seat> getTicketSeats(int tId)
+        {
+            using (var db = new RailwayContext())
+            {
+                List<Seat> res = (from ts in db.ticketSeats
+                    where ts.TicketId == tId
+                    select ts.Seat).ToList();
+                return res;
+            }
+        }
+
+        private static double countPriceOfTicket(Ticket ticket, Seat ts)
+        {
+            int numberOfStations = Math.Abs(ticket.FromStationScheduleId - ticket.UntilStationScheduleId);
+            using (var db = new RailwayContext())
+            {
+                double seatTypePrice = (from s in db.seatTypes
+                    where s.Id == ts.SeatTypeId
+                    select s.Price).Single();
+                return seatTypePrice * numberOfStations;
+            }
+
+            return numberOfStations * 100;
         }
 
         private static string getSeatType(int seatType)
@@ -47,7 +84,7 @@ namespace railway.services
             }
             else 
             {
-                return "REGULAR";
+                return "REDOVNA";
             }
 
         }
@@ -63,7 +100,7 @@ namespace railway.services
             using(var db = new RailwayContext())
             {
                 List<Ticket> tickets = (from t in db.tickets
-                                        where t.UserId == userId && t.TicketType == ticketType
+                    where t.UserId == userId && t.TicketType == ticketType
                                         select t).ToList();
                 return tickets;
             }
@@ -74,7 +111,7 @@ namespace railway.services
             
             TicketsDTO dto = new TicketsDTO();
             setStationScheduleAttr(ticket, dto);
-            dto.Price = ticket.Price;
+            //dto.Price = countTicketPrice(dto);//ticket.Price;//count price
             return dto;
         }
 

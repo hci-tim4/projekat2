@@ -18,6 +18,7 @@
             <Setter Property="BorderThickness" Value="3"/> 
         </Style> 
     </UserControl.Resources>
+
     <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
         <Grid>
             <Grid.RowDefinitions>
@@ -41,9 +42,33 @@
                     </ComboBox.Style>
                 </ComboBox>
                 <Button MinWidth="100" HorizontalAlignment="Right" Content="Prikaži" x:Name="showDrivingLineReportButton"
-                    Click="ShowDrivingLineReportButton_OnClick" FontSize="20"
-                    tour:TourHelper.ElementID="ShowReport"
+                         Click="ShowDrivingLineReportButton_OnClick" FontSize="20"
+                    tour:TourHelper.ElementID="ShowReport" ToolTip="Prikaži izveštaj o broju prodatih karata i zaradi za mrežnu liniju"
                     tour:TourHelper.Placement="BottomCenter" Margin="0,10,0,0"></Button>
+<!--
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        
+        <StackPanel Grid.Row="0" Grid.Column="0">
+            <ComboBox MinWidth="200" x:Name="cmbDrivingLine" 
+                      ItemsSource="{Binding drivingLines}" DisplayMemberPath="Name" IsEditable="True" 
+                      FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                      tour:TourHelper.ElementID="ChoseDrivingLine"
+                      tour:TourHelper.Placement="BottomCenter" Margin="0,20,0,0" ToolTip="Izaberi mrežnu liniju">
+                <ComboBox.Style>
+                    <Style>
+                        <EventSetter Event="TextBox.TextChanged" Handler="TextBox_TextChanged" />
+                    </Style>
+                </ComboBox.Style>
+            </ComboBox>
+            <Button MinWidth="100" HorizontalAlignment="Right" Content="Prikaži" x:Name="showDrivingLineReportButton"-->
+                   
             </StackPanel>
 
             <StackPanel x:Name="lineChartPanel" Grid.Row="0" Grid.Column="1"

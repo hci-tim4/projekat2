@@ -8,7 +8,9 @@
         xmlns:cmd="clr-namespace:railway.Commands"
         xmlns:l="clr-namespace:railway"
         Icon="/icon/trainIcon.png"
-        Title="ŽELEZNICE SRBIJE" Height="400" Width="400" MaxHeight="500" MaxWidth="500" ResizeMode="NoResize">
+        Title="ŽELEZNICE SRBIJE" Height="500" Width="500" MaxHeight="500" MaxWidth="500"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
         <CommandBinding Command="cmd:RoutedCommands.Save" x:Name="save" CanExecute="Save_OnCanExecute" Executed="Save_OnExecuted"></CommandBinding>
@@ -127,11 +129,14 @@
                 <CheckBox MaxHeight="200" MaxWidth="100" Content="Nedelja" FontSize="20"  BorderBrush="Blue" IsChecked="{Binding Path=Sunday}" l:HelpProvider.HelpKey="day"/>     -->
 
             </StackPanel>
+
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="15,15,15,15">
                 <Button ToolTip="Odustani od izmene dana" HorizontalAlignment="Right" Name="cancelchangeDays" Click="cancelChangeDays_Click" FontSize="20" Content="Odustani" Height="40" MaxWidth="150" Margin="2,2,40,2" l:HelpProvider.HelpKey="cancelChangeDays" Background="DodgerBlue" Foreground="White"></Button>
                 <Button ToolTip="Izmeni dane u kojima saobraća linija" HorizontalAlignment="Right" Name="changeDays" Click="changeDays_Click" FontSize="20" Content="Izmeni" Height="40" MaxWidth="150" Margin="0,2,20,2" l:HelpProvider.HelpKey="confirmChangeDays" Background="DodgerBlue" Foreground="White"></Button>
 
             </StackPanel>
+
+            
         </StackPanel>
 
 

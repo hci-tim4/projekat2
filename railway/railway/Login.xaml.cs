@@ -25,6 +25,7 @@ namespace railway
         public Login()
         {
             InitializeComponent();
+            UsernameBox.Focus();
         }
 
         private void login_Click(object sender, RoutedEventArgs e)

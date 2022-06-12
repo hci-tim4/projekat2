@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:cmd="clr-namespace:railway.Commands"
         xmlns:local="clr-namespace:railway.client"
-        mc:Ignorable="d" Height="310" Width="570"
+        mc:Ignorable="d" Height="310" Width="630"
         Icon="\icon\trainIcon.png"
         Title="ŽELEZNICE SRBIJE" WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize"
@@ -30,7 +30,7 @@
                 MaxWidth="120px" MinHeight="30" MaxHeight="60" Margin="2,2,6,2">Odustajem</Button>
             <Button x:Name="confirmBtn" Grid.Row="2" Grid.Column="0" Click="confirmBtn_Click_1"
                 MaxWidth="120px" MinHeight="30" MaxHeight="60" Margin="6,2,2,2"
-                IsDefault="True"> Potvrdim
+                IsDefault="True"> Potvrđujem
             
             </Button>
         </DockPanel>

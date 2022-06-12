@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Documents;
 using railway.database;
+using railway.defineDrivingLine;
 using railway.exception;
 using railway.model;
 
@@ -43,7 +44,7 @@ namespace railway.services
         }
 
         
-        public void saveDrivingService(string name, Train train, DateTime startSelectedDate,
+        public DrivingLine saveDrivingService(string name, Train train, DateTime startSelectedDate,
             ObservableCollection<Station> stations)
         {
             if (name.Trim() == "")
@@ -80,7 +81,7 @@ namespace railway.services
                 
                 if (stations != null)
                     saveStations(db, dl, stations);
-        
+                return dl;
             }
         }
 

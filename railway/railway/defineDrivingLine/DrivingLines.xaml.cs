@@ -31,40 +31,56 @@ namespace railway.defineDrivingLine
         
         public DrivingLines(Frame parentFrame, ViewDrivingLines viewDrivingLines)
         {
-            InitializeComponent();
-            //this.parentFrame = frame;
-            this.parentFrame = parentFrame;
-            this.parentPage = viewDrivingLines;
-            this.DataContext = DrivingLinesList;
-            using (var db = new RailwayContext())
-            {
-                setDrivingLines(db);
-                trains = (from trains in db.trains
-                    select trains).ToList();
-                trainNameCmb.ItemsSource = trains;
-                fullTrains = trains;
-                stations = (from st in db.stations orderby st.Name select st).ToList();
-            }
+            try{
+                InitializeComponent();
+                //this.parentFrame = frame;
+                this.parentFrame = parentFrame;
+                this.parentPage = viewDrivingLines;
+                this.DataContext = DrivingLinesList;
+                using (var db = new RailwayContext())
+                {
+                    setDrivingLines(db);
+                    trains = (from trains in db.trains
+                        select trains).ToList();
+                    trainNameCmb.ItemsSource = trains;
+                    fullTrains = trains;
+                    stations = (from st in db.stations orderby st.Name select st).ToList();
+                }
 
-            
-            startDate.Language = XmlLanguage.GetLanguage(new System.Globalization.CultureInfo("sr-ME").IetfLanguageTag);
-            endDate.Language = XmlLanguage.GetLanguage(new System.Globalization.CultureInfo("sr-ME").IetfLanguageTag);
+                
+                startDate.Language = XmlLanguage.GetLanguage(new System.Globalization.CultureInfo("sr-ME").IetfLanguageTag);
+                endDate.Language = XmlLanguage.GetLanguage(new System.Globalization.CultureInfo("sr-ME").IetfLanguageTag);
+                
+            }
+            catch (Exception e)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
         }
         
         
         public void setDrivingLines(RailwayContext db)
         {
-            this.DrivingLinesList = (from dl in db.drivingLines
-                where dl.deleted == false
-                select new DrivingLineViewDTO()
-                {
-                    DrivingLineId = dl.Id,
-                    Name = dl.Name,
-                    TrainName = dl.Train.Name,
-                    startDate = dl.startDate,
-                    endDate = dl.endDate
-                }).ToList();
-            drivingLineDataGrid.ItemsSource = DrivingLinesList;
+            try{
+                this.DrivingLinesList = (from dl in db.drivingLines
+                    where dl.deleted == false
+                    select new DrivingLineViewDTO()
+                    {
+                        DrivingLineId = dl.Id,
+                        Name = dl.Name,
+                        TrainName = dl.Train.Name,
+                        startDate = dl.startDate,
+                        endDate = dl.endDate
+                    }).ToList();
+                drivingLineDataGrid.ItemsSource = DrivingLinesList;
+                
+            }
+            catch (Exception e)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
         }
 
         private void ViewSchedule_OnClick(object sender, RoutedEventArgs e)
@@ -74,48 +90,56 @@ namespace railway.defineDrivingLine
 
         private void DeleteDrivingLine_OnClick(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                var buttonId = ((Button)sender).Tag;
+                //DrivingLineDTO dto = findDTOById((int)dtoId);
+                int drivingLineId = (int)buttonId;
+                DrivingLineViewDTO send = null;
+                foreach (DrivingLineViewDTO dto in DrivingLinesList)
+                {
+                    if (dto.DrivingLineId == drivingLineId)
+                    {
+                        send = dto;
+                        break;
+                    }
+
+                }
+
+                send.newEndDate = send.endDate;
+                //defEndDateModal.ShowHandlerDialog(send, this);
+
+                DefineEndDateForDrivingLine window = new DefineEndDateForDrivingLine(send, this);
+                window.ShowDialog();
+                /*
+                using (var db = new RailwayContext())
+                {
+                    List<Ticket> tickets = (from t in db.tickets
+                        join s in db.schedules
+                            on t.ScheduleId equals s.Id
+                        where s.DepatureDate > DateTime.Now && s.DrivingLineId == drivingLineId
+                        select t).ToList();
+                    if (tickets.Count > 0)
+                        MessageBox.Show("Postoje prodate karte za liniju, brisanje je onemogućen");
+                    else
+                    {
+                        DrivingLine dl = (from d in db.drivingLines
+                            where d.Id == drivingLineId
+                            select d).Single();
+                        dl.deleted = true;
+                        MessageBox.Show(
+                            "Uspešno ste logičko brisali mrežnu liniju. I dalje možete da vidite kod izveštaja");
+                        db.SaveChanges();
+                        setDrivingLines(db);
+                    }
+                }*/
             
-            var buttonId = ((Button)sender).Tag;
-            //DrivingLineDTO dto = findDTOById((int)dtoId);
-            int drivingLineId = (int)buttonId;
-            DrivingLineViewDTO send = null;
-            foreach (DrivingLineViewDTO dto in DrivingLinesList)
-            {
-                if (dto.DrivingLineId == drivingLineId)
-                {
-                    send = dto;
-                    break;
-                }
-                    
             }
-
-            send.newEndDate = send.endDate;
-            //defEndDateModal.ShowHandlerDialog(send, this);
-
-            DefineEndDateForDrivingLine window = new DefineEndDateForDrivingLine(send, this);
-            window.ShowDialog();
-            /*
-            using (var db = new RailwayContext())
+            catch (Exception ex)
             {
-                List<Ticket> tickets = (from t in db.tickets
-                    join s in db.schedules
-                        on t.ScheduleId equals s.Id
-                    where s.DepatureDate > DateTime.Now && s.DrivingLineId == drivingLineId
-                    select t).ToList();
-                if (tickets.Count > 0)
-                    MessageBox.Show("Postoje prodate karte za liniju, brisanje je onemogućen");
-                else
-                {
-                    DrivingLine dl = (from d in db.drivingLines
-                        where d.Id == drivingLineId
-                        select d).Single();
-                    dl.deleted = true;
-                    MessageBox.Show(
-                        "Uspešno ste logičko brisali mrežnu liniju. I dalje možete da vidite kod izveštaja");
-                    db.SaveChanges();
-                    setDrivingLines(db);
-                }
-            }*/
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
         }
 
         private void ChangeLine_OnClick(object sender, RoutedEventArgs e)
@@ -124,40 +148,56 @@ namespace railway.defineDrivingLine
         
         private void TrainNameChanged_TextChanged(object sender, TextChangedEventArgs e)
         {
-            var trainNameCmb = sender as ComboBox;
+            try{
+                var trainNameCmb = sender as ComboBox;
 
-            //this. = trainNameCmb.Text.ToLower();
-            this.newTrain = (from item in trains
-                where item.Name.ToLower().Equals(trainNameCmb.Text.ToLower())
-                select item).FirstOrDefault();
-            
-            
-            this.trains = (from item in fullTrains
-                where item.Name.ToLower().Contains(trainNameCmb.Text.ToLower())
-                select item).ToList();
-            trainNameCmb.ItemsSource = trains;
+                //this. = trainNameCmb.Text.ToLower();
+                this.newTrain = (from item in trains
+                    where item.Name.ToLower().Equals(trainNameCmb.Text.ToLower())
+                    select item).FirstOrDefault();
+                
+                
+                this.trains = (from item in fullTrains
+                    where item.Name.ToLower().Contains(trainNameCmb.Text.ToLower())
+                    select item).ToList();
+                trainNameCmb.ItemsSource = trains;
 
-            trainNameCmb.IsDropDownOpen = true;
+                trainNameCmb.IsDropDownOpen = true;
+                
+            }
+            catch (Exception ex)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
         }
 
         private void DrivingLineDataGrid_OnSelected(object sender, RoutedEventArgs e)
         {
-            currentSelected = drivingLineDataGrid.SelectedItem as DrivingLineViewDTO;
-            newName.Text = currentSelected.Name;
-            trainNameCmb.SelectedItem = (from ts in this.fullTrains
-                                        where ts.Name == currentSelected.TrainName
-                                            select ts).Single();//Datarow.Cells[0].Value//
-            trainNameCmb.IsDropDownOpen = false;
-            startDate.SelectedDate = currentSelected.startDate;
-            startDate.IsEnabled = false;
-            if (currentSelected.startDate < DateTime.Now)
+            try{
+                currentSelected = drivingLineDataGrid.SelectedItem as DrivingLineViewDTO;
+                newName.Text = currentSelected.Name;
+                trainNameCmb.SelectedItem = (from ts in this.fullTrains
+                                            where ts.Name == currentSelected.TrainName
+                                                select ts).Single();//Datarow.Cells[0].Value//
+                trainNameCmb.IsDropDownOpen = false;
+                startDate.SelectedDate = currentSelected.startDate;
                 startDate.IsEnabled = false;
-            endDate.SelectedDate = currentSelected.endDate;
-            setMap();
-            setStationsOnDrivingLine();
-            
-            IFeatureTourNavigator navigator = FeatureTour.GetNavigator();
-            navigator.IfCurrentStepEquals("datagrid").GoNext();
+                if (currentSelected.startDate < DateTime.Now)
+                    startDate.IsEnabled = false;
+                endDate.SelectedDate = currentSelected.endDate;
+                setMap();
+                setStationsOnDrivingLine();
+                
+                IFeatureTourNavigator navigator = FeatureTour.GetNavigator();
+                navigator.IfCurrentStepEquals("datagrid").GoNext();
+                
+            }
+            catch (Exception ex)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
         }
 
         private void setMap()
@@ -182,61 +222,82 @@ namespace railway.defineDrivingLine
 
         private void setStationsOnDrivingLine()
         {
+            try{
+                using (var db = new RailwayContext())
+                {
+                    List<StationDTO> ss = (from sdb in db.stationsSchedules
+                        where sdb.DrivingLineId == currentSelected.DrivingLineId && sdb.deleted == false
+                        select new StationDTO()
+                        {
+                            StationId = sdb.Station.Id,
+                            StationName = sdb.Station.Name
+                        }).ToList();
+                    currentSelected.stationSchedules = ss;
+                }
             
-            using (var db = new RailwayContext())
-            {
-                List<StationDTO> ss = (from sdb in db.stationsSchedules
-                    where sdb.DrivingLineId == currentSelected.DrivingLineId && sdb.deleted == false
-                    select new StationDTO()
-                    {
-                        StationId = sdb.Station.Id,
-                        StationName = sdb.Station.Name
-                    }).ToList();
-                currentSelected.stationSchedules = ss;
             }
-            
+            catch (Exception e)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
             //stationScheduleDataGrid.ItemsSource = currentSelected.stationSchedules;
         }
         
         private void AddDrivingLine_OnClick(object sender, RoutedEventArgs e)
         {
-            parentPage.CurrentComponent = new AddDrivingLine(parentFrame, this, parentPage);
+            try{
+                parentPage.CurrentComponent = new AddDrivingLine(parentFrame, this, parentPage);
+                
+            }
+            catch (Exception ex)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
             //this.parentFrame.Content = add;
         }
 
         private void SaveChanges_OnClick(object sender, RoutedEventArgs e)
         {
-            if (currentSelected == null)
-            {
-                CustomMessageBox cmb = new CustomMessageBox("Prvo morate da izaberete mrežnu liniju koji hoćete da editujete");
-                cmb.ShowDialog();
-                return;
-            }
-            string name = newName.Text;
-            DrivingLineService dlService = new DrivingLineService();
-            try
-            {
-                dlService.updateBasicDrivingService(name, newTrain, currentSelected.DrivingLineId);
-                CustomMessageBox cmb = new CustomMessageBox("Mrežna linija je uspešno sačuvana");
-                cmb.ShowDialog();
-                setDrivingLines(new RailwayContext());
-            }
-            catch (NotDefinedException nd)
-            {
-                CustomMessageBox cmb = new CustomMessageBox(nd.message);
-                cmb.ShowDialog();
-            }
-            catch (AlreadyDefinedException ad)
-            {
-                CustomMessageBox cmb = new CustomMessageBox(ad.message);
-                cmb.ShowDialog();
+            try{
+                if (currentSelected == null)
+                {
+                    CustomMessageBox cmb = new CustomMessageBox("Prvo morate da izaberete mrežnu liniju koji hoćete da editujete");
+                    cmb.ShowDialog();
+                    return;
+                }
+                string name = newName.Text;
+                DrivingLineService dlService = new DrivingLineService();
+                try
+                {
+                    dlService.updateBasicDrivingService(name, newTrain, currentSelected.DrivingLineId);
+                    CustomMessageBox cmb = new CustomMessageBox("Mrežna linija je uspešno sačuvana");
+                    cmb.ShowDialog();
+                    setDrivingLines(new RailwayContext());
+                }
+                catch (NotDefinedException nd)
+                {
+                    CustomMessageBox cmb = new CustomMessageBox(nd.message);
+                    cmb.ShowDialog();
+                }
+                catch (AlreadyDefinedException ad)
+                {
+                    CustomMessageBox cmb = new CustomMessageBox(ad.message);
+                    cmb.ShowDialog();
+                }
+                catch (Exception ex)
+                {
+                    CustomMessageBox cmb = new CustomMessageBox("Ups, neočekivana greška se desilo");
+                    cmb.Show();
+                }
+
             }
             catch (Exception ex)
             {
-                CustomMessageBox cmb = new CustomMessageBox("Ups, neočekivana greška se desilo");
-                cmb.Show();
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
             }
-
         }
 
         private void RemoveStation_OnClick(object sender, RoutedEventArgs e)
@@ -294,15 +355,23 @@ namespace railway.defineDrivingLine
 
         private void EventSetter_OnHandler(object sender, TextChangedEventArgs e)
         {
-            var cmbx = sender as ComboBox;
-            cmbx.ItemsSource = from item in stations
-                where item.Name.ToLower().Contains(cmbx.Text.ToLower())
-                select item;
-            this.currentStation = (from item in stations
-                where item.Name.ToLower().Equals(cmbx.Text.ToLower())
-                select item).FirstOrDefault();
+            try{
+                var cmbx = sender as ComboBox;
+                cmbx.ItemsSource = from item in stations
+                    where item.Name.ToLower().Contains(cmbx.Text.ToLower())
+                    select item;
+                this.currentStation = (from item in stations
+                    where item.Name.ToLower().Equals(cmbx.Text.ToLower())
+                    select item).FirstOrDefault();
 
-            cmbx.IsDropDownOpen = true;
+                cmbx.IsDropDownOpen = true;
+                
+            }
+            catch (Exception ex)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
+                cmb.ShowDialog();
+            }
         }
 
         public void StartTour_OnClick(object sender, RoutedEventArgs e)
