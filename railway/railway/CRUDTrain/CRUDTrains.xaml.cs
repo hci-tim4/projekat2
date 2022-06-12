@@ -289,6 +289,14 @@ namespace railway.CRUDTrain
         private void delete_Clicked(object sender, RoutedEventArgs e)
         {
             try{
+                
+                ConfirmDelete conf = new ConfirmDelete();
+                conf.ShowDialog();
+                if (!conf.delete)
+                {
+                    return;
+                }
+
                 var db = new RailwayContext();
                 var id = ((Button)sender).Tag;
                 var train = db.trains.Where(t => t.Id == (int)id).FirstOrDefault();

@@ -354,6 +354,7 @@ namespace railway.defineDrivingLine
                     new Step("MapOfDrivingLine", "Mapa", "Nakon odabira željene stanice, ona se prikaže na mapi."),
                     new Step("AllDrivingLinesStack", "Definiši mrežnu liniju", "Ponavljajte ove korake dok ne dodate sve željene stanice."),
                     new Step("SaveDrivingLine", "Sačuvaj", "Kada završite sa dodavanjem stanica klikom na dugme 'Sačuvaj' sačuvaćete novu mrežnu liniju."),
+                    new Step("CancelButton", "Poništi", "Ako niste zadovoljni izborom stranica za novu mrežnu liniju, klikom na dugme 'Poništi' ćete poništiti sve izabrane stanice."),
                     new Step("ChangeTypeOfDrivingLineDefinition", "Promeni tip definisanja", "Na raspolaganju imate i drugačiji način defnisanja mrežne linije. Kliknite 'Prevlačenje' da biste videli."),
                     new Step("BackButton", "Vraćanje nazad", "Ako ste završili kliknite na strelicu da biste se vratili na listu mrežnih linija."),
                     
@@ -363,6 +364,11 @@ namespace railway.defineDrivingLine
 
             tour.Start();
 
+        }
+
+        private void Cancel_OnClick(object sender, RoutedEventArgs e)
+        {
+            clearMap();
         }
     }
     

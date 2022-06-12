@@ -210,9 +210,13 @@ namespace railway.managerSchedule
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            var tour = ((Button)sender).Tag;
-            deleteStationschedule((int)tour);
-
+            ConfirmDelete conf = new ConfirmDelete();
+            conf.ShowDialog();
+            if (conf.delete)
+            {
+                var tour = ((Button)sender).Tag;
+                deleteStationschedule((int)tour);
+            }
         }
 
         private void updateStationSchedule(int tour) {

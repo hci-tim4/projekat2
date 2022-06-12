@@ -466,6 +466,7 @@ namespace railway.defineDrivingLine
                         ShowNextButton = false
                     },
                     new Step("SaveDrivingLine", "Sačuvaj", "Kada završite sa dodavanjem stanica klikom na dugme 'Sačuvaj' sačuvaćete novu mrežnu liniju."),
+                    new Step("CancelButton", "Poništi", "Ako niste zadovoljni izborom stranica za novu mrežnu liniju, klikom na dugme 'Poništi' ćete poništiti sve izabrane stanice."),
                     new Step("ChangeTypeOfDrivingLineDefinition", "Promeni tip definisanje", "Na raspolaganju imate i drugačiji način defnisanje mrežne linije. Kliknite na 'Promeni' da biste videli."),
                     new Step("BackButton", "Vraćanje nazad", "Ako ste završili kliknite na strelicu da biste se vratili na listu mrežnih linija."),
                     
@@ -476,6 +477,11 @@ namespace railway.defineDrivingLine
             tour.Start();
 
 
+        }
+
+        private void Cancel_OnClick(object sender, RoutedEventArgs e)
+        {
+            clearMap();
         }
     }
 }
