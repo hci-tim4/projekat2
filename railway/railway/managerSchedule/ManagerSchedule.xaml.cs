@@ -216,7 +216,7 @@ namespace railway.managerSchedule
         }
 
         private void updateStationSchedule(int tour) {
-           if (validate()) {
+           if (validate(tour)) {
                 using (var db = new RailwayContext())
                 {
                     var station = (from stationSchedule in db.stationsSchedules
@@ -240,12 +240,12 @@ namespace railway.managerSchedule
 
                     db.SaveChanges();
                     setAllDrivingLines();
-                    Window box = new CustomMessageBox("Izmenili ste red voznje za turu " + tour + "\n. Izmene će biti vidljive nakon mesec dana.");
+                    Window box = new CustomMessageBox("Izmenili ste red voznje za turu " + tour + ".");
                     box.ShowDialog();
 
                 }
             }else{
-                Window box = new CustomMessageBox("Greška, potrebno je da vreme dolaska\n bude pre vremena polaska.");
+                Window box = new CustomMessageBox("Greška, potrebno je da vreme dolaska\nbude pre vremena polaska.");
                 box.ShowDialog();
 
             }
@@ -253,16 +253,21 @@ namespace railway.managerSchedule
         }
 
 
-        private bool validate()
+        private bool validate(int tour)
         {
-            for (int i = 0; i < this.currentSelected.schedule.Count - 1; i++)
+            var scheduleTour =
+                (from s in currentSelected.schedule
+                 where s.Tour == tour
+                 select s).ToList();
+
+            for (int i = 0; i < scheduleTour.Count - 1; i++)
             {
-                if (currentSelected.schedule[i].ArrivalTime >= currentSelected.schedule[i].DepartureTime)
+                if (scheduleTour[i].ArrivalTime >= scheduleTour[i].DepartureTime)
                 {
                     return false;
                 }
 
-                if (currentSelected.schedule[i].DepartureTime >= currentSelected.schedule[i + 1].ArrivalTime)
+                if (scheduleTour[i].DepartureTime >= scheduleTour[i + 1].ArrivalTime)
                 {
                     return false;
                 }
@@ -288,7 +293,7 @@ namespace railway.managerSchedule
                 }
                 db.SaveChanges();
                 setAllDrivingLines();
-                Window box = new CustomMessageBox("Obrisali ste red voznje. Izmene će biti vidljive nakon mesec dana.");
+                Window box = new CustomMessageBox("Obrisali ste red vožnje.");
                 box.ShowDialog();
 
             }

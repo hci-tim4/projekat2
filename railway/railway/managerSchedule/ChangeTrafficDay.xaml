@@ -94,8 +94,8 @@
 
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="15,15,15,15">
-                <Button ToolTip="Izmeni dane u kojima saobraća linija" HorizontalAlignment="Right" Name="changeDays" Click="changeDays_Click" FontSize="20" Content="Izmeni" MaxWidth="150" Margin="2,2,2,2" l:HelpProvider.HelpKey="confirmChangeDays"></Button>
                 <Button ToolTip="Odustani od izmene dana" HorizontalAlignment="Right" Name="cancelchangeDays" Click="cancelChangeDays_Click" FontSize="20" Content="Odustani" MaxWidth="150" Margin="2,2,2,2" l:HelpProvider.HelpKey="cancelChangeDays"></Button>
+                <Button ToolTip="Izmeni dane u kojima saobraća linija" HorizontalAlignment="Right" Name="changeDays" Click="changeDays_Click" FontSize="20" Content="Izmeni" MaxWidth="150" Margin="2,2,2,2" l:HelpProvider.HelpKey="confirmChangeDays"></Button>
             </StackPanel>
         </StackPanel>
 
