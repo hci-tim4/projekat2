@@ -79,7 +79,7 @@ namespace railway.defineDrivingLine
                 }else if (startSelectedDate < DateTime.Now)
                 {
                     CustomMessageBox cmb2 =
-                        new CustomMessageBox("Početni datum mora da bude veći \nod današnjeg datuma");
+                        new CustomMessageBox("Početni datum mora da bude \nnakon današnjeg datuma");
                     cmb2.ShowDialog();
                     return;
                 }
