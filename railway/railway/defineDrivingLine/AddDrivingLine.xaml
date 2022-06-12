@@ -143,6 +143,7 @@
             </DockPanel>
             <DockPanel  Margin="5">
                 <Button FontSize="20" Width="150" DockPanel.Dock="Left" x:Name="Cancel" Click="Cancel_OnClick" ToolTip="Poništi dodate stanice"
+                        l:HelpProvider.HelpKey="clearDrivingLine"
                         tour:TourHelper.ElementID="CancelButton"
                         tour:TourHelper.Placement="BottomCenter">Poništi</Button>
                 <Button DockPanel.Dock="Right" FontSize="20" Content="Sačuvaj" MaxWidth="150" HorizontalAlignment="Right" ToolTip="Sačuvejte mrežnu liniju"
