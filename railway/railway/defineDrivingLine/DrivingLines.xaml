@@ -156,11 +156,11 @@
             <TextBox Grid.Column="1" Grid.Row="0" FontSize="20" Text="" x:Name="newName" 
                          l:HelpProvider.HelpKey="drivingLineName"
                          tour:TourHelper.ElementID="changeNameTextBox"
-                         tour:TourHelper.Placement="BottomCenter"></TextBox>
+                         tour:TourHelper.Placement="BottomCenter" ToolTip="Za izmenu imena mrežne linije ovde menjate ime"></TextBox>
                 
                 <ComboBox FontSize="20" Margin="2,2,2,2" x:Name="trainNameCmb" Grid.Column="1" Grid.Row="1" 
                           SelectedValuePath="TrainName" Text="{Binding Path=trains}" IsEditable="True" DisplayMemberPath="Name" 
-                          l:HelpProvider.HelpKey="changeTrainName"
+                          l:HelpProvider.HelpKey="changeTrainName"  ToolTip="Za izmenu voza mrežne linije ovde menjate voz"
                           tour:TourHelper.ElementID="changeTrainComboBox"
                           tour:TourHelper.Placement="BottomCenter">
                 <ComboBox.Style>
@@ -180,7 +180,7 @@
             
             <Button  FontSize="20" x:Name="saveChanges" Click="SaveChanges_OnClick" Grid.Column="1" Grid.Row="4" 
                      ToolTip="Sačuvaje izmenjene podatke o mrežnoj liniji" l:HelpProvider.HelpKey="btnChangeDrivingLine"
-                     tour:TourHelper.ElementID="saveChangesButton"
+                     tour:TourHelper.ElementID="saveChangesButton" 
                      tour:TourHelper.Placement="BottomCenter">
                 Sačuvaj izmene
             </Button>

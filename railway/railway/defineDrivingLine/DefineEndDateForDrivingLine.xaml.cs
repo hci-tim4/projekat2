@@ -97,6 +97,12 @@ namespace railway.defineDrivingLine
                         CustomMessageBox cmb = new CustomMessageBox("Postoje prodate karte za liniju.");
                         cmb.ShowDialog();
                     }
+                    else if (selectedEndDate < DateTime.Now)
+                    {
+                        CustomMessageBox cmb =
+                            new CustomMessageBox("Krajnji datum mora da bude \nnakon danjašnjeg datuma");
+                        cmb.ShowDialog();
+                    }
                     else
                     {
                         DrivingLine dl = (from d in db.drivingLines

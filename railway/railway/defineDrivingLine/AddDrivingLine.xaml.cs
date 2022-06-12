@@ -334,31 +334,34 @@ namespace railway.defineDrivingLine
         private void searchForStation(object sender, KeyEventArgs e)
         {
             try{
-                string input = searchForStationTextBox.Text;
-                if (Touring)
-                {
-                    IFeatureTourNavigator navigator = FeatureTour.GetNavigator();
-                    navigator.IfCurrentStepEquals("SearchThroughDrivingLine").GoNext();
-                }
-                using (var db = new RailwayContext())
-                {
-                    List<Station> s = (from st in db.stations where st.Name.Contains(input) orderby st.Name select st).ToList();
-                    foreach (Station s2 in stations2)
-                    {
-                        if (s.Contains(s2))
-                        {
-                            s.Remove(s2);
-                        }
-                    }
-                    stations = new ObservableCollection<Station>(s);
-                    stationList.ItemsSource = stations;
-                }
-                
+                makeSearchWithGivenInput(searchForStationTextBox.Text);
             }
             catch (Exception ex)
             {
                 CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
                 cmb.ShowDialog();
+            }
+        }
+
+        private void makeSearchWithGivenInput(string input)
+        {
+            if (Touring)
+            {
+                IFeatureTourNavigator navigator = FeatureTour.GetNavigator();
+                navigator.IfCurrentStepEquals("SearchThroughDrivingLine").GoNext();
+            }
+            using (var db = new RailwayContext())
+            {
+                List<Station> s = (from st in db.stations where st.Name.Contains(input) orderby st.Name select st).ToList();
+                foreach (Station s2 in stations2)
+                {
+                    if (s.Contains(s2))
+                    {
+                        s.Remove(s2);
+                    }
+                }
+                stations = new ObservableCollection<Station>(s);
+                stationList.ItemsSource = stations;
             }
         }
 
@@ -387,6 +390,7 @@ namespace railway.defineDrivingLine
         private void ChangeDrivingLineDefView_OnClick(object sender, RoutedEventArgs e)
         {
             try{
+                makeSearchWithGivenInput("");
                 greatParentPage.CurrentComponent = new AddDrivingLineSimple(parentFrame, parentPage, this, stations2, stations, greatParentPage);
                 this.parentFrame.Content = greatParentPage.CurrentComponent;
             }

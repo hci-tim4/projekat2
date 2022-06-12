@@ -147,7 +147,8 @@ namespace railway.drivingLineReport
             try{
                 if (currentDrivingLine == null)
                 {
-                    MessageBox.Show("Prvo morate da izaberete mrežnu liniju.");
+                    CustomMessageBox cmb = new CustomMessageBox("Prvo morate da izaberete mrežnu liniju.");
+                    cmb.ShowDialog();
                     return;
                 }
                 if (Touring)

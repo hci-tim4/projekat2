@@ -92,7 +92,7 @@
             <DockPanel>
                 <Button FontSize="20" x:Name="back" DockPanel.Dock="Left" 
                         Click="Back_OnClick" Style="{StaticResource CircleButton}" 
-                        Width="35" Height="35"
+                        Width="35" Height="35" ToolTip="Vratite se nazad na listu mrežnu liniju"
                         tour:TourHelper.ElementID="BackButton"
                         tour:TourHelper.Placement="BottomCenter">
                     <Image Source="\icon\backbutton.png" Stretch="Fill">
@@ -106,7 +106,7 @@
                         tour:TourHelper.Placement="BottomCenter">Prevlačenje</Button>
             </DockPanel>
             <Button FontSize="20" Content="Sačuvaj" MaxWidth="120" HorizontalAlignment="Right" x:Name="saveDrivingLine" MaxHeight="40"
-                    Click="SaveDrivingLine_OnClick" l:HelpProvider.HelpKey="btnSaveNewDrivingLine"
+                    Click="SaveDrivingLine_OnClick" l:HelpProvider.HelpKey="btnSaveNewDrivingLine" ToolTip="Sačuvejte mrežnu liniju"
                     tour:TourHelper.ElementID="SaveDrivingLine"
                     tour:TourHelper.Placement="BottomCenter"></Button>
             
@@ -117,7 +117,7 @@
                     tour:TourHelper.Placement="LeftCenter">
             <ComboBox x:Name="stationsCmb" DisplayMemberPath="Name" MinWidth="200" 
                       IsEditable="True" 
-                         
+                      ToolTip="Izaberite jednu od stanica"
                       Width="150"  FontSize="20"  
                       FontWeight="Bold" Foreground="DodgerBlue"
                       
@@ -130,7 +130,7 @@
                     </Style>
                 </ComboBox.Style>
             </ComboBox>
-            <Button FontSize="20" Content="Dodaj" MinWidth="60" Height="40" 
+            <Button FontSize="20" Content="Dodaj" MinWidth="60" Height="40" ToolTip="Dodajte izabranu stanicu u mrežnu liniju"
                     x:Name="addStation" Click="AddStation_OnClick" l:HelpProvider.HelpKey="btnAddStationInDrivingLine"
                     tour:TourHelper.ElementID="AddStation"
                     tour:TourHelper.Placement="BottomCenter"></Button>
