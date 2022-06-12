@@ -19,61 +19,61 @@
             <Setter Property="BorderThickness" Value="3"/> 
         </Style> 
     </UserControl.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <StackPanel  Grid.Column="0" Grid.Row="0"  MinWidth="100">
-            <StackPanel Margin="3">
-                <DatePicker FontSize="20" MinWidth="200" x:Name="fromDateDatePicker"
+    <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <StackPanel  Grid.Column="0" Grid.Row="0"  MinWidth="100">
+                <StackPanel Margin="3">
+                    <DatePicker FontSize="20" MinWidth="200" x:Name="fromDateDatePicker"
                             SelectedDateChanged="FromDateDatePicker_OnSelectedDateChanged"
                             tour:TourHelper.ElementID="StartDatePicker"
                             tour:TourHelper.Placement="BottomCenter" Margin="0,10,0,0" materialDesign:HintAssist.Hint="Početni datum"></DatePicker>
-                <DatePicker FontSize="20" MinWidth="200" x:Name="untilDateDatePicker" 
+                    <DatePicker FontSize="20" MinWidth="200" x:Name="untilDateDatePicker" 
                             SelectedDateChanged="UntilDateDatePicker_OnSelectedDateChanged"
                             tour:TourHelper.ElementID="EndDatePicker"
                             tour:TourHelper.Placement="BottomCenter"  materialDesign:HintAssist.Hint="Krajnji datum" Margin="0,10,0,0"></DatePicker>
-                <Button FontSize="20" x:Name="showReport" Click="ShowReport_OnClick" Content="Prikaži" MinWidth="100" 
+                    <Button FontSize="20" x:Name="showReport" Click="ShowReport_OnClick" Content="Prikaži" MinWidth="100" 
                         HorizontalAlignment="Right" 
                         tour:TourHelper.ElementID="ShowReportButton"
                         tour:TourHelper.Placement="BottomCenter" Margin="0,10,0,20"></Button>
-            </StackPanel>
-            <Border BorderBrush="DodgerBlue" BorderThickness="2"> 
-                <StackPanel Margin="0,0,0,0">
+                </StackPanel>
+                <Border BorderBrush="DodgerBlue" BorderThickness="2">
+                    <StackPanel Margin="0,0,0,0">
 
-                    <Label FontSize="20"  >Pregled karata po:</Label>
-                    <RadioButton FontSize="20" x:Name="seatTypeRadioButton" Margin="3" Content="Tipu sedišta" Checked="showBySeatTypes"></RadioButton>
-                    <RadioButton FontSize="20" x:Name="drivingLineRadioButton" Margin="3" Checked="showByDrivingLines"
+                        <Label FontSize="20"  >Pregled karata po:</Label>
+                        <RadioButton FontSize="20" x:Name="seatTypeRadioButton" Margin="3" Content="Tipu sedišta" Checked="showBySeatTypes"></RadioButton>
+                        <RadioButton FontSize="20" x:Name="drivingLineRadioButton" Margin="3" Checked="showByDrivingLines"
                              tour:TourHelper.ElementID="ChangeTypeOfMontlhyReport"
                              tour:TourHelper.Placement="LeftCenter">Mrežnim linijama</RadioButton>
 
-                </StackPanel>
-            </Border>
-        </StackPanel>
-        
-        
-        <StackPanel Grid.Column="1" Grid.Row="0" MaxWidth="1000">
-            
-            <StackPanel x:Name="chartStackPanel" 
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+
+            <StackPanel Grid.Column="1" Grid.Row="0" MaxWidth="1000">
+
+                <StackPanel x:Name="chartStackPanel" 
                         tour:TourHelper.ElementID="ReportChart"
                         tour:TourHelper.Placement="TopCenter">
-                <lvc:CartesianChart x:Name="barChart" Series="{Binding Path=barChartData.BarLineSeriesCollection}" Width="1100" Height="500">
-                    <lvc:CartesianChart.AxisX>
-                        <lvc:Axis x:Name="barChartX" Title="Tip" Labels="{Binding Path=barChartData.xAxisLabels}"></lvc:Axis>
-                    </lvc:CartesianChart.AxisX>
-                    <lvc:CartesianChart.AxisY>
-                        <lvc:Axis Title="Broj prodatih karata" LabelFormatter="{Binding Formatter}"></lvc:Axis>
-                    </lvc:CartesianChart.AxisY>
-                </lvc:CartesianChart>
-                
-            </StackPanel>
-            
-            <ScrollViewer>
-            <DataGrid  Background="DodgerBlue"
+                    <lvc:CartesianChart x:Name="barChart" Series="{Binding Path=barChartData.BarLineSeriesCollection}" Width="1100" Height="500">
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis x:Name="barChartX" Title="Tip" Labels="{Binding Path=barChartData.xAxisLabels}"></lvc:Axis>
+                        </lvc:CartesianChart.AxisX>
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis Title="Broj prodatih karata" LabelFormatter="{Binding Formatter}"></lvc:Axis>
+                        </lvc:CartesianChart.AxisY>
+                    </lvc:CartesianChart>
+
+                </StackPanel>
+
+                <DataGrid  Background="DodgerBlue"
                        ItemsSource="{Binding Path=currentData }"
                        SelectionUnit="FullRow" SelectionMode="Single" AutoGenerateColumns="False"
                        IsReadOnly="True" Name="dataGrid" ScrollViewer.CanContentScroll="True"
@@ -82,18 +82,50 @@
                      CanUserSortColumns="True" 
                        tour:TourHelper.ElementID="ReportTable"
                        tour:TourHelper.Placement="LeftTop">
-                    
-                
-                <DataGrid.Columns>
-                    <DataGridTextColumn FontSize="20" Width="*" MinWidth="100" Header="Tip" Binding="{Binding Path=Type}"/>
-                    <DataGridTextColumn FontSize="20" Width="*" MinWidth="100" Header="Broj karata" Binding="{Binding Path=NumberOfSelledTickets}"/>
-                    <DataGridTextColumn FontSize="20" Width="*" MinWidth="100" Header="Iznos" Binding="{Binding Path=Price}"/>
-                </DataGrid.Columns>
 
-            </DataGrid>
-                </ScrollViewer>
-            
-            <!-- GRAFIKON & tabel -->
-        </StackPanel>
-    </Grid>
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn FontSize="20" Width="*" MinWidth="100" Header="Tip" Binding="{Binding Path=Type}">
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="Foreground" Value="White"/>
+                                    <Setter Property="Background" Value="DodgerBlue"/>
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn FontSize="20" Width="*" MinWidth="100" Header="Broj karata" Binding="{Binding Path=NumberOfSelledTickets}">
+
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="Foreground" Value="White"/>
+                                    <Setter Property="Background" Value="DodgerBlue"/>
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn FontSize="20" Width="*" MinWidth="100" Header="Iznos" Binding="{Binding Path=Price}">
+                            <DataGridTextColumn.HeaderStyle>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="Foreground" Value="White"/>
+                                    <Setter Property="Background" Value="DodgerBlue"/>
+                                    <Setter Property="FontWeight" Value="Bold"/>
+                                </Style>
+                            </DataGridTextColumn.HeaderStyle>
+                        </DataGridTextColumn>
+                    </DataGrid.Columns>
+
+                    <DataGrid.RowStyle>
+                        <Style TargetType="{x:Type DataGridRow}" >
+                            <Setter Property="BorderBrush" Value="Transparent" />
+                            <Setter Property="BorderThickness" Value="1" />
+                        </Style>
+                    </DataGrid.RowStyle>
+                </DataGrid>
+
+
+                <!-- GRAFIKON & tabel -->
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
 </UserControl>

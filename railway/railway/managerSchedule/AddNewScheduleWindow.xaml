@@ -8,7 +8,7 @@
         xmlns:cmd="clr-namespace:railway.Commands"
         xmlns:l="clr-namespace:railway"
         Icon="/icon/trainIcon.png"
-        Title="ŽELEZNICE SRBIJE" Height="450" Width="600" MaxWidth="600">
+        Title="ŽELEZNICE SRBIJE" Height="450" Width="600" MaxWidth="600" ResizeMode="NoResize">
         
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
@@ -25,13 +25,13 @@
         </Grid.ColumnDefinitions>
 
 
-        <DataGrid  AlternatingRowBackground="Gainsboro" AlternationCount="1"
+        <DataGrid  
                   SelectionUnit="FullRow" SelectionMode="Single" AutoGenerateColumns="False"
                   Name="addDataGridStationSchedule" ScrollViewer.CanContentScroll="True"
                     Grid.Row="0" Grid.Column="0" ScrollViewer.HorizontalScrollBarVisibility="Auto"
                     ScrollViewer.VerticalScrollBarVisibility="Auto" FontSize="20"
-                   CanUserAddRows="false"
-                    Background="White" CanUserSortColumns="False" RenderTransformOrigin="0.997,0.431">
+                   CanUserAddRows="false" Width="Auto" ColumnWidth="*" HorizontalAlignment="Left"
+                    Background="DodgerBlue" CanUserSortColumns="False" RenderTransformOrigin="0.997,0.431">
 
             <DataGrid.Columns>
                 <DataGridTextColumn  MinWidth="60" Header="Stanica" Binding="{Binding Path=StationName}" IsReadOnly="True"/>
@@ -75,11 +75,19 @@
                 <DataGridTextColumn MinWidth="60" Header="Polazak" Binding="{Binding Path=DepartureTime, Mode=TwoWay}" IsReadOnly="false"/>   -->
 
             </DataGrid.Columns>
+
+            <DataGrid.RowStyle>
+                <Style TargetType="{x:Type DataGridRow}" >
+                    <Setter Property="BorderBrush" Value="Transparent" />
+                    <Setter Property="BorderThickness" Value="1" />
+                </Style>
+            </DataGrid.RowStyle>
         </DataGrid>
 
-        <StackPanel Grid.Row="2"  Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button  ToolTip="Sačuvajte novi red vožnje" x:Name="btnSave" Click="btnSave_Click" Content="Sačuvaj" Margin="2,2,2,2" FontSize="20" MaxWidth="150" MaxHeight="80" l:HelpProvider.HelpKey="btnSaveNewSchedule"/>
-            <Button ToolTip="Odustanite od kreiranja novog reda vožnje" x:Name="btnCancel" Click="btnCancel_Click" Content="Odustani" Margin="2,2,2,2"  MaxWidth="150" MaxHeight="80" FontSize="20" l:HelpProvider.HelpKey="btnCancelNewschedule"/>
+        <StackPanel Grid.Row="0"  Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Button ToolTip="Odustanite od kreiranja novog reda vožnje" Height="40" x:Name="btnCancel" Click="btnCancel_Click" Content="Odustani" Margin="2,0,20,2"  MaxWidth="150" MaxHeight="80" FontSize="20" l:HelpProvider.HelpKey="btnCancelNewschedule"/>
+            <Button  ToolTip="Sačuvajte novi red vožnje" x:Name="btnSave" Height="40" Click="btnSave_Click" Content="Sačuvaj" Margin="2,0,2,2" FontSize="20" MaxWidth="150" MaxHeight="80" l:HelpProvider.HelpKey="btnSaveNewSchedule"/>
+           
         </StackPanel>
 
 

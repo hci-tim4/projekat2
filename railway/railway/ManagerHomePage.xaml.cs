@@ -59,6 +59,7 @@ namespace railway
                     //GridPrincipal.Children.Add(new Timetable(loggedUser));
                     page.Content = "";
                     CurrentContent = new ManagerSchedule();
+                    currentTab.Content = "RED VOŽNJE";
                     page.Content = CurrentContent;
                     //page.Content = 
 
@@ -66,18 +67,22 @@ namespace railway
                 case 1:
                     page.Content = "";
                     CurrentContent = new ViewDrivingLines(page);
+                    currentTab.Content = "MREŽNE LINIJE";
                     page.Content = CurrentContent;
                     break;
                 case 2:
                     CurrentContent = new CRUDTrains();
+                    currentTab.Content = "VOZOVI";
                     page.Content = CurrentContent;
                     break;
                 case 3:
                     CurrentContent = new ViewMonthlyTicketView();
+                    currentTab.Content = "MESEČNI IZVEŠTAJ";
                     page.Content = CurrentContent;
                     break;
                 case 4:
                     CurrentContent = new ViewDrivingLineTicketReport();
+                    currentTab.Content = "IZVEŠTAJ ZA VOZNU LINIJU";
                     page.Content = CurrentContent;
                     break;
 
@@ -106,6 +111,7 @@ namespace railway
         {
             page.Content = "";
             CurrentContent = new ManagerSchedule();
+            currentTab.Content = "RED VOŽNJE";
             page.Content = CurrentContent;
         }
 
@@ -118,6 +124,7 @@ namespace railway
         {
             page.Content = "";
             CurrentContent = new ViewDrivingLines(page);
+            currentTab.Content = "MREŽNE LINIJE";
             page.Content = CurrentContent;
         }
 
@@ -129,6 +136,7 @@ namespace railway
         private void Trains_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             CurrentContent = new CRUDTrains();
+            currentTab.Content = "VOZOVI";
             page.Content = CurrentContent;
         }
 
@@ -140,6 +148,7 @@ namespace railway
         private void Report_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             CurrentContent = new ViewMonthlyTicketView();
+            currentTab.Content = "MESEČNI IZVEŠTAJ";
             page.Content = CurrentContent;
         }
 

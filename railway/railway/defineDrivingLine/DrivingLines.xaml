@@ -83,7 +83,6 @@
         </Grid.ColumnDefinitions>
         <StackPanel>
             <DockPanel>
-                <Label DockPanel.Dock="Left" FontSize="20"> Mrežne linije</Label>
                 <Button Width="35" Height="35" DockPanel.Dock="Right" HorizontalAlignment="Right" x:Name="addDrivingLine"
                         ToolTip="Dodaj mrežnu liniju" Click="AddDrivingLine_OnClick" l:HelpProvider.HelpKey="btnAddDrivingLine"
                         Style="{StaticResource CircleButton}" 
@@ -103,9 +102,9 @@
                 <DataGrid FontSize="20" SelectedItem="DrivingLineDataGrid_OnSelected" 
                       x:Name="drivingLineDataGrid" ItemsSource="{Binding Path=DrivingLines}" 
                       IsReadOnly="True" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True"
-                      MinHeight="200" MaxHeight="700" MinWidth="200"
+                      MinHeight="200" MaxHeight="700" MaxWidth="400"
                       tour:TourHelper.ElementID="datagrid"
-                      tour:TourHelper.Placement="BottomCenter">
+                      tour:TourHelper.Placement="BottomCenter" Background="DodgerBlue">
             
             <DataGrid.ItemContainerStyle>
                 <Style TargetType="DataGridRow">
@@ -114,13 +113,36 @@
             </DataGrid.ItemContainerStyle>
                 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Ime" Width="Auto" FontSize="20" Binding="{Binding Name}"></DataGridTextColumn>
-                <DataGridTextColumn Header="Voz" Width="Auto" FontSize="20" Binding="{Binding Path=TrainName}" x:Name="TrainName"></DataGridTextColumn>
+                <DataGridTextColumn Header="Ime" Width="Auto" FontSize="20" Binding="{Binding Name}">
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="Background" Value="DodgerBlue"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Voz" Width="Auto" FontSize="20" Binding="{Binding Path=TrainName}" x:Name="TrainName">
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="Background" Value="DodgerBlue"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                    </DataGridTextColumn>
                 
                 <DataGridTemplateColumn Width="Auto" Header="">
-                    <DataGridTemplateColumn.CellTemplate>
+                        <DataGridTemplateColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="Background" Value="DodgerBlue"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                            </Style>
+                        </DataGridTemplateColumn.HeaderStyle>
+                        <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                                <Button x:Name="deleteDrivingLine" FontSize="20" ToolTip="Podesite krajnji datum važenja" 
+                                <Button x:Name="deleteDrivingLine" FontSize="20" MaxHeight="45" ToolTip="Podesite krajnji datum važenja" 
                                         Tag="{Binding Path=DrivingLineId}" Click="DeleteDrivingLine_OnClick" 
                                         Content="Krajnji datum" l:HelpProvider.HelpKey="btnDeleteDrivingLine"
                                         tour:TourHelper.ElementID="defEndDateButton"
@@ -178,7 +200,7 @@
             
             <Button  FontSize="20" x:Name="saveChanges" Click="SaveChanges_OnClick" Grid.Column="1" Grid.Row="4" 
                      ToolTip="Sačuvaje izmenjene podatke o mrežnoj liniji" l:HelpProvider.HelpKey="btnChangeDrivingLine"
-                     tour:TourHelper.ElementID="saveChangesButton"
+                     tour:TourHelper.ElementID="saveChangesButton" MaxHeight="45"
                      tour:TourHelper.Placement="BottomCenter">
                 Sačuvaj izmene
             </Button>

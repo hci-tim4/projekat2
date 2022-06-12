@@ -20,8 +20,8 @@
         <!-- ComboBox, RadioButton, CheckBox, etc... -->
     
 </UserControl.Resources>
-    
-    <ScrollViewer >
+
+    <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible">
         <Grid>
             
             <Grid x:Name="parent">

@@ -24,59 +24,155 @@
             <Setter Property="BorderThickness" Value="3"/>
         </Style>
     </Page.Resources>
+    
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-        </Grid.RowDefinitions>
-
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="67*"></ColumnDefinition>
-            <ColumnDefinition Width="13*"/>
-            <ColumnDefinition Width="80*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="67*"></ColumnDefinition>
+                <ColumnDefinition Width="13*"/>
+                <ColumnDefinition Width="80*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
 
 
-        <DataGrid 
+            <DataGrid 
                   Grid.Row="0" Grid.Column="0" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True"
                   SelectionUnit="FullRow" SelectionMode="Single"  ItemsSource="{Binding Path=lines}" 
                    IsReadOnly="True" Name="drivingLineDataGrid" ScrollViewer.CanContentScroll="True"
-                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                    ScrollViewer.VerticalScrollBarVisibility="Auto" FontSize="20"
+                    ScrollViewer.HorizontalScrollBarVisibility="Visible"
+                    ScrollViewer.VerticalScrollBarVisibility="Visible" FontSize="20"
                    CanUserSortColumns="False" RenderTransformOrigin="0.997,0.431"  Grid.ColumnSpan="2"
-
+                    Width="400" HorizontalAlignment="Center"
                    tour:TourHelper.ElementID="drivingTable"
-                   tour:TourHelper.Placement="BottomCenter">
+                   tour:TourHelper.Placement="BottomCenter" Background="DodgerBlue" Margin="0,20,0,0">
 
 
 
-            <DataGrid.Columns>
-                <DataGridTextColumn x:Name="drivingLineName" MinWidth="60" Header="Naziv" Binding="{Binding Path=Name}"/>
-
-                <DataGridTemplateColumn Header="Izmeni">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button ToolTip="Izmenite dane kojima saobraća linija" x:Name="btnChangeDays" Click="btnChangeDays_Click" Content="Vozni dani"
+                <DataGrid.Columns>
+                <DataGridTextColumn Width="100" x:Name="drivingLineName" Header="Naziv" Binding="{Binding Path=Name}">
+                    <DataGridTextColumn.HeaderStyle>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="Foreground" Value="White"/>
+                        <Setter Property="Background" Value="DodgerBlue"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </Style>
+                </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+                <DataGridTemplateColumn Width="150">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                            <Button Width="130"  ToolTip="Izmenite dane kojima saobraća linija" x:Name="btnChangeDays" Click="btnChangeDays_Click" Content="Vozni dani"
                                     Tag="{Binding Path=drivingLineId}" l:HelpProvider.HelpKey="btnChangeDays"  tour:TourHelper.ElementID="daysBtn"
                    tour:TourHelper.Placement="BottomCenter"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
 
 
-                <DataGridTemplateColumn Header="Dodaj">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button ToolTip="Dodajte novi raspored vožnje" x:Name="btnAdd" Click="btnAdd_Click" Content="Dodaj" 
+                <DataGridTemplateColumn  Width="150">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Width="100" ToolTip="Dodajte novi raspored vožnje" x:Name="btnAdd" Click="btnAdd_Click" Content="Dodaj" 
                                     Tag="{Binding Path=drivingLineId}" l:HelpProvider.HelpKey="btnAddSchedule" 
                                     tour:TourHelper.ElementID="addNewSchedule"
                                    tour:TourHelper.Placement="BottomCenter"/>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-            </DataGrid.Columns>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
 
-            
+
+                <DataGrid.RowStyle>
+                    <Style TargetType="{x:Type DataGridRow}" >
+                        <Setter Property="BorderBrush" Value="DodgerBlue" />
+                        <Setter Property="BorderThickness" Value="1" />
+                        <EventSetter Event="MouseUp" Handler="DrivingLineDataGrid_OnSelected"/>
+                    </Style>
+                </DataGrid.RowStyle>
+
+            </DataGrid>
+
+
+            <DataGrid  Margin="10,20,0,0"
+                  ItemsSource="{Binding Path=Studenti}"
+                  SelectionUnit="FullRow" SelectionMode="Single" AutoGenerateColumns="False"
+                  Name="dataGridStationSchedule" ScrollViewer.CanContentScroll="True"
+                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                   Grid.Row="0" Grid.Column="2" ScrollViewer.VerticalScrollBarVisibility="Auto" FontSize="20"
+                   CanUserAddRows="False" Width="400" HorizontalAlignment="Center"
+                      CanUserSortColumns="False" RenderTransformOrigin="0.997,0.431" l:HelpProvider.HelpKey="error"
+                   tour:TourHelper.ElementID="scheduleDataGrid"
+                   tour:TourHelper.Placement="BottomCenter" Background="DodgerBlue" 
+                   >
+
+                <DataGrid.Columns>
+                <DataGridTextColumn  Header="Stanica" Binding="{Binding Path=StationName}" IsReadOnly="True" Width="150">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Background" Value="DodgerBlue"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+                    <DataGridTemplateColumn Header="Dolazak" Width="120">
+                    <DataGridTemplateColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Background" Value="DodgerBlue"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </Style>
+                    </DataGridTemplateColumn.HeaderStyle>
+                    <DataGridTemplateColumn.CellTemplate >
+                            <DataTemplate >
+
+
+                                <!--   <TextBox Text="{Binding Path=ArrivalTime, Mode=TwoWay}" Loaded="arrTime_OnLoaded" />  -->
+                                <TextBox l:HelpProvider.HelpKey="ArrivalTime" tour:TourHelper.ElementID="arrTime"
+                   tour:TourHelper.Placement="BottomCenter" >
+
+                                    <TextBox.Text >
+                                        <Binding Path="ArrivalTime" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <local:UniqueTimestampValidator/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn Header="Polazak" Width="120">
+                    <DataGridTemplateColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Background" Value="DodgerBlue"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </Style>
+                    </DataGridTemplateColumn.HeaderStyle>
+                    <DataGridTemplateColumn.CellTemplate >
+                            <DataTemplate >
+                                <TextBox l:HelpProvider.HelpKey="DepartureTime"  tour:TourHelper.ElementID="depTime"
+                   tour:TourHelper.Placement="BottomCenter" >
+                                    <TextBox.Text >
+                                        <Binding Path="DepartureTime" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <local:UniqueTimestampValidator/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+
+
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                </DataGrid.Columns>
             <DataGrid.RowStyle>
                 <Style TargetType="{x:Type DataGridRow}" >
                     <Setter Property="BorderBrush" Value="DodgerBlue" />
@@ -85,85 +181,26 @@
                 </Style>
             </DataGrid.RowStyle>
 
-        </DataGrid>
-
-
-        <DataGrid  Margin="10,0,0,0"
-                  ItemsSource="{Binding Path=Studenti}"
-                  SelectionUnit="FullRow" SelectionMode="Single" AutoGenerateColumns="False"
-                  Name="dataGridStationSchedule" ScrollViewer.CanContentScroll="True"
-                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                   Grid.Row="0" Grid.Column="2" ScrollViewer.VerticalScrollBarVisibility="Auto" FontSize="20"
-                   CanUserAddRows="False"
-                     Background="White" CanUserSortColumns="False" RenderTransformOrigin="0.997,0.431" l:HelpProvider.HelpKey="error"
-                   tour:TourHelper.ElementID="scheduleDataGrid"
-                   tour:TourHelper.Placement="BottomCenter"
-                   >
-
-            <DataGrid.Columns>
-                <DataGridTextColumn  MinWidth="60"  Header="Stanica" Binding="{Binding Path=StationName}" IsReadOnly="True"/>
-                <DataGridTemplateColumn Header="Dolazak">
-                    <DataGridTemplateColumn.CellTemplate >
-                        <DataTemplate >
-
-
-                         <!--   <TextBox Text="{Binding Path=ArrivalTime, Mode=TwoWay}" Loaded="arrTime_OnLoaded" />  -->
-                            <TextBox l:HelpProvider.HelpKey="ArrivalTime" tour:TourHelper.ElementID="arrTime"
-                   tour:TourHelper.Placement="BottomCenter" >
-
-                                <TextBox.Text >
-                                    <Binding Path="ArrivalTime" UpdateSourceTrigger="PropertyChanged">
-                                        <Binding.ValidationRules>
-                                            <local:UniqueTimestampValidator/>
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </TextBox.Text>
-                            </TextBox>
-
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-
-                <DataGridTemplateColumn Header="Polazak">
-                    <DataGridTemplateColumn.CellTemplate >
-                        <DataTemplate >
-                            <TextBox l:HelpProvider.HelpKey="DepartureTime"  tour:TourHelper.ElementID="depTime"
-                   tour:TourHelper.Placement="BottomCenter" >
-                                <TextBox.Text >
-                                    <Binding Path="DepartureTime" UpdateSourceTrigger="PropertyChanged">
-                                        <Binding.ValidationRules>
-                                            <local:UniqueTimestampValidator/>
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </TextBox.Text>
-                            </TextBox>
-
-
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
-
-            </DataGrid.Columns>
-
             <DataGrid.GroupStyle>
-                <GroupStyle>
-                    <GroupStyle.HeaderTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Tura: " Margin="2,2,2,2"></TextBlock>
-                                <TextBlock Text="{Binding Path=Name}" Margin="2,2,2,2"/>
-                                <Button ToolTip="Izmenite vreme polaska i dolaska" x:Name="btnUpdate" Click="btnUpdate_Click"
-                                        Content="Izmeni" Tag="{Binding Path=Name}" Margin="2,2,2,2" l:HelpProvider.HelpKey="btnUpdateSchedule"
-                                        tour:TourHelper.ElementID="update"  tour:TourHelper.Placement="BottomCenter"/>
-                                <Button ToolTip="Obriši ovu turu" Content="Obriši" x:Name="btnDelete" Click="btnDelete_Click" 
+                    <GroupStyle>
+                        <GroupStyle.HeaderTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Background="AliceBlue">
+                                    <TextBlock Text="Tura: " Margin="2,2,2,2" Foreground="DodgerBlue"></TextBlock>
+                                <TextBlock Text="{Binding Path=Name}" Margin="2,2,2,2" Foreground="DodgerBlue"/>
+                                    <Button ToolTip="Izmenite vreme polaska i dolaska" x:Name="btnUpdate" Click="btnUpdate_Click"
+                                        Content="Izmeni" Tag="{Binding Path=Name}" Margin="5,2,2,2" l:HelpProvider.HelpKey="btnUpdateSchedule"
+                                        tour:TourHelper.ElementID="update"  tour:TourHelper.Placement="BottomCenter" Foreground="White" Background="DodgerBlue"/>
+                                    <Button ToolTip="Obriši ovu turu" Content="Obriši" x:Name="btnDelete" Click="btnDelete_Click" 
                                         Tag="{Binding Path=Name}" Margin="2,2,2,2" l:HelpProvider.HelpKey="btnDeleteSchedule"
-                                        tour:TourHelper.ElementID="delete"  tour:TourHelper.Placement="BottomCenter"></Button>
-                            </StackPanel>
-                        </DataTemplate>
-                    </GroupStyle.HeaderTemplate>
-                </GroupStyle>
-            </DataGrid.GroupStyle>
+                                        tour:TourHelper.ElementID="delete"  tour:TourHelper.Placement="BottomCenter" Foreground="White" Background="DodgerBlue"></Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </GroupStyle.HeaderTemplate>
+                    </GroupStyle>
+                </DataGrid.GroupStyle>
 
-        </DataGrid>
-    </Grid>
+            </DataGrid>
+        </Grid>
+    
 </Page>

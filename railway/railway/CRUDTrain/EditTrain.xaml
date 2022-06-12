@@ -26,9 +26,9 @@
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Label FontSize="20" FontWeight="Bold" Foreground="DodgerBlue" HorizontalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="2" Margin="0,0,0,15">IZMENA VOZA</Label>
-        <TextBox  Width="200" Height="50"  Name="valuetb" materialDesign:HintAssist.Hint="Naziv voza" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontFamily="Champagne &amp; Limousines" FontSize="18" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="0" l:HelpProvider.HelpKey="trainNameEDIT" />
-        <ComboBox x:Name="colorTrain" Width="200" Height="40" Grid.Row="2" Grid.Column="0" FontSize="18"
+        <Label  FontSize="20" FontWeight="Bold" Foreground="DodgerBlue" HorizontalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="2" Margin="0,0,0,15">IZMENA VOZA</Label>
+        <TextBox  BorderBrush="DodgerBlue" Foreground="DodgerBlue" Width="200" Height="50"  Name="valuetb" materialDesign:HintAssist.Hint="Naziv voza" Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontFamily="Champagne &amp; Limousines" FontSize="18" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="0" l:HelpProvider.HelpKey="trainNameEDIT" />
+        <ComboBox  BorderBrush="DodgerBlue" Foreground="DodgerBlue" x:Name="colorTrain" Width="200" Height="40" Grid.Row="2" Grid.Column="0" FontSize="18"
                           IsReadOnly="True"  SelectedItem="" materialDesign:HintAssist.Hint="Boja voza" HorizontalAlignment="Center" l:HelpProvider.HelpKey="editColorTrain">
             <ComboBoxItem>crvena</ComboBoxItem>
             <ComboBoxItem>plava</ComboBoxItem>
@@ -38,10 +38,10 @@
             <ComboBoxItem>crna</ComboBoxItem>
             <ComboBoxItem>siva</ComboBoxItem>
         </ComboBox>
-      
-        <Button x:Name="cancelBtn"  Click="cancelBtn_Click"  Width="120" 
-                 MinHeight="25" MaxHeight="50" Margin="20,40,0,2" Grid.Row="4" Grid.Column="0" l:HelpProvider.HelpKey="returnBtn" HorizontalAlignment="Left">Nazad</Button>
-        <Button x:Name="addBtn" Grid.Row="4" Grid.Column="1" Click="editBtn_Click"
+
+        <Button BorderBrush="White" Foreground="White" Background="DodgerBlue" ToolTip="Odustanite od unetih izmena voza" x:Name="cancelBtn"  Click="cancelBtn_Click"  Width="120" 
+                 MinHeight="25" MaxHeight="50" Margin="20,40,0,2" Grid.Row="4" Grid.Column="0" l:HelpProvider.HelpKey="returnBtn" HorizontalAlignment="Left">Odustani</Button>
+        <Button BorderBrush="White" Foreground="White" Background="DodgerBlue" x:Name="addBtn" Grid.Row="4" Grid.Column="1" Click="editBtn_Click"
                  MinHeight="20" MaxHeight="50" Margin="0,40,20,2" Width="130"
                 IsDefault="True" l:HelpProvider.HelpKey="confirmChangingTrain" HorizontalAlignment="Right">Potvrdi izmene
 

@@ -135,7 +135,7 @@ namespace railway.CRUDTrain
                     Grid grid = new Grid();
                     grid.Margin = new Thickness { Bottom = 0, Left =10, Right = 10, Top = 10 };
                     grid.Height = 250;
-                    grid.Width = 300;
+                    grid.Width = 250;
                     grid.VerticalAlignment = VerticalAlignment.Top;
                     Grid.SetColumn(grid, j);
                     Grid.SetRow(grid, i);
@@ -192,7 +192,7 @@ namespace railway.CRUDTrain
                     stackPanel.Children.Add(tbCol);
 
                     TextBlock tbRegular = new TextBlock();
-                    tbRegular.Text = "Broj redova klasa REGULAR: " + dto[(i - 1) * 4 + j].numberREGULAR;
+                    tbRegular.Text = "Broj redova regularne klase: " + dto[(i - 1) * 4 + j].numberREGULAR;
                     tbRegular.Foreground = new SolidColorBrush(Colors.DodgerBlue);
                     tbRegular.Width = 280;
                     tbRegular.FontSize = 15;
@@ -200,14 +200,14 @@ namespace railway.CRUDTrain
                      
 
                     TextBlock tbBusiness = new TextBlock();
-                    tbBusiness.Text = "Broj redova klasa BUSINESS: " + dto[(i - 1) * 4 + j].numberBUSINESS;
+                    tbBusiness.Text = "Broj redova biznis klase: " + dto[(i - 1) * 4 + j].numberBUSINESS;
                     tbBusiness.Foreground = new SolidColorBrush(Colors.DodgerBlue);
                     tbBusiness.FontSize = 15;
                     tbBusiness.Width = 280;
                     stackPanel.Children.Add(tbBusiness);
 
                     TextBlock tbVip = new TextBlock();
-                    tbVip.Text = "Broj redova klasa VIP: " + dto[(i - 1) * 4 + j].numberVIP;
+                    tbVip.Text = "Broj redova vip klase: " + dto[(i - 1) * 4 + j].numberVIP;
                     tbVip.Foreground = new SolidColorBrush(Colors.DodgerBlue);
                     tbVip.FontSize = 15;
                     tbVip.Width = 280;
@@ -237,7 +237,7 @@ namespace railway.CRUDTrain
                     btnDelete.Foreground = new SolidColorBrush(Colors.White);
 
                     btnDelete.Background = (Brush)bc.ConvertFrom("#FF1E90FF");
-                    btnDelete.Margin = new Thickness { Bottom = 10, Left = 10, Right = 0, Top = 15 };
+                    btnDelete.Margin = new Thickness { Bottom = 10, Left = 0, Right = 25, Top = 15 };
                     btnDelete.CommandParameter = "btnDeleteTrain";
                     stackPanel2.Children.Add(btnDelete);
                     stackPanel.Children.Add(stackPanel2);

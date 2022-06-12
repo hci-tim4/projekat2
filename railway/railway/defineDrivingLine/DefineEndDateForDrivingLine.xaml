@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         xmlns:l="clr-namespace:railway"
         Icon="\icon\trainIcon.png"
-        Title="ŽELEZNICE SRBIJE" ResizeMode="NoResize" Width="400" Height="200"
+        Title="ŽELEZNICE SRBIJE" ResizeMode="NoResize" Width="400" Height="250"
         WindowStartupLocation="CenterScreen"
         >
     <Window.CommandBindings>
@@ -19,16 +19,18 @@
     </Window.Resources>
     <Grid>
         <StackPanel x:Name="endDateStackPanel">
-            <Label FontSize="20">Izaberite krajnji datum za mrežnu liniju: </Label>
-            <Label FontSize="20" Content="{Binding Path=Name}"></Label>
-            <DatePicker FontSize="20" x:Name="endDate" FirstDayOfWeek="Monday" Text="{Binding Path=newEndDate}" l:HelpProvider.HelpKey="endDateDelete"/>
+            <StackPanel Orientation="Horizontal">
+                <Label FontSize="20" Foreground="DodgerBlue">Izaberite krajnji datum za mrežnu liniju </Label>
+            <Label FontSize="20" Content="{Binding Path=Name}" Foreground="DodgerBlue" FontWeight="Bold" Width="50"></Label>
+            </StackPanel>
+            <DatePicker Width="300" FontSize="20" x:Name="endDate" FirstDayOfWeek="Monday" Text="{Binding Path=newEndDate}" l:HelpProvider.HelpKey="endDateDelete"/>
             <DockPanel>
                 <Button FontSize="20" Grid.Row="2" Grid.Column="0" x:Name="cancelBtn"  Click="cancelBtn_Click"
-                        MinHeight="25" MaxHeight="50" Margin="2,20,30,2" Width="150">Odustajem</Button>
+                        MinHeight="25" MaxHeight="55" Margin="2,20,10,2" Width="150">Odustani</Button>
 
                 <Button FontSize="20" x:Name="Save" Click="Save_OnClick"
-                        MinHeight="20" MaxHeight="50" Margin="30,20,2,2" Width="150"
-                        IsDefault="True" IsEnabled="True">Potvrđujem</Button>
+                        MinHeight="20" MaxHeight="55" Margin="30,20,2,2" Width="150"
+                        IsDefault="True" IsEnabled="True">Potvrdi</Button>
 
 
             </DockPanel>

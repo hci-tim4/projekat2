@@ -16,65 +16,65 @@
         <CommandBinding Command="cmd:RoutedCommands.Save" x:Name="save" CanExecute="Save_OnCanExecute" Executed="Save_OnExecuted"></CommandBinding>
     </UserControl.CommandBindings>
     <UserControl.Resources>
-       <Style TargetType="controls:TourControl">
-          <Setter Property="Background" Value="White"/>
-          <Setter Property="Foreground" Value="Brown"/> 
-          <Setter Property="BorderBrush" Value="Brown" /> 
-          <Setter Property="CornerRadius" Value="10"/>
-          <Setter Property="BorderThickness" Value="3"/> 
-       </Style> 
-       <Style x:Key="CircleButton" TargetType="Button">
-     <Setter Property="OverridesDefaultStyle" Value="True"/>
-     <Setter Property="Margin" Value="2"/>
-     <Setter Property="FocusVisualStyle" Value="{StaticResource MyFocusVisual}"/>
-     <Setter Property="Background" Value="#FF6DB4EF"/>
-     <Setter Property="Template">
-        <Setter.Value>
-           <ControlTemplate TargetType="Button">
-              <Grid>
-                 <Ellipse Fill="{TemplateBinding Background}"/>
-                 <Ellipse>
-                    <Ellipse.Fill>
-                       <RadialGradientBrush>
-                          <GradientStop Offset="0" Color="#00000000"/>
-                          <GradientStop Offset="0.88" Color="#00000000"/>
-                          <GradientStop Offset="1" Color="#80000000"/>
-                       </RadialGradientBrush>
-                    </Ellipse.Fill>
-                 </Ellipse>
-                 <Ellipse Margin="10" x:Name="highlightCircle" >
-                    <Ellipse.Fill >
-                       <LinearGradientBrush >
-                          <GradientStop Offset="0" Color="#50FFFFFF"/>
-                          <GradientStop Offset="0.5" Color="#00FFFFFF"/>
-                          <GradientStop Offset="1" Color="#50FFFFFF"/>
-                       </LinearGradientBrush>
-                    </Ellipse.Fill>
-                 </Ellipse>
-                 <ContentPresenter x:Name="content" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-              </Grid>
-              <ControlTemplate.Triggers>
-                 <Trigger Property="IsPressed" Value="True">
-                    <Setter TargetName="highlightCircle" Property="Fill">
-                       <Setter.Value>
-                       <LinearGradientBrush StartPoint="0.3,0" EndPoint="0.7,1">
-                          <GradientStop Offset="0" Color="#50FFFFFF"/>
-                          <GradientStop Offset="0.5" Color="#00FFFFFF"/>
-                          <GradientStop Offset="1" Color="#50FFFFFF"/>
-                       </LinearGradientBrush>
-                       </Setter.Value>
-                    </Setter>
-                    <Setter TargetName="content" Property="RenderTransform">
-                       <Setter.Value>
-                          <TranslateTransform Y="0.5" X="0.5"/>
-                       </Setter.Value>
-                    </Setter>
-                 </Trigger>
-              </ControlTemplate.Triggers>
-           </ControlTemplate>
-        </Setter.Value>
-     </Setter>
-  </Style>
+        <Style TargetType="controls:TourControl">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="Brown"/>
+            <Setter Property="BorderBrush" Value="Brown" />
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="BorderThickness" Value="3"/>
+        </Style>
+        <Style x:Key="CircleButton" TargetType="Button">
+            <Setter Property="OverridesDefaultStyle" Value="True"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="FocusVisualStyle" Value="{StaticResource MyFocusVisual}"/>
+            <Setter Property="Background" Value="#FF6DB4EF"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Ellipse Fill="{TemplateBinding Background}"/>
+                            <Ellipse>
+                                <Ellipse.Fill>
+                                    <RadialGradientBrush>
+                                        <GradientStop Offset="0" Color="#00000000"/>
+                                        <GradientStop Offset="0.88" Color="#00000000"/>
+                                        <GradientStop Offset="1" Color="#80000000"/>
+                                    </RadialGradientBrush>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <Ellipse Margin="10" x:Name="highlightCircle" >
+                                <Ellipse.Fill >
+                                    <LinearGradientBrush >
+                                        <GradientStop Offset="0" Color="#50FFFFFF"/>
+                                        <GradientStop Offset="0.5" Color="#00FFFFFF"/>
+                                        <GradientStop Offset="1" Color="#50FFFFFF"/>
+                                    </LinearGradientBrush>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <ContentPresenter x:Name="content" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="highlightCircle" Property="Fill">
+                                    <Setter.Value>
+                                        <LinearGradientBrush StartPoint="0.3,0" EndPoint="0.7,1">
+                                            <GradientStop Offset="0" Color="#50FFFFFF"/>
+                                            <GradientStop Offset="0.5" Color="#00FFFFFF"/>
+                                            <GradientStop Offset="1" Color="#50FFFFFF"/>
+                                        </LinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter TargetName="content" Property="RenderTransform">
+                                    <Setter.Value>
+                                        <TranslateTransform Y="0.5" X="0.5"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -82,14 +82,15 @@
             <RowDefinition ></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="11*"></ColumnDefinition>
+            <ColumnDefinition Width="19*"/>
+            <ColumnDefinition Width="30*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        
-        <StackPanel Grid.Column="0" Grid.Row="0">
-            
-            
-            <DockPanel>
+
+        <StackPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2">
+
+
+            <DockPanel Width="200">
                 <Button FontSize="20" x:Name="back" DockPanel.Dock="Left" 
                         Click="Back_OnClick" Style="{StaticResource CircleButton}" 
                         Width="35" Height="35"
@@ -99,27 +100,27 @@
                     </Image>
                 </Button>
 
-            
+
                 <Button FontSize="20" x:Name="backToDragAndDrop" Click="BackToDragAndDrop_OnClick" DockPanel.Dock="Right" HorizontalAlignment="Right" 
-                        MaxWidth="160" MaxHeight="40" ToolTip="Prevuci pusti pristup" l:HelpProvider.HelpKey="dragDropWay"
+                        MaxWidth="180" Height="45" ToolTip="Prevuci pusti pristup" l:HelpProvider.HelpKey="dragDropWay"
                         tour:TourHelper.ElementID="ChangeTypeOfDrivingLineDefinition"
                         tour:TourHelper.Placement="BottomCenter">Prevlačenje</Button>
             </DockPanel>
-            <Button FontSize="20" Content="Sačuvaj" MaxWidth="120" HorizontalAlignment="Right" x:Name="saveDrivingLine" MaxHeight="40"
-                    Click="SaveDrivingLine_OnClick" l:HelpProvider.HelpKey="btnSaveNewDrivingLine"
+            <Button FontSize="20" Content="Sačuvaj" MaxWidth="120" HorizontalAlignment="Right" x:Name="saveDrivingLine" Height="45"
+                    Click="SaveDrivingLine_OnClick" l:HelpProvider.HelpKey="btnSaveNewDrivingLine"  Margin="0,10,0,0"
                     tour:TourHelper.ElementID="SaveDrivingLine"
                     tour:TourHelper.Placement="BottomCenter"></Button>
-            
+
         </StackPanel>
-        
+
         <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" MaxHeight="30" VerticalAlignment="Top" 
                     HorizontalAlignment="Right" tour:TourHelper.ElementID="AllDrivingLinesStack"
-                    tour:TourHelper.Placement="LeftCenter">
+                    tour:TourHelper.Placement="LeftCenter" Grid.ColumnSpan="2">
             <ComboBox x:Name="stationsCmb" DisplayMemberPath="Name" MinWidth="200" 
                       IsEditable="True" 
                          
                       Width="150"  FontSize="20"  
-                      FontWeight="Bold" Foreground="DodgerBlue"
+                      FontWeight="Bold" Foreground="DodgerBlue" MaxHeight="55"
                       
                       l:HelpProvider.HelpKey="stationChoice"
                       tour:TourHelper.ElementID="AllDrivingLines"
@@ -130,18 +131,18 @@
                     </Style>
                 </ComboBox.Style>
             </ComboBox>
-            <Button FontSize="20" Content="Dodaj" MinWidth="60" Height="40" 
+            <Button FontSize="20" Content="Dodaj" MinWidth="60" MaxHeight="55" 
                     x:Name="addStation" Click="AddStation_OnClick" l:HelpProvider.HelpKey="btnAddStationInDrivingLine"
                     tour:TourHelper.ElementID="AddStation"
                     tour:TourHelper.Placement="BottomCenter"></Button>
         </StackPanel>
-       
-       <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" 
+
+        <Grid Grid.Column="2" Grid.Row="0" Grid.RowSpan="2" 
              tour:TourHelper.ElementID="MapOfDrivingLine"
              tour:TourHelper.Placement="LeftCenter">
-          <gmaps:GMapControl x:Name="mapView" Loaded="map_Loaded"/>
-       </Grid>
+            <gmaps:GMapControl x:Name="mapView" Loaded="map_Loaded"/>
+        </Grid>
 
-        
+
     </Grid>
 </UserControl>

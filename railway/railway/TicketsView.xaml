@@ -74,9 +74,9 @@
                 <DataGridTextColumn Header="Klasa" Binding="{Binding Path= seatType}"/>
                 <DataGridTextColumn Header="Red" Binding="{Binding Path=row }"/>
                 <DataGridTextColumn Header="Broj sedišta" Binding="{Binding Path=col}"/>
-                <DataGridTextColumn Header="Cena" Binding="{Binding Path=Price}"/>
+                <DataGridTextColumn Header="Cena" Binding="{Binding Path=Price}">
+                </DataGridTextColumn>
             </DataGrid.Columns>
-
 
             <DataGrid.RowStyle>
                 <Style TargetType="{x:Type DataGridRow}" >
