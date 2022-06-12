@@ -24,11 +24,11 @@
             <DatePicker FontSize="20" x:Name="endDate" FirstDayOfWeek="Monday" Text="{Binding Path=newEndDate}" l:HelpProvider.HelpKey="endDateDelete"/>
             <DockPanel>
                 <Button FontSize="20" Grid.Row="2" Grid.Column="0" x:Name="cancelBtn"  Click="cancelBtn_Click"
-                        MinHeight="25" MaxHeight="50" Margin="2,20,30,2" Width="150">Odustajem</Button>
+                        MinHeight="25" MaxHeight="50" Margin="2,20,30,2" Width="150">Odustani</Button>
 
                 <Button FontSize="20" x:Name="Save" Click="Save_OnClick"
                         MinHeight="20" MaxHeight="50" Margin="30,20,2,2" Width="150"
-                        IsDefault="True" IsEnabled="True">Potvrđujem</Button>
+                        IsDefault="True" IsEnabled="True">Potvrdi</Button>
 
 
             </DockPanel>

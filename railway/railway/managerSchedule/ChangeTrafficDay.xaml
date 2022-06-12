@@ -93,10 +93,10 @@
                 <CheckBox MaxHeight="200" MaxWidth="100" Content="Nedelja" FontSize="20"  BorderBrush="Blue" IsChecked="{Binding Path=Sunday}" l:HelpProvider.HelpKey="day"/>     -->
 
             </StackPanel>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="15,15,15,15">
-                <Button ToolTip="Odustani od izmene dana" HorizontalAlignment="Right" Name="cancelchangeDays" Click="cancelChangeDays_Click" FontSize="20" Content="Odustani" MaxWidth="150" Margin="2,2,2,2" l:HelpProvider.HelpKey="cancelChangeDays"></Button>
-                <Button ToolTip="Izmeni dane u kojima saobraća linija" HorizontalAlignment="Right" Name="changeDays" Click="changeDays_Click" FontSize="20" Content="Izmeni" MaxWidth="150" Margin="2,2,2,2" l:HelpProvider.HelpKey="confirmChangeDays"></Button>
-            </StackPanel>
+            <DockPanel  VerticalAlignment="Center" Margin="5,5,5,5">
+                <Button DockPanel.Dock="Left"  ToolTip="Odustani od izmene dana" HorizontalAlignment="Right" Name="cancelchangeDays" Click="cancelChangeDays_Click" FontSize="20" Content="Odustani" MaxWidth="150" Margin="2,2,2,2" l:HelpProvider.HelpKey="cancelChangeDays"></Button>
+                <Button DockPanel.Dock="Right"  ToolTip="Izmeni dane u kojima saobraća linija" HorizontalAlignment="Right" Name="changeDays" Click="changeDays_Click" FontSize="20" Content="Izmeni" MaxWidth="150" Margin="2,2,2,2" l:HelpProvider.HelpKey="confirmChangeDays"></Button>
+            </DockPanel>
         </StackPanel>
 
 

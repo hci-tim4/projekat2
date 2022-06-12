@@ -42,8 +42,9 @@
             <DatePicker FontSize="20" SelectedDate="{Binding Path=startSelectedDate, Mode=TwoWay}" x:Name="startDate" FirstDayOfWeek="Monday" l:HelpProvider.HelpKey="startDateNewLine"/>
         </StackPanel>
         
-        <DockPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
-            <Button MaxWidth="100" DockPanel.Dock="Right" FontSize="20" Click="SaveDrivingLine_OnClick" x:Name="saveDrivingLine" l:HelpProvider.HelpKey="btnSaveNewDrivingLine">Sačuvaj</Button>
+        <DockPanel  Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Margin="2,2,2,2">
+            <Button  MaxWidth="150" DockPanel.Dock="Left" FontSize="20" Click="CancelDrivingLine_OnClick" x:Name="cancelDrivingLine" l:HelpProvider.HelpKey="btnSaveNewDrivingLine">Odustani</Button>
+            <Button  MaxWidth="150" DockPanel.Dock="Right" FontSize="20" Click="SaveDrivingLine_OnClick" HorizontalAlignment="Right" x:Name="saveDrivingLine" l:HelpProvider.HelpKey="btnSaveNewDrivingLine">Sačuvaj</Button>
         </DockPanel>
     </Grid>
 </Window>

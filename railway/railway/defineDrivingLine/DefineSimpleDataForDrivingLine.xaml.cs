@@ -63,6 +63,11 @@ namespace railway.defineDrivingLine
             }
         }
 
+        private void CancelDrivingLine_OnClick(object sender, RoutedEventArgs e) 
+        {
+            this.Close();
+        }
+
         private void saveDrivingLineInDB()
         {
 
