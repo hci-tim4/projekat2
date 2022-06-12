@@ -152,7 +152,7 @@ namespace railway.managerSchedule
 
             }
             else {
-                Window box = new CustomMessageBox("Greška, potrebno je da vreme dolaska\n bude pre vremena polaska.");
+                Window box = new CustomMessageBox("Greška, potrebno je da vreme dolaska\nbude pre vremena polaska.");
                 box.ShowDialog();
             }
         }

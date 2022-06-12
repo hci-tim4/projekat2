@@ -14,74 +14,74 @@
         <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
         <CommandBinding Command="cmd:RoutedCommands.Save" x:Name="save" CanExecute="Save_OnCanExecute" Executed="Save_OnExecuted"></CommandBinding>
     </Window.CommandBindings>
-    <Grid>
+    <ScrollViewer>
+        <Grid>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
+ 
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-
-        <DataGrid  AlternatingRowBackground="Gainsboro" AlternationCount="1"
+       
+            <DataGrid  AlternatingRowBackground="Gainsboro" AlternationCount="1"
                   SelectionUnit="FullRow" SelectionMode="Single" AutoGenerateColumns="False"
                   Name="addDataGridStationSchedule" ScrollViewer.CanContentScroll="True"
                     Grid.Row="0" Grid.Column="0" ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                    ScrollViewer.VerticalScrollBarVisibility="Auto" FontSize="20"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto" FontSize="20" MaxWidth="600"
                    CanUserAddRows="false"
                     Background="White" CanUserSortColumns="False" RenderTransformOrigin="0.997,0.431">
 
-            <DataGrid.Columns>
-                <DataGridTextColumn  MinWidth="60" Header="Stanica" Binding="{Binding Path=StationName}" IsReadOnly="True"/>
-                <DataGridTemplateColumn Header="Dolazak">
-                    <DataGridTemplateColumn.CellTemplate >
-                        <DataTemplate >
-             
-                            <TextBox l:HelpProvider.HelpKey="ArrivalTime">
-                                <TextBox.Text >
-                                    <Binding Path="ArrivalTime" UpdateSourceTrigger="PropertyChanged">
-                                        <Binding.ValidationRules>
-                                            <local:UniqueTimestampValidator/>
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </TextBox.Text>
-                            </TextBox>
-                            
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                <DataGrid.Columns>
+                    <DataGridTextColumn  MinWidth="60" Header="Stanica" Binding="{Binding Path=StationName}" IsReadOnly="True"/>
+                    <DataGridTemplateColumn Header="Dolazak">
+                        <DataGridTemplateColumn.CellTemplate >
+                            <DataTemplate >
 
-                <DataGridTemplateColumn Header="Polazak">
-                    <DataGridTemplateColumn.CellTemplate >
-                        <DataTemplate>
+                                <TextBox l:HelpProvider.HelpKey="ArrivalTime" Margin="5,5,5,20">
+                                    <TextBox.Text >
+                                        <Binding Path="ArrivalTime" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <local:UniqueTimestampValidator/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
 
-                            <TextBox l:HelpProvider.HelpKey="DepartureTime">
-                                <TextBox.Text >
-                                    <Binding Path="DepartureTime" UpdateSourceTrigger="PropertyChanged">
-                                        <Binding.ValidationRules>
-                                            <local:UniqueTimestampValidator/>
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </TextBox.Text>
-                            </TextBox>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
 
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Polazak">
+                        <DataGridTemplateColumn.CellTemplate >
+                            <DataTemplate>
+                                <TextBox l:HelpProvider.HelpKey="DepartureTime" Margin="5,5,5,20">
+                                    <TextBox.Text >
+                                        <Binding Path="DepartureTime" UpdateSourceTrigger="PropertyChanged">
+                                            <Binding.ValidationRules>
+                                                <local:UniqueTimestampValidator/>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
 
-                <!-- <DataGridTextColumn MinWidth="60" Header="Dolazak" Binding="{Binding Path=ArrivalTime, Mode=TwoWay}" IsReadOnly="false"/>
-                <DataGridTextColumn MinWidth="60" Header="Polazak" Binding="{Binding Path=DepartureTime, Mode=TwoWay}" IsReadOnly="false"/>   -->
-
-            </DataGrid.Columns>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+        
         </DataGrid>
 
-        <StackPanel Grid.Row="2"  Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button  ToolTip="Sačuvajte novi red vožnje" x:Name="btnSave" Click="btnSave_Click" Content="Sačuvaj" Margin="2,2,2,2" FontSize="20" MaxWidth="150" MaxHeight="80" l:HelpProvider.HelpKey="btnSaveNewSchedule"/>
-            <Button ToolTip="Odustanite od kreiranja novog reda vožnje" x:Name="btnCancel" Click="btnCancel_Click" Content="Odustani" Margin="2,2,2,2"  MaxWidth="150" MaxHeight="80" FontSize="20" l:HelpProvider.HelpKey="btnCancelNewschedule"/>
-        </StackPanel>
-
+     
+        <DockPanel Grid.Row="2"  Grid.Column="0" Margin="5,5,5,5">
+                <Button DockPanel.Dock="Left" ToolTip="Odustanite od kreiranja novog reda vožnje" x:Name="btnCancel" Click="btnCancel_Click" Content="Odustani" Margin="2,2,2,2"  MaxWidth="150" MaxHeight="80" FontSize="20" l:HelpProvider.HelpKey="btnCancelNewschedule"/>
+                <Button  DockPanel.Dock="Right" HorizontalAlignment="Right" ToolTip="Sačuvajte novi red vožnje" x:Name="btnSave" Click="btnSave_Click" Content="Sačuvaj" Margin="2,2,2,2" FontSize="20" MaxWidth="150" MaxHeight="80" l:HelpProvider.HelpKey="btnSaveNewSchedule"/>
+            </DockPanel>
+      
 
     </Grid>
+    </ScrollViewer>
 </Window>
