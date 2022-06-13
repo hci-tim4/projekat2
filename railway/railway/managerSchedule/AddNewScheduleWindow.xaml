@@ -8,7 +8,7 @@
         xmlns:cmd="clr-namespace:railway.Commands"
         xmlns:l="clr-namespace:railway"
         Icon="/icon/trainIcon.png"
-        Title="ŽELEZNICE SRBIJE" Height="550" Width="600" MaxWidth="600" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+        Title="ŽELEZNICE SRBIJE" Height="520" Width="600" MaxWidth="600" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
 
         
     <Window.CommandBindings>
@@ -104,7 +104,7 @@
             </DataGrid.RowStyle>
         </DataGrid>
 
-            <DockPanel Margin="2,2,2,2" Grid.Row="1"  Grid.Column="0" >
+            <DockPanel Margin="2,10,2,2" Grid.Row="1"  Grid.Column="0" >
                 <Button DockPanel.Dock="Left" Margin="2,2,2,2" HorizontalAlignment="Left" ToolTip="Odustanite od kreiranja novog reda vožnje" x:Name="btnCancel" Click="btnCancel_Click" Content="Odustani"   MaxWidth="150" MinHeight="35" FontSize="20" l:HelpProvider.HelpKey="btnCancelNewschedule"/>
                 <Button DockPanel.Dock="Right" Margin="2,2,2,2" HorizontalAlignment="Right" ToolTip="Sačuvajte novi red vožnje" x:Name="btnSave"  Click="btnSave_Click" Content="Sačuvaj" FontSize="20" MaxWidth="150" MinHeight="35" l:HelpProvider.HelpKey="btnSaveNewSchedule"/>
 
