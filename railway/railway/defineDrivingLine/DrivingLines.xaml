@@ -102,7 +102,7 @@
                 <DataGrid FontSize="20" SelectedItem="DrivingLineDataGrid_OnSelected" 
                       x:Name="drivingLineDataGrid" ItemsSource="{Binding Path=DrivingLines}" 
                       IsReadOnly="True" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True"
-                      MinHeight="200" MaxHeight="700" MaxWidth="400"
+                      MinHeight="200" MaxHeight="700"
                       tour:TourHelper.ElementID="datagrid"
                       tour:TourHelper.Placement="BottomCenter" Background="DodgerBlue">
             
@@ -157,7 +157,7 @@
                         </DataGridTemplateColumn.HeaderStyle>
                         <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                                <Button x:Name="deleteDrivingLine" FontSize="20" MaxHeight="45" ToolTip="Podesite krajnji datum važenja" 
+                                <Button x:Name="deleteDrivingLine" FontSize="20" MinHeight="35" MaxHeight="180" ToolTip="Podesite krajnji datum važenja" 
                                         Tag="{Binding Path=DrivingLineId}" Click="DeleteDrivingLine_OnClick" 
                                         Content="Krajnji datum" l:HelpProvider.HelpKey="btnDeleteDrivingLine"
                                         tour:TourHelper.ElementID="defEndDateButton"
@@ -215,7 +215,7 @@
             
             <Button  FontSize="20" x:Name="saveChanges" Click="SaveChanges_OnClick" Grid.Column="1" Grid.Row="4" 
                      ToolTip="Sačuvaje izmenjene podatke o mrežnoj liniji" l:HelpProvider.HelpKey="btnChangeDrivingLine"
-                      MaxHeight="45"
+                      MaxHeight="45" MinHeight="35"
                      tour:TourHelper.ElementID="saveChangesButton" 
                      tour:TourHelper.Placement="BottomCenter">
                 Sačuvaj izmene

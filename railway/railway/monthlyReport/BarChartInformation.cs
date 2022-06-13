@@ -13,7 +13,7 @@ namespace railway.monthlyReport
         public barChartInformation()
         {
             BarLineSeriesCollection = new SeriesCollection();
-            xAxisLabels = new List<string>(){"tip"};
+            xAxisLabels = new List<string>(){""};
         }
 
         public void reset()

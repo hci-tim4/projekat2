@@ -36,6 +36,7 @@ namespace railway.defineDrivingLine
                     trainNameCmb.ItemsSource = trains;
                     this.fullTrains = (from trains in db.trains
                         select trains).ToList();
+                    this.DataContext = this;
                 }
 
                 this.stations = stations;

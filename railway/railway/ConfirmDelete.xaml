@@ -10,10 +10,10 @@
         Icon="/icon/trainIcon.png"
         Title="ŽELEZNICE SRBIJE"  Height="150" Width="400">
     <StackPanel>
-        <Label FontSize="20" Margin="5"> Da li ste sigurni da hoćete da obrište?</Label>
+        <Label FontSize="20" Margin="5" Foreground="DodgerBlue">Da li ste sigurni da hoćete da obrišete?</Label>
         <DockPanel Margin="5,15,5,0">
-        <Button FontSize="20" Width="150" DockPanel.Dock="Left" x:Name="cancel" Click="Cancel_OnClick">Odustani</Button>
-        <Button FontSize="20" HorizontalAlignment="Right" Width="150" DockPanel.Dock="Right" x:Name="ok" Click="Ok_OnClick">Potvrdi</Button>
+        <Button FontSize="20" MinHeight="35" Width="150" DockPanel.Dock="Left" x:Name="cancel" Click="Cancel_OnClick">Odustani</Button>
+            <Button FontSize="20" MinHeight="35" HorizontalAlignment="Right" Width="150" DockPanel.Dock="Right" x:Name="ok" Click="Ok_OnClick">Potvrdi</Button>
         </DockPanel>
     </StackPanel>
 </Window>

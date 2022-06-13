@@ -93,6 +93,7 @@ namespace railway.defineDrivingLine
 
         private void setUpMapView()
         {
+            previous = null;
             try{
                 GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerAndCache;
                 // choose your provider here

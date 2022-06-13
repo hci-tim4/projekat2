@@ -13,7 +13,7 @@ namespace railway.drivingLineReport
         public LineChartInformation()
         {
             LineSeriesCollection = new SeriesCollection();
-            xAxisLabels = new List<string>(){"tip"};
+            xAxisLabels = new List<string>(){""};
         }
 
         public void reset()

@@ -32,9 +32,12 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Grid.Column="0" Height="40" Background="DodgerBlue">
-            <Label x:Name="currentTab" VerticalAlignment="Center" FontSize="20" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,700,0" Width="300"></Label>
-            <Menu Background="DodgerBlue" Foreground="White" HorizontalAlignment="Right" Margin="0,0,20,0">
+        <DockPanel Grid.Row="0" Grid.Column="0" Height="40" Background="DodgerBlue" >
+            <Label x:Name="currentTab" VerticalAlignment="Center" FontSize="20" Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" Margin="260,0,0,0" 
+                   DockPanel.Dock="Left" MaxWidth="300">
+                
+            </Label>
+            <Menu Background="DodgerBlue" DockPanel.Dock="Right" MaxWidth="250" Foreground="White" HorizontalAlignment="Right" Margin="0,0,10,0">
                 <MenuItem Header="Pomoć" >
                     <MenuItem Width="200" Header="Pomoć" Command="ApplicationCommands.Help" Click="help_clicked" IsEnabled="True" Foreground="DodgerBlue">
                         <MenuItem.Icon>
@@ -44,7 +47,7 @@
                     <MenuItem Width="200" Header="Tutorijal" Command="cmd:RoutedCommands.StartTutorial" Click="tutorial_clicked" IsEnabled="True"  Foreground="DodgerBlue"></MenuItem>
                 </MenuItem>
             </Menu>
-        </StackPanel>
+        </DockPanel>
 
 
         <Grid Grid.Row="1" Margin="250 55 0 0">

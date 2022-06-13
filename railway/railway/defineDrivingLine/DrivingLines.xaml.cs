@@ -263,7 +263,7 @@ namespace railway.defineDrivingLine
             try{
                 if (currentSelected == null)
                 {
-                    CustomMessageBox cmb = new CustomMessageBox("Prvo morate da izaberete mrežnu liniju koji hoćete da editujete");
+                    CustomMessageBox cmb = new CustomMessageBox("Prvo morate da izaberete mrežnu liniju \nkoju hoćete da menjate");
                     cmb.ShowDialog();
                     return;
                 }

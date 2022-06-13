@@ -4,13 +4,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:railway.defineDrivingLine"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:cmd="clr-namespace:railway.Commands"
         mc:Ignorable="d"
         xmlns:l="clr-namespace:railway"
         
         Icon="\icon\trainIcon.png"
         Title="ŽELEZNICE SRBIJE" WindowStartupLocation="CenterScreen"
-        ResizeMode="NoResize" Height="200" Width="500">
+        ResizeMode="NoResize" Height="300" Width="500">
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Help" Executed="CommandBinding_Executed"/>
         <CommandBinding Command="cmd:RoutedCommands.Save" x:Name="save" CanExecute="Save_OnCanExecute" Executed="Save_OnExecuted"></CommandBinding>
@@ -18,33 +19,28 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
+            
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         
-        <StackPanel Grid.Row="0" Grid.Column="0">
-            <Label FontSize="20">Ime: </Label>
-            <Label FontSize="20">Voz: </Label>
-            <Label FontSize="20">Datum početka važenja: </Label>
-        </StackPanel>
-        <StackPanel Grid.Row="0" Grid.Column="1" MinWidth="200">
-            <TextBox FontSize="20" x:Name="drivingLineName" l:HelpProvider.HelpKey="newDrivingLineName"></TextBox >
-            <ComboBox FontSize="20" Margin="2" x:Name="trainNameCmb" ToolTip="Izaberite voz koji saobraća na novoj mrežnoj liniji" Grid.Column="1" Grid.Row="1" SelectedValuePath="TrainName" Text="{Binding Path=trains}" IsEditable="True" DisplayMemberPath="Name" l:HelpProvider.HelpKey="newDravingLineTrain">
+        <StackPanel Grid.Row="0" Grid.Column="1" MinWidth="200" HorizontalAlignment="Center">
+            <TextBox FontSize="20" x:Name="drivingLineName" l:HelpProvider.HelpKey="newDrivingLineName" materialDesign:HintAssist.Hint="Naziv mrežne linije" ></TextBox >
+            <ComboBox FontSize="20" Margin="0,20,0,20" x:Name="trainNameCmb" materialDesign:HintAssist.Hint="Naziv voza" ToolTip="Izaberite voz koji saobraća na novoj mrežnoj liniji" Grid.Column="1" Grid.Row="1" SelectedValuePath="TrainName" Text="{Binding Path=trains}" IsEditable="True" DisplayMemberPath="Name" l:HelpProvider.HelpKey="newDravingLineTrain">
                 <ComboBox.Style>
                     <Style>
                         <EventSetter Event="TextBox.TextChanged" Handler="TrainNameChanged_TextChanged" />
                     </Style>
                 </ComboBox.Style>
             </ComboBox>
-            <DatePicker FontSize="20" SelectedDate="{Binding Path=startSelectedDate, Mode=TwoWay}" ToolTip="Unesite datum kada nova linija počinje da saobraća" x:Name="startDate" FirstDayOfWeek="Monday" l:HelpProvider.HelpKey="startDateNewLine"/>
+            <DatePicker FontSize="20" SelectedDate="{Binding Path=startSelectedDate, Mode=TwoWay}" materialDesign:HintAssist.Hint="Datum početka važenja" ToolTip="Unesite datum kada nova linija počinje da saobraća" x:Name="startDate" FirstDayOfWeek="Monday" l:HelpProvider.HelpKey="startDateNewLine"/>
         </StackPanel>
         
-        <DockPanel  Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Margin="2,2,2,2">
-            <Button  MaxWidth="150" DockPanel.Dock="Left" FontSize="20" Click="CancelDrivingLine_OnClick" x:Name="cancelDrivingLine"  l:HelpProvider.HelpKey="btnCancelDrivingLine" >Odustani</Button>
-            <Button  MaxWidth="150" DockPanel.Dock="Right" FontSize="20" Click="SaveDrivingLine_OnClick" HorizontalAlignment="Right" x:Name="saveDrivingLine" l:HelpProvider.HelpKey="btnSaveNewDrivingLine">Sačuvaj</Button>
+        <DockPanel  Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Margin="10,30,10,2">
+            <Button  MaxWidth="150" DockPanel.Dock="Left" FontSize="20" MinHeight="35" Click="CancelDrivingLine_OnClick" x:Name="cancelDrivingLine"  l:HelpProvider.HelpKey="btnCancelDrivingLine" >Odustani</Button>
+            <Button  MaxWidth="150" DockPanel.Dock="Right" FontSize="20" MinHeight="35" Click="SaveDrivingLine_OnClick" HorizontalAlignment="Right" x:Name="saveDrivingLine" l:HelpProvider.HelpKey="btnSaveNewDrivingLine">Sačuvaj</Button>
         </DockPanel>
     </Grid>
 </Window>

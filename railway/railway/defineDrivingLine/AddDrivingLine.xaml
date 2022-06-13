@@ -136,25 +136,25 @@
                     </Image>
                 </Button>
                 
-                <Button FontSize="20" DockPanel.Dock="Right" HorizontalAlignment="Right" MaxWidth="120" MaxHeight="45" ToolTip="Ručna definicija mrežne linije"
+                <Button FontSize="20" DockPanel.Dock="Right" HorizontalAlignment="Right" MaxWidth="180" MaxHeight="45" ToolTip="Ručna definicija mrežne linije"
                         x:Name="changeDrivingLineDefView" Click="ChangeDrivingLineDefView_OnClick" l:HelpProvider.HelpKey="goToSimpeWay"
-                        tour:TourHelper.ElementID="ChangeTypeOfDrivingLineDefinition"
+                        tour:TourHelper.ElementID="ChangeTypeOfDrivingLineDefinition" MinHeight="35"
                         tour:TourHelper.Placement="BottomCenter">Promeni</Button>
             </DockPanel>
 
             <DockPanel  Margin="5">
                 <Button FontSize="20" Width="150" DockPanel.Dock="Left" x:Name="Cancel" Click="Cancel_OnClick" ToolTip="Poništi dodate stanice"
-                        l:HelpProvider.HelpKey="clearDrivingLine"
+                        l:HelpProvider.HelpKey="clearDrivingLine" MaxWidth="180" MinHeight="35"
                         tour:TourHelper.ElementID="CancelButton"
                         tour:TourHelper.Placement="BottomCenter">Poništi</Button>
-                <Button DockPanel.Dock="Right" FontSize="20" Content="Sačuvaj" MaxWidth="150" HorizontalAlignment="Right" ToolTip="Sačuvejte mrežnu liniju"
+                <Button DockPanel.Dock="Right" FontSize="20" Content="Sačuvaj" MaxWidth="180" HorizontalAlignment="Right" ToolTip="Sačuvejte mrežnu liniju"
                         x:Name="saveDrivingLine" Click="SaveDrivingLine_OnClick" l:HelpProvider.HelpKey="btnSaveNewDrivingLine"
-                        tour:TourHelper.ElementID="SaveDrivingLine"
+                        tour:TourHelper.ElementID="SaveDrivingLine"  MinHeight="35"
                         tour:TourHelper.Placement="BottomCenter"></Button>
             </DockPanel>
             <TextBox Margin="0,2,0,0" Background="White" FontSize="20" ToolTip="Pretražuj po imenu" 
                      KeyUp="searchForStation" x:Name="searchForStationTextBox"  l:HelpProvider.HelpKey="searchStation"
-                     tour:TourHelper.ElementID="SearchThroughDrivingLine"
+                     tour:TourHelper.ElementID="SearchThroughDrivingLine"  MinHeight="35"
                      tour:TourHelper.Placement="BottomCenter">
                 
             </TextBox>
