@@ -41,9 +41,9 @@
 
 
         <Button BorderBrush="White" Foreground="White" Background="DodgerBlue" ToolTip="Odustanite od unetih izmena voza" x:Name="cancelBtn"  Click="cancelBtn_Click"  Width="120" 
-                 MinHeight="25" MaxHeight="50" Margin="20,40,0,2" Grid.Row="4" Grid.Column="0" l:HelpProvider.HelpKey="returnBtn" HorizontalAlignment="Left">Odustani</Button>
+                 MinHeight="35" FontSize="20" Margin="20,40,0,2" Grid.Row="4" Grid.Column="0" l:HelpProvider.HelpKey="returnBtn" HorizontalAlignment="Left">Odustani</Button>
         <Button BorderBrush="White" Foreground="White" Background="DodgerBlue" x:Name="addBtn" Grid.Row="4" Grid.Column="1" Click="editBtn_Click"
-                 MinHeight="20" MaxHeight="50" Margin="0,40,20,2" Width="130"
+                 MinHeight="35" FontSize="20" Margin="0,40,20,2" MaxWidth="180"
                 IsDefault="True" l:HelpProvider.HelpKey="confirmChangingTrain" HorizontalAlignment="Right">Potvrdi izmene
 
         </Button>

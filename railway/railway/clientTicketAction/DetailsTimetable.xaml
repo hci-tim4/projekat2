@@ -23,7 +23,7 @@
         
         <StackPanel Grid.Row="0" Grid.Column="0">
             <DataGrid FontSize="20"
-                      ItemsSource="{Binding Path=Values }"
+                      ItemsSource="{Binding Path=Values }" Width="Auto" ColumnWidth="*"
                       SelectionUnit="FullRow" SelectionMode="Single" AutoGenerateColumns="False"
                       IsReadOnly="True" Name="detailGrid" ScrollViewer.CanContentScroll="True"
                       ScrollViewer.HorizontalScrollBarVisibility="Auto"
@@ -31,10 +31,43 @@
                       Grid.RowSpan="2" Background="DodgerBlue" CanUserSortColumns="False" RenderTransformOrigin="0.997,0.431">
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn  Header="Stanica"  Binding="{Binding Path=StationName}" />
-                    <DataGridTextColumn Header="Vreme dolaska"  Binding="{Binding Path=ArrivalTime}" />
-                    <DataGridTextColumn Header="Vreme polaska" Binding="{Binding Path=DepartureTime}" />
+                    <DataGridTextColumn  Header="Stanica"  Binding="{Binding Path=StationName}">
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="Background" Value="DodgerBlue"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Vreme dolaska"  Binding="{Binding Path=ArrivalTime}">
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="Background" Value="DodgerBlue"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Header="Vreme polaska" Binding="{Binding Path=DepartureTime}">
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="Background" Value="DodgerBlue"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                                <Setter Property="Width" Value="200"></Setter>
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                    </DataGridTextColumn>
                 </DataGrid.Columns>
+                
+                <DataGrid.RowStyle>
+                    <Style TargetType="{x:Type DataGridRow}" >
+                        <Setter Property="BorderBrush" Value="Transparent" />
+                        <Setter Property="BorderThickness" Value="1" />
+                        <Setter Property="Foreground" Value="DodgerBlue"></Setter>
+                    </Style>
+                </DataGrid.RowStyle>
             </DataGrid>
         </StackPanel>
 

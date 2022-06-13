@@ -37,21 +37,21 @@
             </Grid.ColumnDefinitions>
 
 
-            <DataGrid 
+            <DataGrid  MaxHeight="800" VerticalAlignment="Top"
                   Grid.Row="0" Grid.Column="0" AutoGenerateColumns="False" IsSynchronizedWithCurrentItem="True"
                   SelectionUnit="FullRow" SelectionMode="Single"  ItemsSource="{Binding Path=lines}" 
                    IsReadOnly="True" Name="drivingLineDataGrid" ScrollViewer.CanContentScroll="True"
                     ScrollViewer.HorizontalScrollBarVisibility="Visible"
                     ScrollViewer.VerticalScrollBarVisibility="Visible" FontSize="20"
                    CanUserSortColumns="False" RenderTransformOrigin="0.997,0.431"  Grid.ColumnSpan="2"
-                    Width="400" HorizontalAlignment="Center"
+                
                    tour:TourHelper.ElementID="drivingTable"
                    tour:TourHelper.Placement="BottomCenter" Background="DodgerBlue" Margin="0,20,0,0">
 
 
 
                 <DataGrid.Columns>
-                <DataGridTextColumn Width="100" x:Name="drivingLineName" Header="Naziv" Binding="{Binding Path=Name}">
+                <DataGridTextColumn x:Name="drivingLineName" Header="Naziv" Binding="{Binding Path=Name}">
                     <DataGridTextColumn.HeaderStyle>
                     <Style TargetType="DataGridColumnHeader">
                         <Setter Property="Foreground" Value="White"/>
@@ -60,22 +60,22 @@
                         </Style>
                 </DataGridTextColumn.HeaderStyle>
                 </DataGridTextColumn>
-                <DataGridTemplateColumn Width="150">
+                <DataGridTemplateColumn >
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                            <Button Width="130"  ToolTip="Izmenite dane kojima saobraća linija" x:Name="btnChangeDays" Click="btnChangeDays_Click" Content="Vozni dani"
-                                    Tag="{Binding Path=drivingLineId}" l:HelpProvider.HelpKey="btnChangeDays"  tour:TourHelper.ElementID="daysBtn"
+                            <Button Width="130"  ToolTip="Izmenite dane kojima saobraća linija" x:Name="btnChangeDays" MinHeight="35" Click="btnChangeDays_Click" Content="Vozni dani"
+                                    Tag="{Binding Path=drivingLineId}" l:HelpProvider.HelpKey="btnChangeDays"  tour:TourHelper.ElementID="daysBtn" FontSize="20"
                    tour:TourHelper.Placement="BottomCenter"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
 
 
-                <DataGridTemplateColumn  Width="150">
+                <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Width="100" ToolTip="Dodajte novi raspored vožnje" x:Name="btnAdd" Click="btnAdd_Click" Content="Dodaj" 
-                                    Tag="{Binding Path=drivingLineId}" l:HelpProvider.HelpKey="btnAddSchedule" 
+                                    Tag="{Binding Path=drivingLineId}" l:HelpProvider.HelpKey="btnAddSchedule" MinHeight="35" FontSize="20"
                                     tour:TourHelper.ElementID="addNewSchedule"
                                    tour:TourHelper.Placement="BottomCenter"/>
                             </DataTemplate>
@@ -95,20 +95,20 @@
             </DataGrid>
 
 
-            <DataGrid  Margin="10,20,0,0"
+            <DataGrid  Margin="10,20,0,0" MaxHeight="800" VerticalAlignment="Top"
                   ItemsSource="{Binding Path=Studenti}"
                   SelectionUnit="FullRow" SelectionMode="Single" AutoGenerateColumns="False"
                   Name="dataGridStationSchedule" ScrollViewer.CanContentScroll="True"
                     ScrollViewer.HorizontalScrollBarVisibility="Auto"
                    Grid.Row="0" Grid.Column="2" ScrollViewer.VerticalScrollBarVisibility="Auto" FontSize="20"
-                   CanUserAddRows="False" Width="400" HorizontalAlignment="Center"
+                   CanUserAddRows="False" 
                       CanUserSortColumns="False" RenderTransformOrigin="0.997,0.431" l:HelpProvider.HelpKey="error"
                    tour:TourHelper.ElementID="scheduleDataGrid"
                    tour:TourHelper.Placement="BottomCenter" Background="DodgerBlue" 
                    >
 
                 <DataGrid.Columns>
-                <DataGridTextColumn  Header="Stanica" Binding="{Binding Path=StationName}" IsReadOnly="True" Width="150">
+                <DataGridTextColumn  Header="Stanica" Binding="{Binding Path=StationName}" IsReadOnly="True">
                     <DataGridTextColumn.HeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
                             <Setter Property="Foreground" Value="White"/>
@@ -117,7 +117,7 @@
                         </Style>
                     </DataGridTextColumn.HeaderStyle>
                 </DataGridTextColumn>
-                    <DataGridTemplateColumn Header="Dolazak" Width="120">
+                    <DataGridTemplateColumn Header="Dolazak">
                     <DataGridTemplateColumn.HeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
                             <Setter Property="Foreground" Value="White"/>
@@ -146,7 +146,7 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
 
-                    <DataGridTemplateColumn Header="Polazak" Width="120">
+                    <DataGridTemplateColumn Header="Polazak" >
                     <DataGridTemplateColumn.HeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
                             <Setter Property="Foreground" Value="White"/>
@@ -188,10 +188,10 @@
                                 <StackPanel Orientation="Horizontal" Background="AliceBlue">
                                     <TextBlock Text="Tura: " Margin="2,2,2,2" Foreground="DodgerBlue"></TextBlock>
                                 <TextBlock Text="{Binding Path=Name}" Margin="2,2,2,2" Foreground="DodgerBlue"/>
-                                    <Button ToolTip="Izmenite vreme polaska i dolaska" x:Name="btnUpdate" Click="btnUpdate_Click"
+                                    <Button ToolTip="Izmenite vreme polaska i dolaska" x:Name="btnUpdate" MinHeight="35" Click="btnUpdate_Click" FontSize="20"
                                         Content="Izmeni" Tag="{Binding Path=Name}" Margin="5,2,2,2" l:HelpProvider.HelpKey="btnUpdateSchedule"
                                         tour:TourHelper.ElementID="update"  tour:TourHelper.Placement="BottomCenter" Foreground="White" Background="DodgerBlue"/>
-                                    <Button ToolTip="Obriši ovu turu" Content="Obriši" x:Name="btnDelete" Click="btnDelete_Click" 
+                                    <Button ToolTip="Obriši ovu turu" Content="Obriši" x:Name="btnDelete" MinHeight="35" Click="btnDelete_Click" FontSize="20"
                                         Tag="{Binding Path=Name}" Margin="2,2,2,2" l:HelpProvider.HelpKey="btnDeleteSchedule"
                                         tour:TourHelper.ElementID="delete"  tour:TourHelper.Placement="BottomCenter" Foreground="White" Background="DodgerBlue"></Button>
                                 </StackPanel>

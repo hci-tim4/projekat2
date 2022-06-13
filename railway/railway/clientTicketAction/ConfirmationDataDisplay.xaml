@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:railway.client"
+      xmlns:conv="clr-namespace:railway.converter"
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="800"
       xmlns:rg="clr-namespace:SourceChord.ResponsiveGrid;assembly=ResponsiveGrid.Wpf"
@@ -24,7 +25,7 @@
 
         <rg:ResponsiveGrid Grid.Row="0">
             <Label rg:ResponsiveGrid.XS="6" rg:ResponsiveGrid.SM="6" FontSize="15" FontWeight="Bold" Foreground="DodgerBlue">Datum polaska:</Label>
-            <Label rg:ResponsiveGrid.XS="6" rg:ResponsiveGrid.SM="6" Content="{Binding Path=Date}" FontSize="15" Foreground="DodgerBlue"></Label>
+            <Label rg:ResponsiveGrid.XS="6" rg:ResponsiveGrid.SM="6" Content="{Binding Path=Date, Converter={conv:DateTimeToStringConverter}}" FontSize="15" Foreground="DodgerBlue"></Label>
         </rg:ResponsiveGrid>
         <rg:ResponsiveGrid Grid.Row="1">
             <Label rg:ResponsiveGrid.XS="6" rg:ResponsiveGrid.SM="6" FontSize="15" FontWeight="Bold" Foreground="DodgerBlue">Od:</Label>

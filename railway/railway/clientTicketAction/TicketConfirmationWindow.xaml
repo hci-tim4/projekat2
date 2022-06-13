@@ -26,11 +26,11 @@
         <Label FontSize="20" Foreground="Red" x:Name="askingForConfirmLabel" Grid.Row="0" Grid.Column="0"/>
         <Frame x:Name="confirmationDataFrame" NavigationUIVisibility="Hidden" Margin="2,2,2,2"  Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"/>
         <DockPanel Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center">
-            <Button x:Name="cancelBtn"  Click="cancelBtn_Click"
-                MaxWidth="120px" MinHeight="30" MaxHeight="60" Margin="2,2,6,2">Odustajem</Button>
-            <Button x:Name="confirmBtn" Grid.Row="2" Grid.Column="0" Click="confirmBtn_Click_1"
+            <Button x:Name="cancelBtn" DockPanel.Dock="Left" Width="120"  Click="cancelBtn_Click"
+                MaxWidth="120px" MinHeight="30" MaxHeight="60" Margin="2,2,6,2">Odustani</Button>
+            <Button x:Name="confirmBtn" DockPanel.Dock="Right" Width="120" Grid.Row="2" Grid.Column="0" Click="confirmBtn_Click_1"
                 MaxWidth="120px" MinHeight="30" MaxHeight="60" Margin="6,2,2,2"
-                IsDefault="True"> Potvrđujem
+                IsDefault="True"> Potvrdi
             
             </Button>
         </DockPanel>
