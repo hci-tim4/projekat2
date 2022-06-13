@@ -83,7 +83,7 @@ namespace railway
                     break;
                 case 4:
                     CurrentContent = new ViewDrivingLineTicketReport();
-                    currentTab.Content = "IZVEŠTAJ ZA VOZNU LINIJU";
+                    currentTab.Content = "IZVEŠTAJ ZA MREŽNU LINIJU";
                     page.Content = CurrentContent;
                     break;
 
@@ -161,6 +161,7 @@ namespace railway
         private void Report2_OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
             CurrentContent = new ViewDrivingLineTicketReport();
+            currentTab.Content = "IZVEŠTAJ ZA MREŽNU LINIJU";
             page.Content = CurrentContent;
         }
         private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
