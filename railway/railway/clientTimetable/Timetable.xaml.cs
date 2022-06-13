@@ -538,7 +538,7 @@ namespace railway.clientTimetable
 
         private void btnDetails_Click(object sender, RoutedEventArgs e)
         {
-            try{
+            try {
                 var dtoId = ((Button)sender).Tag;
                 DrivingLineDTO dto = findDTOById((int)dtoId);
                 Window win = new DetailsTimetable(dto.Tour, departure.Id, arrival.Id, parentFrame, this, dto.drivingLine);
@@ -546,11 +546,18 @@ namespace railway.clientTimetable
                 //var res = DetailsModal.ShowHandlerDialog(dto.Tour,departure.Id,arrival.Id,dto.drivingLine);
 
             }
+            catch (NullReferenceException ex)
+            {
+                CustomMessageBox cmb = new CustomMessageBox("Polazište i odredište moraju biti odabrani.");
+                cmb.ShowDialog();
+            }
+
             catch (Exception ex)
             {
                 CustomMessageBox cmb = new CustomMessageBox("Nešto je pošlo po zlu.\nPokušajte ponovo.");
                 cmb.ShowDialog();
             }
+
 
         }
 

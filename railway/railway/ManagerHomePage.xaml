@@ -70,31 +70,31 @@
                 </materialDesign:TransitioningContent>
                 <ListView x:Name="ListViewMenu" Margin="0,100,0,0" Foreground="White" FontWeight="Bold" SelectionChanged="ListViewMenu_SelectionChanged" FontFamily="Champagne &amp; Limousines" FontSize="18"  SelectedIndex="0" Grid.ColumnSpan="2" Background="DodgerBlue">
                     <ListViewItem Height="50" Background="DodgerBlue" Foreground="White">
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal" l:HelpProvider.HelpKey="RedVoznje">
                             <materialDesign:PackIcon Kind="Timetable" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
                             <TextBlock Text="Red vožnje" FontSize="17" VerticalAlignment="Center" Margin="10 0"/>
                         </StackPanel>
                     </ListViewItem>
                     <ListViewItem Height="50"  Background="DodgerBlue" Foreground="White">
-                        <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal" l:HelpProvider.HelpKey="MreznaLinija">
                             <materialDesign:PackIcon Kind="Map" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
                             <TextBlock Text="Mrežne linije" FontSize="17" VerticalAlignment="Center" Margin="10 0"/>
                         </StackPanel>
                     </ListViewItem>
                     <ListViewItem Height="50"  Background="DodgerBlue" Foreground="White">
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal" l:HelpProvider.HelpKey="Vozovi">
                             <materialDesign:PackIcon Kind="Train" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
                             <TextBlock Text="Vozovi" FontSize="17" VerticalAlignment="Center" Margin="10 0"/>
                         </StackPanel>
                     </ListViewItem>
                     <ListViewItem Height="50"  Background="DodgerBlue" Foreground="White">
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal" l:HelpProvider.HelpKey="MesecniIzvestaj">
                             <materialDesign:PackIcon Kind="GraphBar" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
                             <TextBlock Text= "Mesečni izveštaj" FontSize="17" VerticalAlignment="Center" Margin="10 0"/>
                         </StackPanel>
                     </ListViewItem>
                     <ListViewItem Height="50"  Background="DodgerBlue" Foreground="White">
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal" l:HelpProvider.HelpKey="MreznaLinijaIzvestaj">
                             <materialDesign:PackIcon Kind="GraphLine" Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
                             <TextBlock Text= "Izveštaj za mrežnu liniju" FontSize="17" VerticalAlignment="Center" Margin="10 0"/>
                         </StackPanel>
