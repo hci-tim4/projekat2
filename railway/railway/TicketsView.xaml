@@ -54,11 +54,11 @@
             </ComboBox>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="1">
-            <RadioButton  Foreground="DodgerBlue" Name="buyrb" GroupName="Tickets"  Grid.Row="2" Grid.Column="1" FontSize="18" IsChecked="True">Kupljene karte</RadioButton >
-        <RadioButton Foreground="DodgerBlue" Unchecked="buy_checked" Checked="reserve_checked" Margin="20,0,0,0" Name="reserverb" Grid.Column="1" Grid.Row="2"  GroupName="Tickets"  FontSize="18" IsChecked="False">Rezervisane karte</RadioButton >
+            <RadioButton  Foreground="DodgerBlue" Name="buyrb" GroupName="Tickets"  Grid.Row="2" Grid.Column="1" FontSize="19" IsChecked="True">Kupljene karte</RadioButton >
+        <RadioButton Foreground="DodgerBlue" Unchecked="buy_checked" Checked="reserve_checked" Margin="20,0,0,0" Name="reserverb" Grid.Column="1" Grid.Row="2"  GroupName="Tickets"  FontSize="19" IsChecked="False">Rezervisane karte</RadioButton >
         </StackPanel>
         <DataGrid  ItemsSource="{Binding Path=dto }" 
-                 ColumnWidth="*" Width="1100" Height="400"
+                 ColumnWidth="*" Width="Auto" Height="400" FontSize="19" Margin="5,0,5,0"
                   SelectionUnit="FullRow" SelectionMode="Single" AutoGenerateColumns="False"
                    IsReadOnly="True" Name="dataGrid" ScrollViewer.CanContentScroll="True"
                     ScrollViewer.HorizontalScrollBarVisibility="Auto"
