@@ -170,7 +170,7 @@ namespace railway.monthlyReport
             currentData.Add(vip);
             InformationForGraphDisplay biz = new InformationForGraphDisplay()
             {
-                Type = "biznis",
+                Type = "Biznis",
                 NumberOfSelledTickets = GetNumberOfBiznisCards(),
                 Price = CountPriceForBiznisCards()
             };
@@ -178,7 +178,7 @@ namespace railway.monthlyReport
             Profit += biz.Price;
             InformationForGraphDisplay reg = new InformationForGraphDisplay()
             {
-                Type = "Regularan",
+                Type = "Redovna",
                 NumberOfSelledTickets = GetNumberOfRegularCards(),
                 Price = CountPriceForRegularCards()
             };
