@@ -373,17 +373,17 @@ namespace railway.database
 
                 db.Database.ExecuteSqlCommand("Insert into Tickets Values(1,1,    2,3,  1,200,   1)");
                 db.Database.ExecuteSqlCommand("Insert into TicketSeats Values(1,1)");
-                db.Database.ExecuteSqlCommand("Insert into Tickets Values(0,1,  3,5,  21,400,  1)");
+                db.Database.ExecuteSqlCommand("Insert into Tickets Values(0,1,  26,28,  21,400,  1)");
                 db.Database.ExecuteSqlCommand("Insert into TicketSeats Values(1,2)");
-                db.Database.ExecuteSqlCommand("Insert into Tickets Values(0,1,  2,4,  20,400,   1)");
+                db.Database.ExecuteSqlCommand("Insert into Tickets Values(0,1,  21,22,  20,200,   1)");
                 db.Database.ExecuteSqlCommand("Insert into TicketSeats Values(1,3)");
                 
                 
-                db.Database.ExecuteSqlCommand("Insert into Tickets Values(1,1,  1,2,  27,200,1)");
+                db.Database.ExecuteSqlCommand("Insert into Tickets Values(1,1,  13,14,  27,200,1)");
                 db.Database.ExecuteSqlCommand("Insert into TicketSeats Values(1,4)");
-                db.Database.ExecuteSqlCommand("Insert into Tickets Values(0,1,  2,3,  39,200,1)");
+                db.Database.ExecuteSqlCommand("Insert into Tickets Values(0,1,  24,26,  39,400,1)");
                 db.Database.ExecuteSqlCommand("Insert into TicketSeats Values(1,5)");
-                db.Database.ExecuteSqlCommand("Insert into Tickets Values(0,1,  1,4,  38,600,1)");
+                db.Database.ExecuteSqlCommand("Insert into Tickets Values(0,1,  20,23,  38,600,1)");
                 db.Database.ExecuteSqlCommand("Insert into TicketSeats Values(1,6)");
                 db.SaveChanges();
             }

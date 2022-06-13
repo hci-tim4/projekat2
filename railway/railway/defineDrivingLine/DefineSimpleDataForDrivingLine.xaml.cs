@@ -42,7 +42,7 @@ namespace railway.defineDrivingLine
                 this.stations = stations;
                 this.drivingGotSavedHandler = drivingGotSavedHandler;
                 startDate.Language = XmlLanguage.GetLanguage(new System.Globalization.CultureInfo("sr-ME").IetfLanguageTag);
-                
+                //trainNameCmb.Text = materialDes
             }
             catch (Exception e)
             {

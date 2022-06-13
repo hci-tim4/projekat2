@@ -208,11 +208,11 @@ namespace railway.services
                 foreach (TicketForReportDTO t in res)
                 {
                     t.NumberOfVIPSeats = t.GetNumberOfSeatType("VIP");
-                    t.NumberOfBiznisSeats = t.GetNumberOfSeatType("Biznis klasa");
-                    t.NumberOfRegularSeats = t.GetNumberOfSeatType("Regularan");
+                    t.NumberOfBiznisSeats = t.GetNumberOfSeatType("Biznis");
+                    t.NumberOfRegularSeats = t.GetNumberOfSeatType("Redovna");
                     t.PriceOfVIPSeats = t.CountPriceForSeatType("VIP");
-                    t.PriceOfBiznisSeats = t.CountPriceForSeatType("Biznis klasa");
-                    t.PriceOfRegularSeats = t.CountPriceForSeatType("Regularan");
+                    t.PriceOfBiznisSeats = t.CountPriceForSeatType("Biznis");
+                    t.PriceOfRegularSeats = t.CountPriceForSeatType("Redovna");
                 }
                 return res;
             }

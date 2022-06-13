@@ -27,8 +27,8 @@
         </Grid.RowDefinitions>
         
         <StackPanel Grid.Row="0" Grid.Column="1" MinWidth="200" HorizontalAlignment="Center">
-            <TextBox FontSize="20" x:Name="drivingLineName" l:HelpProvider.HelpKey="newDrivingLineName" materialDesign:HintAssist.Hint="Naziv mrežne linije" ></TextBox >
-            <ComboBox FontSize="20" Margin="0,20,0,20" x:Name="trainNameCmb" materialDesign:HintAssist.Hint="Naziv voza" ToolTip="Izaberite voz koji saobraća na novoj mrežnoj liniji" Grid.Column="1" Grid.Row="1" SelectedValuePath="TrainName" Text="{Binding Path=trains}" IsEditable="True" DisplayMemberPath="Name" l:HelpProvider.HelpKey="newDravingLineTrain">
+            <TextBox ToolTip="Dodate naziv novoj mrežnoj liniji" FontSize="20" x:Name="drivingLineName" l:HelpProvider.HelpKey="newDrivingLineName" materialDesign:HintAssist.Hint="Naziv mrežne linije" ></TextBox >
+            <ComboBox FontSize="20" Margin="0,20,0,20" x:Name="trainNameCmb" MaxHeight="100" materialDesign:HintAssist.Hint="Naziv voza" ToolTip="Izaberite voz koji saobraća na novoj mrežnoj liniji" Grid.Column="1" Grid.Row="1" SelectedValuePath="TrainName" Text="{Binding Path=trains}" IsEditable="True" DisplayMemberPath="Name" l:HelpProvider.HelpKey="newDravingLineTrain">
                 <ComboBox.Style>
                     <Style>
                         <EventSetter Event="TextBox.TextChanged" Handler="TrainNameChanged_TextChanged" />
