@@ -66,15 +66,87 @@
                    Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Background="DodgerBlue"  VerticalAlignment="Top">
 
             <DataGrid.Columns >
-                <DataGridTextColumn  Header="Datum" Binding="{Binding Path=DepatureDate, Converter={conv:DateTimeToStringConverter}}"/>
-                <DataGridTextColumn Header="Vreme polaska" Binding="{Binding Path=ArrivalTime }"/>
-                <DataGridTextColumn Header="Polazište" Binding="{Binding Path=DepartureStationName}"/>
-                <DataGridTextColumn Header="Vreme dolaska" Binding="{Binding Path=DepartureTime }"/>
-                <DataGridTextColumn Header="Odredište" Binding="{Binding Path=ArrivalStationName }"/>
-                <DataGridTextColumn Header="Klasa" Binding="{Binding Path= seatType}"/>
-                <DataGridTextColumn Header="Red" Binding="{Binding Path=row }"/>
-                <DataGridTextColumn Header="Broj sedišta" Binding="{Binding Path=col}"/>
+                <DataGridTextColumn  Header="Datum" Binding="{Binding Path=DepatureDate, Converter={conv:DateTimeToStringConverter}}">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Background" Value="DodgerBlue"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                    
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Vreme polaska" Binding="{Binding Path=ArrivalTime }">
+                    
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Background" Value="DodgerBlue"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Polazište" Binding="{Binding Path=DepartureStationName}">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Background" Value="DodgerBlue"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Vreme dolaska" Binding="{Binding Path=DepartureTime }">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Background" Value="DodgerBlue"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Odredište" Binding="{Binding Path=ArrivalStationName }">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Background" Value="DodgerBlue"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Klasa" Binding="{Binding Path= seatType}">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Background" Value="DodgerBlue"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Red" Binding="{Binding Path=row }">
+                    <DataGridTextColumn.HeaderStyle>
+                   <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="Background" Value="DodgerBlue"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Broj sedišta" Binding="{Binding Path=col}">  <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Background" Value="DodgerBlue"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
                 <DataGridTextColumn Header="Cena" Binding="{Binding Path=Price}">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Background" Value="DodgerBlue"/>
+                            <Setter Property="FontWeight" Value="Bold"/>
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
                 </DataGridTextColumn>
             </DataGrid.Columns>
 

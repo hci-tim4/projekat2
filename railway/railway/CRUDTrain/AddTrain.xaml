@@ -56,9 +56,9 @@
         </ComboBox>
 
         <Button  BorderBrush="White" Foreground="White" Background="DodgerBlue" ToolTip="Odustani od dodavanja novog voza" x:Name="cancelBtn"  Click="cancelBtn_Click"  Width="150" 
-                 MinHeight="25" MaxHeight="50" Margin="2,40,0,2" Grid.Row="4" Grid.Column="0" l:HelpProvider.HelpKey="returnBtn">Odustani</Button>
+                 MinHeight="35"  FontSize="20" Margin="2,40,0,2" Grid.Row="4" Grid.Column="0" l:HelpProvider.HelpKey="returnBtn">Odustani</Button>
         <Button BorderBrush="White" Foreground="White" Background="DodgerBlue" ToolTip="Dodajte novi voz" x:Name="addBtn" Grid.Row="4" Grid.Column="1" Click="addBtn_Click"
-                 MinHeight="20" MaxHeight="50" Margin="0,40,2,2" Width="150"
+                 MinHeight="35"  Margin="0,40,2,2" Width="150" FontSize="20"
                 IsDefault="True" l:HelpProvider.HelpKey="confirmAddTrain">Dodaj
 
         </Button>

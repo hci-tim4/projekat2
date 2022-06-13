@@ -8,7 +8,7 @@
       mc:Ignorable="d" 
       MinWidth="1000"
       Title="Timetable" >
-
+    <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" >
     <Grid >
         <Grid  x:Name="parent">
             <Grid.RowDefinitions>
@@ -62,12 +62,50 @@
                    Grid.Row="0" Grid.Column="1" Background="DodgerBlue" CanUserSortColumns="False" RenderTransformOrigin="0.997,0.431">
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn Width="150"  Header="Polazište" Binding="{Binding Path=Departure}"/>
-                    <DataGridTextColumn     Width="150" Header="Odredište" Binding="{Binding Path=Arrival}"/>
+                    <DataGridTextColumn Width="150"  Header="Polazište" Binding="{Binding Path=Departure}">
+                        
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="Background" Value="DodgerBlue"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                                <!--<Setter Property="HorizontalAlignment" Value="Center"></Setter>
+        -->                    </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                 
+                    </DataGridTextColumn>
+                    <DataGridTextColumn     Width="150" Header="Odredište" Binding="{Binding Path=Arrival}">
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="Background" Value="DodgerBlue"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                    </DataGridTextColumn>
                     <!--<DataGridTextColumn MinWidth="60" Header="Datum" Binding="{Binding Path=Date}"/>-->
                     <!-- Binding="{Binding Path=Date, Converter={local:DateTimeToStringConverter}}"  -->
-                    <DataGridTextColumn Width="150" Header="Vreme" Binding="{Binding Path=Time}" />
-                    <DataGridTextColumn Width="150" Header="Voz" Binding="{Binding Path=Train}" />
+                    <DataGridTextColumn Width="150" Header="Vreme" Binding="{Binding Path=Time}">
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="Background" Value="DodgerBlue"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Width="150" Header="Voz" Binding="{Binding Path=Train}" >
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="Background" Value="DodgerBlue"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                                <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                    </DataGridTextColumn>
                     <DataGridTemplateColumn Width="350">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -93,6 +131,7 @@
                     <Style TargetType="{x:Type DataGridRow}" >
                         <Setter Property="BorderBrush" Value="Transparent" />
                         <Setter Property="BorderThickness" Value="1" />
+                       
                     </Style>
                 </DataGrid.RowStyle>
             </DataGrid>
@@ -104,4 +143,5 @@
         <local:TicketConfirmationModal x:Name="TicketConfirmationModal"></local:TicketConfirmationModal>
 
     </Grid>
+        </ScrollViewer>
 </Page>

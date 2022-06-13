@@ -194,10 +194,10 @@ namespace railway.client
 
         private void addLegend()
         {
-            RowDefinition rowDef = new RowDefinition();
-            rowDef.Height = GridLength.Auto; // new GridLength(2, GridUnitType.Star);
-            grid1.RowDefinitions.Add(rowDef);
-            rowCount++;
+            //RowDefinition rowDef = new RowDefinition();
+            //rowDef.Height = GridLength.Auto; // new GridLength(2, GridUnitType.Star);
+            //grid2.RowDefinitions.Add(rowDef);
+            //rowCount++;
             StackPanel sp = new StackPanel();
             using (var db = new RailwayContext())
             {
@@ -209,10 +209,10 @@ namespace railway.client
             }
             DockPanel occupiedLegend = makeOccupeidLegend();
             sp.Children.Add(occupiedLegend);
-            Grid.SetRow(sp, rowCount++);
-            Grid.SetColumn(sp, 0);
-            Grid.SetColumnSpan(sp, colCount + 1);
-            grid1.Children.Add(sp);
+            //Grid.SetRow(sp, rowCount++);
+           // Grid.SetColumn(sp, 0);
+            //Grid.SetColumnSpan(sp, colCount + 1);
+            legend.Children.Add(sp);
         }
 
         private DockPanel makeOccupeidLegend()

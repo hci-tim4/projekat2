@@ -79,7 +79,7 @@ namespace railway.CRUDTrain
             TourHelper.SetElementID(gridTrains, "allTrains");
             TourHelper.SetPlacement(gridTrains, Placement.TopCenter);
            
-            for(int i=0;i<4; i++) //4 kolone
+            for(int i=0;i<3; i++) //4 kolone
             {
                 var colDef = new ColumnDefinition();
                 colDef.Width = new GridLength(1, GridUnitType.Star);
@@ -87,17 +87,17 @@ namespace railway.CRUDTrain
             }
            
 
-            int col = 4;
-            int rowNum = dto.Count() / 4; 
+            int col = 3;
+            int rowNum = dto.Count() / 3; 
 
-            if (dto.Count() < 4)
+            if (dto.Count() < 3)
             {
                 col = dto.Count(); 
-                rowNum = dto.Count() / 4 + 1;
+                rowNum = dto.Count() / 3 + 1;
             }
-            if(dto.Count() % 4 != 0)
+            if(dto.Count() % 3 != 0)
             {
-                rowNum = dto.Count() / 4 + 1;
+                rowNum = dto.Count() / 3 + 1;
             
              }
             var rowDef1 = new RowDefinition();
@@ -140,16 +140,16 @@ namespace railway.CRUDTrain
 
             for (int i = 1; i < rowNum+1; i++)
             {
-                if (dto.Count() - 4 * (i - 1) < 4)
+                if (dto.Count() - 3 * (i - 1) < 3)
                 {
-                    col = dto.Count() - 4 * (i-1);
+                    col = dto.Count() - 3 * (i-1);
                 }
                 for (int j = 0; j < col; j++)
                 {
                     Grid grid = new Grid();
-                    grid.Margin = new Thickness { Bottom = 0, Left =10, Right = 10, Top = 10 };
-                    grid.Height = 250;
-                    grid.Width = 250;
+                    grid.Margin = new Thickness { Bottom = 0, Left =10, Right = 10, Top = 15 };
+                    grid.Height = 270;
+                    grid.Width = 350;
                     grid.VerticalAlignment = VerticalAlignment.Top;
                     Grid.SetColumn(grid, j);
                     Grid.SetRow(grid, i);
@@ -167,7 +167,7 @@ namespace railway.CRUDTrain
 
 
                     StackPanel stackPanel = new StackPanel();
-                    stackPanel.Width = 300;
+                    stackPanel.Width = 330;
 
                     StackPanel stackPanelName = new StackPanel();
                     stackPanelName.Orientation = Orientation.Horizontal;
@@ -175,12 +175,12 @@ namespace railway.CRUDTrain
                     stackPanelName.Margin = new Thickness { Bottom = 20, Left = 0, Right = 0, Top = 10 };
                     Image img = new Image();
                     img.Width = 50;
-                    img.Height = 40;
+                    img.Height =  40;
                     img.Source = new BitmapImage(new Uri("/icon/trainIcon.png", UriKind.Relative));
                     stackPanelName.Children.Add(img);
 
                     TextBlock tb = new TextBlock();
-                    tb.Text = dto[(i-1)*4+j].Name;
+                    tb.Text = dto[(i-1)*3+j].Name;
                     tb.FontSize = 30;
                     tb.Margin = new Thickness { Bottom = 0, Left = 10, Right = 0, Top = 0 };
                     tb.FontWeight = FontWeights.Bold;
@@ -191,44 +191,44 @@ namespace railway.CRUDTrain
                     stackPanel.Children.Add(stackPanelName);
                     
                     TextBlock tbColor = new TextBlock();
-                    tbColor.Text = "Boja: " + dto[(i - 1) * 4 + j].Color;
+                    tbColor.Text = "Boja: " + dto[(i - 1) * 3 + j].Color;
                     tbColor.Foreground = new SolidColorBrush(Colors.DodgerBlue);
                     tbColor.Width = 280;
-                    tbColor.FontSize = 15;
+                    tbColor.FontSize = 20;
                     
                     stackPanel.Children.Add(tbColor);
 
                     TextBlock tbCol = new TextBlock();
-                    tbCol.Text = "Broj kolona: " + dto[(i - 1) * 4 + j].col;
+                    tbCol.Text = "Broj kolona: " + dto[(i - 1) * 3 + j].col;
                     tbCol.Foreground = new SolidColorBrush(Colors.DodgerBlue);
-                    tbCol.FontSize = 15;
+                    tbCol.FontSize = 20;
                     tbCol.Width = 280;
                     stackPanel.Children.Add(tbCol);
 
                     TextBlock tbRegular = new TextBlock();
 
-                    tbRegular.Text = "Broj redova regularne klase: " + dto[(i - 1) * 4 + j].numberREGULAR;
+                    tbRegular.Text = "Broj redova regularne klase: " + dto[(i - 1) * 3 + j].numberREGULAR;
 
                     tbRegular.Foreground = new SolidColorBrush(Colors.DodgerBlue);
                     tbRegular.Width = 280;
-                    tbRegular.FontSize = 15;
+                    tbRegular.FontSize = 20;
                     stackPanel.Children.Add(tbRegular);
                      
 
                     TextBlock tbBusiness = new TextBlock();
 
-                    tbBusiness.Text = "Broj redova biznis klase: " + dto[(i - 1) * 4 + j].numberBUSINESS;
+                    tbBusiness.Text = "Broj redova biznis klase: " + dto[(i - 1) * 3 + j].numberBUSINESS;
 
                     tbBusiness.Foreground = new SolidColorBrush(Colors.DodgerBlue);
-                    tbBusiness.FontSize = 15;
+                    tbBusiness.FontSize = 20;
                     tbBusiness.Width = 280;
                     stackPanel.Children.Add(tbBusiness);
 
                     TextBlock tbVip = new TextBlock();
-                    tbVip.Text = "Broj redova vip klase: " + dto[(i - 1) * 4 + j].numberVIP;
+                    tbVip.Text = "Broj redova vip klase: " + dto[(i - 1) * 3 + j].numberVIP;
 
                     tbVip.Foreground = new SolidColorBrush(Colors.DodgerBlue);
-                    tbVip.FontSize = 15;
+                    tbVip.FontSize = 20;
                     tbVip.Width = 280;
                     stackPanel.Children.Add(tbVip);
 
@@ -237,9 +237,11 @@ namespace railway.CRUDTrain
                     stackPanel2.Orientation = Orientation.Horizontal;
                     stackPanel2.HorizontalAlignment = HorizontalAlignment.Center;
                     Button btnEdit = new Button();
-                    btnEdit.Width = 80;
+                    btnEdit.MaxWidth = 150;
+                    btnEdit.FontSize = 20;
+                    btnEdit.MinHeight = 35;
                     btnEdit.Content = "Izmeni";
-                    btnEdit.Tag = dto[(i - 1) * 4 + j].Id;
+                    btnEdit.Tag = dto[(i - 1) * 3 + j].Id;
                     btnEdit.Click += edit_Clicked;
                     btnEdit.Foreground = new SolidColorBrush(Colors.White);
                     btnEdit.Background = (Brush)bc.ConvertFrom("#FF1E90FF");
@@ -249,10 +251,12 @@ namespace railway.CRUDTrain
 
 
                     Button btnDelete = new Button();
-                    btnDelete.Width = 80;
+                    btnDelete.MaxWidth = 150;
+                    btnDelete.FontSize = 20;
+                    btnDelete.MinHeight = 35;
                     btnDelete.Content = "Obriši";
                     btnDelete.Click += delete_Clicked;
-                    btnDelete.Tag = dto[(i - 1) * 4 + j].Id;
+                    btnDelete.Tag = dto[(i - 1) * 3 + j].Id;
                     btnDelete.Foreground = new SolidColorBrush(Colors.White);
 
                     btnDelete.Background = (Brush)bc.ConvertFrom("#FF1E90FF");

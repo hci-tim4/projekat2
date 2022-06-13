@@ -8,13 +8,19 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="SeatDisplay">
 
-    <Grid x:Name="grid1">
+    <Grid x:Name="grid2">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+      
+        <Grid x:Name="grid1" Grid.Row="0"></Grid>
+          
+        <StackPanel x:Name="legend" Grid.Row="1"></StackPanel>
         <Grid.ColumnDefinitions>
 
         </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            
-        </Grid.RowDefinitions>
         
     </Grid>
 </Page>

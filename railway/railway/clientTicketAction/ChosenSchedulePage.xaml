@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:rg="clr-namespace:SourceChord.ResponsiveGrid;assembly=ResponsiveGrid.Wpf"
       xmlns:local="clr-namespace:railway.client"
+      xmlns:conv="clr-namespace:railway.converter"
       mc:Ignorable="d" 
       Title="ChosenSchedulePage">
     <Grid>
@@ -28,7 +29,7 @@
         
         <StackPanel Grid.Column="1">
             
-            <Label FontSize="20" Content="{Binding Path=Date}"></Label>
+            <Label FontSize="20" Content="{Binding Path=Date, Converter={conv:DateTimeToStringConverter}}"></Label>
             <Label FontSize="20" x:Name="fromStation" Content="{Binding Path=fromStation, Mode=TwoWay}"></Label>
             <Label FontSize="20" x:Name="depatureTime" Content="{Binding Path=depatureTime, Mode=TwoWay}"></Label>
             <Label FontSize="20" x:Name="untilStation" Content="{Binding Path=untilStation, Mode=TwoWay}"></Label>
