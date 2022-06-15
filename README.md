@@ -20,5 +20,8 @@ Koraci za pokretanje aplikacije "ŽELEZNICE SRBIJE"
 4. Otvoriti aplikaciju pokretanjem railway.sln
 5. U fajlu MainWindow.xaml.cs iskomentarisati deo koji popunjava bazu podacima i generiše buduće redove vožnje.
 6. Pokrenite aplikaciju klikom na F5 ili u slučaju ako se pokreće u Release režimu CTRL + F5.
+7. Logovanje u ulozi običnog korisnika: username: miki, password: 123
+8. Logovanje u ulozi menadžera: username: djole, password: 123
 
-Napomena: Uputstvo je pisano za Microsoft Visual Studio okruženje.
+
+Napomena: Uputstvo je pisano za Microsoft Visual Studio okruženje. 
